@@ -717,7 +717,8 @@
       <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
-        <a href="#" class="hover:text-blue-600">Electrical Machines Lab</a>
+        <a href="#" class="hover:text-blue-600">
+Electronics & Communication Engineering Labs</a>
         <span>></span>
         <span class="text-gray-800 font-medium">Theory</span>
       </nav>
@@ -726,7 +727,7 @@
       <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
         <div class="px-4 py-3" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
           <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
-            To study the Load Characteristics of DC shunt generator
+            The aim of this experiment is to demonstrate and understand the processes of image sampling and quantization.
           </h1>
         </div>
       </div>
@@ -736,110 +737,226 @@
 
   <div class="space-y-8 text-gray-700 text-lg leading-relaxed">
 
-    <!-- Introduction -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Introduction</h3>
-      <p class="mb-6 text-justify">
-        A DC shunt generator is a type of self-excited DC generator in which the field winding is connected in parallel (shunt) with the armature winding. As a result, the field current remains almost constant (since it depends only on the terminal voltage). The yoke of a DC generator is made of cast iron because it provides high magnetic permeability, good mechanical strength, and serves as a low-reluctance path for the magnetic flux.
-      </p>
+   <style>
+.content{
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+    line-height:1.8;
+    text-align:justify;
+}
 
-      <p class="mb-6 text-justify">
-        The performance of a DC shunt generator is described using load characteristics, which illustrate how the terminal voltage and load current change as the load varies.
-      </p>
+.content h2{
+    font-size:2rem;
+    margin-top:30px;
+    margin-bottom:15px;
+    color:#222;
+}
 
-      <p class="mb-6 text-justify">
-        In a shunt generator, the field winding is connected in parallel with the armature winding so that the terminal voltage of the generator is applied across it. The shunt field winding has many turns of fine wire having high resistance. Therefore, only a part of the armature current flows through the shunt field winding, and the rest flows through the load. Fig. 1 shows the connections of a shunt wound generator. The armature current I<sub>a</sub> splits into two parts — a small fraction I<sub>sh</sub> flowing through the shunt field winding, while the major part I<sub>L</sub> goes to the external load.
-      </p>
+.content p,
+.content li{
+    font-size:1.1rem;
+}
 
-      <div class="flex justify-center mb-4">
-        <img src="./images/DCS-01.png" alt="Equivalent circuit of DC shunt generator for load characteristics" class="w-[500px] h-[250px] rounded-lg shadow-md">
-      </div>
-      <p class="text-center font-semibold text-gray-800">
-        <b>Fig. 1 Equivalent circuit of DC shunt generator for load characteristics</b>
-      </p>
-    </div>
+.content img{
+    max-width:100%;
+    height:auto;
+    display:block;
+    margin:20px auto;
+}
 
-    <!-- Losses -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Losses in a DC Shunt Generator</h3>
-      <p class="mb-6 text-justify">
-        In a DC shunt generator, various losses occur during operation, such as armature copper losses, shunt field copper losses, iron losses, and mechanical losses. Among these, armature copper losses constitute a significant portion of the total losses. The copper losses in the armature of a DC shunt generator are approximately 30% of the total full-load losses. These losses occur due to the resistance of the armature winding and increase with load current, thereby affecting the efficiency and voltage regulation of the generator.
-      </p>
-    </div>
+.content figure{
+    text-align:center;
+    margin:25px 0;
+}
 
-    <!-- Types of Characteristics -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Types of Characteristics</h3>
-      <p class="mb-4">
-        There are two main characteristics of a DC shunt generator:
-      </p>
+.content figcaption{
+    font-weight:bold;
+    font-size:1rem;
+    margin-top:10px;
+}
 
-      <h4 class="text-lg font-semibold mb-2 text-gray-800">1. Internal Characteristic</h4>
-      <p class="mb-6 text-justify">
-        The internal characteristic curve represents the relation between the generated voltage (E<sub>g</sub>) and the load current I<sub>L</sub>. When the generator is loaded, the generated voltage decreases due to armature reaction. Therefore, the generated voltage will be lower than the emf generated at no load. In Fig. 2, the AD curve shows the no-load voltage curve, and AB represents the internal characteristic curve.
-      </p>
+.content ul,
+.content ol{
+    padding-left:25px;
+}
+</style>
 
-      <h4 class="text-lg font-semibold mb-2 text-gray-800">2. External or Load Characteristic</h4>
-      <p class="mb-4 text-justify">
-        The external characteristic of a DC shunt generator represents the relationship between the terminal voltage (V) and the load current (I<sub>L</sub>) while the generator is supplying power. It shows how the terminal voltage varies with changes in the load.
-      </p>
+<section class="content-header">
+    <h1 class="main-title">
+        Sampling and Quantization
+    </h1>
+</section>
 
-      <p class="mb-4 text-justify">
-        This characteristic is typically represented by a V–I<sub>L</sub> graph. In Fig. 2, the AC curve represents the external characteristic of the DC shunt generator. Due to the ohmic drop in the armature resistance, the terminal voltage is lower than the generated voltage. Therefore, the external characteristic curve lies below the internal characteristic curve.
-      </p>
+<style>
+.main-title{
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #222;
+    margin: 20px 0 30px 0;
+    letter-spacing: 1px;
+    line-height: 1.3;
+}
 
-      <div class="text-center text-lg font-mono my-6 bg-gray-100 p-4 rounded-lg">
-        V = (E<sub>g</sub> − I<sub>a</sub>R<sub>a</sub>) = E<sub>g</sub> − (I<sub>L</sub> + I<sub>sh</sub>)R<sub>a</sub>
-      </div>
+@media (max-width: 768px){
+    .main-title{
+        font-size: 2.2rem;
+    }
+}
+</style>
 
-      <p class="mb-2"><strong>Where,</strong></p>
-      <ul class="list-disc pl-6 mb-6 space-y-1">
-        <li>V is the terminal voltage of the generator</li>
-        <li>E<sub>g</sub> is the generated emf in the armature</li>
-        <li>I<sub>a</sub> is armature current and R<sub>a</sub> is armature resistance</li>
-        <li>I<sub>sh</sub> is the current flowing through the shunt field winding</li>
-        <li>I<sub>L</sub> is the load current delivered to the external load</li>
-      </ul>
+<div class="content">
 
-      <div class="flex justify-center mb-4">
-        <img src="./images/DCS-02.png" alt="Load characteristics of DC shunt generator" class="w-[500px] h-[250px] rounded-lg shadow-md">
-      </div>
-      <p class="text-center font-semibold text-gray-800">
-        <b>Fig. 2 Characteristics of DC shunt generator</b>
-      </p>
-    </div>
+    <h2>Introduction</h2>
 
-    <!-- Behaviour -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Behaviour of External Characteristics</h3>
-      <p class="mb-6 text-justify">
-        When the load resistance of a DC shunt generator decreases, the load current (I<sub>L</sub>) increases. However, this increase is limited only up to point C, known as the breakdown point. Beyond this point, a further decrease in load resistance causes a decrease in load current, and the external characteristic curve reverses (shown by the dotted line). Eventually, the terminal voltage may drop to zero except for a small value due to residual magnetism. The point at which the generator delivers maximum current is called the breakdown point.
-      </p>
-    </div>
+    <p>
+        The digital representation of images is fundamental to numerous applications,
+        including medical imaging, satellite photography, remote sensing, and computer vision.
+        The process of converting a continuous analog image into a digital format involves two crucial steps:
+    </p>
 
-    <!-- Advantages -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Advantages</h3>
-      <ul class="list-disc pl-6 mb-6 space-y-2">
-        <li>Provides nearly constant terminal voltage under light to medium load.</li>
-        <li>Stable operation within a certain load range.</li>
-        <li>Suitable for battery charging, lighting, and excitation purposes where steady voltage is required.</li>
-        <li>Simple voltage control by adjusting the field current.</li>
-      </ul>
-    </div>
+    <ol>
+        <li>
+            <b>Sampling:</b> It refers to selecting discrete points from the continuous image
+            to create a digital representation.
+        </li>
 
-    <!-- Disadvantages -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Disadvantages</h3>
-      <ul class="list-disc pl-6 space-y-2">
-        <li>Poor voltage regulation at high load current.</li>
-        <li>Stability decreases with decreasing load resistance.</li>
-        <li>Depends on residual magnetism for initial voltage build-up.</li>
-        <li>Breakdown point limitation: beyond a certain load current, the characteristic curve reverses.</li>
-      </ul>
-    </div>
+        <li>
+            <b>Quantization:</b> It involves mapping a range of intensity values to a limited
+            number of discrete levels, reducing the data required for storage and processing.
+        </li>
+    </ol>
 
-  </div>
+    <figure>
+        <img src="images/s&q.png" alt="Sampling and Quantization">
+        <figcaption>
+            Fig. 1 Visual representation of image sampling and quantization
+        </figcaption>
+    </figure>
+
+    <ul>
+        <li>
+            <b>Top row:</b> Shows how reducing the sampling rate (higher sampling factor)
+            affects image resolution. As the factor increases, image details are lost.
+        </li>
+
+        <li>
+            <b>Bottom row:</b> Displays the impact of reducing quantization levels (bit depth).
+            With fewer levels, the image becomes more posterized, losing smooth transitions in shades.
+        </li>
+    </ul>
+
+    <h2>Image Sampling</h2>
+
+    <p>
+        Sampling is the process of converting a continuous-tone image into a discrete form by
+        selecting a finite number of points, called pixels. The sampling process directly affects
+        the spatial resolution of the digital image.
+    </p>
+
+    <ol>
+        <li>
+            <b>Spatial Resolution and Sampling Rate</b><br>
+            Spatial resolution defines the number of pixels used to represent an image.
+            The sampling rate determines how frequently pixels are taken from the continuous image.
+            A higher sampling rate results in finer details and better quality, whereas a lower
+            sampling rate may lead to loss of critical image information.
+        </li>
+
+        <li>
+            <b>The Nyquist Sampling Theorem</b><br>
+            To accurately represent an image without introducing distortions, the Nyquist theorem
+            states that the sampling frequency should be at least twice the highest frequency present
+            in the image. If the sampling rate is too low, high-frequency components will be
+            misrepresented as lower frequencies, leading to aliasing artifacts.
+        </li>
+
+        <li>
+            <b>Aliasing and Its Effects</b><br>
+            Aliasing occurs when the sampling rate is insufficient to capture the high-frequency
+            details in an image, resulting in distortions such as Moiré patterns, jagged edges,
+            and loss of fine details.
+        </li>
+    </ol>
+
+    <figure>
+        <img src="images/sampling.png" alt="Image Sampling">
+        <figcaption>
+            Fig. 2 Generating a digital image (a) Continuous image (b) A scan line from A to B
+            in the continuous image, used to illustrate the concepts of sampling and quantization
+            (c) Sampling and Quantization (d) Digital scan line
+        </figcaption>
+    </figure>
+
+    <h2>Image Quantization</h2>
+
+    <p>
+        Quantization is the process of reducing the number of distinct intensity levels in an image,
+        converting a continuous range of values into a finite set.
+    </p>
+
+    <ol>
+        <li>
+            <b>Quantization Levels and Bit Depth</b><br>
+            The number of quantization levels defines how accurately pixel intensities are represented.
+            The bit depth of an image refers to the number of bits used to store the intensity of each pixel.
+        </li>
+
+        <li>
+            <b>Effects of Quantization</b>
+            <ul>
+                <li>
+                    Higher Quantization Levels → More accurate intensity representation,
+                    higher quality, but larger file size.
+                </li>
+
+                <li>
+                    Lower Quantization Levels → Reduces file size but can cause visual
+                    artifacts such as false contouring and loss of detail.
+                </li>
+            </ul>
+        </li>
+    </ol>
+
+    <figure>
+        <img src="images/continuos.jpg" alt="Continuous Image">
+        <figcaption>
+            Fig. 3 (a) Continuous image projected onto a sensor array
+            (b) Result of image sampling and quantization.
+        </figcaption>
+    </figure>
+
+    <h2>Applications of Image Sampling and Quantization</h2>
+
+    <ul>
+        <li>
+            Medical Imaging - Ensures accurate diagnosis while minimizing storage and processing requirements.
+        </li>
+
+        <li>
+            Image Compression - Used in JPEG and PNG formats to optimize storage without significant quality loss.
+        </li>
+
+        <li>
+            Computer Vision and AI - Properly sampled and quantized images improve object detection and machine learning accuracy.
+        </li>
+
+        <li>
+            Remote Sensing - Satellite images require high-resolution sampling for climate monitoring and urban planning.
+        </li>
+    </ul>
+
+    <h2>Conclusion</h2>
+
+    <p>
+        Image sampling and quantization are essential steps in digital image processing that impact
+        resolution, storage efficiency, and visual quality. Proper selection of sampling rates and
+        quantization levels ensures a balance between image fidelity and computational efficiency,
+        benefiting diverse fields such as medical imaging, AI, remote sensing, and digital media.
+    </p>
+
+</div>
 
 </section>
    <section id="progressreport" class="section-content vl-card mb-8 p-6 animate-fadeInUp hidden">
