@@ -726,7 +726,7 @@
       <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
         <div class="px-4 py-3" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
           <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
-            To study the Load Characteristics of DC shunt generator
+           Derivative-Based Edge Detection
           </h1>
         </div>
       </div>
@@ -734,112 +734,492 @@
       <!-- Theory Content -->
 <section class="section-content vl-card p-6 animate-fadeInUp">
 
-  <div class="space-y-8 text-gray-700 text-lg leading-relaxed">
+<style>
+  .lab-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 30px 35px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #222;
+    line-height: 1.7;
+    font-size: 16px;
+  }
 
-    <!-- Introduction -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Introduction</h3>
-      <p class="mb-6 text-justify">
-        A DC shunt generator is a type of self-excited DC generator in which the field winding is connected in parallel (shunt) with the armature winding. As a result, the field current remains almost constant (since it depends only on the terminal voltage). The yoke of a DC generator is made of cast iron because it provides high magnetic permeability, good mechanical strength, and serves as a low-reluctance path for the magnetic flux.
-      </p>
+  .lab-content h2 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f3c88;
+    margin: 30px 0 18px;
+    border-bottom: 3px solid #1f3c88;
+    padding-bottom: 8px;
+  }
 
-      <p class="mb-6 text-justify">
-        The performance of a DC shunt generator is described using load characteristics, which illustrate how the terminal voltage and load current change as the load varies.
-      </p>
+  .lab-content h3 {
+    font-size: 24px;
+    font-weight: 650;
+    color: #2c3e50;
+    margin: 28px 0 14px;
+  }
 
-      <p class="mb-6 text-justify">
-        In a shunt generator, the field winding is connected in parallel with the armature winding so that the terminal voltage of the generator is applied across it. The shunt field winding has many turns of fine wire having high resistance. Therefore, only a part of the armature current flows through the shunt field winding, and the rest flows through the load. Fig. 1 shows the connections of a shunt wound generator. The armature current I<sub>a</sub> splits into two parts — a small fraction I<sub>sh</sub> flowing through the shunt field winding, while the major part I<sub>L</sub> goes to the external load.
-      </p>
+  .lab-content h4 {
+    font-size: 20px;
+    font-weight: 650;
+    color: #34495e;
+    margin: 22px 0 10px;
+  }
 
-      <div class="flex justify-center mb-4">
-        <img src="./images/DCS-01.png" alt="Equivalent circuit of DC shunt generator for load characteristics" class="w-[500px] h-[250px] rounded-lg shadow-md">
-      </div>
-      <p class="text-center font-semibold text-gray-800">
-        <b>Fig. 1 Equivalent circuit of DC shunt generator for load characteristics</b>
-      </p>
-    </div>
+  .lab-content p {
+    font-size: 17px;
+    text-align: justify;
+    margin-bottom: 15px;
+  }
 
-    <!-- Losses -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Losses in a DC Shunt Generator</h3>
-      <p class="mb-6 text-justify">
-        In a DC shunt generator, various losses occur during operation, such as armature copper losses, shunt field copper losses, iron losses, and mechanical losses. Among these, armature copper losses constitute a significant portion of the total losses. The copper losses in the armature of a DC shunt generator are approximately 30% of the total full-load losses. These losses occur due to the resistance of the armature winding and increase with load current, thereby affecting the efficiency and voltage regulation of the generator.
-      </p>
-    </div>
+  .lab-content ul,
+  .lab-content ol {
+    font-size: 17px;
+    text-align: justify;
+    margin: 12px 0 20px 30px;
+  }
 
-    <!-- Types of Characteristics -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Types of Characteristics</h3>
-      <p class="mb-4">
-        There are two main characteristics of a DC shunt generator:
-      </p>
+  .lab-content li {
+    margin-bottom: 8px;
+  }
 
-      <h4 class="text-lg font-semibold mb-2 text-gray-800">1. Internal Characteristic</h4>
-      <p class="mb-6 text-justify">
-        The internal characteristic curve represents the relation between the generated voltage (E<sub>g</sub>) and the load current I<sub>L</sub>. When the generator is loaded, the generated voltage decreases due to armature reaction. Therefore, the generated voltage will be lower than the emf generated at no load. In Fig. 2, the AD curve shows the no-load voltage curve, and AB represents the internal characteristic curve.
-      </p>
+  .formula-box {
+    text-align: center;
+    margin: 22px 0;
+    font-size: 22px;
+    background: #f7f9fc;
+    border: 1px solid #dce3f0;
+    padding: 14px;
+    border-radius: 8px;
+  }
 
-      <h4 class="text-lg font-semibold mb-2 text-gray-800">2. External or Load Characteristic</h4>
-      <p class="mb-4 text-justify">
-        The external characteristic of a DC shunt generator represents the relationship between the terminal voltage (V) and the load current (I<sub>L</sub>) while the generator is supplying power. It shows how the terminal voltage varies with changes in the load.
-      </p>
+  .image-box {
+    text-align: center;
+    margin: 28px 0;
+  }
 
-      <p class="mb-4 text-justify">
-        This characteristic is typically represented by a V–I<sub>L</sub> graph. In Fig. 2, the AC curve represents the external characteristic of the DC shunt generator. Due to the ohmic drop in the armature resistance, the terminal voltage is lower than the generated voltage. Therefore, the external characteristic curve lies below the internal characteristic curve.
-      </p>
+  .image-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+  }
 
-      <div class="text-center text-lg font-mono my-6 bg-gray-100 p-4 rounded-lg">
-        V = (E<sub>g</sub> − I<sub>a</sub>R<sub>a</sub>) = E<sub>g</sub> − (I<sub>L</sub> + I<sub>sh</sub>)R<sub>a</sub>
-      </div>
+  .image-box figcaption {
+    font-size: 15px;
+    font-weight: 600;
+    color: #555;
+    margin-top: 8px;
+  }
 
-      <p class="mb-2"><strong>Where,</strong></p>
-      <ul class="list-disc pl-6 mb-6 space-y-1">
-        <li>V is the terminal voltage of the generator</li>
-        <li>E<sub>g</sub> is the generated emf in the armature</li>
-        <li>I<sub>a</sub> is armature current and R<sub>a</sub> is armature resistance</li>
-        <li>I<sub>sh</sub> is the current flowing through the shunt field winding</li>
-        <li>I<sub>L</sub> is the load current delivered to the external load</li>
-      </ul>
+  .matrix-row {
+    display: flex;
+    justify-content: center;
+    gap: 35px;
+    flex-wrap: wrap;
+    margin: 20px 0;
+  }
 
-      <div class="flex justify-center mb-4">
-        <img src="./images/DCS-02.png" alt="Load characteristics of DC shunt generator" class="w-[500px] h-[250px] rounded-lg shadow-md">
-      </div>
-      <p class="text-center font-semibold text-gray-800">
-        <b>Fig. 2 Characteristics of DC shunt generator</b>
-      </p>
-    </div>
+  .matrix-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+  }
 
-    <!-- Behaviour -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Behaviour of External Characteristics</h3>
-      <p class="mb-6 text-justify">
-        When the load resistance of a DC shunt generator decreases, the load current (I<sub>L</sub>) increases. However, this increase is limited only up to point C, known as the breakdown point. Beyond this point, a further decrease in load resistance causes a decrease in load current, and the external characteristic curve reverses (shown by the dotted line). Eventually, the terminal voltage may drop to zero except for a small value due to residual magnetism. The point at which the generator delivers maximum current is called the breakdown point.
-      </p>
-    </div>
+  .matrix-box table,
+  .comparison-table,
+  .pixel-table {
+    border-collapse: collapse;
+    text-align: center;
+  }
 
-    <!-- Advantages -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Advantages</h3>
-      <ul class="list-disc pl-6 mb-6 space-y-2">
-        <li>Provides nearly constant terminal voltage under light to medium load.</li>
-        <li>Stable operation within a certain load range.</li>
-        <li>Suitable for battery charging, lighting, and excitation purposes where steady voltage is required.</li>
-        <li>Simple voltage control by adjusting the field current.</li>
-      </ul>
-    </div>
+  .matrix-box td,
+  .pixel-table td {
+    width: 42px;
+    height: 42px;
+    border: 1px solid #555;
+    font-size: 16px;
+  }
 
-    <!-- Disadvantages -->
-    <div>
-      <h3 class="text-xl font-semibold mb-4 text-gray-800">Disadvantages</h3>
-      <ul class="list-disc pl-6 space-y-2">
-        <li>Poor voltage regulation at high load current.</li>
-        <li>Stability decreases with decreasing load resistance.</li>
-        <li>Depends on residual magnetism for initial voltage build-up.</li>
-        <li>Breakdown point limitation: beyond a certain load current, the characteristic curve reverses.</li>
-      </ul>
-    </div>
+  .comparison-table {
+    width: 100%;
+    margin: 25px 0;
+    font-size: 16px;
+  }
 
+  .comparison-table th {
+    background: #1f3c88;
+    color: white;
+    padding: 12px;
+    border: 1px solid #ddd;
+  }
+
+  .comparison-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+
+  .comparison-table tr:nth-child(even) {
+    background: #f8f9fa;
+  }
+
+  .main-footer {
+    margin-top: 35px;
+    padding: 15px;
+    background: #f4f6f8;
+    text-align: center;
+  }
+
+  .main-footer h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+  }
+</style>
+
+<section class="content lab-content">
+
+  <h2>Introduction</h2>
+
+  <p>
+    Image segmentation is the division of an image into regions or categories, which correspond to different objects or parts of objects.
+    Every pixel in an image is allocated to one of these categories.
+  </p>
+
+  <p>A good segmentation is typically one in which:</p>
+
+  <ul>
+    <li>Pixels in the same category have similar grey scale or multivariate values and form a connected region.</li>
+    <li>Neighboring pixels in different categories have dissimilar values.</li>
+  </ul>
+
+  <h3>Edge Based Image Segmentation</h3>
+
+  <p>
+    Edge-based segmentation is one of the most popular implementations of segmentation in image processing.
+    It focuses on identifying the edges of different objects in an image.
+    This is a crucial step because edges contain important information about object boundaries and features.
+  </p>
+
+  <p>
+    Edge detection helps remove unwanted and unnecessary information from the image.
+    It reduces the image size considerably, making it easier to analyse.
+    Edge-based algorithms identify edges according to differences in texture, contrast, grey level, colour, saturation, and other properties.
+  </p>
+
+  <h3>Gradient</h3>
+
+  <p>
+    In image processing, a gradient refers to the rate of change of intensity in an image.
+    It points in the direction of the greatest rate of increase of intensity, and its magnitude represents the strength of change.
+  </p>
+
+  <div class="formula-box">
+    ∇f(x, y) = [ ∂f/∂x , ∂f/∂y ]
   </div>
+
+  <p>Where:</p>
+
+  <ul>
+    <li><b>∂f/∂x:</b> Partial derivative in the horizontal direction.</li>
+    <li><b>∂f/∂y:</b> Partial derivative in the vertical direction.</li>
+  </ul>
+
+  <p>The magnitude of the gradient is given by:</p>
+
+  <div class="formula-box">
+    |∇f(x, y)| = √((∂f/∂x)² + (∂f/∂y)²)
+  </div>
+
+  <p>The direction of the gradient is:</p>
+
+  <div class="formula-box">
+    θ(x, y) = tan⁻¹((∂f/∂y) / (∂f/∂x))
+  </div>
+
+  <h3>Steps in Edge Detection</h3>
+
+  <ol>
+    <li>
+      <b>Filtering:</b> Filtering is used to reduce noise before edge detection.
+      More filtering reduces noise, but it can also reduce edge strength.
+    </li>
+    <li>
+      <b>Enhancement:</b> Enhancement highlights pixels where there is a significant change in local intensity.
+      This is usually done by computing gradient magnitude.
+    </li>
+    <li>
+      <b>Detection:</b> Detection selects only strong edge points.
+      Thresholding is commonly used to decide which points are actual edges.
+    </li>
+    <li>
+      <b>Localization:</b> Localization estimates the exact position and orientation of the edge.
+    </li>
+  </ol>
+
+  <h3>Edge Detectors</h3>
+
+  <ol>
+    <li>
+      First-order derivative
+      <ul>
+        <li>Roberts Operator</li>
+        <li>Sobel Operator</li>
+        <li>Prewitt Operator</li>
+      </ul>
+    </li>
+    <li>
+      Second-order derivative
+      <ul>
+        <li>Laplacian Operator</li>
+      </ul>
+    </li>
+    <li>Canny Edge Detector</li>
+    <li>Morphological Operations</li>
+  </ol>
+
+<div class="image-box">
+    <img src="images/img1.png" alt="Image">
+    <figcaption>Fig. 1 Edge detection result for medical image</figcaption>
+</div>
+
+  <h3>First Order Derivative Operators</h3>
+
+  <p>
+    First-order derivative operators are used to detect edges by measuring the rate of change in intensity.
+    These operators highlight regions with strong intensity contrast, which usually represent object boundaries.
+  </p>
+
+  <h4>1. Roberts Operator</h4>
+
+  <p>
+    The Roberts cross operator provides a simple approximation to the gradient magnitude.
+  </p>
+
+  <div class="formula-box">
+    G[f[i,j]] = |f[i,j] - f[i+1,j+1]| + |f[i+1,j] - f[i,j+1]|
+  </div>
+
+  <p>Using convolution masks:</p>
+
+  <div class="formula-box">
+    G[f[i,j]] = |Gx| + |Gy|
+  </div>
+
+  <div class="matrix-row">
+    <div class="matrix-box">
+      <span>Gx =</span>
+      <table>
+        <tr><td>1</td><td>0</td></tr>
+        <tr><td>0</td><td>-1</td></tr>
+      </table>
+    </div>
+
+    <div class="matrix-box">
+      <span>Gy =</span>
+      <table>
+        <tr><td>0</td><td>-1</td></tr>
+        <tr><td>1</td><td>0</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <p>
+    The Roberts operator is simple and fast, but it is sensitive to noise because it uses a small 2 × 2 mask.
+  </p>
+
+  <h4>2. Sobel Operator</h4>
+
+  <p>
+    The Sobel operator uses a 3 × 3 neighborhood to calculate the gradient.
+    It gives more importance to pixels near the center of the mask.
+  </p>
+
+  <div class="formula-box">
+    M = √(Sx² + Sy²)
+  </div>
+
+  <div class="matrix-row">
+    <div class="matrix-box">
+      <span>Sx =</span>
+      <table>
+        <tr><td>-1</td><td>0</td><td>1</td></tr>
+        <tr><td>-2</td><td>0</td><td>2</td></tr>
+        <tr><td>-1</td><td>0</td><td>1</td></tr>
+      </table>
+    </div>
+
+    <div class="matrix-box">
+      <span>Sy =</span>
+      <table>
+        <tr><td>1</td><td>2</td><td>1</td></tr>
+        <tr><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>-1</td><td>-2</td><td>-1</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <p>
+    The Sobel operator is one of the most commonly used edge detectors because it performs better than Roberts in noisy images.
+  </p>
+
+  <div class="image-box">
+    <table class="pixel-table" style="margin:auto;">
+      <tr><td>a<sub>0</sub></td><td>a<sub>1</sub></td><td>a<sub>2</sub></td></tr>
+      <tr><td>a<sub>7</sub></td><td>[i, j]</td><td>a<sub>3</sub></td></tr>
+      <tr><td>a<sub>6</sub></td><td>a<sub>5</sub></td><td>a<sub>4</sub></td></tr>
+    </table>
+    <figcaption>Fig. 2 Neighborhood pixels used in Sobel and Prewitt operators</figcaption>
+  </div>
+
+  <h4>3. Prewitt Operator</h4>
+
+  <p>
+    The Prewitt operator is similar to the Sobel operator, but it does not give extra weight to the center pixels.
+  </p>
+
+  <div class="matrix-row">
+    <div class="matrix-box">
+      <span>Sx =</span>
+      <table>
+        <tr><td>-1</td><td>0</td><td>1</td></tr>
+        <tr><td>-1</td><td>0</td><td>1</td></tr>
+        <tr><td>-1</td><td>0</td><td>1</td></tr>
+      </table>
+    </div>
+
+    <div class="matrix-box">
+      <span>Sy =</span>
+      <table>
+        <tr><td>1</td><td>1</td><td>1</td></tr>
+        <tr><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>-1</td><td>-1</td><td>-1</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <p>
+    Prewitt is simple and useful for detecting horizontal and vertical edges, but it is less noise-resistant than Sobel.
+  </p>
+
+  <h3>Second Order Derivative Operators</h3>
+
+  <p>
+    Second-order derivative operators detect edges by finding zero crossings in the second derivative of image intensity.
+    These operators are useful for identifying points where intensity changes sharply.
+  </p>
+
+  <h4>Laplacian Operator</h4>
+
+  <p>
+    The Laplacian is the two-dimensional equivalent of the second derivative.
+  </p>
+
+  <div class="formula-box">
+    ∇²f(x, y) = ∂²f/∂x² + ∂²f/∂y²
+  </div>
+
+  <div class="image-box">
+    <img src="images/img2.png" alt="Comparison of various edge detectors">
+    <figcaption>
+      Fig. 3 Comparison of various edge detectors: Original, Filtered, Roberts, Sobel and Prewitt results.
+    </figcaption>
+  </div>
+
+  <h3>Comparison of Edge Detectors</h3>
+
+  <table class="comparison-table">
+    <thead>
+      <tr>
+        <th>Edge Detector</th>
+        <th>Method</th>
+        <th>Advantages</th>
+        <th>Limitations</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <td>Roberts</td>
+        <td>Gradient Based</td>
+        <td>
+          <ol>
+            <li>Simple and fast computation.</li>
+            <li>Useful for sharp edges.</li>
+          </ol>
+        </td>
+        <td>
+          <ol>
+            <li>Highly sensitive to noise.</li>
+            <li>Less accurate for complex images.</li>
+          </ol>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Sobel</td>
+        <td>Gradient Based</td>
+        <td>
+          <ol>
+            <li>Better noise resistance than Roberts.</li>
+            <li>Detects horizontal and vertical edges effectively.</li>
+          </ol>
+        </td>
+        <td>
+          <ol>
+            <li>May produce thick edges.</li>
+            <li>Less accurate than Canny.</li>
+          </ol>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Prewitt</td>
+        <td>Gradient Based</td>
+        <td>
+          <ol>
+            <li>Simple implementation.</li>
+            <li>Good for basic edge detection.</li>
+          </ol>
+        </td>
+        <td>
+          <ol>
+            <li>Less noise-resistant than Sobel.</li>
+            <li>Not suitable for highly noisy images.</li>
+          </ol>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Canny</td>
+        <td>Gaussian Based</td>
+        <td>
+          <ol>
+            <li>Accurate edge detection.</li>
+            <li>Good noise reduction.</li>
+            <li>Produces thin and clear edges.</li>
+          </ol>
+        </td>
+        <td>
+          <ol>
+            <li>Slow compared to simple operators.</li>
+            <li>More complex implementation.</li>
+          </ol>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</section>
+
+<footer class="main-footer">
+  <h4>Lab contributed by IIT Roorkee</h4>
+</footer>
+        
 
 </section>
    <section id="progressreport" class="section-content vl-card mb-8 p-6 animate-fadeInUp hidden">
