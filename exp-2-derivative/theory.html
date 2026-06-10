@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Virtual Labs | Electrical Machines Lab - Theory</title>
+  <title>Virtual Labs | Image Processing Lab - Theory</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./alert-theme.css">
@@ -717,7 +717,9 @@
       <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
-        <a href="#" class="hover:text-blue-600">Electrical Machines Lab</a>
+        <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
+        <span>></span>
+        <a href="#" class="hover:text-blue-600">Derivative-Based Edge Detection</a>
         <span>></span>
         <span class="text-gray-800 font-medium">Theory</span>
       </nav>
@@ -731,228 +733,231 @@
         </div>
       </div>
 
-      <!-- Theory Content -->
-<section class="section-content vl-card p-6 animate-fadeInUp">
+<!-- Theory Content -->
+<section class="section-content vl-card animate-fadeInUp">
 
 <style>
-  .lab-content {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 30px 35px;
-    font-family: "Segoe UI", Arial, sans-serif;
-    color: #222;
-    line-height: 1.7;
-    font-size: 16px;
-  }
-
-  .lab-content h2 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #1f3c88;
-    margin: 30px 0 18px;
-    border-bottom: 3px solid #1f3c88;
-    padding-bottom: 8px;
-  }
-
-  .lab-content h3 {
-    font-size: 24px;
-    font-weight: 650;
-    color: #2c3e50;
-    margin: 28px 0 14px;
-  }
-
-  .lab-content h4 {
-    font-size: 20px;
-    font-weight: 650;
-    color: #34495e;
-    margin: 22px 0 10px;
-  }
-
-  .lab-content p {
-    font-size: 17px;
-    text-align: justify;
-    margin-bottom: 15px;
-  }
-
-  .lab-content ul,
-  .lab-content ol {
-    font-size: 17px;
-    text-align: justify;
-    margin: 12px 0 20px 30px;
-  }
-
-  .lab-content li {
-    margin-bottom: 8px;
-  }
-
-  .formula-box {
-    text-align: center;
-    margin: 22px 0;
-    font-size: 22px;
-    background: #f7f9fc;
-    border: 1px solid #dce3f0;
-    padding: 14px;
-    border-radius: 8px;
-  }
-
-  .image-box {
-    text-align: center;
-    margin: 28px 0;
-  }
-
-  .image-box img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-  }
-
-  .image-box figcaption {
-    font-size: 15px;
-    font-weight: 600;
-    color: #555;
-    margin-top: 8px;
-  }
-
-  .matrix-row {
-    display: flex;
-    justify-content: center;
-    gap: 35px;
-    flex-wrap: wrap;
-    margin: 20px 0;
-  }
-
-  .matrix-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 20px;
-  }
-
-  .matrix-box table,
-  .comparison-table,
-  .pixel-table {
-    border-collapse: collapse;
-    text-align: center;
-  }
-
-  .matrix-box td,
-  .pixel-table td {
-    width: 42px;
-    height: 42px;
-    border: 1px solid #555;
-    font-size: 16px;
-  }
-
-  .comparison-table {
+  .section-content {
     width: 100%;
-    margin: 25px 0;
-    font-size: 16px;
+    max-width: none;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
-  .comparison-table th {
-    background: #1f3c88;
-    color: rgb(20, 15, 15);
-    padding: 12px;
-    border: 1px solid #ddd;
-  }
-
-  .comparison-table td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    vertical-align: top;
-  }
-
-  .comparison-table tr:nth-child(even) {
-    background: #f8f9fa;
-  }
-
-  .main-footer {
-    margin-top: 35px;
-    padding: 15px;
-    background: #f4f6f8;
-    text-align: center;
-  }
-
-  .main-footer h4 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-  }
-</style>
-
-<style>
   .theory-section {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 25px 35px;
+    width: 100%;
+    max-width: none;
+    margin: 0 !important;
+    padding: 0 15px !important;
     font-family: Arial, Helvetica, sans-serif;
     color: #222;
-    line-height: 1.7;
-    font-size: 18px;
+    line-height: 1.8;
+    font-size: 1.1rem;
+    text-align: justify;
   }
 
   .theory-section h2 {
-    font-size: 32px;
-    margin: 25px 0 15px;
-    color: #222;
+    font-size: 2rem;
     font-weight: 700;
+    color: #222;
+    margin: 0 0 12px 0 !important;
+    padding: 0 !important;
+    text-align: left;
+    border: none;
   }
 
   .theory-section h3 {
-    font-size: 25px;
-    margin: 30px 0 12px;
-    color: #333;
+    font-size: 1.4rem;
     font-weight: 700;
+    color: #222;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+
+  .theory-section h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #222;
+    margin-top: 18px;
+    margin-bottom: 10px;
   }
 
   .theory-section p {
-    margin: 10px 0 16px;
+    font-size: 1.1rem;
+    margin: 8px 0 12px 0;
+    line-height: 1.8;
     text-align: justify;
+    color: #000;
   }
 
   .theory-section ul,
   .theory-section ol {
-    margin: 10px 0 20px 35px;
-    padding-left: 20px;
+    font-size: 1.1rem;
+    margin: 12px 0 20px 0 !important;
+    padding-left: 40px !important;
     text-align: justify;
   }
 
+  .theory-section ol {
+    list-style: decimal !important;
+    list-style-position: outside !important;
+  }
+
+  .theory-section ul {
+    list-style: disc !important;
+    list-style-position: outside !important;
+  }
+
   .theory-section li {
-    margin-bottom: 10px;
+    display: list-item !important;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    line-height: 1.8;
+    color: #000;
+    text-align: justify;
+  }
+
+  .theory-section b {
+    font-weight: 700;
+    color: #000;
   }
 
   .formula-box {
     text-align: center;
-    margin: 20px 0;
-    font-size: 22px;
+    margin: 14px auto;
+    font-size: 1.25rem;
+    background: #f7f9fc;
+    border: 1px solid #dce3f0;
+    padding: 14px 10px;
+    border-radius: 6px;
     overflow-x: auto;
+    overflow-y: visible;
+    color: #000;
+  }
+
+  .math-formula {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 1.35rem;
+    line-height: 1.4;
+    overflow: visible;
+  }
+
+  .math-frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1.1;
+    margin: 0 3px;
+  }
+
+  .math-frac .num {
+    border-bottom: 1.8px solid #000;
+    padding: 0 5px 3px 5px;
+  }
+
+  .math-frac .den {
+    padding: 3px 5px 0 5px;
+  }
+
+  .square-group {
+    display: inline-flex;
+    align-items: flex-start;
+    overflow: visible;
+  }
+
+  .square-group sup {
+    font-size: 0.65em;
+    position: relative;
+    top: -5px;
+    margin-left: 2px;
+  }
+
+  .sqrt-formula {
+    display: inline-flex;
+    align-items: flex-start;
+    vertical-align: middle;
+    overflow: visible;
+  }
+
+  .sqrt-sign {
+    font-size: 48px;
+    line-height: 1;
+    margin-top: 7px;
+    margin-right: 2px;
+    color: #000;
+  }
+
+  .sqrt-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border-top: 2px solid #000;
+    padding: 14px 8px 0 8px;
+    overflow: visible;
+  }
+
+  .big-round {
+    font-size: 80px;
+    line-height: 0.75;
+    display: inline-block;
+    vertical-align: middle;
+    font-weight: 300;
+    color: #000;
+  }
+
+  .vector-box {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .vector-box::before {
+    content: "[";
+    font-size: 52px;
+    line-height: 1;
+    margin-right: 5px;
+  }
+
+  .vector-box::after {
+    content: "]";
+    font-size: 52px;
+    line-height: 1;
+    margin-left: 5px;
   }
 
   .image-box {
     text-align: center;
-    margin: 25px 0;
+    margin: 20px 0;
   }
 
   .image-box img {
     max-width: 100%;
     height: auto;
     display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 6px;
   }
 
   .image-box figcaption {
-    font-weight: bold;
-    font-size: 16px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000;
     margin-top: 8px;
+    text-align: center;
   }
 
   .mask-row {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    gap: 35px;
+    gap: 30px;
     flex-wrap: wrap;
-    margin: 20px 0;
+    margin: 18px 0;
   }
 
   .mask-box {
@@ -962,13 +967,14 @@
   }
 
   .mask-label {
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #000;
   }
 
   .theory-section table {
     border-collapse: collapse;
-    margin: 15px auto;
+    margin: 12px auto;
     text-align: center;
   }
 
@@ -977,26 +983,45 @@
     border: 1px solid #333;
     padding: 8px 12px;
     vertical-align: middle;
+    color: #000;
   }
 
   .small-mask td {
     width: 38px;
     height: 38px;
+    font-size: 1rem;
   }
 
   .comparison-table {
     width: 100%;
     max-width: 950px;
+    margin: 18px auto;
+    font-size: 1rem;
+    border-collapse: collapse;
   }
 
   .comparison-table th {
     background-color: #f2f2f2;
-    font-weight: bold;
+    color: #000;
+    font-weight: 700;
+    padding: 10px;
+    border: 1px solid #333;
+  }
+
+  .comparison-table td {
+    padding: 10px;
+    border: 1px solid #333;
+    vertical-align: top;
+    text-align: left;
+  }
+
+  .comparison-table tr:nth-child(even) {
+    background: #f8f9fa;
   }
 
   .comparison-table ol {
-    margin: 0;
-    padding-left: 18px;
+    margin: 0 !important;
+    padding-left: 20px !important;
     text-align: left;
   }
 </style>
@@ -1013,8 +1038,8 @@
   <p>A good segmentation is typically one in which:</p>
 
   <ul>
-    <li>pixels in the same category have similar grey scale of multivariate values and form a connected region,</li>
-    <li>neighboring pixels which are in different categories have dissimilar values.</li>
+    <li>Pixels in the same category have similar grey scale or multivariate values and form a connected region.</li>
+    <li>Neighboring pixels which are in different categories have dissimilar values.</li>
   </ul>
 
   <h3>Edge Based Image Segmentation</h3>
@@ -1042,35 +1067,107 @@
 
   <p>
     In image processing, a gradient refers to the directional change in the intensity or color in an image.
-    Mathematically, the gradient of an image function f(x, y) is a vector that points in the direction of the greatest rate of increase off, and whose magnitude is the rate of change in that direction:
+    Mathematically, the gradient of an image function f(x, y) is a vector that points in the direction of the greatest rate of increase of f, and whose magnitude is the rate of change in that direction:
   </p>
 
   <div class="formula-box">
-    ∇f(x, y) = [ ∂f/∂x , ∂f/∂y ]
+    <div class="math-formula">
+      <span>∇f(x, y) =</span>
+
+      <span class="vector-box">
+        <span class="math-frac">
+          <span class="num">∂f</span>
+          <span class="den">∂x</span>
+        </span>
+
+        <span>,</span>
+
+        <span class="math-frac">
+          <span class="num">∂f</span>
+          <span class="den">∂y</span>
+        </span>
+      </span>
+    </div>
   </div>
 
   <p>Where:</p>
 
   <ul>
-    <li>∂f/∂x: the partial derivative in the horizontal direction (gradient in x-direction)</li>
-    <li>∂f/∂y: the partial derivative in the vertical direction (gradient in y-direction)</li>
+    <li>
+      <b>∂f/∂x:</b> The partial derivative in the horizontal direction, also called gradient in x-direction.
+    </li>
+    <li>
+      <b>∂f/∂y:</b> The partial derivative in the vertical direction, also called gradient in y-direction.
+    </li>
   </ul>
 
   <p>The magnitude of the gradient is given by:</p>
 
   <div class="formula-box">
-    |∇f(x, y)| = √((∂f/∂x)<sup>2</sup> + (∂f/∂y)<sup>2</sup>)
+    <div class="math-formula">
+      <span>|∇f(x, y)| =</span>
+
+      <span class="sqrt-formula">
+        <span class="sqrt-sign">√</span>
+
+        <span class="sqrt-inner">
+          <span class="big-round">(</span>
+
+          <span class="square-group">
+            <span class="math-frac">
+              <span class="num">∂f</span>
+              <span class="den">∂x</span>
+            </span>
+            <sup>2</sup>
+          </span>
+
+          <span>+</span>
+
+          <span class="square-group">
+            <span class="math-frac">
+              <span class="num">∂f</span>
+              <span class="den">∂y</span>
+            </span>
+            <sup>2</sup>
+          </span>
+
+          <span class="big-round">)</span>
+        </span>
+      </span>
+    </div>
   </div>
 
-  <p>And the direction (angle) of the gradient is:</p>
+  <p>And the direction angle of the gradient is:</p>
 
   <div class="formula-box">
-    θ(x, y) = tan<sup>-1</sup>((∂f/∂y) / (∂f/∂x))
+    <div class="math-formula">
+      <span>θ(x, y) = tan<sup>-1</sup></span>
+
+      <span class="big-round">(</span>
+
+      <span class="math-frac">
+        <span class="num">
+          <span class="math-frac">
+            <span class="num">∂f</span>
+            <span class="den">∂y</span>
+          </span>
+        </span>
+
+        <span class="den">
+          <span class="math-frac">
+            <span class="num">∂f</span>
+            <span class="den">∂x</span>
+          </span>
+        </span>
+      </span>
+
+      <span class="big-round">)</span>
+    </div>
   </div>
 
   <h3>Steps in Edge Detection</h3>
 
-  <p>Algorithms for edge detection contain three steps:</p>
+  <p>Algorithms for edge detection contain the following steps:</p>
 
   <ol>
     <li>
@@ -1094,7 +1191,6 @@
       Therefore, some method should be used to determine which points are edge points.
       Frequently, thresholding provides the criterion used for detection.
       Examples at the end of this section will clearly illustrate each of these steps using various edge detectors.
-      Many edge detection algorithms include a fourth step:
     </li>
 
     <li>
@@ -1108,7 +1204,7 @@
 
   <ol>
     <li>
-      First-order derivative
+      <b>First-order derivative</b>
       <ul>
         <li>Robert</li>
         <li>Sobel</li>
@@ -1117,458 +1213,266 @@
     </li>
 
     <li>
-      Second-order derivative
+      <b>Second-order derivative</b>
       <ul>
         <li>Laplacian</li>
       </ul>
     </li>
 
-    <li>Canny</li>
-    <li>Morphological operations</li>
+    <li><b>Canny</b></li>
+
+    <li><b>Morphological operations</b></li>
   </ol>
 
   <figure class="image-box">
     <img src="images/img1.png" alt="Edge detection result for medical image">
-    <figcaption>Fig. 1 Edge detection result for medical</figcaption>
+    <figcaption>Fig. 1 Edge Detection Result for Medical Image</figcaption>
   </figure>
 
-  <ol>
+  <h3>1. First Order Derivative Operators</h3>
+
+  <p>
+    First order derivative operators are used in image processing to detect edges by measuring the rate of change in intensity.
+    These operators highlight regions with strong intensity contrast, which typically correspond to object boundaries.
+    The most commonly used first-order derivative operators include:
+  </p>
+
+  <ol type="a">
     <li>
-      <h3>First Order Derivative Operators</h3>
+      <b>Robert Operator</b>
 
-      <p>
-        First order derivative operators are used in image processing to detect edges by measuring the rate of change in intensity.
-        These operators highlight regions with strong intensity contrast, which typically correspond to object boundaries.
-        The most commonly used first-order derivative operators include:
-      </p>
-
-      <ol type="a">
-        <li>
-          <b>Robert Operator</b>
-
-          <p>
-            The Roberts cross operator provides a simple approximation to the gradient magnitude:
-          </p>
-
-          <div class="formula-box">
-            G[f[i, j]] = |f[i, j] - f[i + 1, j + 1]| + |f[i + 1, j] - f[i, j + 1]|
-          </div>
-
-          <p>Using convolution masks, this becomes</p>
-
-          <div class="formula-box">
-            G[f[i, j]] = |G<sub>x</sub>| + |G<sub>y</sub>|
-          </div>
-
-          <p>where G<sub>x</sub> and G<sub>y</sub> are calculated using the following masks:</p>
-
-          <div class="mask-row">
-            <div class="mask-box">
-              <span class="mask-label">G<sub>x</sub> =</span>
-              <table class="small-mask">
-                <tr>
-                  <td>1</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <td>0</td>
-                  <td>-1</td>
-                </tr>
-              </table>
-            </div>
-
-            <div class="mask-box">
-              <span class="mask-label">G<sub>y</sub> =</span>
-              <table class="small-mask">
-                <tr>
-                  <td>0</td>
-                  <td>-1</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>0</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-
-          <p>
-            As with the previous 2 x 2 gradient operator, the differences are computed at the interpolated point [i + 1/2, j + 1/2].
-            The Roberts operator is an approximation to the continuous gradient at that point and not at the point [i,j] as might be expected.
-            The results of Roberts edge detector are shown in the figures at the end of this section.
-          </p>
-        </li>
-
-        <li>
-          <b>Sobel Operator</b>
-
-          <p>
-            As mentioned previously, a way to avoid having the gradient calculated about an interpolated point between pixels is to use a 3 x 3 neighborhood for the gradient calculations.
-            Consider the arrangement of pixels about the pixel [i,j] shown in Figure 1.
-            The Sobel operator is the magnitude of the gradient computed by
-          </p>
-
-          <div class="formula-box">
-            M = √(S<sub>x</sub><sup>2</sup> + S<sub>y</sub><sup>2</sup>)
-          </div>
-
-          <p>where the partial derivatives are computed by</p>
-
-          <div class="formula-box">
-            S<sub>x</sub> = (a<sub>2</sub> + ca<sub>3</sub> + a<sub>4</sub>) − (a<sub>0</sub> + ca<sub>7</sub> + a<sub>6</sub>)
-          </div>
-
-          <div class="formula-box">
-            S<sub>y</sub> = (a<sub>0</sub> + ca<sub>1</sub> + a<sub>2</sub>) − (a<sub>6</sub> + ca<sub>5</sub> + a<sub>4</sub>)
-          </div>
-
-          <p>
-            with the constant c = 2.
-            Like the other gradient operators, s<sub>x</sub> and s<sub>y</sub> can be implemented using convolution masks:
-          </p>
-
-          <div class="mask-row">
-            <div class="mask-box">
-              <span class="mask-label">S<sub>x</sub> =</span>
-              <table class="small-mask">
-                <tr>
-                  <td>-1</td>
-                  <td>0</td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <td>-2</td>
-                  <td>0</td>
-                  <td>2</td>
-                </tr>
-                <tr>
-                  <td>-1</td>
-                  <td>0</td>
-                  <td>1</td>
-                </tr>
-              </table>
-            </div>
-
-            <div class="mask-box">
-              <span class="mask-label">S<sub>y</sub> =</span>
-              <table class="small-mask">
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <td>-1</td>
-                  <td>-2</td>
-                  <td>-1</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-
-          <p>
-            Note that this operator places an emphasis on pixels that are closer to the center of the mask.
-            The figures at the end of this section show the performance of this operator.
-            The Sobel operator is one of the most commonly used edge detectors.
-          </p>
-
-          <figure class="image-box">
-            <table class="small-mask">
-              <tr>
-                <td>a<sub>0</sub></td>
-                <td>a<sub>1</sub></td>
-                <td>a<sub>2</sub></td>
-              </tr>
-              <tr>
-                <td>a<sub>7</sub></td>
-                <td>[i, j]</td>
-                <td>a<sub>3</sub></td>
-              </tr>
-              <tr>
-                <td>a<sub>6</sub></td>
-                <td>a<sub>5</sub></td>
-                <td>a<sub>4</sub></td>
-              </tr>
-            </table>
-
-            <figcaption>
-              Fig. 2 The labeling of neighborhood pixels used to explain the Sobel and Prewitt operators
-            </figcaption>
-          </figure>
-        </li>
-
-        <li>
-          <b>Prewitt Operator</b>
-
-          <p>
-            The Prewitt operator uses the same equations as the Sobel operator, except that the constant c = 1.
-            Therefore:
-          </p>
-
-          <div class="mask-row">
-            <div class="mask-box">
-              <span class="mask-label">S<sub>x</sub> =</span>
-              <table class="small-mask">
-                <tr>
-                  <td>-1</td>
-                  <td>0</td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <td>-1</td>
-                  <td>0</td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <td>-1</td>
-                  <td>0</td>
-                  <td>1</td>
-                </tr>
-              </table>
-            </div>
-
-            <div class="mask-box">
-              <span class="mask-label">S<sub>y</sub> =</span>
-              <table class="small-mask">
-                <tr>
-                  <td>1</td>
-                  <td>1</td>
-                  <td>1</td>
-                </tr>
-                <tr>
-                  <td>0</td>
-                  <td>0</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <td>-1</td>
-                  <td>-1</td>
-                  <td>-1</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-
-          <p>
-            Note that, unlike the Sobel operator, this operator does not place any emphasis on pixels that are closer to the center of the masks.
-            The performance of this edge detector is also shown in the figures at the end of this section.
-          </p>
-        </li>
-      </ol>
-    </li>
-
-    <li>
-      <h3>Second Order Derivative Operators</h3>
-
-      <p>
-        The edge detectors discussed earlier computed the first derivative and, if it was above a threshold, the presence of an edge point was assumed.
-        This results in detection of too many edge points.
-        A better approach would be to find only the points that have local maxima in gradient values and consider them edge points.
-        This means that at edge points, there will be a peak in the first derivative and, equivalently, there will be a zero crossing in the second derivative.
-        Thus, edge points may be detected by finding the zero crossings of the second derivative of the image intensity.
-        There are two operators in two dimensions that correspond to the second derivative: the Laplacian and second directional derivative.
-      </p>
-
-      <ol type="a">
-        <li>
-          <b>Laplacian Operator</b>
-
-          <p>
-            The second derivative of a smoothed step edge is a function that crosses zero at the location of the edge.
-            The Laplacian is the two-dimensional equivalent of the second derivative.
-            The formula for the Laplacian of a function f (x, y) is
-          </p>
-
-          <div class="formula-box">
-            ∇<sup>2</sup>f(x, y) = ∂<sup>2</sup>f/∂x<sup>2</sup> + ∂<sup>2</sup>f/∂y<sup>2</sup>
-          </div>
-
-          <figure class="image-box">
-            <img src="images/img2.png" alt="Comparison of various edge detectors">
-            <figcaption>
-              Fig. 3 A comparison of various edge detectors. (a) Original image. (b) Filtered image.
-              (c) Simple gradient using 1 x 2 and 2 x 1 masks, T = 32.
-              (d) Gradient using 2 x 2 masks, T = 64.
-              (e) Roberts cross operator, T = 64.
-              (f) Sobel operator, T = 225.
-              (g) Prewitt operator,T = 225.
-            </figcaption>
-          </figure>
-        </li>
-      </ol>
-    </li>
-
-    <li>
-      <h3>Canny Edge Detector</h3>
-
-      <p>
-        The Canny edge detector is the first derivative of a Gaussian and closely approximates the operator that optimizes the product of signal-to-noise ratio and localization.
-        The Canny edge detection algorithm is summarized by the following notation.
-        Let I[i, j] denote the image.
-        The result from convolving the image with a Gaussian smoothing filter using separable filtering is an array of smoothed data,
-      </p>
+      <p>The Roberts cross operator provides a simple approximation to the gradient magnitude:</p>
 
       <div class="formula-box">
-        S[i, j] = G[i, j; σ] ∗ I[i, j]
+        G[f[i, j]] = |f[i, j] - f[i + 1, j + 1]| + |f[i + 1, j] - f[i, j + 1]|
+      </div>
+
+      <p>Using convolution masks, this becomes:</p>
+
+      <div class="formula-box">
+        G[f[i, j]] = |G<sub>x</sub>| + |G<sub>y</sub>|
+      </div>
+
+      <p>Where G<sub>x</sub> and G<sub>y</sub> are calculated using the following masks:</p>
+
+      <div class="mask-row">
+        <div class="mask-box">
+          <span class="mask-label">G<sub>x</sub> =</span>
+          <table class="small-mask">
+            <tr>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0</td>
+              <td>-1</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="mask-box">
+          <span class="mask-label">G<sub>y</sub> =</span>
+          <table class="small-mask">
+            <tr>
+              <td>0</td>
+              <td>-1</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0</td>
+            </tr>
+          </table>
+        </div>
       </div>
 
       <p>
-        where σ is the spread of the Gaussian and controls the degree of smoothing.
-        The gradient of the smoothed array S[i, j] can be computed using the 2 x 2 first-difference approximations to produce two arrays P[i,j] and Q[i, j] for the x and y partial derivatives:
-      </p>
-
-      <div class="formula-box">
-        P[i, j] ≈ (S[i, j + 1] - S[i, j] + S[i + 1, j + 1] - S[i + 1, j]) / 2
-      </div>
-
-      <div class="formula-box">
-        Q[i, j] ≈ (S[i, j] - S[i + 1, j] + S[i, j + 1] - S[i + 1, j + 1]) / 2
-      </div>
-
-      <p>
-        The finite differences are averaged over the 2 x 2 square so that the x and y partial derivatives are computed at the same point in the image.
-        The magnitude and orientation of the gradient can be computed from the standard formulas for rectangular-to-polar conversion:
-      </p>
-
-      <div class="formula-box">
-        M[i, j] = √(P[i, j]<sup>2</sup> + Q[i, j]<sup>2</sup>)
-      </div>
-
-      <div class="formula-box">
-        θ[i, j] = arctan(Q[i, j], P[i, j])
-      </div>
-
-      <p>
-        where the arctan function takes two arguments and generates an angle over the entire circle of possible directions.
-        These functions must be computed efficiently, preferably without using floating-point arithmetic.
-        It is possible to compute the gradient magnitude and orientation from the partial derivatives by table lookup.
-        The arctangent can be computed using mostly fixed-point arithmetic with a few essential floating-point calculations performed in software using integer and fixed-point arithmetic.
+        As with the previous 2 x 2 gradient operator, the differences are computed at the interpolated point [i + 1/2, j + 1/2].
+        The Roberts operator is an approximation to the continuous gradient at that point and not at the point [i, j] as might be expected.
+        The results of Roberts edge detector are shown in the figures at the end of this section.
       </p>
     </li>
 
     <li>
-      <h3>Morphological Operations</h3>
+      <b>Sobel Operator</b>
 
       <p>
-        Morphological transformations are some simple operations based on the image shape.
-        It is normally performed on binary images.
-        It needs two inputs, one is our original image, second one is called structuring element or kernel which decides the nature of operation.
-        Two basic morphological operators are Erosion and Dilation.
-        Then its variant forms like Opening, Closing, Gradient etc also comes into play.
+        As mentioned previously, a way to avoid having the gradient calculated about an interpolated point between pixels is to use a 3 x 3 neighborhood for the gradient calculations.
+        Consider the arrangement of pixels about the pixel [i, j] shown in Figure 2.
+        The Sobel operator is the magnitude of the gradient computed by:
       </p>
 
-      <ol type="a">
-        <li>
-          <b>Erosion</b>
+      <div class="formula-box">
+        <div class="math-formula">
+          <span>M =</span>
 
-          <p>
-            Erosion is a fundamental morphological operation that functions similarly to the natural process of soil erosion — it gradually erodes the boundaries of the foreground object.
-            Typically, the foreground is represented in white (pixel value = 1), and the background in black (pixel value = 0).
-          </p>
+          <span class="sqrt-formula">
+            <span class="sqrt-sign">√</span>
 
-          <p>
-            During erosion, a structuring element (or kernel) is slid over the image, much like in 2D convolution.
-            For a pixel in the output image to be set to 1, all pixels under the kernel in the original image must also be 1.
-            If even one pixel under the kernel is 0, the output pixel is set to 0.
-          </p>
+            <span class="sqrt-inner">
+              <span>S<sub>x</sub><sup>2</sup></span>
+              <span>+</span>
+              <span>S<sub>y</sub><sup>2</sup></span>
+            </span>
+          </span>
+        </div>
+      </div>
 
-          <p>
-            As a result, pixels at the boundaries of white regions are removed, causing the white foreground areas to shrink.
-            The extent of erosion depends on the size and shape of the structuring element.
-          </p>
+      <p>Where the partial derivatives are computed by:</p>
 
-          <figure class="image-box">
-            <img src="images/erosion.png" alt="Example of Erosion">
-            <figcaption>Fig. 4 Example of Erosion</figcaption>
-          </figure>
+      <div class="formula-box">
+        S<sub>x</sub> = (a<sub>2</sub> + ca<sub>3</sub> + a<sub>4</sub>) − (a<sub>0</sub> + ca<sub>7</sub> + a<sub>6</sub>)
+      </div>
 
-          <p><b>Effects of Erosion:</b></p>
+      <div class="formula-box">
+        S<sub>y</sub> = (a<sub>0</sub> + ca<sub>1</sub> + a<sub>2</sub>) − (a<sub>6</sub> + ca<sub>5</sub> + a<sub>4</sub>)
+      </div>
 
-          <ul>
-            <li>Removes small white noise</li>
-            <li>Separates objects that are connected</li>
-            <li>Reduces thickness of foreground objects</li>
-          </ul>
-        </li>
+      <p>
+        With the constant c = 2.
+        Like the other gradient operators, S<sub>x</sub> and S<sub>y</sub> can be implemented using convolution masks:
+      </p>
 
-        <li>
-          <b>Dilation</b>
+      <div class="mask-row">
+        <div class="mask-box">
+          <span class="mask-label">S<sub>x</sub> =</span>
+          <table class="small-mask">
+            <tr><td>-1</td><td>0</td><td>1</td></tr>
+            <tr><td>-2</td><td>0</td><td>2</td></tr>
+            <tr><td>-1</td><td>0</td><td>1</td></tr>
+          </table>
+        </div>
 
-          <p>
-            Dilation is the morphological operation that performs the inverse of erosion.
-            While erosion reduces the boundaries of foreground objects, dilation expands them.
-          </p>
+        <div class="mask-box">
+          <span class="mask-label">S<sub>y</sub> =</span>
+          <table class="small-mask">
+            <tr><td>1</td><td>2</td><td>1</td></tr>
+            <tr><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>-1</td><td>-2</td><td>-1</td></tr>
+          </table>
+        </div>
+      </div>
 
-          <p>
-            In dilation, a structuring element kernel slides over the binary image.
-            For each position of the kernel, the corresponding pixel in the output image is set to 1 white if at least one pixel under the kernel in the input image is 1.
-            In other words, if any part of the kernel overlaps with a white pixel in the original image, the output pixel is set to white.
-          </p>
+      <p>
+        Note that this operator places an emphasis on pixels that are closer to the center of the mask.
+        The figures at the end of this section show the performance of this operator.
+        The Sobel operator is one of the most commonly used edge detectors.
+      </p>
 
-          <p>
-            This process increases the size of the foreground objects white regions, causing them to grow outward by a margin defined by the structuring element.
-          </p>
+      <figure class="image-box">
+        <table class="small-mask">
+          <tr><td>a<sub>0</sub></td><td>a<sub>1</sub></td><td>a<sub>2</sub></td></tr>
+          <tr><td>a<sub>7</sub></td><td>[i,j]</td><td>a<sub>3</sub></td></tr>
+          <tr><td>a<sub>6</sub></td><td>a<sub>5</sub></td><td>a<sub>4</sub></td></tr>
+        </table>
 
-          <figure class="image-box">
-            <img src="images/dilation.png" alt="Example of Dilation">
-            <figcaption>Fig. 5 Example of Dilation</figcaption>
-          </figure>
+        <figcaption>
+          Fig. 2 The Labeling of Neighborhood Pixels Used to Explain the Sobel and Prewitt Operators
+        </figcaption>
+      </figure>
+    </li>
 
-          <p><b>Effects of Dilation:</b></p>
+    <li>
+      <b>Prewitt Operator</b>
 
-          <ul>
-            <li>Expands object boundaries, filling small holes and gaps</li>
-            <li>Useful after erosion to restore object size a sequence called opening</li>
-            <li>Bridges small breaks or connects disjoint parts of objects</li>
-            <li>Fills in gaps in object contours or outlines</li>
-          </ul>
-        </li>
+      <p>
+        The Prewitt operator uses the same equations as the Sobel operator, except that the constant c = 1.
+        Therefore:
+      </p>
 
-        <li>
-          <b>Opening</b>
+      <div class="mask-row">
+        <div class="mask-box">
+          <span class="mask-label">S<sub>x</sub> =</span>
+          <table class="small-mask">
+            <tr><td>-1</td><td>0</td><td>1</td></tr>
+            <tr><td>-1</td><td>0</td><td>1</td></tr>
+            <tr><td>-1</td><td>0</td><td>1</td></tr>
+          </table>
+        </div>
 
-          <p>
-            Opening is a fundamental morphological operation in image processing, defined as an erosion followed by dilation, using the same structuring element for both steps.
-            It is primarily used to remove small objects or noise from an image while preserving the shape and size of larger foreground objects.
-          </p>
+        <div class="mask-box">
+          <span class="mask-label">S<sub>y</sub> =</span>
+          <table class="small-mask">
+            <tr><td>1</td><td>1</td><td>1</td></tr>
+            <tr><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>-1</td><td>-1</td><td>-1</td></tr>
+          </table>
+        </div>
+      </div>
 
-          <p><b>Effects of Opening:</b></p>
-
-          <ul>
-            <li>Removing salt-and-pepper noise from binary images.</li>
-            <li>Eliminating small unwanted objects e.g., speckles, dots.</li>
-            <li>Separating weakly connected components.</li>
-            <li>Cleaning up scanned documents, microscopy images, etc.</li>
-            <li>Preprocessing step for shape analysis and feature extraction.</li>
-          </ul>
-        </li>
-
-        <li>
-          <b>Closing</b>
-
-          <p>
-            Closing is a fundamental morphological operation that is essentially the reverse of Opening.
-            It is performed by applying Dilation followed by Erosion on a binary image.
-            While Opening focuses on removing small objects and shrinking the foreground, Closing works to fill small holes or gaps in the foreground objects, and it is particularly useful for removing small black points within or around the objects.
-          </p>
-
-          <p><b>Effects of Closing:</b></p>
-
-          <ul>
-            <li>Closing small holes or gaps inside the foreground objects, making them more solid and continuous.</li>
-            <li>Eliminating small black noise points often referred to as salt noise that are scattered on or near the objects.</li>
-            <li>Smoothening object contours by closing small imperfections while preserving the general shape of the objects.</li>
-            <li>Joining broken parts of an object, making them appear as a single connected structure.</li>
-          </ul>
-        </li>
-      </ol>
+      <p>
+        Note that, unlike the Sobel operator, this operator does not place any emphasis on pixels that are closer to the center of the masks.
+        The performance of this edge detector is also shown in the figures at the end of this section.
+      </p>
     </li>
   </ol>
+
+  <h3>2. Second Order Derivative Operators</h3>
+
+  <p>
+    The edge detectors discussed earlier computed the first derivative and, if it was above a threshold, the presence of an edge point was assumed.
+    This results in detection of too many edge points.
+    A better approach would be to find only the points that have local maxima in gradient values and consider them edge points.
+    This means that at edge points, there will be a peak in the first derivative and, equivalently, there will be a zero crossing in the second derivative.
+    Thus, edge points may be detected by finding the zero crossings of the second derivative of the image intensity.
+    There are two operators in two dimensions that correspond to the second derivative: the Laplacian and second directional derivative.
+  </p>
+
+  <ol type="a">
+    <li>
+      <b>Laplacian Operator</b>
+
+      <p>
+        The second derivative of a smoothed step edge is a function that crosses zero at the location of the edge.
+        The Laplacian is the two-dimensional equivalent of the second derivative.
+        The formula for the Laplacian of a function f(x, y) is:
+      </p>
+
+      <div class="formula-box">
+        <div class="math-formula">
+          <span>∇<sup>2</sup>f(x, y) =</span>
+
+          <span class="math-frac">
+            <span class="num">∂<sup>2</sup>f</span>
+            <span class="den">∂x<sup>2</sup></span>
+          </span>
+
+          <span>+</span>
+
+          <span class="math-frac">
+            <span class="num">∂<sup>2</sup>f</span>
+            <span class="den">∂y<sup>2</sup></span>
+          </span>
+        </div>
+      </div>
+
+      <figure class="image-box">
+        <img src="images/img2.png" alt="Comparison of various edge detectors">
+        <figcaption>
+          Fig. 3 A Comparison of Various Edge Detectors. (a) Original Image. (b) Filtered Image.
+          (c) Simple Gradient Using 1 x 2 and 2 x 1 Masks, T = 32.
+          (d) Gradient Using 2 x 2 Masks, T = 64.
+          (e) Roberts Cross Operator, T = 64.
+          (f) Sobel Operator, T = 225.
+          (g) Prewitt Operator, T = 225.
+        </figcaption>
+      </figure>
+    </li>
+  </ol>
+
+  <h3>3. Canny Edge Detector</h3>
+
+  <p>
+    Canny edge detector is a Gaussian-based edge detection method.
+    It is more accurate than simple gradient-based methods because it reduces noise before detecting edges.
+    It uses smoothing, gradient calculation, non-maximum suppression, and thresholding to detect strong and weak edges.
+  </p>
+
+  <h3>4. Morphological Operations</h3>
+
+  <p>
+    Morphological operations are image processing techniques based on the shape and structure of objects in an image.
+    These operations are commonly used for extracting boundaries, removing small noise, filling gaps, and improving the detected edges.
+  </p>
 
   <h3>Comparison of Edge Detectors</h3>
 
@@ -1584,7 +1488,7 @@
 
     <tbody>
       <tr>
-        <td>Roberts</td>
+        <td><b>Roberts</b></td>
         <td>Gradient Based</td>
         <td>
           <ol>
@@ -1594,7 +1498,7 @@
         </td>
         <td>
           <ol>
-            <li>These are more sensitive to noise.</li>
+            <li>More sensitive to noise.</li>
             <li>Detection of edges is inaccurate.</li>
             <li>Less reliable.</li>
           </ol>
@@ -1602,7 +1506,26 @@
       </tr>
 
       <tr>
-        <td>Sobel</td>
+        <td><b>Sobel</b></td>
+        <td>Gradient Based</td>
+        <td>
+          <ol>
+            <li>Easy and simple computation.</li>
+            <li>Edges are detected along with their orientation.</li>
+            <li>Gives better result than Roberts because it uses a 3 x 3 mask.</li>
+          </ol>
+        </td>
+        <td>
+          <ol>
+            <li>Sensitive to noise.</li>
+            <li>May produce thick edges.</li>
+            <li>Less accurate than Canny.</li>
+          </ol>
+        </td>
+      </tr>
+
+      <tr>
+        <td><b>Prewitt</b></td>
         <td>Gradient Based</td>
         <td>
           <ol>
@@ -1612,50 +1535,34 @@
         </td>
         <td>
           <ol>
-            <li>These are more sensitive to noise.</li>
-            <li>Detection of edges is inaccurate.</li>
-            <li>Less reliable.</li>
+            <li>Sensitive to noise.</li>
+            <li>Detection of edges may be inaccurate.</li>
+            <li>Less reliable than Canny.</li>
           </ol>
         </td>
       </tr>
 
       <tr>
-        <td>Prewitt</td>
-        <td>Gradient Based</td>
-        <td>
-          <ol>
-            <li>Easy and simple computation.</li>
-            <li>Edges are detected along with their orientation.</li>
-          </ol>
-        </td>
-        <td>
-          <ol>
-            <li>These are more sensitive to noise.</li>
-            <li>Detection of edges is inaccurate.</li>
-            <li>Less reliable.</li>
-          </ol>
-        </td>
-      </tr>
-
-      <tr>
-        <td>Canny</td>
+        <td><b>Canny</b></td>
         <td>Gaussian Based</td>
         <td>
           <ol>
             <li>Improved signal to noise ratio.</li>
-            <li>Suitable for noisy images i.e., more sensitive to noisy pixels.</li>
-            <li>Accurate.</li>
+            <li>Suitable for noisy images.</li>
+            <li>Accurate edge detection.</li>
           </ol>
         </td>
         <td>
           <ol>
             <li>Slow and complex.</li>
-            <li>False zero crossing.</li>
+            <li>Requires more computation.</li>
           </ol>
         </td>
       </tr>
     </tbody>
   </table>
+
+</section>
 
 </section>
 

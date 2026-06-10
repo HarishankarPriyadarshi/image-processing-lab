@@ -3,25 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Virtual Labs | Electrical Machines Lab - Pretest</title>
+  <title>Virtual Labs | Image Processing Lab- Pretest</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./alert-theme.css">
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
     body {
       font-family: 'Inter', sans-serif;
     }
-    /* Page blur when intro popup is open */
+
     body.body-blurred #page-wrapper {
       filter: blur(5px);
       pointer-events: none;
       user-select: none;
     }
+
     body.body-blurred {
       overflow: hidden;
     }
-    /* Custom Animations */
+
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -32,22 +35,26 @@
         transform: translateY(0);
       }
     }
+
     .animate-fadeInUp {
       animation: fadeInUp 0.6s ease-out forwards;
     }
+
     @keyframes slideInLeft {
       from {
         opacity: 0;
         transform: translateX(-20px);
       }
-        to {
+      to {
         opacity: 1;
         transform: translateX(0);
       }
     }
+
     .animate-slideInLeft {
       animation: slideInLeft 0.5s ease-out forwards;
     }
+
     @keyframes chatbot-float {
       0%, 100% {
         transform: translateY(0);
@@ -71,7 +78,7 @@
         transform: translate(8px, -50%) scale(0.94);
       }
     }
-    /* Stagger animation for menu items */
+
     .menu-item:nth-child(1) { animation-delay: 0.1s; }
     .menu-item:nth-child(2) { animation-delay: 0.2s; }
     .menu-item:nth-child(3) { animation-delay: 0.3s; }
@@ -80,36 +87,40 @@
     .menu-item:nth-child(6) { animation-delay: 0.6s; }
     .menu-item:nth-child(7) { animation-delay: 0.7s; }
     .menu-item:nth-child(8) { animation-delay: 0.8s; }
-    /* Section stagger */
+
     .section-content:nth-child(even) { animation-delay: 0.2s; }
     .section-content:nth-child(odd) { animation-delay: 0.1s; }
-    /* Virtual Labs specific styling */
+
     .vl-header {
-       height: 70px;
+      height: 70px;
       background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
       box-shadow: 0 10px 30px rgba(2, 26, 44, 0.35);
     }
+
     .header-inner {
       max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.75rem 1rem; /* Increased padding for better breathing room */
+      padding: 0.75rem 1rem;
     }
+
     .top-nav {
-      gap: 1.5rem; /* Increased gap for better spacing */
+      gap: 1.5rem;
       align-items: center;
     }
+
     .nav-link {
       position: relative;
       color: #e2e8f0;
       font-weight: 600;
-      padding: 0.5rem 1rem; /* Slightly increased padding */
-      transition: color 150ms ease, transform 150ms ease; /* Added subtle transform */
-      border-radius: 0.375rem; /* Subtle rounding */
+      padding: 0.5rem 1rem;
+      transition: color 150ms ease, transform 150ms ease;
+      border-radius: 0.375rem;
       text-decoration: none;
     }
+
     .nav-link::after {
       content: '';
       position: absolute;
@@ -123,34 +134,40 @@
       transform-origin: center;
       transition: transform 200ms ease;
     }
+
     .nav-link:hover,
     .nav-link:focus {
       color: #fff;
-      transform: translateY(-1px); /* Subtle lift on hover */
-      background: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.1);
     }
+
     .nav-link:hover::after,
     .nav-link:focus::after {
       transform: scaleX(1);
     }
-    /* Logo improvements */
+
     .logo-container {
       display: flex;
       align-items: center;
-      gap: 0.75rem; /* Consistent gap */
+      gap: 0.75rem;
     }
+
     .logo-glow {
       transition: transform 200ms ease, box-shadow 200ms ease;
     }
+
     .logo-glow:hover {
       transform: scale(1.05);
       box-shadow: 0 0 20px rgba(11, 96, 168, 0.5);
     }
+
     .logo-text {
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
+
     .logo-title {
       color: #fff;
       font-size: 1.25rem;
@@ -158,43 +175,50 @@
       line-height: 1.2;
       margin: 0;
     }
+
     .logo-subtitle {
       color: #bfdbfe;
       font-size: 0.875rem;
       font-weight: 500;
       margin: 0;
     }
-   .flex-1.pt-16 {
-    flex: 1;
-  }
-  .vl-footer {
-    background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
-    color: #e2e8f0;
-    padding: 1.25rem 0;
-    box-shadow: 0 -10px 30px rgba(2, 26, 44, 0.5);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 50;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-  .footer-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-    padding: 0 1.5rem;
-  }
+
+    .flex-1.pt-16 {
+      flex: 1;
+    }
+
+    .vl-footer {
+      background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
+      color: #e2e8f0;
+      padding: 1.25rem 0;
+      box-shadow: 0 -10px 30px rgba(2, 26, 44, 0.5);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 50;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
+
     .vl-sidebar {
       background: #f8fafc;
       border-right: 1px solid #e2e8f0;
     }
+
     .vl-card {
       border: 1px solid #e2e8f0;
       border-radius: 12px;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
+
     .menu-item {
       border-left: 3px solid transparent;
       background: rgba(255, 255, 255, 0.6);
@@ -234,7 +258,6 @@
       transform: translateX(0);
     }
 
-    /* Override Tailwind blue accents with lab primary theme */
     .bg-blue-600,
     .hover\:bg-blue-700:hover {
       background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
@@ -249,7 +272,6 @@
       border-color: #0b60a8;
     }
 
-    /* Check button disabled state */
     #check-btn:disabled {
       opacity: 0.55;
       cursor: not-allowed;
@@ -259,7 +281,6 @@
       box-shadow: none;
     }
 
-    /* Refresh button disabled state */
     #refresh-btn:disabled {
       opacity: 0.55;
       cursor: not-allowed;
@@ -269,7 +290,6 @@
       box-shadow: none;
     }
 
-    /* MCQ styling */
     .mcq {
       border: 1px solid #e2e8f0;
       border-radius: 14px;
@@ -280,7 +300,7 @@
 
     .option-label {
       display: flex;
-      align-items: center;
+      align-items: flex-start !important;
       gap: 10px;
       padding: 10px 12px;
       margin-top: 8px;
@@ -289,6 +309,7 @@
       background: linear-gradient(120deg, #ffffff, #f8fbff);
       transition: all 160ms ease;
       cursor: pointer;
+      overflow-x: auto;
     }
 
     .option-label:hover {
@@ -301,12 +322,20 @@
       accent-color: #0b60a8;
       width: 18px;
       height: 18px;
+      margin-top: 8px;
+      flex-shrink: 0;
     }
 
     .option-label input:disabled {
       opacity: 1;
       filter: none;
       cursor: default;
+    }
+
+    .option-content {
+      display: block;
+      width: 100%;
+      color: #000;
     }
 
     .option-label.disabled-option {
@@ -331,6 +360,93 @@
       background: linear-gradient(135deg, #fef2f2, #fee2e2);
       box-shadow: 0 12px 26px rgba(239, 68, 68, 0.22);
     }
+
+    /* Matrix and formula option styling */
+    .matrix-option-wrap {
+      display: inline-flex;
+      align-items: center;
+      margin: 6px 0 4px 6px;
+      vertical-align: middle;
+    }
+
+    .matrix-bracket {
+      font-size: 76px;
+      line-height: 0.85;
+      font-weight: 300;
+      color: #000;
+    }
+
+    .matrix-table {
+      border-collapse: collapse;
+      margin: 0 4px;
+    }
+
+    .matrix-table td {
+      border: none !important;
+      min-width: 32px;
+      height: 28px;
+      padding: 1px 8px !important;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #000;
+    }
+
+    .math-choice {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      flex-wrap: wrap;
+      vertical-align: middle;
+      color: #000;
+    }
+
+    .q-frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      line-height: 1.1;
+      margin: 0 3px;
+    }
+
+    .q-frac .num {
+      border-bottom: 1.6px solid #000;
+      padding: 0 5px 2px 5px;
+    }
+
+    .q-frac .den {
+      padding: 2px 5px 0 5px;
+    }
+
+    .q-sqrt {
+      display: inline-flex;
+      align-items: flex-start;
+      vertical-align: middle;
+    }
+
+    .q-sqrt-symbol {
+      font-size: 38px;
+      line-height: 1;
+      margin-top: 5px;
+      margin-right: 2px;
+    }
+
+    .q-sqrt-content {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-top: 2px solid #000;
+      padding: 6px 6px 0 6px;
+    }
+
+    .q-big-bracket {
+      font-size: 42px;
+      line-height: 1;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
     #intro-text .intro-line {
       margin: 0 0 0.85rem;
       color: #1f2933;
@@ -338,15 +454,18 @@
       opacity: 0.65;
       transition: opacity 160ms ease, transform 160ms ease;
     }
+
     #intro-text .intro-line:last-child {
       margin-bottom: 0;
     }
+
     #intro-text .intro-line.active {
       opacity: 1;
       color: #0f172a;
       font-weight: 600;
       transform: translateX(2px);
     }
+
     .chatbot-launcher {
       width: 74px;
       height: 74px;
@@ -364,6 +483,7 @@
       z-index: 1;
       overflow: visible;
     }
+
     .chatbot-launcher::before,
     .chatbot-launcher::after {
       content: '';
@@ -382,18 +502,22 @@
       transition: opacity 180ms ease, transform 180ms ease;
       z-index: -1;
     }
+
     .chatbot-launcher::after {
       filter: blur(12px);
     }
+
     .chatbot-launcher:hover::before,
     .chatbot-launcher:hover::after {
       opacity: 1;
       transform: scale(1.05);
     }
+
     .chatbot-launcher:hover {
       transform: translateY(-2px) scale(1.02);
       box-shadow: 0 30px 60px rgba(15, 23, 42, 0.45);
     }
+
     .chatbot-launcher-image {
       width: 58px;
       height: 58px;
@@ -401,6 +525,7 @@
       filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.65));
       animation: chatbot-float 2.4s ease-in-out infinite;
     }
+
     .chatbot-hint-bubble {
       position: absolute;
       right: 100%;
@@ -421,9 +546,10 @@
       animation: chatbot-hint-pulse 4.2s ease-in-out infinite;
       pointer-events: none;
     }
+
     .chatbot-hint-dot {
-        position: relative;
-  left: -5px;
+      position: relative;
+      left: -5px;
       width: 22px;
       height: 22px;
       border-radius: 999px;
@@ -436,19 +562,7 @@
       font-weight: 700;
       color: #0f172a;
     }
-    @media (max-width: 640px) {
-      .chatbot-launcher {
-        width: 64px;
-        height: 64px;
-      }
-      .chatbot-launcher-image {
-        width: 50px;
-        height: 50px;
-      }
-      .chatbot-hint-bubble {
-        display: none;
-      }
-    }
+
     .chatbot-widget {
       position: fixed;
       bottom: 28px;
@@ -472,11 +586,13 @@
       #sidebar { z-index: 120 !important; }
       #overlay { z-index: 110 !important; }
     }
+
     .chatbot-widget.chatbot-open .chatbot-hint-bubble,
     .chatbot-widget:hover .chatbot-hint-bubble {
       animation: none;
       opacity: 0;
     }
+
     .chatbot-panel {
       width: min(420px, calc(100vw - 40px));
       height: min(600px, calc(100vh - 140px));
@@ -493,12 +609,14 @@
       display: flex;
       flex-direction: column;
     }
+
     .chatbot-panel.open {
       opacity: 1;
       transform: translateY(0) scale(1);
       pointer-events: auto;
     }
-   .chatbot-panel-header {
+
+    .chatbot-panel-header {
       padding: 1.1rem 1.35rem;
       background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
       color: #fff;
@@ -507,16 +625,19 @@
       align-items: center;
       gap: 1rem;
     }
+
     .chatbot-panel-title {
       font-size: 1.05rem;
       font-weight: 700;
       margin: 0;
     }
+
     .chatbot-panel-caption {
       font-size: 0.78rem;
       opacity: 0.9;
       margin: 0;
     }
+
     .chatbot-panel-close {
       border: none;
       background: rgba(255, 255, 255, 0.18);
@@ -530,15 +651,18 @@
       cursor: pointer;
       transition: background 120ms ease;
     }
+
     .chatbot-panel-close:hover {
       background: rgba(255, 255, 255, 0.3);
     }
+
     .chatbot-panel-body {
       flex: 1;
       background: linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
       position: relative;
       border-top: 1px solid rgba(15, 23, 42, 0.06);
     }
+
     .chatbot-panel-placeholder {
       position: absolute;
       inset: 0;
@@ -551,6 +675,7 @@
       font-size: 0.92rem;
       line-height: 1.5;
     }
+
     .chatbot-panel iframe {
       width: 100%;
       height: 100%;
@@ -561,34 +686,54 @@
       overflow: hidden;
       scrollbar-width: none;
     }
+
     .chatbot-panel iframe::-webkit-scrollbar {
       display: none;
     }
+
     .chatbot-panel iframe.chatbot-frame-visible {
       display: block;
     }
-    /* Improved text alignment in sections */
+
     .section-text {
-      text-align: left; /* Ensure left alignment for readability */
-      line-height: 1.7; /* Improved line height for better spacing */
-      hyphens: auto; /* Allow soft hyphens for long words */
+      text-align: left;
+      line-height: 1.7;
+      hyphens: auto;
     }
+
     .section-text p {
-      margin-bottom: 1rem; /* Consistent paragraph spacing */
-      text-indent: 0; /* No indentation, use spacing instead */
+      margin-bottom: 1rem;
+      text-indent: 0;
     }
+
     @media (max-width: 640px) {
+      .chatbot-launcher {
+        width: 64px;
+        height: 64px;
+      }
+
+      .chatbot-launcher-image {
+        width: 50px;
+        height: 50px;
+      }
+
+      .chatbot-hint-bubble {
+        display: none;
+      }
+
       .chatbot-widget {
         bottom: 16px;
         right: 16px;
         width: calc(100vw - 24px);
       }
+
       .chatbot-panel {
         width: 100%;
         height: min(82vh, 580px);
         border-radius: 20px;
       }
     }
+
     @media (max-width: 480px) {
       .chatbot-panel {
         height: min(88vh, 620px);
@@ -596,7 +741,9 @@
     }
   </style>
 </head>
+
 <body class="bg-gray-50 min-h-screen">
+
   <!-- HEADER -->
   <header class="vl-header shadow-xl fixed top-0 left-0 right-0 z-50">
     <div class="header-inner px-4 sm:px-6 lg:px-8">
@@ -608,6 +755,7 @@
             class="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-xl object-contain bg-white p-1.5 logo-glow"
             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%230b60a8%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3EVL%3C/text%3E%3C/svg%3E'"
           >
+
           <div class="logo-text">
             <h1 class="logo-title text-base sm:text-lg lg:text-xl">Virtual Labs</h1>
             <p class="logo-subtitle text-[10px] sm:text-xs lg:text-sm">IIT Roorkee</p>
@@ -630,105 +778,58 @@
           <a href="../../main.html" class="nav-link">Home</a>
           <a href="user_input.html?return=pretest.html" class="nav-link nav-user-link" data-user-input-link data-redirect-return="pretest.html">
             <span class="nav-user-pill">
-          
               <span class="nav-user-text" data-user-text>User Input</span>
             </span>
           </a>
- 
         </nav>
       </div>
     </div>
   </header>
 
- <div class="flex pt-16 min-h-screen">
+  <div class="flex pt-16 min-h-screen">
+
     <!-- Sidebar -->
     <aside id="sidebar" class="vl-sidebar w-64 fixed inset-y-0 left-0 z-50 overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pt-20 lg:pt-6 pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
+
         <nav class="space-y-1">
-           <a href="aim.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-    </svg>
-    Aim
-  </a>
-  <a href="theory.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-    </svg>
-    Theory
-  </a>
-  <a href="pretest.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-    </svg>
-    Pretest
-  </a>
-  <a href="procedure.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2m-6 9l2 2 4-4"></path>
-    </svg>
-    Procedure
-  </a>
-  <a href="simulation.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-    </svg>
-    Simulation
-  </a>
-  <a href="posttest.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-    </svg>
-    Posttest
-  </a>
-  <a href="references.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
-    </svg>
-    References
-  </a>
-  <a href="contributors.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-    </svg>
-    Contributors
-  </a>
-  <a id="progressReportNav"
-     href="#progressreport"
-     class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group"
-     data-progress-report-link>
+          <a href="aim.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">Aim</a>
+          <a href="theory.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">Theory</a>
+          <a href="pretest.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">Pretest</a>
+          <a href="procedure.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">Procedure</a>
+          <a href="simulation.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">Simulation</a>
+          <a href="posttest.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">Posttest</a>
+          <a href="references.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">References</a>
+          <a href="contributors.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">Contributors</a>
 
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-    </svg>
-
-    Progress report
-  </a>
+          <a id="progressReportNav"
+             href="#progressreport"
+             class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group"
+             data-progress-report-link>
+            Progress report
+          </a>
         </nav>
       </div>
     </aside>
+
     <!-- MOBILE OVERLAY -->
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
+
     <!-- MAIN CONTENT -->
     <main class="flex-1 lg:ml-64 p-6">
+
       <!-- Breadcrumb -->
       <nav class="mb-6 text-sm text-gray-600 animate-slideInLeft flex items-center space-x-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
-        <a href="#" class="hover:text-blue-600">Electrical Machines Lab</a>
+        <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
+        <span>></span>
+        <a href="#" class="hover:text-blue-600">Derivative-Based Edge Detection</a>
         <span>></span>
         <span class="text-gray-800 font-medium">Pretest</span>
       </nav>
+
       <!-- TITLE CARD -->
       <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
         <div class="px-4 py-3" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
@@ -737,56 +838,57 @@
           </h1>
         </div>
       </div>
+
       <!-- Theory Questions -->
       <section class="section-content vl-card p-6 animate-fadeInUp">
-     
         <div id="mcq-container" class="space-y-6 text-gray-700 text-lg"></div>
-<!-- Controls: Refresh + Check (LEFT SIDE) -->
-<div class="mt-6 flex items-center gap-3">
-  <div class="flex gap-2">
-    <button id="refresh-btn"
-      class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg font-semibold">
-      Refresh Questions
-    </button>
-    <button id="check-btn"
-      class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold">
-      Check Answers
-    </button>
-  </div>
-  <div class="flex-1"></div>
-</div>
-<p id="result" class="mt-4 text-xl font-semibold"></p>
-      </section>
-    <section id="progressreport"
-             class="section-content vl-card mb-8 p-6 animate-fadeInUp hidden">
 
-      <div class="border-l-4 border-orange-600 pl-4 mb-4 flex items-center justify-between">
-        <div class="flex items-center">
-          <h2 class="text-2xl font-bold text-gray-800">
-            Progress Report
-          </h2>
+        <div class="mt-6 flex items-center gap-3">
+          <div class="flex gap-2">
+            <button id="refresh-btn"
+              class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-lg font-semibold">
+              Refresh Questions
+            </button>
+
+            <button id="check-btn"
+              class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold">
+              Check Answers
+            </button>
+          </div>
+
+          <div class="flex-1"></div>
         </div>
-        <span class="text-sm text-gray-600">
-          Embedded view (opens within this page)
-        </span>
-      </div>
 
-      <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-inner">
-        <iframe
-          src="progressreport.html"
-          title="Progress Report"
-          class="w-full"
-          style="min-height: 900px;"
-          loading="lazy">
-        </iframe>
-      </div>
+        <p id="result" class="mt-4 text-xl font-semibold"></p>
+      </section>
 
-    </section>
+      <section id="progressreport"
+               class="section-content vl-card mb-8 p-6 animate-fadeInUp hidden">
+        <div class="border-l-4 border-orange-600 pl-4 mb-4 flex items-center justify-between">
+          <div class="flex items-center">
+            <h2 class="text-2xl font-bold text-gray-800">Progress Report</h2>
+          </div>
 
+          <span class="text-sm text-gray-600">
+            Embedded view (opens within this page)
+          </span>
+        </div>
+
+        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-inner">
+          <iframe
+            src="progressreport.html"
+            title="Progress Report"
+            class="w-full"
+            style="min-height: 900px;"
+            loading="lazy">
+          </iframe>
+        </div>
+      </section>
     </main>
   </div>
+
   <!-- FOOTER -->
-  <footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12"> <!-- Key: h-12 = 48px -->
+  <footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12">
     <div class="footer-inner flex items-center justify-center h-full px-4">
       <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
         &copy; 2026 Virtual Labs IIT Roorkee
@@ -794,7 +896,7 @@
     </div>
   </footer>
 
-  <!-- Alert Modal (matches simulation popup style) -->
+  <!-- Alert Modal -->
   <div id="warningModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalMessage">
     <div class="modal-box" role="document">
       <h2 id="modalTitle">Alert</h2>
@@ -810,48 +912,488 @@
 <script>
 /* ------------------ 20 QUESTIONS ------------------ */
 const questions = [
-  {id:1,text:'What is the primary purpose of image segmentation in image processing?',choices:['A) Compress an image to reduce file size','B) Divide an image into regions corresponding to different objects or parts of objects','C) Enhance the overall brightness and contrast of an image','D) Convert a colour image to a binary black-and-white image'],answer:'B',selected:null},
+  {
+    id: 1,
+    text: 'What is the primary purpose of image segmentation in image processing?',
+    choices: [
+      'A) Compress an image to reduce file size',
+      'B) Divide an image into regions corresponding to different objects or parts of objects',
+      'C) Enhance the overall brightness and contrast of an image',
+      'D) Convert a colour image to a binary black-and-white image'
+    ],
+    answer: 'B',
+    selected: null
+  },
 
-  {id:2,text:'In image processing, the gradient ∇f(x,y) is defined as:',choices:['A) A scalar representing average pixel intensity across the image','B) A vector pointing in the direction of the greatest rate of increase of intensity','C) The second-order partial derivative of the image function','D) The discrete Fourier transform of the image'],answer:'B',selected:null},
+  {
+    id: 2,
+    text: 'In image processing, the gradient ∇f(x,y) is defined as:',
+    choices: [
+      'A) A scalar representing average pixel intensity across the image',
+      'B) A vector pointing in the direction of the greatest rate of increase of intensity',
+      'C) The second-order partial derivative of the image function',
+      'D) The discrete Fourier transform of the image'
+    ],
+    answer: 'B',
+    selected: null
+  },
 
-  {id:3,text:'The gradient magnitude |∇f(x,y)| is correctly computed as:',choices:['A) ∂f/∂x + ∂f/∂y','B) (∂f/∂x) × (∂f/∂y)','C) √((∂f/∂x)² + (∂f/∂y)²)','D) ∂²f/∂x² + ∂²f/∂y²'],answer:'C',selected:null},
+  {
+    id: 3,
+    text: 'The gradient magnitude |∇f(x,y)| is correctly computed as:',
+    choices: [
+      `A)
+      <span class="math-choice">
+        <span class="q-frac">
+          <span class="num">∂f</span>
+          <span class="den">∂x</span>
+        </span>
+        <span>+</span>
+        <span class="q-frac">
+          <span class="num">∂f</span>
+          <span class="den">∂y</span>
+        </span>
+      </span>`,
 
-  {id:4,text:'The direction (angle) of the gradient θ(x,y) is given by:',choices:['A) tan⁻¹(∂f/∂x / ∂f/∂y)','B) sin⁻¹(∂f/∂y / ∂f/∂x)','C) tan⁻¹(∂f/∂y / ∂f/∂x)','D) cos⁻¹(∂f/∂x / ∂f/∂y)'],answer:'C',selected:null},
+      `B)
+      <span class="math-choice">
+        <span class="q-big-bracket">(</span>
+        <span class="q-frac">
+          <span class="num">∂f</span>
+          <span class="den">∂x</span>
+        </span>
+        <span class="q-big-bracket">)</span>
+        <span>×</span>
+        <span class="q-big-bracket">(</span>
+        <span class="q-frac">
+          <span class="num">∂f</span>
+          <span class="den">∂y</span>
+        </span>
+        <span class="q-big-bracket">)</span>
+      </span>`,
 
-  {id:5,text:'Which of the following is NOT one of the standard steps in edge detection?',choices:['A) Filtering','B) Enhancement','C) Compression','D) Detection'],answer:'C',selected:null},
+      `C)
+      <span class="math-choice">
+        <span class="q-sqrt">
+          <span class="q-sqrt-symbol">√</span>
+          <span class="q-sqrt-content">
+            <span class="q-big-bracket">(</span>
+            <span class="q-frac">
+              <span class="num">∂f</span>
+              <span class="den">∂x</span>
+            </span>
+            <span>)<sup>2</sup></span>
+            <span>+</span>
+            <span class="q-big-bracket">(</span>
+            <span class="q-frac">
+              <span class="num">∂f</span>
+              <span class="den">∂y</span>
+            </span>
+            <span>)<sup>2</sup></span>
+            <span class="q-big-bracket">)</span>
+          </span>
+        </span>
+      </span>`,
 
-  {id:6,text:'The Filtering step in edge detection is primarily used to:',choices:['A) Detect zero-crossings of the second derivative','B) Improve edge detector performance with respect to noise','C) Compute gradient magnitude for all pixels','D) Locate edges with sub-pixel accuracy'],answer:'B',selected:null},
+      `D)
+      <span class="math-choice">
+        <span class="q-frac">
+          <span class="num">∂<sup>2</sup>f</span>
+          <span class="den">∂x<sup>2</sup></span>
+        </span>
+        <span>+</span>
+        <span class="q-frac">
+          <span class="num">∂<sup>2</sup>f</span>
+          <span class="den">∂y<sup>2</sup></span>
+        </span>
+      </span>`
+    ],
+    answer: 'C',
+    selected: null
+  },
 
-  {id:7,text:'The Roberts cross operator computes the gradient about:',choices:['A) The exact pixel location [i, j]','B) The centre of a 3×3 neighbourhood','C) An interpolated point [i + 1/2, j + 1/2]','D) The four corner pixels of the image'],answer:'C',selected:null},
+  {
+    id: 4,
+    text: 'The direction (angle) of the gradient θ(x,y) is given by:',
+    choices: [
+      `A)
+      <span class="math-choice">
+        tan<sup>-1</sup>
+        <span class="q-big-bracket">(</span>
+        <span class="q-frac">
+          <span class="num">∂f/∂x</span>
+          <span class="den">∂f/∂y</span>
+        </span>
+        <span class="q-big-bracket">)</span>
+      </span>`,
 
-  {id:8,text:'The kernel size used in the Roberts cross operator is:',choices:['A) 1×2','B) 3×3','C) 5×5','D) 2×2'],answer:'D',selected:null},
+      `B)
+      <span class="math-choice">
+        sin<sup>-1</sup>
+        <span class="q-big-bracket">(</span>
+        <span class="q-frac">
+          <span class="num">∂f/∂y</span>
+          <span class="den">∂f/∂x</span>
+        </span>
+        <span class="q-big-bracket">)</span>
+      </span>`,
 
-  {id:9,text:'The Sobel kernel Sx (detecting horizontal intensity changes) is:',choices:['A) [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]','B) [[-1, -2, -1], [0, 0, 0], [1, 2, 1]]','C) [[1, 0, -1], [1, 0, -1], [1, 0, -1]]','D) [[0, 1, 0], [1, -4, 1], [0, 1, 0]]'],answer:'A',selected:null},
+      `C)
+      <span class="math-choice">
+        tan<sup>-1</sup>
+        <span class="q-big-bracket">(</span>
+        <span class="q-frac">
+          <span class="num">∂f/∂y</span>
+          <span class="den">∂f/∂x</span>
+        </span>
+        <span class="q-big-bracket">)</span>
+      </span>`,
 
-  {id:10,text:'The Prewitt kernel Sx for detecting horizontal intensity changes is:',choices:['A) [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]','B) [[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]]','C) [[-3, 0, 3], [-10, 0, 10], [-3, 0, 3]]','D) [[0, 1, 0], [1, -4, 1], [0, 1, 0]]'],answer:'B',selected:null},
+      `D)
+      <span class="math-choice">
+        cos<sup>-1</sup>
+        <span class="q-big-bracket">(</span>
+        <span class="q-frac">
+          <span class="num">∂f/∂x</span>
+          <span class="den">∂f/∂y</span>
+        </span>
+        <span class="q-big-bracket">)</span>
+      </span>`
+    ],
+    answer: 'C',
+    selected: null
+  },
 
-  {id:11,text:'The Laplacian operator belongs to which category of edge detectors?',choices:['A) First-order derivative','B) Morphological operators','C) Second-order derivative','D) Frequency-domain operators'],answer:'C',selected:null},
+  {
+    id: 5,
+    text: 'Which of the following is NOT one of the standard steps in edge detection?',
+    choices: ['A) Filtering', 'B) Enhancement', 'C) Compression', 'D) Detection'],
+    answer: 'C',
+    selected: null
+  },
 
-  {id:12,text:'The mathematical formula for the Laplacian ∇²f(x,y) is:',choices:['A) ∂f/∂x + ∂f/∂y','B) √(∂²f/∂x² + ∂²f/∂y²)','C) ∂²f/∂x² + ∂²f/∂y²','D) (∂f/∂x)² + (∂f/∂y)²'],answer:'C',selected:null},
+  {
+    id: 6,
+    text: 'The Filtering step in edge detection is primarily used to:',
+    choices: [
+      'A) Detect zero-crossings of the second derivative',
+      'B) Improve edge detector performance with respect to noise',
+      'C) Compute gradient magnitude for all pixels',
+      'D) Locate edges with sub-pixel accuracy'
+    ],
+    answer: 'B',
+    selected: null
+  },
 
-  {id:13,text:'Second-order derivative edge operators detect edge points by identifying:',choices:['A) Local maxima in gradient magnitude only','B) Zero crossings of the second derivative','C) Regions with intensity above a fixed global threshold','D) The direction of minimum intensity change'],answer:'B',selected:null},
+  {
+    id: 7,
+    text: 'The Roberts cross operator computes the gradient about:',
+    choices: [
+      'A) The exact pixel location [i, j]',
+      'B) The centre of a 3×3 neighbourhood',
+      'C) An interpolated point [i + 1/2, j + 1/2]',
+      'D) The four corner pixels of the image'
+    ],
+    answer: 'C',
+    selected: null
+  },
 
-  {id:14,text:'The Enhancement step in edge detection emphasises:',choices:['A) Pixels in low-frequency background regions','B) Pixels where there is a significant change in local intensity values via gradient magnitude','C) Pixels with the highest absolute intensity in the image','D) Pixels that lie on straight lines only'],answer:'B',selected:null},
+  {
+    id: 8,
+    text: 'The kernel size used in the Roberts cross operator is:',
+    choices: ['A) 1×2', 'B) 3×3', 'C) 5×5', 'D) 2×2'],
+    answer: 'D',
+    selected: null
+  },
 
-  {id:15,text:'A good image segmentation requires that pixels in the same category:',choices:['A) Have widely different grey-scale values','B) Are spatially disconnected from each other','C) Have similar grey-scale values and form a connected region','D) Be located only at image boundaries'],answer:'C',selected:null},
+  {
+    id: 9,
+    text: 'The Sobel kernel Sx (detecting horizontal intensity changes) is:',
+    choices: [
+      `A)
+      <div class="matrix-option-wrap">
+        <span class="matrix-bracket">[</span>
+        <table class="matrix-table">
+          <tr><td>-1</td><td>0</td><td>1</td></tr>
+          <tr><td>-2</td><td>0</td><td>2</td></tr>
+          <tr><td>-1</td><td>0</td><td>1</td></tr>
+        </table>
+        <span class="matrix-bracket">]</span>
+      </div>`,
 
-  {id:16,text:'Which edge detection operator places the greatest emphasis on pixels closest to the centre of the mask?',choices:['A) Roberts','B) Prewitt','C) Laplacian','D) Sobel'],answer:'D',selected:null},
+      `B)
+      <div class="matrix-option-wrap">
+        <span class="matrix-bracket">[</span>
+        <table class="matrix-table">
+          <tr><td>-1</td><td>-2</td><td>-1</td></tr>
+          <tr><td>0</td><td>0</td><td>0</td></tr>
+          <tr><td>1</td><td>2</td><td>1</td></tr>
+        </table>
+        <span class="matrix-bracket">]</span>
+      </div>`,
 
-  {id:17,text:'The trade-off present in the Filtering step of edge detection is between:',choices:['A) Spatial resolution and colour depth','B) Edge strength and noise reduction','C) Processing speed and memory usage','D) Image file size and visual quality'],answer:'B',selected:null},
+      `C)
+      <div class="matrix-option-wrap">
+        <span class="matrix-bracket">[</span>
+        <table class="matrix-table">
+          <tr><td>1</td><td>0</td><td>-1</td></tr>
+          <tr><td>1</td><td>0</td><td>-1</td></tr>
+          <tr><td>1</td><td>0</td><td>-1</td></tr>
+        </table>
+        <span class="matrix-bracket">]</span>
+      </div>`,
 
-  {id:18,text:'What is the Localization step in edge detection concerned with?',choices:['A) Applying gradient magnitude thresholds','B) Computing the second derivative of the image','C) Estimating edge location with sub-pixel resolution and determining edge orientation','D) Smoothing the image prior to gradient computation'],answer:'C',selected:null},
+      `D)
+      <div class="matrix-option-wrap">
+        <span class="matrix-bracket">[</span>
+        <table class="matrix-table">
+          <tr><td>0</td><td>1</td><td>0</td></tr>
+          <tr><td>1</td><td>-4</td><td>1</td></tr>
+          <tr><td>0</td><td>1</td><td>0</td></tr>
+        </table>
+        <span class="matrix-bracket">]</span>
+      </div>`
+    ],
+    answer: 'A',
+    selected: null
+  },
 
-  {id:19,text:'Kernel X (Sx) in first-order derivative operators primarily detects intensity changes in which direction?',choices:['A) Vertical direction (y-axis)','B) Diagonal direction (45°)','C) Circular (radial) direction','D) Horizontal direction (x-axis)'],answer:'D',selected:null},
+  {
+    id: 10,
+    text: 'The Prewitt kernel Sx for detecting horizontal intensity changes is:',
+    choices: [
+      `A)
+      <div class="matrix-option-wrap">
+        <span class="matrix-bracket">[</span>
+        <table class="matrix-table">
+          <tr><td>-1</td><td>0</td><td>1</td></tr>
+          <tr><td>-2</td><td>0</td><td>2</td></tr>
+          <tr><td>-1</td><td>0</td><td>1</td></tr>
+        </table>
+        <span class="matrix-bracket">]</span>
+      </div>`,
 
-  {id:20,text:'Edge detection helps reduce image complexity primarily because it:',choices:['A) Increases image resolution and pixel density','B) Preserves all original colour information intact','C) Removes unwanted and unnecessary information, making the image easier to analyse','D) Applies lossless compression to all pixel values'],answer:'C',selected:null}
+      `B)
+      <div class="matrix-option-wrap">
+        <span class="matrix-bracket">[</span>
+        <table class="matrix-table">
+          <tr><td>-1</td><td>0</td><td>1</td></tr>
+          <tr><td>-1</td><td>0</td><td>1</td></tr>
+          <tr><td>-1</td><td>0</td><td>1</td></tr>
+        </table>
+        <span class="matrix-bracket">]</span>
+      </div>`,
+
+      `C)
+      <div class="matrix-option-wrap">
+        <span class="matrix-bracket">[</span>
+        <table class="matrix-table">
+          <tr><td>-3</td><td>0</td><td>3</td></tr>
+          <tr><td>-10</td><td>0</td><td>10</td></tr>
+          <tr><td>-3</td><td>0</td><td>3</td></tr>
+        </table>
+        <span class="matrix-bracket">]</span>
+      </div>`,
+
+      `D)
+      <div class="matrix-option-wrap">
+        <span class="matrix-bracket">[</span>
+        <table class="matrix-table">
+          <tr><td>0</td><td>1</td><td>0</td></tr>
+          <tr><td>1</td><td>-4</td><td>1</td></tr>
+          <tr><td>0</td><td>1</td><td>0</td></tr>
+        </table>
+        <span class="matrix-bracket">]</span>
+      </div>`
+    ],
+    answer: 'B',
+    selected: null
+  },
+
+  {
+    id: 11,
+    text: 'The Laplacian operator belongs to which category of edge detectors?',
+    choices: [
+      'A) First-order derivative',
+      'B) Morphological operators',
+      'C) Second-order derivative',
+      'D) Frequency-domain operators'
+    ],
+    answer: 'C',
+    selected: null
+  },
+
+  {
+    id: 12,
+    text: 'The mathematical formula for the Laplacian ∇²f(x,y) is:',
+    choices: [
+      `A)
+      <span class="math-choice">
+        <span class="q-frac">
+          <span class="num">∂f</span>
+          <span class="den">∂x</span>
+        </span>
+        <span>+</span>
+        <span class="q-frac">
+          <span class="num">∂f</span>
+          <span class="den">∂y</span>
+        </span>
+      </span>`,
+
+      `B)
+      <span class="math-choice">
+        <span class="q-sqrt">
+          <span class="q-sqrt-symbol">√</span>
+          <span class="q-sqrt-content">
+            <span class="q-frac">
+              <span class="num">∂<sup>2</sup>f</span>
+              <span class="den">∂x<sup>2</sup></span>
+            </span>
+            <span>+</span>
+            <span class="q-frac">
+              <span class="num">∂<sup>2</sup>f</span>
+              <span class="den">∂y<sup>2</sup></span>
+            </span>
+          </span>
+        </span>
+      </span>`,
+
+      `C)
+      <span class="math-choice">
+        <span class="q-frac">
+          <span class="num">∂<sup>2</sup>f</span>
+          <span class="den">∂x<sup>2</sup></span>
+        </span>
+        <span>+</span>
+        <span class="q-frac">
+          <span class="num">∂<sup>2</sup>f</span>
+          <span class="den">∂y<sup>2</sup></span>
+        </span>
+      </span>`,
+
+      `D)
+      <span class="math-choice">
+        <span class="q-big-bracket">(</span>
+        <span class="q-frac">
+          <span class="num">∂f</span>
+          <span class="den">∂x</span>
+        </span>
+        <span>)<sup>2</sup></span>
+        <span>+</span>
+        <span class="q-big-bracket">(</span>
+        <span class="q-frac">
+          <span class="num">∂f</span>
+          <span class="den">∂y</span>
+        </span>
+        <span>)<sup>2</sup></span>
+      </span>`
+    ],
+    answer: 'C',
+    selected: null
+  },
+
+  {
+    id: 13,
+    text: 'Second-order derivative edge operators detect edge points by identifying:',
+    choices: [
+      'A) Local maxima in gradient magnitude only',
+      'B) Zero crossings of the second derivative',
+      'C) Regions with intensity above a fixed global threshold',
+      'D) The direction of minimum intensity change'
+    ],
+    answer: 'B',
+    selected: null
+  },
+
+  {
+    id: 14,
+    text: 'The Enhancement step in edge detection emphasises:',
+    choices: [
+      'A) Pixels in low-frequency background regions',
+      'B) Pixels where there is a significant change in local intensity values via gradient magnitude',
+      'C) Pixels with the highest absolute intensity in the image',
+      'D) Pixels that lie on straight lines only'
+    ],
+    answer: 'B',
+    selected: null
+  },
+
+  {
+    id: 15,
+    text: 'A good image segmentation requires that pixels in the same category:',
+    choices: [
+      'A) Have widely different grey-scale values',
+      'B) Are spatially disconnected from each other',
+      'C) Have similar grey-scale values and form a connected region',
+      'D) Be located only at image boundaries'
+    ],
+    answer: 'C',
+    selected: null
+  },
+
+  {
+    id: 16,
+    text: 'Which edge detection operator places the greatest emphasis on pixels closest to the centre of the mask?',
+    choices: ['A) Roberts', 'B) Prewitt', 'C) Laplacian', 'D) Sobel'],
+    answer: 'D',
+    selected: null
+  },
+
+  {
+    id: 17,
+    text: 'The trade-off present in the Filtering step of edge detection is between:',
+    choices: [
+      'A) Spatial resolution and colour depth',
+      'B) Edge strength and noise reduction',
+      'C) Processing speed and memory usage',
+      'D) Image file size and visual quality'
+    ],
+    answer: 'B',
+    selected: null
+  },
+
+  {
+    id: 18,
+    text: 'What is the Localization step in edge detection concerned with?',
+    choices: [
+      'A) Applying gradient magnitude thresholds',
+      'B) Computing the second derivative of the image',
+      'C) Estimating edge location with sub-pixel resolution and determining edge orientation',
+      'D) Smoothing the image prior to gradient computation'
+    ],
+    answer: 'C',
+    selected: null
+  },
+
+  {
+    id: 19,
+    text: 'Kernel X (Sx) in first-order derivative operators primarily detects intensity changes in which direction?',
+    choices: [
+      'A) Vertical direction (y-axis)',
+      'B) Diagonal direction (45°)',
+      'C) Circular (radial) direction',
+      'D) Horizontal direction (x-axis)'
+    ],
+    answer: 'D',
+    selected: null
+  },
+
+  {
+    id: 20,
+    text: 'Edge detection helps reduce image complexity primarily because it:',
+    choices: [
+      'A) Increases image resolution and pixel density',
+      'B) Preserves all original colour information intact',
+      'C) Removes unwanted and unnecessary information, making the image easier to analyse',
+      'D) Applies lossless compression to all pixel values'
+    ],
+    answer: 'C',
+    selected: null
+  }
 ];
+
 /* ------------------ SETTINGS ------------------ */
-const size = 5; // number of questions shown per refresh
+const size = 5;
 const container = document.getElementById("mcq-container");
 const result = document.getElementById("result");
 const refreshBtn = document.getElementById("refresh-btn");
@@ -937,7 +1479,7 @@ function getQuestionAttemptKey(questionId) {
   return `q-${questionId}`;
 }
 
-let currentSetIndices = []; // indices into `questions` array for the current shown set
+let currentSetIndices = [];
 let setLocked = false;
 let attemptedQuestionIds = readStoredIdSet(ASSESSMENT_KEYS.attemptedIds);
 let correctQuestionIds = readStoredIdSet(ASSESSMENT_KEYS.correctIds);
@@ -970,6 +1512,7 @@ function persistAssessmentTotals() {
   const now = String(Date.now());
   const attemptedIdsJson = JSON.stringify(Array.from(attemptedQuestionIds));
   const correctIdsJson = JSON.stringify(Array.from(correctQuestionIds));
+
   try {
     localStorage.setItem(ASSESSMENT_KEYS.score, String(totalCorrect));
     localStorage.setItem(ASSESSMENT_KEYS.total, String(totalAttempted));
@@ -1009,13 +1552,11 @@ function persistAssessmentTotals() {
 
 persistAssessmentTotals();
 
-/* ------------------ UTIL: pick random unique set ------------------ */
 function pickRandomSet() {
   const remainingIndices = questions
     .map((question, index) => attemptedQuestionIds.has(getQuestionAttemptKey(question.id)) ? null : index)
     .filter((index) => index !== null);
 
-  // Fisher-Yates shuffle on index array, then slice first `size`
   const indices = remainingIndices.length
     ? [...remainingIndices]
     : Array.from({ length: questions.length }, (_, i) => i);
@@ -1041,32 +1582,39 @@ function pickRandomSet() {
   }
 }
 
-/* ------------------ RENDER CURRENT SET (Q1..Q5) ------------------ */
+/* ------------------ FIXED RENDER FUNCTION ------------------ */
 function showPage() {
-   container.innerHTML = "";
+  container.innerHTML = "";
+
   if (result) {
     result.textContent = "";
     result.classList.remove("text-green-600", "text-red-600");
   }
-  // Show the chosen 5 questions, numbering Q1..Q5
+
   currentSetIndices.forEach((qIndex, i) => {
     const q = questions[qIndex];
+
     const div = document.createElement("div");
     div.className = "mcq";
     div.dataset.answer = q.answer;
+
     div.innerHTML = `
       <p><b>Q${i + 1}.</b> ${q.text}</p>
+
       ${q.choices.map(c => {
-        const val = c[0].toUpperCase();
+        const val = String(c).trim().charAt(0).toUpperCase();
+
         return `
-          <label class="block option-label">
-            <input type="radio" name="q${q.id}" value="${val}" ${q.selected === val ? "checked":""}> ${c}
+          <label class="option-label">
+            <input type="radio" name="q${q.id}" value="${val}" ${q.selected === val ? "checked" : ""}>
+            <span class="option-content">${c}</span>
           </label>
         `;
       }).join("")}
     `;
+
     container.appendChild(div);
-    // attach change listeners to save selection into the question object
+
     div.querySelectorAll("input[type='radio']").forEach(inp => {
       inp.addEventListener("change", () => {
         if (setLocked) return;
@@ -1075,6 +1623,7 @@ function showPage() {
       });
     });
   });
+
   result.innerHTML = "";
   updateCheckButtonState();
 }
@@ -1083,6 +1632,7 @@ function lockQuestionInputs(div) {
   div.querySelectorAll(".option-label").forEach(label => {
     label.classList.remove("selected-option", "disabled-option", "correct-option", "wrong-option", "text-green-600", "text-red-600");
   });
+
   div.querySelectorAll("input[type='radio']").forEach(input => {
     input.disabled = true;
     if (input.checked) input.parentElement.classList.add("selected-option");
@@ -1092,7 +1642,6 @@ function lockQuestionInputs(div) {
 
 function updateCheckButtonState() {
   if (!checkBtn) return;
-  // Keep the button clickable so we can show alerts even when answers are missing.
   checkBtn.disabled = false;
 }
 
@@ -1104,108 +1653,116 @@ function playMappedAlertAudio(soundEl, message) {
   if (!soundEl || typeof soundEl.play !== "function") return;
   const normalizedMessage = String(message || "").trim();
   if (normalizedMessage !== PRETEST_WELCOME_ALERT_MESSAGE) return;
+
   if (soundEl.getAttribute("src") !== PRETEST_WELCOME_ALERT_AUDIO_SRC) {
     soundEl.setAttribute("src", PRETEST_WELCOME_ALERT_AUDIO_SRC);
   }
+
   soundEl.currentTime = 0;
   const playPromise = soundEl.play();
+
   if (playPromise && typeof playPromise.catch === "function") {
     playPromise.catch(() => {});
   }
 }
 
- function showPopup(message, title = "Alert", options = {}) {
-   if (!message) return;
-   const onClose = typeof options?.onClose === "function" ? options.onClose : null;
-   popupOnClose = onClose;
+function showPopup(message, title = "Alert", options = {}) {
+  if (!message) return;
 
-   const modal = document.getElementById("warningModal");
-   if (!modal) {
-     window.alert(String(message));
-     if (onClose) onClose();
-     return;
-   }
+  const onClose = typeof options?.onClose === "function" ? options.onClose : null;
+  popupOnClose = onClose;
 
-   const box = modal.querySelector(".modal-box");
-   const msg = modal.querySelector("#modalMessage");
-   const ttl = modal.querySelector("#modalTitle");
-   const sound = document.getElementById("alertSound");
-   const okBtn = modal.querySelector("[data-modal-close]");
+  const modal = document.getElementById("warningModal");
 
-   if (ttl) ttl.textContent = String(title || "Alert");
-   if (msg) msg.textContent = String(message);
+  if (!modal) {
+    window.alert(String(message));
+    if (onClose) onClose();
+    return;
+  }
 
-   if (box) {
-     box.classList.remove("closing");
-     box.classList.remove("danger");
-   }
+  const box = modal.querySelector(".modal-box");
+  const msg = modal.querySelector("#modalMessage");
+  const ttl = modal.querySelector("#modalTitle");
+  const sound = document.getElementById("alertSound");
+  const okBtn = modal.querySelector("[data-modal-close]");
 
-   modal.classList.add("show");
-   document.body.classList.add("is-modal-open");
-   window.setTimeout(() => okBtn?.focus?.(), 0);
+  if (ttl) ttl.textContent = String(title || "Alert");
+  if (msg) msg.textContent = String(message);
 
-   playMappedAlertAudio(sound, message);
- }
+  if (box) {
+    box.classList.remove("closing");
+    box.classList.remove("danger");
+  }
 
- function closePopup() {
-   const modal = document.getElementById("warningModal");
-   if (!modal) return;
-   const box = modal.querySelector(".modal-box");
-   const sound = document.getElementById("alertSound");
-   const onClose = popupOnClose;
-   popupOnClose = null;
+  modal.classList.add("show");
+  document.body.classList.add("is-modal-open");
+  window.setTimeout(() => okBtn?.focus?.(), 0);
 
-   if (box) {
-     box.classList.add("closing");
-   }
+  playMappedAlertAudio(sound, message);
+}
 
-   window.setTimeout(() => {
-     modal.classList.remove("show");
-     if (box) {
-       box.classList.remove("closing");
-     }
-     document.body.classList.remove("is-modal-open");
-     if (onClose) onClose();
-   }, 450);
+function closePopup() {
+  const modal = document.getElementById("warningModal");
+  if (!modal) return;
 
-   if (sound && typeof sound.pause === "function") {
-     sound.pause();
-   }
- }
+  const box = modal.querySelector(".modal-box");
+  const sound = document.getElementById("alertSound");
+  const onClose = popupOnClose;
+  popupOnClose = null;
 
- function isPopupOpen() {
-   const modal = document.getElementById("warningModal");
-   return !!(modal && modal.classList.contains("show"));
- }
+  if (box) {
+    box.classList.add("closing");
+  }
 
- (function initAlertModal() {
-   const modal = document.getElementById("warningModal");
-   if (!modal) return;
+  window.setTimeout(() => {
+    modal.classList.remove("show");
 
-   const closeBtn = modal.querySelector("[data-modal-close]");
-   if (closeBtn) closeBtn.addEventListener("click", closePopup);
+    if (box) {
+      box.classList.remove("closing");
+    }
 
-   modal.addEventListener("click", (event) => {
-     if (event.target === modal) {
-       closePopup();
-     }
-   });
+    document.body.classList.remove("is-modal-open");
 
-   document.addEventListener("keydown", (event) => {
-     if (event.key === "Escape" && isPopupOpen()) {
-       closePopup();
-     }
-   });
- })();
+    if (onClose) onClose();
+  }, 450);
 
-/* ------------------ CHECK ANSWERS for CURRENT SET ------------------ */
+  if (sound && typeof sound.pause === "function") {
+    sound.pause();
+  }
+}
+
+function isPopupOpen() {
+  const modal = document.getElementById("warningModal");
+  return !!(modal && modal.classList.contains("show"));
+}
+
+(function initAlertModal() {
+  const modal = document.getElementById("warningModal");
+  if (!modal) return;
+
+  const closeBtn = modal.querySelector("[data-modal-close]");
+  if (closeBtn) closeBtn.addEventListener("click", closePopup);
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closePopup();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && isPopupOpen()) {
+      closePopup();
+    }
+  });
+})();
+
 function attemptAlreadyUsedAlert() {
   showPopup("This set is already checked. Use Refresh Questions to load a new set.", "Notice");
 }
 
 function finalizeAttempt() {
   setLocked = true;
-  // Lock current selections to prevent re-submission tweaks
+
   container.querySelectorAll("input[type='radio']").forEach(input => {
     input.disabled = true;
   });
@@ -1216,6 +1773,7 @@ function checkAnswers() {
     attemptAlreadyUsedAlert();
     return;
   }
+
   const unanswered = currentSetIndices.filter((qIndex) => {
     const q = questions[qIndex];
     return !container.querySelector(`input[name="q${q.id}"]:checked`);
@@ -1226,6 +1784,7 @@ function checkAnswers() {
     const firstInput = first
       ? container.querySelector(`input[name="q${first.id}"]`)
       : null;
+
     showPopup("Please attend all the questions before checking the answers.", "Reminder", {
       onClose: () => {
         try {
@@ -1234,11 +1793,12 @@ function checkAnswers() {
         } catch (e) {}
       }
     });
+
     return;
   }
 
   let score = 0;
-  // remove previous highlight classes
+
   container.querySelectorAll(".option-label").forEach(l => {
     l.classList.remove("text-green-600", "text-red-600", "correct-option", "wrong-option");
   });
@@ -1256,16 +1816,18 @@ function checkAnswers() {
     } else {
       selectedInput.parentElement.classList.remove("selected-option", "disabled-option");
       selectedInput.parentElement.classList.add("text-red-600", "wrong-option");
+
       const correctInput = container.querySelector(`input[name="q${q.id}"][value="${q.answer}"]`);
+
       if (correctInput) {
         correctInput.parentElement.classList.remove("disabled-option");
         correctInput.parentElement.classList.add("text-green-600", "correct-option");
       }
     }
 
-    // Count only the first attempt for each unique question.
     if (!attemptedQuestionIds.has(questionKey) && attemptedQuestionIds.size < questions.length) {
       attemptedQuestionIds.add(questionKey);
+
       if (isCorrect) {
         correctQuestionIds.add(questionKey);
       }
@@ -1283,17 +1845,16 @@ function checkAnswers() {
   updateCheckButtonState();
 }
 
-/* ------------------ BUTTON BINDINGS ------------------ */
 refreshBtn.addEventListener("click", () => {
   pickRandomSet();
   refreshBtn.blur();
 });
+
 checkBtn.addEventListener("click", () => {
   checkAnswers();
   checkBtn.blur();
 });
 
-/* ------------------ INITIALIZE ------------------ */
 const pretestWelcomeMessage = PRETEST_WELCOME_ALERT_MESSAGE;
 pickRandomSet();
 showPopup(pretestWelcomeMessage, "Welcome to the Pretest section");
@@ -1307,6 +1868,7 @@ showPopup(pretestWelcomeMessage, "Welcome to the Pretest section");
         <p class="chatbot-panel-title">Virtual Lab Assistant</p>
         <p class="chatbot-panel-caption">Ask anything about this experiment</p>
       </div>
+
       <button type="button" class="chatbot-panel-close" aria-label="Close chatbot">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -1319,191 +1881,203 @@ showPopup(pretestWelcomeMessage, "Welcome to the Pretest section");
       <div class="chatbot-panel-placeholder">
         Loading area for your chatbot. Update the <strong>data-chat-url</strong> to match your deployment.
       </div>
+
       <iframe title="Chatbot assistant" referrerpolicy="no-referrer" scrolling="no"></iframe>
     </div>
   </div>
 
-    <button type="button" class="chatbot-launcher" aria-expanded="false" aria-label="Open chatbot assistant">
+  <button type="button" class="chatbot-launcher" aria-expanded="false" aria-label="Open chatbot assistant">
     <span class="chatbot-hint-bubble">
-      <span class="chatbot-hint-dot">Hi </span>
-       Ask anything about this experiment 
-      </span>
-      <img src="images/chatbot.png" alt="" aria-hidden="true" class="chatbot-launcher-image">
+      <span class="chatbot-hint-dot">Hi</span>
+      Ask anything about this experiment
+    </span>
+    <img src="images/chatbot.png" alt="" aria-hidden="true" class="chatbot-launcher-image">
   </button>
 </div>
 
 <audio id="chatbot-notification-audio" preload="auto">
   <source src="live-chat-353605.mp3" type="audio/mpeg">
 </audio>
- <script>
-    (function () {
-      const widget = document.querySelector('.chatbot-widget');
-      if (!widget) {
-        return;
+
+<script>
+(function () {
+  const widget = document.querySelector('.chatbot-widget');
+  if (!widget) return;
+
+  const toggleBtn = widget.querySelector('.chatbot-launcher');
+  const panel = widget.querySelector('.chatbot-panel');
+  const closeBtn = widget.querySelector('.chatbot-panel-close');
+  const iframe = panel.querySelector('iframe');
+  const placeholder = panel.querySelector('.chatbot-panel-placeholder');
+  const chatUrl = (panel.dataset.chatUrl || '').trim();
+  const notifyAudio = document.getElementById('chatbot-notification-audio');
+
+  if (!toggleBtn || !panel || !closeBtn || !iframe || !placeholder) return;
+
+  let isLoaded = false;
+  let autoCloseTimer = null;
+
+  function playNotification() {
+    if (!notifyAudio) return;
+
+    try {
+      const maybePromise = notifyAudio.play();
+
+      if (maybePromise && typeof maybePromise.catch === 'function') {
+        maybePromise.catch(function () {});
       }
+    } catch (e) {}
+  }
 
-      const toggleBtn = widget.querySelector('.chatbot-launcher');
-      const panel = widget.querySelector('.chatbot-panel');
-      const closeBtn = widget.querySelector('.chatbot-panel-close');
-      const iframe = panel.querySelector('iframe');
-      const placeholder = panel.querySelector('.chatbot-panel-placeholder');
-      const chatUrl = (panel.dataset.chatUrl || '').trim();
-      const notifyAudio = document.getElementById('chatbot-notification-audio');
+  function scheduleAutoOpen() {
+    if (document.body.classList.contains('sidebar-open')) return;
 
-      if (!toggleBtn || !panel || !closeBtn || !iframe || !placeholder) {
-        return;
-      }
+    playNotification();
 
-      let isLoaded = false;
-      let autoCloseTimer = null;
+    if (!panel.classList.contains('open')) openPanel();
 
-      function playNotification() {
-        if (!notifyAudio) return;
-        try {
-          const maybePromise = notifyAudio.play();
-          if (maybePromise && typeof maybePromise.catch === 'function') {
-            maybePromise.catch(function () {});
-          }
-        } catch (e) {}
-      }
+    if (autoCloseTimer) clearTimeout(autoCloseTimer);
 
-      function scheduleAutoOpen() {
-        if (document.body.classList.contains('sidebar-open')) return;
-        playNotification();
-        if (!panel.classList.contains('open')) openPanel();
+    autoCloseTimer = setTimeout(function () {
+      if (panel.classList.contains('open')) closePanel();
+    }, 3000);
+  }
 
-        if (autoCloseTimer) clearTimeout(autoCloseTimer);
-        autoCloseTimer = setTimeout(function () {
-          if (panel.classList.contains('open')) closePanel();
-        }, 3000);
-      }
- 
-      function openPanel() {
-        panel.classList.add('open');
-        toggleBtn.setAttribute('aria-expanded', 'true');
-        widget.classList.add('chatbot-open');
+  function openPanel() {
+    panel.classList.add('open');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    widget.classList.add('chatbot-open');
 
-        if (chatUrl && chatUrl !== '#') {
-          if (!isLoaded) {
-            placeholder.textContent = 'Loading assistant...';
-            iframe.addEventListener('load', () => {
-              isLoaded = true;
-              iframe.classList.add('chatbot-frame-visible');
-              placeholder.style.display = 'none';
-            }, { once: true });
-            iframe.src = chatUrl;
-          }
-        } else {
-          placeholder.innerHTML = 'Set the <strong>data-chat-url</strong> on the chatbot panel to your chatbot link.';
-        }
-      }
+    if (chatUrl && chatUrl !== '#') {
+      if (!isLoaded) {
+        placeholder.textContent = 'Loading assistant...';
 
-      function closePanel() {
-        panel.classList.remove('open');
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        widget.classList.remove('chatbot-open');
-        if (autoCloseTimer) {
-          clearTimeout(autoCloseTimer);
-          autoCloseTimer = null;
-        }
-      }
-
-      toggleBtn.addEventListener('click', () => {
-        if (panel.classList.contains('open')) {
-          closePanel();
-        } else {
-          openPanel();
-        }
-      });
-
-      closeBtn.addEventListener('click', closePanel);
-
-      if (document.readyState === 'complete') {
-        setTimeout(scheduleAutoOpen, 1200);
-      } else {
-        window.addEventListener('load', function () {
-          setTimeout(scheduleAutoOpen, 1200);
+        iframe.addEventListener('load', () => {
+          isLoaded = true;
+          iframe.classList.add('chatbot-frame-visible');
+          placeholder.style.display = 'none';
         }, { once: true });
+
+        iframe.src = chatUrl;
       }
-    })();
-  </script>   
-
- 
-  <script src="./user_input_modal.js"></script>
-  <script src="./progress_tracker.js"></script>
-  <script src="./progress_report_embed.js"></script>
-  <script>
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    const toggleBtn = document.getElementById('mobile-menu-toggle');
-    const mobileSidebarQuery = window.matchMedia('(max-width: 1023px)');
-
-    function setSidebarOpen(isOpen) {
-      const shouldOpen = Boolean(isOpen) && mobileSidebarQuery.matches;
-      if (sidebar) sidebar.classList.toggle('-translate-x-full', !shouldOpen);
-      if (overlay) overlay.classList.toggle('hidden', !shouldOpen);
-      document.body.classList.toggle('overflow-hidden', shouldOpen);
-      document.body.classList.toggle('sidebar-open', shouldOpen);
-      if (toggleBtn) toggleBtn.setAttribute('aria-expanded', String(shouldOpen));
-
-      const chatbotWidget = document.querySelector('.chatbot-widget');
-      const chatbotPanel = chatbotWidget?.querySelector('.chatbot-panel');
-      const chatbotLauncher = chatbotWidget?.querySelector('.chatbot-launcher');
-      if (shouldOpen && chatbotWidget && chatbotPanel?.classList.contains('open')) {
-        chatbotPanel.classList.remove('open');
-        chatbotWidget.classList.remove('chatbot-open');
-        chatbotLauncher?.setAttribute('aria-expanded', 'false');
-      }
+    } else {
+      placeholder.innerHTML = 'Set the <strong>data-chat-url</strong> on the chatbot panel to your chatbot link.';
     }
+  }
 
-    if (toggleBtn) {
-      toggleBtn.addEventListener('click', () => {
-        const isClosed = !sidebar || sidebar.classList.contains('-translate-x-full');
-        setSidebarOpen(isClosed);
-      });
+  function closePanel() {
+    panel.classList.remove('open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    widget.classList.remove('chatbot-open');
+
+    if (autoCloseTimer) {
+      clearTimeout(autoCloseTimer);
+      autoCloseTimer = null;
     }
+  }
 
-    if (overlay) {
-      overlay.addEventListener('click', () => setSidebarOpen(false));
+  toggleBtn.addEventListener('click', () => {
+    if (panel.classList.contains('open')) {
+      closePanel();
+    } else {
+      openPanel();
     }
+  });
 
-    document.querySelectorAll('#sidebar a').forEach(link => {
-      link.addEventListener('click', () => {
-        if (mobileSidebarQuery.matches) setSidebarOpen(false);
-      });
+  closeBtn.addEventListener('click', closePanel);
+
+  if (document.readyState === 'complete') {
+    setTimeout(scheduleAutoOpen, 1200);
+  } else {
+    window.addEventListener('load', function () {
+      setTimeout(scheduleAutoOpen, 1200);
+    }, { once: true });
+  }
+})();
+</script>
+
+<script src="./user_input_modal.js"></script>
+<script src="./progress_tracker.js"></script>
+<script src="./progress_report_embed.js"></script>
+
+<script>
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const toggleBtn = document.getElementById('mobile-menu-toggle');
+const mobileSidebarQuery = window.matchMedia('(max-width: 1023px)');
+
+function setSidebarOpen(isOpen) {
+  const shouldOpen = Boolean(isOpen) && mobileSidebarQuery.matches;
+
+  if (sidebar) sidebar.classList.toggle('-translate-x-full', !shouldOpen);
+  if (overlay) overlay.classList.toggle('hidden', !shouldOpen);
+
+  document.body.classList.toggle('overflow-hidden', shouldOpen);
+  document.body.classList.toggle('sidebar-open', shouldOpen);
+
+  if (toggleBtn) toggleBtn.setAttribute('aria-expanded', String(shouldOpen));
+
+  const chatbotWidget = document.querySelector('.chatbot-widget');
+  const chatbotPanel = chatbotWidget?.querySelector('.chatbot-panel');
+  const chatbotLauncher = chatbotWidget?.querySelector('.chatbot-launcher');
+
+  if (shouldOpen && chatbotWidget && chatbotPanel?.classList.contains('open')) {
+    chatbotPanel.classList.remove('open');
+    chatbotWidget.classList.remove('chatbot-open');
+    chatbotLauncher?.setAttribute('aria-expanded', 'false');
+  }
+}
+
+if (toggleBtn) {
+  toggleBtn.addEventListener('click', () => {
+    const isClosed = !sidebar || sidebar.classList.contains('-translate-x-full');
+    setSidebarOpen(isClosed);
+  });
+}
+
+if (overlay) {
+  overlay.addEventListener('click', () => setSidebarOpen(false));
+}
+
+document.querySelectorAll('#sidebar a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (mobileSidebarQuery.matches) setSidebarOpen(false);
+  });
+});
+
+window.addEventListener('resize', () => {
+  if (!mobileSidebarQuery.matches) setSidebarOpen(false);
+});
+</script>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    const targetId = this.getAttribute('href').substring(1);
+    if (!targetId) return;
+
+    const targetSection = document.getElementById(targetId);
+    if (!targetSection) return;
+
+    e.preventDefault();
+
+    document.querySelectorAll('.section-content').forEach(sec => {
+      sec.classList.add('hidden');
     });
 
-    window.addEventListener('resize', () => {
-      if (!mobileSidebarQuery.matches) setSidebarOpen(false);
+    targetSection.classList.remove('hidden');
+
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.classList.remove('active');
     });
-  </script>
-  <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        const targetId = this.getAttribute('href').substring(1);
-        if (!targetId) return;
 
-        const targetSection = document.getElementById(targetId);
-        if (!targetSection) return;
+    const menuItem = this.closest('.menu-item');
+    if (menuItem) menuItem.classList.add('active');
 
-        e.preventDefault();
+    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
 
-        document.querySelectorAll('.section-content').forEach(sec => {
-          sec.classList.add('hidden');
-        });
-
-        targetSection.classList.remove('hidden');
-
-        document.querySelectorAll('.menu-item').forEach(item => {
-          item.classList.remove('active');
-        });
-
-        const menuItem = this.closest('.menu-item');
-        if (menuItem) menuItem.classList.add('active');
-
-        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
-    });
-  </script>
 </body>
 </html>
