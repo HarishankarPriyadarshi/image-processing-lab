@@ -733,7 +733,7 @@
       <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
         <div class="px-4 py-3" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
           <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
-            To study the Load Characteristics of DC shunt generator
+            Derivative-Based Edge Detection
           </h1>
         </div>
       </div>
@@ -812,26 +812,39 @@
 <script>
 /* ------------------ 20 QUESTIONS ------------------ */
 const questions = [
-  {id:1,text:'Armature magnetic field in a DC generator produces which of the following effect?',choices:['A: It demagnetizes or reduces the main flux','B: It cross-magnetizes the main flux','C: It magnetizes or reinforces the main flux','D: Both (a) and (b)'],answer:'D',selected:null},
-  {id:2,text:'Copper losses in the armature of the DC shunt generator amount to which of the following percentages of full load losses? ',choices:['A: 5 to 10%','B: 10 to 20%','C: 20 to 30%','D: 30 to 40%'],answer:'C',selected:null},
-  {id:3,text:'In a DC generator, compared to the air gap under field poles, the interpole air gap is made:',choices:['A: Larger','B: Smaller','C: The same','D: Much smaller'],answer:'A',selected:null},
-  {id:4,text:'If the field current of a DC shunt generator is slightly reduced during operation, the terminal voltage will:',choices:['A:  Increase sharply','B: Decrease gradually','C: Remain unchanged','D: Become zero'],answer:'B',selected:null},
-  {id:5,text:'The yoke of a DC generator is made of cast iron because:',choices:['A: It is cheaper','B: It completes the magnetic path','C: It gives mechanical protection','D: All of these'],answer:'D',selected:null},
-  {id:6,text:'What happens to the terminal voltage of a DC shunt generator as load increases?',choices:['A: It increases','B: It decreases','C: It remains constant','D: It first increases then decreases'],answer:'B',selected:null},
-  {id:7,text:'The main reason for the drop in terminal voltage under load is:',choices:['A: Armature resistance drop and armature reaction','B: Decrease in field resistance','C: Increase in field current','D: Decrease in speed'],answer:'A',selected:null},
-  {id:8,text:'What does the external characteristic curve of a DC shunt generator represent?',choices:['A: E vs Ia','B: V vs IL','C: E vs If','D: V vs N'],answer:'B',selected:null},
-  {id:9,text:'If the terminal voltage of the generator falls sharply with increasing load, it indicates:',choices:['A: High armature resistance','B: Poor voltage regulation','C: Weak residual magnetism','D: Low field current'],answer:'B',selected:null},
-  {id:10,text:'How can the voltage regulation of a DC shunt generator be improved?',choices:['A: By increasing armature resistance','B: By increasing field excitation','C: By reducing field current','D: By increasing speed'],answer:'B',selected:null},
-  {id:11,text:'In a well-designed DC shunt generator, the voltage drop from no-load to full-load is typically:',choices:['A: Negligible','B: Around 5–10%','C: 30–40%','D: 50–60%'],answer:'B',selected:null},
-  {id:12,text:'During the experiment, the load on the DC shunt generator is varied by:',choices:['A: Changing the armature speed','B: Adjusting field rheostat','C: Varying the load resistance across armature','D: Changing supply voltage'],answer:'C',selected:null},
-  {id:13,text:'The reason for using a shunt field regulator in the experiment is to:',choices:['A: Protect the generator','B: Vary the excitation current','C: Maintain constant load','D: Reduce armature reaction'],answer:'B',selected:null},
-  {id:14,text:'When load increases, armature current increases. This causes:',choices:['A: More voltage drop across armature resistance','B: More field flux','C: Less terminal current','D: Constant emf'],answer:'A',selected:null},
-  {id:15,text:'The generated emf in the generator is directly proportional to:',choices:['A: Load current','B: Armature resistance','C: Speed and field flux','D: Terminal voltage'],answer:'C',selected:null},
-  {id:16,text:'In the experiment, the field current is kept constant to obtain:',choices:['A: Open circuit characteristics','B: Load characteristics','C: Internal characteristics','D: Magnetization curve'],answer:'B',selected:null},
-  {id:17,text:'The curve plotted between terminal voltage and load current is generally:',choices:['A: Straight line','B: Slightly drooping curve','C: Parabolic','D: Exponential'],answer:'B',selected:null},
-  {id:18,text:'In the experiment, if the speed of the generator fluctuates, it will:',choices:['A: Have no effect on voltage','B: Cause incorrect load characteristics','C: Reduce field resistance','D: Increase copper loss'],answer:'B',selected:null},
-  {id:19,text:'The load characteristics help determine:',choices:['A: Efficiency and voltage regulation','B: Field winding design','C: Commutator dimensions','D: Mechanical losses'],answer:'A',selected:null},
-  {id:20,text:'Which safety precaution is essential while performing this experiment?',choices:['A: Start without excitation','B: Never exceed rated load current','C: Disconnect load suddenly','D: Operate at maximum speed'],answer:'B',selected:null},
+  {id:1,text:'When a 3×3 Sobel kernel is applied via valid convolution (no padding) to a 7×7 binary image, the resulting gradient matrix dimensions are:',choices:['A) 7×7','B) 5×5','C) 6×6','D) 4×4'],answer:'B',selected:null},
+
+  {id:2,text:'If ΔX = 3 and ΔY = 4 at a pixel, the resultant gradient magnitude ΔG = √(ΔX² + ΔY²) equals:',choices:['A) 7','B) 3.5','C) 12','D) 5'],answer:'D',selected:null},
+
+  {id:3,text:'In the simulation, the normalisation formula applied to generate the resultant edge image pixel value is:',choices:['A) ΔG × 255 / MaxValue','B) ΔG / (MaxValue × 255)','C) ΔG + 255','D) ΔG × MaxValue / 255'],answer:'B',selected:null},
+
+  {id:4,text:'When the Roberts (2×2) kernel is applied to the 7×7 input image with valid convolution, the resulting gradient matrix size is:',choices:['A) 5×5','B) 7×7','C) 6×6','D) 4×4'],answer:'C',selected:null},
+
+  {id:5,text:'How many element-wise multiplications are performed for each pixel window position during convolution with a 3×3 kernel?',choices:['A) 3','B) 6','C) 9','D) 12'],answer:'C',selected:null},
+
+  {id:6,text:'In the simulation, when both ΔX and ΔY values at a particular pixel position are zero, this indicates:',choices:['A) The pixel lies on a strong edge boundary','B) The simulation has not yet reached that pixel position','C) The pixel is in a uniform/flat region with no intensity change','D) The kernel weights have been applied incorrectly'],answer:'C',selected:null},
+
+  {id:7,text:'The Laplacian operator uses an identical matrix for both Kernel X and Kernel Y in the simulation. The mathematical reason is:',choices:['A) The Laplacian is an isotropic second-order operator (∂²f/∂x² + ∂²f/∂y²) that treats all directions equally','B) It is a programming simplification with no rigorous mathematical basis','C) The Laplacian only operates in the horizontal direction','D) Both kernels cancel each other out in the final gradient computation'],answer:'A',selected:null},
+
+  {id:8,text:'After running the simulation with the Multiply (×) sign image and Sobel operator, where would the highest ΔG values be expected?',choices:['A) At the exact centre pixel of the 7×7 image','B) Along the diagonal edges of the X-shaped pattern','C) Uniformly distributed across all positions in the result matrix','D) Only at the four corners of the 7×7 grid'],answer:'B',selected:null},
+
+  {id:9,text:'If a pixel has ΔX ≠ 0 and ΔY = 0, the detected edge at that pixel is oriented:',choices:['A) Horizontally — a gradient only in x means a horizontal edge','B) Vertically — a non-zero horizontal gradient detects a vertically oriented edge','C) Diagonally at 45°','D) Diagonally at 135°'],answer:'B',selected:null},
+
+  {id:10,text:'Which of the following ΔX, ΔY pairs produces the strongest resultant gradient ΔG?',choices:['A) ΔX = 0, ΔY = 0 → ΔG = 0','B) ΔX = 1, ΔY = 1 → ΔG ≈ 1.41','C) ΔX = 3, ΔY = 4 → ΔG = 5','D) ΔX = 2, ΔY = 0 → ΔG = 2'],answer:'C',selected:null},
+
+  {id:11,text:'In the simulation convolution step panel, the running sum displayed for Kernel X after each multiplication represents:',choices:['A) The final ΔX value for the entire result matrix','B) The cumulative sum of element-wise products computed so far within the current window position','C) The kernel weight at the current sliding position','D) The original image pixel intensity at that location'],answer:'B',selected:null},
+
+  {id:12,text:'A student observes that the Prewitt result differs from the Sobel result on the same binary image. The key numerical difference in their kernels is:',choices:['A) Prewitt uses ±1 uniformly; Sobel doubles the centre row/column weights to ±2','B) Prewitt uses a 5×5 kernel; Sobel uses 3×3','C) Prewitt uses only positive weights; Sobel uses both positive and negative','D) Prewitt computes second-order derivatives, unlike Sobel'],answer:'A',selected:null},
+
+  {id:13,text:'After normalisation by ΔG / (MaxValue × 255), the pixel carrying the maximum gradient value in the result matrix appears in the resultant edge image as:',choices:['A) Black (normalised intensity ≈ 0)','B) Grey (normalised intensity ≈ 0.5)','C) White (normalised intensity = 1.0, maximum brightness)','D) Red (indicating maximum gradient direction)'],answer:'C',selected:null},
+
+  {id:14,text:'Why does the Sobel operator often provide smoother edges than Roberts?',choices:['A) It uses larger neighborhoods with weighted center pixels','B) It ignores vertical gradients','C) It avoids convolution','D) It uses thresholding only'],answer:'A',selected:null},
+
+  {id:15,text:'Brighter pixels in the output image correspond to:',choices:['A) Weaker edges','B) Stronger intensity changes','C) Noise removal only','D) Uniform regions'],answer:'B',selected:null},
+
+  {id:16,text:'If only horizontal intensity changes are present, the magnitude contribution will mainly come from:',choices:['A) Kernel Y','B) Kernel X','C) Laplacian kernel','D) Threshold value'],answer:'B',selected:null},
+
+  {id:17,text:'Why does the Sobel operator often provide smoother edges than Roberts?',choices:['A) It uses larger neighborhoods with weighted center pixels','B) It ignores vertical gradients','C) It avoids convolution','D) It uses thresholding only'],answer:'A',selected:null}
 ];
 
 /* ------------------ SETTINGS ------------------ */

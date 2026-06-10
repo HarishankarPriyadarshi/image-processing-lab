@@ -733,7 +733,7 @@
       <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
         <div class="px-4 py-3" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
           <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
-            To study the Load Characteristics of DC shunt generator
+            Derivative-Based Edge Detection
           </h1>
         </div>
       </div>
@@ -809,29 +809,47 @@
 
 <script>
 /* ------------------ 20 QUESTIONS ------------------ */
- const questions = [
-  {id:1,text:'DC shunt generator has terminal voltage versus load current characteristic which is',choices:['A. Constant','B. Slightly drooping','C. Slightly rising','D. Highly drooping'],answer:'B',selected:null},
-  {id:2,text:'Which dc generator gives constant output voltage at all loads?',choices:['A. Shunt generator','B. Series generator','C. Short shunt compound generator','D. Level compound generator'],answer:'D',selected:null},
-  {id:3,text:'In a DC shunt generator, the shunt field current mainly depends on:',choices:['A. Load current','B. Terminal voltage','C. Armature resistance','D. Speed only'],answer:'B',selected:null},
-  {id:4,text:'When a DC shunt generator is loaded, which loss increases significantly with load current?',choices:['A. Iron loss','B. Mechanical loss','C. Armature copper loss','D. Field copper loss'],answer:'C',selected:null},
-  {id:5,text:'The voltage regulation of a DC shunt generator is defined as:',choices:['A.  Change in speed from no-load to full-load','B. Ratio of generated emf to terminal voltage','C. Percentage change in terminal voltage from no-load to full-load','D. Ratio of load current to field current'],answer:'C',selected:null},
-  {id:6,text:'Main function of DC generator is:',choices:['A) Convert electrical→mechanical','B) Convert mechanical→electrical','C) Step up voltage','D) Step down current'],answer:'B',selected:null},
-  {id:7,text:'Field winding of DC shunt generator is connected:',choices:['A) In series','B) In parallel','C) Across load','D) In series with load'],answer:'B',selected:null},
-  {id:8,text:'Generated emf in DC generator:',choices:['A) E=V+IaRa','B) E=kΦN','C) E=V/I','D) E=P/I'],answer:'B',selected:null},
-  {id:9,text:'Armature reaction causes:',choices:['A) Increase flux','B) Decrease flux','C) No effect','D) Constant emf'],answer:'B',selected:null},
-  {id:10,text:'Load characteristic of DC shunt generator is:',choices:['A) Ia–If','B) V–IL','C) IL–speed','D) torque–speed'],answer:'B',selected:null},
-  {id:11,text:'As load current increases terminal voltage:',choices:['A) Increases','B) Decreases','C) Constant','D) Zero'],answer:'B',selected:null},
-  {id:12,text:'Drop in terminal voltage due to:',choices:['A) Armature reaction + resistance','B) Commutator resistance','C) Eddy current','D) Field resistance'],answer:'A',selected:null},
-  {id:13,text:'Residual magnetism needed for:',choices:['A) Commutation','B) Self-excitation','C) Speed control','D) Field regulation'],answer:'B',selected:null},
-  {id:14,text:'OCC curve represents:',choices:['A) V vs If (constant speed)','B) V vs IL','C) I vs R','D) torque vs speed'],answer:'A',selected:null},
-  {id:15,text:'Internal characteristic shows:',choices:['A) Eg–If','B) V–If','C) Eg–Ia','D) V–Ia'],answer:'C',selected:null},
-  {id:16,text:'External characteristic shows:',choices:['A) Eg–If','B) V–IL','C) Eg–Ia','D) torque–speed'],answer:'B',selected:null},
-  {id:17,text:'Losses in DC generator:',choices:['A) Copper','B) Iron','C) Mechanical','D) All'],answer:'D',selected:null},
-  {id:18,text:'Load test determines:',choices:['A) Armature efficiency','B) Speed regulation','C) Load characteristics','D) Field efficiency'],answer:'C',selected:null},
-  {id:19,text:'Field current in DC shunt generator is:',choices:['A) Constant','B) Depends on speed','C) Depends on load','D) Zero'],answer:'C',selected:null},
-  {id:20,text:'Terminal voltage at full load:',choices:['A) = Eg','B) > Eg','C) < Eg','D) Independent'],answer:'C',selected:null},
-];
+const questions = [
+  {id:1,text:'What is the primary purpose of image segmentation in image processing?',choices:['A) Compress an image to reduce file size','B) Divide an image into regions corresponding to different objects or parts of objects','C) Enhance the overall brightness and contrast of an image','D) Convert a colour image to a binary black-and-white image'],answer:'B',selected:null},
 
+  {id:2,text:'In image processing, the gradient ∇f(x,y) is defined as:',choices:['A) A scalar representing average pixel intensity across the image','B) A vector pointing in the direction of the greatest rate of increase of intensity','C) The second-order partial derivative of the image function','D) The discrete Fourier transform of the image'],answer:'B',selected:null},
+
+  {id:3,text:'The gradient magnitude |∇f(x,y)| is correctly computed as:',choices:['A) ∂f/∂x + ∂f/∂y','B) (∂f/∂x) × (∂f/∂y)','C) √((∂f/∂x)² + (∂f/∂y)²)','D) ∂²f/∂x² + ∂²f/∂y²'],answer:'C',selected:null},
+
+  {id:4,text:'The direction (angle) of the gradient θ(x,y) is given by:',choices:['A) tan⁻¹(∂f/∂x / ∂f/∂y)','B) sin⁻¹(∂f/∂y / ∂f/∂x)','C) tan⁻¹(∂f/∂y / ∂f/∂x)','D) cos⁻¹(∂f/∂x / ∂f/∂y)'],answer:'C',selected:null},
+
+  {id:5,text:'Which of the following is NOT one of the standard steps in edge detection?',choices:['A) Filtering','B) Enhancement','C) Compression','D) Detection'],answer:'C',selected:null},
+
+  {id:6,text:'The Filtering step in edge detection is primarily used to:',choices:['A) Detect zero-crossings of the second derivative','B) Improve edge detector performance with respect to noise','C) Compute gradient magnitude for all pixels','D) Locate edges with sub-pixel accuracy'],answer:'B',selected:null},
+
+  {id:7,text:'The Roberts cross operator computes the gradient about:',choices:['A) The exact pixel location [i, j]','B) The centre of a 3×3 neighbourhood','C) An interpolated point [i + 1/2, j + 1/2]','D) The four corner pixels of the image'],answer:'C',selected:null},
+
+  {id:8,text:'The kernel size used in the Roberts cross operator is:',choices:['A) 1×2','B) 3×3','C) 5×5','D) 2×2'],answer:'D',selected:null},
+
+  {id:9,text:'The Sobel kernel Sx (detecting horizontal intensity changes) is:',choices:['A) [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]','B) [[-1, -2, -1], [0, 0, 0], [1, 2, 1]]','C) [[1, 0, -1], [1, 0, -1], [1, 0, -1]]','D) [[0, 1, 0], [1, -4, 1], [0, 1, 0]]'],answer:'A',selected:null},
+
+  {id:10,text:'The Prewitt kernel Sx for detecting horizontal intensity changes is:',choices:['A) [[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]]','B) [[-1, 0, 1], [-1, 0, 1], [-1, 0, 1]]','C) [[-3, 0, 3], [-10, 0, 10], [-3, 0, 3]]','D) [[0, 1, 0], [1, -4, 1], [0, 1, 0]]'],answer:'B',selected:null},
+
+  {id:11,text:'The Laplacian operator belongs to which category of edge detectors?',choices:['A) First-order derivative','B) Morphological operators','C) Second-order derivative','D) Frequency-domain operators'],answer:'C',selected:null},
+
+  {id:12,text:'The mathematical formula for the Laplacian ∇²f(x,y) is:',choices:['A) ∂f/∂x + ∂f/∂y','B) √(∂²f/∂x² + ∂²f/∂y²)','C) ∂²f/∂x² + ∂²f/∂y²','D) (∂f/∂x)² + (∂f/∂y)²'],answer:'C',selected:null},
+
+  {id:13,text:'Second-order derivative edge operators detect edge points by identifying:',choices:['A) Local maxima in gradient magnitude only','B) Zero crossings of the second derivative','C) Regions with intensity above a fixed global threshold','D) The direction of minimum intensity change'],answer:'B',selected:null},
+
+  {id:14,text:'The Enhancement step in edge detection emphasises:',choices:['A) Pixels in low-frequency background regions','B) Pixels where there is a significant change in local intensity values via gradient magnitude','C) Pixels with the highest absolute intensity in the image','D) Pixels that lie on straight lines only'],answer:'B',selected:null},
+
+  {id:15,text:'A good image segmentation requires that pixels in the same category:',choices:['A) Have widely different grey-scale values','B) Are spatially disconnected from each other','C) Have similar grey-scale values and form a connected region','D) Be located only at image boundaries'],answer:'C',selected:null},
+
+  {id:16,text:'Which edge detection operator places the greatest emphasis on pixels closest to the centre of the mask?',choices:['A) Roberts','B) Prewitt','C) Laplacian','D) Sobel'],answer:'D',selected:null},
+
+  {id:17,text:'The trade-off present in the Filtering step of edge detection is between:',choices:['A) Spatial resolution and colour depth','B) Edge strength and noise reduction','C) Processing speed and memory usage','D) Image file size and visual quality'],answer:'B',selected:null},
+
+  {id:18,text:'What is the Localization step in edge detection concerned with?',choices:['A) Applying gradient magnitude thresholds','B) Computing the second derivative of the image','C) Estimating edge location with sub-pixel resolution and determining edge orientation','D) Smoothing the image prior to gradient computation'],answer:'C',selected:null},
+
+  {id:19,text:'Kernel X (Sx) in first-order derivative operators primarily detects intensity changes in which direction?',choices:['A) Vertical direction (y-axis)','B) Diagonal direction (45°)','C) Circular (radial) direction','D) Horizontal direction (x-axis)'],answer:'D',selected:null},
+
+  {id:20,text:'Edge detection helps reduce image complexity primarily because it:',choices:['A) Increases image resolution and pixel density','B) Preserves all original colour information intact','C) Removes unwanted and unnecessary information, making the image easier to analyse','D) Applies lossless compression to all pixel values'],answer:'C',selected:null}
+];
 /* ------------------ SETTINGS ------------------ */
 const size = 5; // number of questions shown per refresh
 const container = document.getElementById("mcq-container");
