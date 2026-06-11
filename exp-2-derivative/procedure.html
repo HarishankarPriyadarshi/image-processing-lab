@@ -670,7 +670,7 @@
 <body class="bg-gray-50 min-h-screen">
 
   <!-- HEADER -->
-    <header class="vl-header shadow-xl fixed top-0 left-0 right-0 z-50">
+    <header class="vl-header shadow-xl fixed top-0 left-0 right-0 z-[1000]">
     <div class="header-inner px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between py-1 w-full">
         <!-- Logo Section - Absolute Left Corner -->
@@ -716,9 +716,9 @@
     </div>
   </header>
 
- <div class="flex pt-16 min-h-screen">
+ <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-       <aside id="sidebar" class="vl-sidebar w-64 fixed inset-y-0 left-0 z-50 overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pt-20 lg:pt-6 pb-6">
+       <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -903,45 +903,27 @@
     }
   </style>
 
-  <section class="procedure-section">
+ <section class="procedure-section">
 
     <h2>Procedure</h2>
 
     <h3>For Derivative Based Edge Detection</h3>
 
-    <ol>
-      <li>
-        Select an image from the available sample images or upload your own image using the
-        <b>Upload File</b> button.
-      </li>
+    <p><b>Step 1:</b> Select an image from the available sample images or upload your own image using the <b>Upload File</b> button.</p>
 
-      <li>
-        Choose the desired derivative order from the available options.
-      </li>
+    <p><b>Step 2:</b> Choose the desired <b>Derivative Order</b> from the available options.</p>
 
-      <li>
-        If <b>First Order Derivative</b> is selected, choose the required filter such as
-        <b>Sobel</b>, <b>Prewitt</b>, or <b>Robert</b>.
-      </li>
+    <p><b>Step 3:</b> If <b>First Order Derivative</b> is selected, choose the required filter such as <b>Sobel</b>, <b>Prewitt</b>, or <b>Robert</b>.</p>
 
-      <li>
-        If <b>Second Order Derivative</b> is selected, select the required kernel size.
-      </li>
+    <p><b>Step 4:</b> If <b>Second Order Derivative</b> is selected, select the required kernel size.</p>
 
-      <li>
-        After selecting all required parameters, click on the <b>Process</b> button.
-      </li>
+    <p><b>Step 5:</b> After selecting all required parameters, click on the <b>Process</b> button.</p>
 
-      <li>
-        The processed edge-detected image will be displayed on the output screen.
-      </li>
+    <p><b>Step 6:</b> The processed edge-detected image will be displayed on the output screen.</p>
 
-      <li>
-        Click on the <b>Print</b> button to print or save the result.
-      </li>
-    </ol>
+    <p><b>Step 7:</b> Click on the <b>Print</b> button to print or save the result.</p>
 
-  </section>
+</section>
 
 </section>
 </section>

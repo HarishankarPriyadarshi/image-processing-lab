@@ -580,7 +580,7 @@
 <body class="bg-gray-50 min-h-screen">
 
   <!-- HEADER -->
-    <header class="vl-header shadow-xl fixed top-0 left-0 right-0 z-50">
+    <header class="vl-header shadow-xl fixed top-0 left-0 right-0 z-[1000]">
     <div class="header-inner px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between py-1 w-full">
         <!-- Logo Section - Absolute Left Corner -->
@@ -626,9 +626,9 @@
     </div>
   </header>
 
- <div class="flex pt-16 min-h-screen">
+ <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed inset-y-0 left-0 z-50 overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pt-20 lg:pt-6 pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -1090,16 +1090,22 @@
     </div>
   </div>
 
-  <p>Where:</p>
+ <div style="width: 100%; text-align: center;">
+  <div style="display: inline-block; text-align: left;">
+    <p style="text-align: center !important; margin: 0 0 10px 0;">
+      Where:
+    </p>
 
-  <ul>
-    <li>
-      <b>∂f/∂x:</b> The partial derivative in the horizontal direction, also called gradient in x-direction.
-    </li>
-    <li>
-      <b>∂f/∂y:</b> The partial derivative in the vertical direction, also called gradient in y-direction.
-    </li>
-  </ul>
+    <ul style="text-align: left; margin: 0; padding-left: 20px;">
+      <li>
+        <b>∂f/∂x:</b> The partial derivative in the horizontal direction, (gradient in x-direction).
+      </li>
+      <li>
+        <b>∂f/∂y:</b> The partial derivative in the vertical direction, (gradient in y-direction).
+      </li>
+    </ul>
+  </div>
+</div>
 
   <p>The magnitude of the gradient is given by:</p>
 
@@ -1137,7 +1143,7 @@
     </div>
   </div>
 
-  <p>And the direction angle of the gradient is:</p>
+  <p>And the direction (angle) of the gradient is:</p>
 
   <div class="formula-box">
     <div class="math-formula">
@@ -1459,22 +1465,7 @@
     </li>
   </ol>
 
-  <h3>3. Canny Edge Detector</h3>
-
-  <p>
-    Canny edge detector is a Gaussian-based edge detection method.
-    It is more accurate than simple gradient-based methods because it reduces noise before detecting edges.
-    It uses smoothing, gradient calculation, non-maximum suppression, and thresholding to detect strong and weak edges.
-  </p>
-
-  <h3>4. Morphological Operations</h3>
-
-  <p>
-    Morphological operations are image processing techniques based on the shape and structure of objects in an image.
-    These operations are commonly used for extracting boundaries, removing small noise, filling gaps, and improving the detected edges.
-  </p>
-
-  <h3>Comparison of Edge Detectors</h3>
+     <h3>Comparison of Edge Detectors</h3>
 
   <table class="comparison-table">
     <thead>
