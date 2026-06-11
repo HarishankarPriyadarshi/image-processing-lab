@@ -727,7 +727,7 @@
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
         <span>></span>
-        <a href="#" class="hover:text-blue-600">Sampling and Quantization</a>
+        <a href="#" class="hover:text-blue-600">Canny Edge Detection</a>
         <span>></span>
         <span class="text-gray-800 font-medium">Posttest</span>
       </nav>
@@ -735,7 +735,7 @@
       <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
         <div class="px-4 py-3" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
           <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
-            Sampling and Quantization
+            Canny Edge Detection
           </h1>
         </div>
       </div>
@@ -814,45 +814,47 @@
 <script>
 /* ------------------ 20 QUESTIONS ------------------ */
 const questions = [
-  {id:1,text:'In the sampling experiment, the main purpose of changing the scale factor is to study:',choices:['A) Image compression ratio','B) Change in spatial resolution','C) Change in color depth','D) Change in file format'],answer:'B',selected:null},
 
-  {id:2,text:'When the scale factor is set below 1, the image generally becomes:',choices:['A) Larger and sharper','B) Smaller with reduced detail','C) Color inverted','D) Binary'],answer:'B',selected:null},
+{id:1,text:'Given gradient components P[i,j] = 3 and Q[i,j] = 4, compute the gradient magnitude M[i,j].',choices:['A) 7','B) 3.5','C) 5','D) 12'],answer:'C',selected:null},
 
-  {id:3,text:'Which interpolation method is the fastest and simplest in the simulation?',choices:['A) Cubic','B) Linear','C) Nearest','D) Bilinear'],answer:'C',selected:null},
+{id:2,text:'If P[i,j] = 0 and Q[i,j] = 5, the gradient direction θ = arctan(5/0) resolves to which quantized angle?',choices:['A) 0 degrees','B) 45 degrees','C) 90 degrees','D) 135 degrees'],answer:'C',selected:null},
 
-  {id:4,text:'Linear interpolation is also known as:',choices:['A) Bicubic interpolation','B) Bilinear interpolation','C) Nearest interpolation','D) Median interpolation'],answer:'B',selected:null},
+{id:3,text:'A gradient direction of 22° falls into which quantized direction bin?',choices:['A) 0 degrees','B) 45 degrees','C) 90 degrees','D) 135 degrees'],answer:'A',selected:null},
 
-  {id:5,text:'Cubic interpolation generally gives:',choices:['A) The lowest quality output','B) The most blocky result','C) Better smoothness and visual quality','D) No change in image size'],answer:'C',selected:null},
+{id:4,text:'For a quantized gradient direction of 90 degrees, NMS compares the pixel against its:',choices:['A) Left and right neighbours','B) Top-left and bottom-right neighbours','C) Top and bottom neighbours','D) Top-right and bottom-left neighbours'],answer:'C',selected:null},
 
-  {id:6,text:'If the scale factor is 2, the output image size will usually be:',choices:['A) Half of the original size','B) Same as original size','C) Double in each dimension','D) Zero'],answer:'C',selected:null},
+{id:5,text:'For a quantized gradient direction of 135 degrees, NMS compares the pixel against its:',choices:['A) Top and bottom neighbours','B) Left and right neighbours','C) Top-right and bottom-left neighbours','D) Top-left and bottom-right neighbours'],answer:'D',selected:null},
 
-  {id:7,text:'The sampling experiment mainly demonstrates the effect of changing:',choices:['A) Intensity values','B) Pixel spacing','C) File extension','D) Image brightness only'],answer:'B',selected:null},
+{id:6,text:'A gradient magnitude matrix after NMS has a centre pixel value of 200. With low threshold = 50 and high threshold = 150, classify the centre pixel:',choices:['A) Weak edge','B) Suppressed (zero)','C) Strong edge','D) Cannot classify'],answer:'C',selected:null},
 
-  {id:8,text:'Which of the following is a correct observation when an image is downsampled?',choices:['A) More pixels are added','B) Spatial detail decreases','C) Bit depth increases','D) The image becomes binary'],answer:'B',selected:null},
+{id:7,text:'A pixel after NMS has magnitude 100. With low threshold = 120 and high threshold = 200, it is classified as:',choices:['A) Strong edge','B) Weak edge','C) Suppressed','D) Local maximum'],answer:'C',selected:null},
 
-  {id:9,text:'Why is interpolation needed in resizing an image?',choices:['A) To remove the file header','B) To estimate pixel values at new positions','C) To convert RGB to CMYK','D) To increase file size'],answer:'B',selected:null},
+{id:8,text:'After double thresholding, a weak edge pixel is connected only to other weak edge pixels (no strong neighbours). In the final edge map it is:',choices:['A) Retained as a weak edge','B) Promoted to a strong edge','C) Removed from the edge map','D) Set to the low threshold value'],answer:'C',selected:null},
 
-  {id:10,text:'Which method is usually preferred for high-quality enlargement of photographs?',choices:['A) Nearest','B) Linear','C) Cubic','D) Thresholding'],answer:'C',selected:null},
+{id:9,text:'What is the effect on the final edge map if BOTH thresholds are set very HIGH?',choices:['A) More edges detected, including noisy false edges','B) Fewer edges detected; only very strong gradient regions survive','C) Gaussian smoothing becomes ineffective','D) NMS step is automatically skipped'],answer:'B',selected:null},
 
-  {id:11,text:'Using the formula L = 2^n, how many bits per pixel are required to represent exactly 64 distinct grey levels?',choices:['A) 4 bits','B) 5 bits','C) 6 bits','D) 7 bits'],answer:'C',selected:null},
+{id:10,text:'In the simulation, setting low threshold = 0 and high threshold = 255 produces:',choices:['A) All gradient pixels classified as strong edges','B) Almost all gradient pixels become weak edges and most are suppressed during hysteresis due to lack of strong anchors','C) No change from default settings','D) All pixels detected as edges'],answer:'B',selected:null},
 
-  {id:12,text:'A 512×512 pixel image is quantized at 2 bits per pixel. What is the total number of bits required to store this image (ignoring any header or compression)?',choices:['A) 262,144 bits','B) 524,288 bits','C) 1,048,576 bits','D) 2,097,152 bits'],answer:'B',selected:null},
+{id:11,text:'In the simulation, selecting Gauss On with a 7×7 kernel versus a 3×3 kernel will:',choices:['A) Produce sharper edges with finer detail','B) Apply stronger smoothing, potentially blurring fine edges','C) Detect more edges because more pixels are included','D) Run faster due to the larger kernel'],answer:'B',selected:null},
 
-  {id:13,text:'In the quantization tab, bit depth controls:',choices:['A) Spatial resolution','B) Number of intensity levels','C) Image dimensions','D) Sampling frequency'],answer:'B',selected:null},
+{id:12,text:'When Gauss On is selected in the simulation and the image is processed, the output panel displays:',choices:['A) Only the final edge-detected image','B) The Gaussian-blurred image and the Canny edge image placed side by side','C) The original image and the edge image side by side','D) Three images: original, blurred, and edge-detected'],answer:'B',selected:null},
 
-  {id:14,text:'A 2-bit quantized image can represent:',choices:['A) 2 levels','B) 4 levels','C) 8 levels','D) 16 levels'],answer:'B',selected:null},
+{id:13,text:'Which sequence correctly describes the full Canny pipeline as implemented in the simulation?',choices:['A) Colour image -> Gradient (Sobel) -> NMS -> Double thresholding -> Hysteresis','B) Colour image -> Grayscale -> (Optional Gaussian) -> Canny (Gradient, NMS, Thresholding, Hysteresis) -> Edge map','C) Colour image -> Grayscale -> Double thresholding -> NMS -> Edge map','D) Colour image -> Gaussian -> Double thresholding -> Gradient -> Edge map'],answer:'B',selected:null},
 
-  {id:15,text:'The default 8-Bit quantization in the simulation produces how many intensity levels, and why is this considered perceptually adequate for most images?',choices:['A) 64 levels — sufficient for binary images','B) 128 levels — matches the human eye dynamic range','C) 256 levels — sufficient for the human eye to perceive smooth gradients','D) 512 levels — required for HDR imaging'],answer:'C',selected:null},
+{id:14,text:'Compared to the simple Sobel edge detector, the Canny algorithm provides:',choices:['A) Faster computation with the same edge quality','B) Thinner, more precise edges through NMS and better noise handling through hysteresis','C) Detection without requiring gradient computation','D) Direct operation on colour images'],answer:'B',selected:null},
 
-  {id:16,text:'A higher bit depth generally gives:',choices:['A) Fewer gray levels','B) More gray levels and smoother tone transitions','C) Blockier output','D) Lower spatial resolution'],answer:'B',selected:null},
+{id:15,text:'Why is the Roberts cross operator considered more noise-sensitive than Sobel?',choices:['A) It is computationally slower','B) It uses only a 2×2 kernel, providing little noise averaging','C) It only detects horizontal edges','D) It requires Gaussian pre-smoothing to function correctly'],answer:'B',selected:null},
 
-  {id:17,text:'The banding effect in a low-bit image is also called:',choices:['A) Aliasing','B) Posterization','C) Blurring','D) Upsampling'],answer:'B',selected:null},
+{id:16,text:'The Laplacian of Gaussian (LoG) detector differs from Canny primarily because LoG uses:',choices:['A) First-order derivatives for edge localisation','B) Second-order derivatives and detects edges at zero-crossings','C) No smoothing step','D) Hysteresis edge tracking'],answer:'B',selected:null},
 
-  {id:18,text:'Which image will show quantization banding most clearly?',choices:['A) Binary logo','B) Smooth gradient image','C) Text file','D) Noisy spreadsheet image'],answer:'B',selected:null},
+{id:17,text:'In the Canny theory, the formula P[i,j] = (S[i,j+1] − S[i,j] + S[i+1,j+1] − S[i+1,j]) / 2 computes:',choices:['A) The y-partial derivative of the smoothed image','B) The x-partial derivative averaged over a 2×2 square','C) The Gaussian kernel value at position [i,j]','D) The gradient magnitude at position [i,j]'],answer:'B',selected:null},
 
-  {id:19,text:'Sampling and quantization together are used to create:',choices:['A) A continuous analog image','B) A digital image','C) A compressed video','D) A binary signal only'],answer:'B',selected:null},
+{id:18,text:'The gradient magnitude formula M[i,j] = √(P² + Q²) is the L2 norm. An L1 approximation replaces this with:',choices:['A) M = P × Q','B) M = |P| + |Q|','C) M = max(P,Q)','D) M = (P + Q)/2'],answer:'B',selected:null},
 
-  {id:20,text:'The overall objective of this simulation is to understand how changing sampling and quantization affects:',choices:['A) Network speed','B) Image quality','C) Keyboard input','D) File names'],answer:'B',selected:null}
+{id:19,text:'If Gaussian smoothing is skipped (Gauss Off) before applying Canny to a noisy image, the expected result is:',choices:['A) Cleaner, better-localised edges','B) More false edges and fragmented detections due to noise','C) Faster but identical edge quality','D) All edges suppressed by NMS'],answer:'B',selected:null},
+
+{id:20,text:'A gradient direction of 70° is quantized to:',choices:['A) 0°','B) 45°','C) 90°','D) 135°'],answer:'C',selected:null},
+
 ];
 
 /* ------------------ SETTINGS ------------------ */

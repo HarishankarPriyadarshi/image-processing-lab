@@ -727,7 +727,7 @@
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
         <span>></span>
-        <a href="#" class="hover:text-blue-600">Sampling and Quantization</a>
+        <a href="#" class="hover:text-blue-600">Canny Edge Detection</a>
         <span>></span>
         <span class="text-gray-800 font-medium">Pretest</span>
       </nav>
@@ -735,7 +735,7 @@
       <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
         <div class="px-4 py-3" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
           <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
-            Sampling and Quantization
+            Canny Edge Detection
           </h1>
         </div>
       </div>
@@ -812,45 +812,46 @@
 <script>
 /* ------------------ 20 QUESTIONS ------------------ */
  const questions = [
-  {id:1,text:'What is the primary purpose of image sampling?',choices:['A) Reduce image brightness','B) Convert a continuous image into discrete pixels','C) Increase image size','D) Remove noise'],answer:'B',selected:null},
 
-  {id:2,text:'Sampling mainly affects which property of a digital image?',choices:['A) Color depth','B) Spatial resolution','C) Compression ratio','D) Brightness'],answer:'B',selected:null},
+{id:1,text:'What is the primary purpose of the Canny edge detection algorithm in image processing?',choices:['A) To enhance colour saturation in digital images','B) To detect boundaries between regions by identifying significant intensity changes','C) To compress image data for faster transmission','D) To convert colour images into binary format directly'],answer:'B',selected:null},
 
-  {id:3,text:'A higher sampling rate generally results in:',choices:['A) Lower resolution','B) Better image detail','C) More quantization error','D) Smaller image size'],answer:'B',selected:null},
+{id:2,text:'The Canny edge detector is mathematically described as the first derivative of a:',choices:['A) Laplacian operator','B) Sobel kernel','C) Gaussian function','D) Median filter'],answer:'C',selected:null},
 
-  {id:4,text:'According to the Nyquist theorem, the sampling frequency should be at least:',choices:['A) Equal to the highest frequency','B) Half the highest frequency','C) Twice the highest frequency','D) Four times the highest frequency'],answer:'C',selected:null},
+{id:3,text:'Which of the following correctly represents the complete order of steps in the Canny algorithm?',choices:['A) Gradient computation -> Smoothing -> NMS -> Thresholding -> Hysteresis','B) Smoothing -> Gradient computation -> NMS -> Double thresholding -> Hysteresis','C) Smoothing -> Thresholding -> NMS -> Gradient -> Hysteresis','D) NMS -> Smoothing -> Gradient -> Hysteresis -> Thresholding'],answer:'B',selected:null},
 
-  {id:5,text:'What occurs when an image is sampled below the Nyquist rate?',choices:['A) Sharpening','B) Aliasing','C) Enhancement','D) Segmentation'],answer:'B',selected:null},
+{id:4,text:'Why is Gaussian smoothing applied before gradient computation in the Canny algorithm?',choices:['A) To increase image resolution','B) To reduce noise and prevent noise pixels from being falsely detected as edges','C) To convert the image from colour to grayscale','D) To compute gradient magnitude faster'],answer:'B',selected:null},
 
-  {id:6,text:'Which of the following is an example of aliasing?',choices:['A) Smooth shading','B) Moiré patterns','C) Increased contrast','D) Histogram equalization'],answer:'B',selected:null},
+{id:5,text:'What does the parameter sigma (σ) control in the Gaussian filter?',choices:['A) The number of detected edges','B) The degree of smoothing applied to the image','C) The gradient direction','D) The double threshold ratio'],answer:'B',selected:null},
 
-  {id:7,text:'Quantization is the process of:',choices:['A) Increasing image resolution','B) Selecting pixels','C) Mapping continuous intensity values into discrete levels','D) Rotating an image'],answer:'C',selected:null},
+{id:6,text:'What is the general effect of choosing a larger Gaussian kernel size?',choices:['A) Less smoothing and preservation of fine edge details','B) Stronger smoothing that may blur fine edges','C) No change in edge detection output','D) Faster computation speed'],answer:'B',selected:null},
 
-  {id:8,text:'The number of bits used to represent pixel intensity is called:',choices:['A) Sampling rate','B) Spatial frequency','C) Bit depth','D) Pixel density'],answer:'C',selected:null},
+{id:7,text:'What does gradient magnitude M[i,j] represent in edge detection?',choices:['A) The colour value of a pixel','B) The strength of the intensity change at a pixel location','C) The distance between two detected edges','D) The number of edge pixels in a region'],answer:'B',selected:null},
 
-  {id:9,text:'An 8-bit grayscale image can represent:',choices:['A) 16 levels','B) 64 levels','C) 128 levels','D) 256 levels'],answer:'D',selected:null},
+{id:8,text:'Which mathematical function is used to compute gradient direction theta from P and Q?',choices:['A) Sine function','B) Cosine function','C) Two-argument arctangent function (arctan)','D) Square root function'],answer:'C',selected:null},
 
-  {id:10,text:'Increasing quantization levels will generally:',choices:['A) Improve image quality','B) Reduce image quality','C) Reduce resolution','D) Cause aliasing'],answer:'A',selected:null},
+{id:9,text:'Why are gradient directions quantized to discrete angles before Non-Maximum Suppression?',choices:['A) To speed up the Gaussian smoothing step','B) To enable comparison with a finite set of pixel neighbours in a discrete grid','C) To convert the image to a binary format','D) To reduce gradient magnitude values'],answer:'B',selected:null},
 
-  {id:11,text:'Lower quantization levels may cause:',choices:['A) Better contrast','B) False contouring','C) Increased resolution','D) Noise removal'],answer:'B',selected:null},
+{id:10,text:'What is the purpose of Non-Maximum Suppression (NMS) in the Canny algorithm?',choices:['A) To remove all pixels with low gradient magnitude indiscriminately','B) To thin edges by retaining only local maxima along the gradient direction','C) To eliminate Gaussian smoothing artefacts','D) To classify pixels into strong and weak edge categories'],answer:'B',selected:null},
 
-  {id:12,text:'Which process affects intensity representation?',choices:['A) Quantization','B) Sampling','C) Interpolation','D) Cropping'],answer:'A',selected:null},
+{id:11,text:'Which mathematical expression is used to calculate gradient magnitude?',choices:['A) (Gx + Gy)','B) (Gx - Gy)','C) √(Gx² + Gy²)','D) (Gx × Gy)'],answer:'C',selected:null},
 
-  {id:13,text:'Which application requires high-quality sampling and quantization for diagnosis?',choices:['A) Gaming','B) Medical Imaging','C) Social Media','D) Animation'],answer:'B',selected:null},
+{id:12,text:'During NMS, in which direction are neighbouring pixels compared to determine local maxima?',choices:['A) Perpendicular to the gradient direction','B) Along the gradient direction','C) Horizontally only','D) Along the image diagonal regardless of gradient'],answer:'B',selected:null},
 
-  {id:14,text:'Which artifact appears due to insufficient quantization levels?',choices:['A) Motion Blur','B) False Contouring','C) Edge Detection','D) Thresholding'],answer:'B',selected:null},
+{id:13,text:'What is the role of Double Thresholding in the Canny algorithm?',choices:['A) To apply Gaussian blur in two passes','B) To classify pixels as strong edge, weak edge, or non-edge using two threshold values','C) To compute gradients in both x and y directions simultaneously','D) To convert the grayscale image to binary in two steps'],answer:'B',selected:null},
 
-  {id:15,text:'The process of converting an analog image into digital form requires:',choices:['A) Sampling and Quantization','B) Compression and Encryption','C) Filtering and Sharpening','D) Cropping and Scaling'],answer:'A',selected:null},
+{id:14,text:'A pixel is classified as a strong edge when its gradient magnitude is:',choices:['A) Below the low threshold','B) Between the low threshold and the high threshold','C) Above the high threshold','D) Equal to zero'],answer:'C',selected:null},
 
-  {id:16,text:'Which statement is correct?',choices:['A) Sampling affects resolution; quantization affects intensity levels.','B) Sampling affects intensity; quantization affects resolution.','C) Both affect only file size.','D) Neither affects image quality.'],answer:'A',selected:null},
+{id:15,text:'A pixel is classified as a weak edge when its gradient magnitude is:',choices:['A) Above the high threshold','B) Below the low threshold','C) Between the low threshold and the high threshold','D) Exactly equal to the high threshold'],answer:'C',selected:null},
 
-  {id:17,text:'Which component of a digital image is affected by sampling?',choices:['A) Spatial information','B) File name','C) Metadata','D) Image format'],answer:'A',selected:null},
+{id:16,text:'What is Hysteresis in the context of the Canny edge detection algorithm?',choices:['A) A technique to increase image contrast','B) A process that links weak edge pixels to nearby strong edge pixels to form continuous edges','C) A method to apply Gaussian blur iteratively','D) A technique to compute gradient direction'],answer:'B',selected:null},
 
-  {id:18,text:'A digital image with more pixels generally has:',choices:['A) Lower resolution','B) Higher spatial resolution','C) Lower bit depth','D) Fewer details'],answer:'B',selected:null},
+{id:17,text:'In a digital image, an edge is best described as:',choices:['A) A region of perfectly uniform pixel intensity','B) A boundary location where pixel intensity changes significantly','C) A pixel with value 0 (black)','D) A perfectly horizontal or vertical line of pixels'],answer:'B',selected:null},
 
-  {id:19,text:'What is the minimum number of bits required to represent 16 intensity levels?',choices:['A) 2','B) 3','C) 4','D) 8'],answer:'C',selected:null},
+{id:18,text:'In an 8-bit grayscale image, what is the valid range of pixel values?',choices:['A) 0 to 127','B) 0 to 255','C) -128 to 127','D) 1 to 256'],answer:'B',selected:null},
 
-  {id:20,text:'An image represented with 1-bit depth can display:',choices:['A) 2 intensity levels','B) 4 intensity levels','C) 8 intensity levels','D) 16 intensity levels'],answer:'A',selected:null},
+{id:19,text:'Which of the following is NOT a step in the Canny edge detection algorithm?',choices:['A) Gaussian smoothing','B) Non-Maximum Suppression','C) Histogram Equalisation','D) Hysteresis Edge Tracking'],answer:'C',selected:null},
+
+{id:20,text:'The gradient direction is generally calculated using:',choices:['A) tan⁻¹(Gx/Gy)','B) tan⁻¹(Gy/Gx)','C) (Gx + Gy)','D) (Gx² + Gy²)'],answer:'B',selected:null},
 
 ];
 
