@@ -814,39 +814,47 @@
 <script>
 /* ------------------ 20 QUESTIONS ------------------ */
 const questions = [
-  {id:1,text:'When a 3×3 Sobel kernel is applied via valid convolution (no padding) to a 7×7 binary image, the resulting gradient matrix dimensions are:',choices:['A) 7×7','B) 5×5','C) 6×6','D) 4×4'],answer:'B',selected:null},
 
-  {id:2,text:'If ΔX = 3 and ΔY = 4 at a pixel, the resultant gradient magnitude ΔG = √(ΔX² + ΔY²) equals:',choices:['A) 7','B) 3.5','C) 12','D) 5'],answer:'D',selected:null},
+{id:1,text:'When a 3×3 Sobel kernel is applied via valid convolution (no padding) to a 7×7 binary image, the resulting gradient matrix dimensions are:',choices:['A) 7×7','B) 5×5','C) 6×6','D) 4×4'],answer:'B',selected:null},
 
-  {id:3,text:'In the simulation, the normalisation formula applied to generate the resultant edge image pixel value is:',choices:['A) ΔG × 255 / MaxValue','B) ΔG / (MaxValue × 255)','C) ΔG + 255','D) ΔG × MaxValue / 255'],answer:'B',selected:null},
+{id:2,text:'If ΔX = 3 and ΔY = 4 at a pixel, the resultant gradient magnitude ΔG = √(ΔX² + ΔY²) equals:',choices:['A) 7','B) 3.5','C) 12','D) 5'],answer:'D',selected:null},
 
-  {id:4,text:'When the Roberts (2×2) kernel is applied to the 7×7 input image with valid convolution, the resulting gradient matrix size is:',choices:['A) 5×5','B) 7×7','C) 6×6','D) 4×4'],answer:'C',selected:null},
+{id:3,text:'In the simulation, the normalisation formula applied to generate the resultant edge image pixel value is:',choices:['A) ΔG × 255 / MaxValue','B) ΔG / (MaxValue × 255)','C) ΔG + 255','D) ΔG × MaxValue / 255'],answer:'B',selected:null},
 
-  {id:5,text:'How many element-wise multiplications are performed for each pixel window position during convolution with a 3×3 kernel?',choices:['A) 3','B) 6','C) 9','D) 12'],answer:'C',selected:null},
+{id:4,text:'When the Roberts (2×2) kernel is applied to the 7×7 input image with valid convolution, the resulting gradient matrix size is:',choices:['A) 5×5','B) 7×7','C) 6×6','D) 4×4'],answer:'C',selected:null},
 
-  {id:6,text:'In the simulation, when both ΔX and ΔY values at a particular pixel position are zero, this indicates:',choices:['A) The pixel lies on a strong edge boundary','B) The simulation has not yet reached that pixel position','C) The pixel is in a uniform/flat region with no intensity change','D) The kernel weights have been applied incorrectly'],answer:'C',selected:null},
+{id:5,text:'How many element-wise multiplications are performed for each pixel window position during convolution with a 3×3 kernel?',choices:['A) 3','B) 6','C) 9','D) 12'],answer:'C',selected:null},
 
-  {id:7,text:'The Laplacian operator uses an identical matrix for both Kernel X and Kernel Y in the simulation. The mathematical reason is:',choices:['A) The Laplacian is an isotropic second-order operator (∂²f/∂x² + ∂²f/∂y²) that treats all directions equally','B) It is a programming simplification with no rigorous mathematical basis','C) The Laplacian only operates in the horizontal direction','D) Both kernels cancel each other out in the final gradient computation'],answer:'A',selected:null},
+{id:6,text:'The Scharr Kernel X used in the simulation contains which distinctive centre-row values?',choices:['A) [-2, 0, 2]','B) [-10, 0, 10]','C) [-4, 0, 4]','D) [-8, 0, 8]'],answer:'B',selected:null},
 
-  {id:8,text:'After running the simulation with the Multiply (×) sign image and Sobel operator, where would the highest ΔG values be expected?',choices:['A) At the exact centre pixel of the 7×7 image','B) Along the diagonal edges of the X-shaped pattern','C) Uniformly distributed across all positions in the result matrix','D) Only at the four corners of the 7×7 grid'],answer:'B',selected:null},
+{id:7,text:'In the simulation, when both ΔX and ΔY values at a particular pixel position are zero, this indicates:',choices:['A) The pixel lies on a strong edge boundary','B) The simulation has not yet reached that pixel position','C) The pixel is in a uniform or flat region with no intensity change','D) The kernel weights have been applied incorrectly'],answer:'C',selected:null},
 
-  {id:9,text:'If a pixel has ΔX ≠ 0 and ΔY = 0, the detected edge at that pixel is oriented:',choices:['A) Horizontally — a gradient only in x means a horizontal edge','B) Vertically — a non-zero horizontal gradient detects a vertically oriented edge','C) Diagonally at 45°','D) Diagonally at 135°'],answer:'B',selected:null},
+{id:8,text:'The Laplacian operator uses an identical matrix for both Kernel X and Kernel Y in the simulation. The mathematical reason is:',choices:['A) The Laplacian is an isotropic second-order operator that treats all directions equally','B) It is a programming simplification with no rigorous mathematical basis','C) The Laplacian only operates in the horizontal direction','D) Both kernels cancel each other out in the final gradient computation'],answer:'A',selected:null},
 
-  {id:10,text:'Which of the following ΔX, ΔY pairs produces the strongest resultant gradient ΔG?',choices:['A) ΔX = 0, ΔY = 0 → ΔG = 0','B) ΔX = 1, ΔY = 1 → ΔG ≈ 1.41','C) ΔX = 3, ΔY = 4 → ΔG = 5','D) ΔX = 2, ΔY = 0 → ΔG = 2'],answer:'C',selected:null},
+{id:9,text:'After running the simulation with the Multiply (×) sign image and Sobel operator, where would the highest ΔG values be expected?',choices:['A) At the exact centre pixel of the 7×7 image','B) Along the diagonal edges of the X-shaped pattern','C) Uniformly distributed across all positions in the result matrix','D) Only at the four corners of the 7×7 grid'],answer:'B',selected:null},
 
-  {id:11,text:'In the simulation convolution step panel, the running sum displayed for Kernel X after each multiplication represents:',choices:['A) The final ΔX value for the entire result matrix','B) The cumulative sum of element-wise products computed so far within the current window position','C) The kernel weight at the current sliding position','D) The original image pixel intensity at that location'],answer:'B',selected:null},
+{id:10,text:'If a pixel has ΔX ≠ 0 and ΔY = 0, the detected edge at that pixel is oriented:',choices:['A) Horizontally','B) Vertically','C) Diagonally at 45°','D) Diagonally at 135°'],answer:'B',selected:null},
 
-  {id:12,text:'A student observes that the Prewitt result differs from the Sobel result on the same binary image. The key numerical difference in their kernels is:',choices:['A) Prewitt uses ±1 uniformly; Sobel doubles the centre row/column weights to ±2','B) Prewitt uses a 5×5 kernel; Sobel uses 3×3','C) Prewitt uses only positive weights; Sobel uses both positive and negative','D) Prewitt computes second-order derivatives, unlike Sobel'],answer:'A',selected:null},
+{id:11,text:'Which of the following ΔX, ΔY pairs produces the strongest resultant gradient ΔG?',choices:['A) ΔX = 0, ΔY = 0','B) ΔX = 1, ΔY = 1','C) ΔX = 3, ΔY = 4','D) ΔX = 2, ΔY = 0'],answer:'C',selected:null},
 
-  {id:13,text:'After normalisation by ΔG / (MaxValue × 255), the pixel carrying the maximum gradient value in the result matrix appears in the resultant edge image as:',choices:['A) Black (normalised intensity ≈ 0)','B) Grey (normalised intensity ≈ 0.5)','C) White (normalised intensity = 1.0, maximum brightness)','D) Red (indicating maximum gradient direction)'],answer:'C',selected:null},
+{id:12,text:'In the simulation convolution step panel, the running sum displayed for Kernel X after each multiplication represents:',choices:['A) The final ΔX value for the entire result matrix','B) The cumulative sum of element-wise products computed so far within the current window position','C) The kernel weight at the current sliding position','D) The original image pixel intensity at that location'],answer:'B',selected:null},
 
-  {id:14,text:'Why does the Sobel operator often provide smoother edges than Roberts?',choices:['A) It uses larger neighborhoods with weighted center pixels','B) It ignores vertical gradients','C) It avoids convolution','D) It uses thresholding only'],answer:'A',selected:null},
+{id:13,text:'A student observes that the Prewitt result differs from the Sobel result on the same binary image. The key numerical difference in their kernels is:',choices:['A) Prewitt uses ±1 uniformly; Sobel doubles the centre row or column weights to ±2','B) Prewitt uses a 5×5 kernel; Sobel uses 3×3','C) Prewitt uses only positive weights; Sobel uses both positive and negative','D) Prewitt computes second-order derivatives, unlike Sobel'],answer:'A',selected:null},
 
-  {id:15,text:'Brighter pixels in the output image correspond to:',choices:['A) Weaker edges','B) Stronger intensity changes','C) Noise removal only','D) Uniform regions'],answer:'B',selected:null},
+{id:14,text:'During the simulation, the animated red sliding window overlay on the original image helps the student understand:',choices:['A) Which pixels have been normalised in the resultant image','B) The spatial correspondence between the kernel current position and the input region being convolved','C) The direction of maximum gradient at each pixel','D) The boundary between the output gradient matrix and unused border pixels'],answer:'B',selected:null},
 
-  {id:16,text:'If only horizontal intensity changes are present, the magnitude contribution will mainly come from:',choices:['A) Kernel Y','B) Kernel X','C) Laplacian kernel','D) Threshold value'],answer:'B',selected:null},
+{id:15,text:'First-order edge detectors in the simulation (Sobel, Prewitt, Roberts, Scharr) detect edges by:',choices:['A) Finding zero crossings of the second derivative of intensity','B) Identifying local maxima in gradient magnitude, indicating sharp intensity transitions','C) Averaging pixel intensities above a fixed threshold value','D) Detecting symmetric intensity patterns around each pixel'],answer:'B',selected:null},
 
-  {id:17,text:'Why does the Sobel operator often provide smoother edges than Roberts?',choices:['A) It uses larger neighborhoods with weighted center pixels','B) It ignores vertical gradients','C) It avoids convolution','D) It uses thresholding only'],answer:'A',selected:null}
+{id:16,text:'After normalisation by ΔG / (MaxValue × 255), the pixel carrying the maximum gradient value in the result matrix appears in the resultant edge image as:',choices:['A) Black (normalised intensity ≈ 0)','B) Grey (normalised intensity ≈ 0.5)','C) White (normalised intensity = 1.0, maximum brightness)','D) Red (indicating maximum gradient direction)'],answer:'C',selected:null},
+
+{id:17,text:'Why does the Sobel operator often provide smoother edges than Roberts?',choices:['A) It uses larger neighborhoods with weighted center pixels','B) It ignores vertical gradients','C) It avoids convolution','D) It uses thresholding only'],answer:'A',selected:null},
+
+{id:18,text:'Brighter pixels in the output image correspond to:',choices:['A) Weaker edges','B) Stronger intensity changes','C) Noise removal only','D) Uniform regions'],answer:'B',selected:null},
+
+{id:19,text:'If only horizontal intensity changes are present, the magnitude contribution will mainly come from:',choices:['A) Kernel Y','B) Kernel X','C) Laplacian kernel','D) Threshold value'],answer:'B',selected:null},
+
+{id:20,text:'Why does the Sobel operator often provide smoother edges than Roberts?',choices:['A) It uses larger neighborhoods with weighted center pixels','B) It ignores vertical gradients','C) It avoids convolution','D) It uses thresholding only'],answer:'A',selected:null}
+
 ];
 
 /* ------------------ SETTINGS ------------------ */
