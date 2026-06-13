@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Virtual Labs | Electrical Machines Lab</title>
+    <script src="https://unpkg.com/jsplumb/dist/js/jsplumb.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="../script/vendor/html2canvas.min.js?v=20260214l"></script>
+
+  <link rel="stylesheet" href="../css/styles.css?v=20260214l" />
+  <link rel="stylesheet" href="../css/styles2.css?v=20260214l">
+  <link rel="stylesheet" href="../css/chatbot.css?v=20260214l">
+
+</head>
+
+<body>
+ <!-- Components Popup Modal -->
+<div id="componentsModal" class="components-overlay is-hidden" role="dialog" aria-modal="true" aria-label="Experiment Components">
+  <div class="components-overlay__backdrop" data-components-close></div>
+
+  <div class="components-dialog" role="document">
+    <div class="components-dialog__header">
+      <div class="components-dialog__title">Components</div>
+
+      <div class="components-dialog__actions">
+        <button type="button" class="components-skip-btn components-audio-btn" data-components-audio aria-pressed="false">
+          <span data-components-audio-label>Play Audio</span>
+        </button>
+        <button type="button" class="components-skip-btn" data-components-skip>Skip</button>
+        <button type="button" class="components-close-btn" data-components-close aria-label="Close Components">&times;</button>
+      </div>
+    </div>
+
+    <div class="components-dialog__body">
+      <iframe
+        title="Experiment components"
+        src="components_window.html?embed=1"
+        referrerpolicy="no-referrer"
+        allow="autoplay"
+        loading="eager"
+      ></iframe>
+    </div>
+  </div>
+</div>
+
+  <main class="panel" >
+
+    <section class="top-row">
+      <aside class="left-column">
+        <div class="mcb-starter-section">
+          <div class="mcb-block">
+            <img class="mcb-toggle" src="../images/mcb-off.png" alt="MCB">
+            <h3 class="mcb-label">MCB</h3>
+            <div>
+              
+                <button class="point-R">R</button>
+                <div id="pointR" class="point"></div>
+              
+             <button class="point-B">B</button>
+             
+             <div id="pointB" class="point"></div>
+            </div>
+          </div>
+          <div class="starter-block">
+            <h3 class="starter-label">Starter</h3>
+            <img class="starter-body" src="../images/starter.png" alt="Starter body">
+            <img class="starter-handle" src="../images/starter-handle.png" alt="Starter handle">
+            <div>
+              <button class="point-L">L</button>
+              <button class="point-A">A</button>
+              <button class="point-F">F</button>
+
+              <div id="pointL" class="point"></div>
+              <div id="pointA" class="point"></div>
+              <div id="pointF" class="point"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="lampboard-dropdown">
+           <select name="number" id="number">
+             <option value="">Select number of bulbs</option>
+             <option value="1">1</option>
+             <option value="2">2</option>
+             <option value="3">3</option>
+             <option value="4">4</option>
+             <option value="5">5</option>
+             <option value="6">6</option>
+             <option value="7">7</option>
+             <option value="8">8</option>
+             <option value="9">9</option>
+             <option value="10">10</option>
+           </select>
+        </div>
+        <div class="lamp-board">
+          
+          <div class="lamp-grid">
+            <img class="lamp-bulb off" src="../images/off-bulb.png" alt="Lamp off">
+            <img class="lamp-bulb off" src="../images/off-bulb.png" alt="Lamp off">
+            <img class="lamp-bulb off" src="../images/off-bulb.png" alt="Lamp off">
+            <img class="lamp-bulb off" src="../images/off-bulb.png" alt="Lamp off">
+            <img class="lamp-bulb off" src="../images/off-bulb.png" alt="Lamp off">
+            <img class="lamp-bulb off" src="../images/off-bulb.png" alt="Lamp off">
+            <img class="lamp-bulb off" src="../images/off-bulb.png" alt="Lamp off">
+            <img class="lamp-bulb off" src="../images/off-bulb.png" alt="Lamp off">
+            <img class="lamp-bulb off" src="../images/off-bulb.png" alt="Lamp off">
+            <img class="lamp-bulb off" src="../images/off-bulb.png" alt="Lamp off">
+          </div>
+          <h3 class="lamp-load-label">Lamp Load</h3>
+           <div>
+            <button class="point-L1">L1</button>
+            <div id="pointL1" class="point"></div>   
+            </div>
+            <div>
+              <button class="point-L2">L2</button>     
+              <div id="pointL2" class="point"></div>  
+            </div>
+        </div>
+      </aside>
+
+      <section class="center-column">
+
+        <!-- METER + SLOTS WRAPPER (this fixes drifting) -->
+        <div class="meter-area">
+ 
+          <div class="meter-panel">
+            <div class="meters">
+              <h3 id="ammter1-label">DC Ammeter-1</h3>
+               <h3 id="voltmeter1-label">DC Voltmeter-1</h3>
+              <h3 id="ammter2-label">DC Ammeter-2</h3>
+              <h3 id="voltmeter2-label">DC Voltmeter-2</h3>
+
+              <div class="meter-card">
+                <img class="ammeter-img" src="../images/ammeter.png" alt="Ammeter">
+                <div class="meter-needle1">
+                  <img src="../images/needle.png" alt="needle">
+                </div>
+                
+                <div>
+                    <button class="point-C">C</button>
+                   <button class="point-D">D</button>
+                     
+                    <div id="pointC" class="point"></div>
+                   <div id="pointD" class="point"></div>
+                   
+                </div>
+              </div>
+
+              <div class="meter-card">
+                 <img id="vlt" src="../images/voltmeter.png" alt="Voltmeter">
+                <div class="meter-needle3">
+                  <img src="../images/needle.png" alt="needle">
+                </div>
+                <div>
+                   <button class="point-E">E</button>
+                   <button class="point-G">G</button>
+                     
+                   <div id="pointE" class="point"></div>
+                   <div id="pointG" class="point"></div>
+                   
+                </div>
+              </div>
+
+              <div class="meter-card">
+                <img  class="ammeter-img" src="../images/ammeter.png" alt="Ammeter">
+                <div class="meter-needle2">
+                  <img src="../images/needle.png" alt="needle">
+                </div>
+                 <div>
+                     <button class="point-H">H</button>
+                     <button class="point-I">I</button>
+                     
+                   <div id="pointH" class="point"></div>
+                   <div id="pointI" class="point"></div>
+                   
+                </div>
+              </div>
+
+              <div class="meter-card">
+                <img id="vlt2"  src="../images/voltmeter.png" alt="Voltmeter">
+                <div class="meter-needle4">
+                  <img src="../images/needle.png" alt="needle">
+                </div>
+                 <div>
+                     <button class="point-J">J</button>
+                     <button class="point-K">K</button>
+                     
+                   <div id="pointJ" class="point"></div>
+                   <div id="pointK" class="point"></div>
+                   
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+         
+        <div class="workspace">
+          
+          <div class="equipment-row">
+            
+            <div class="assembly">
+             
+              <div class="motor-box">
+                <img src="../images/shuntmotor.png" alt="Motor">
+                <h3 class="dc-motor-label">
+                  DC Shunt Motor
+                </h3>
+                <div>
+                  <button class="point-A1">A1</button>
+                  <button class="point-Z1">Z1</button>
+                        
+                  <div id="pointA1" class="point"></div>
+                  <div id="pointZ1" class="point"></div>
+                   
+                </div>
+                <div>
+                  <button class="point-A2">A2</button>
+                  <button class="point-Z2">Z2</button>
+                        
+                  <div id="pointA2" class="point"></div>
+                  <div id="pointZ2" class="point"></div>
+                   
+                </div>
+              </div>
+
+              <div class="coupler">
+                <img src="../images/shaft.png" alt="Coupling shaft">
+              </div>
+
+              <div class="generator-box">
+                <img class="generator-body" src="../images/Rotor-body.png" alt="Rotor body">
+                <img class="generator-rotor" id="gr" src="../images/Generator-Rotor.png" alt="Generator rotor">               
+                <h3 class="dc-generator-label">
+                  DC Shunt Generator
+                </h3>
+                  <div>
+                     <button class="point-A3">A3</button>
+                     <button class="point-Z3">Z3</button>
+                           
+                     <div id="pointA3" class="point"></div>
+                     <div id="pointZ3" class="point"></div>
+                   
+                </div>
+                  <div>
+                     <button class="point-A4">A4</button>
+                     <button class="point-Z4">Z4</button>
+                           
+                     <div id="pointA4" class="point"></div>
+                     <div id="pointZ4" class="point"></div>
+                   
+                </div>
+              </div>
+           </div>
+         </div>
+        </div>
+
+        <section class="observation-section observation-floating">
+          <div class="observation-header">
+            <div>
+              <h3 class="table-label">Observation Table</h3>
+            </div>
+          </div>
+          <div class="observation-table-wrapper">
+            <table id="observationTable">
+              <thead>
+                <tr>
+                  <th>S. No.</th>
+                  <th>Load Current (A)</th>
+                  <th>Terminal Voltage (V)</th>
+                </tr>
+             </thead>
+             <tbody id="observationBody">
+             </tbody>
+             </table>
+          </div>
+     
+        </section>
+             <div class="graph-actions">
+          <button class="graph-pill-btn gold-btn" type="button">
+            <span class="btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M23 6l-9.5 9.5-5-5L1 18" />
+                <path d="M17 6h6v6" />
+              </svg>
+            </span>
+            <span class="btn-label">Graph</span>
+          </button>
+          <button class="graph-pill-btn gold-btn" type="button">
+            <span class="btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                <path d="M14 2v6h6" />
+                <path d="M16 13H8" />
+                <path d="M16 17H8" />
+                <path d="M10 9H8" />
+              </svg>
+            </span>
+            <span class="btn-label">Report</span>
+          </button>
+          <button class="graph-pill-btn gold-btn" type="button">
+            <span class="btn-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <path d="M6 9V2h12v7" />
+                <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2" />
+                <rect x="6" y="14" width="12" height="8" />
+              </svg>
+            </span>
+            <span class="btn-label">Print</span>
+          </button>
+        </div>
+      </section>
+      <div id="pill-stack">
+         <div class="instructions-wrapper">
+           <button class="pill-btn instructions-btn gold-btn" type="button">
+             <span class="btn-icon" aria-hidden="true">
+               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                 <circle cx="12" cy="12" r="10" />
+                 <path d="M12 16v-4" />
+                 <path d="M12 8h.01" />
+               </svg>
+             </span>
+             <span class="btn-label">Instructions</span>
+           </button>
+            <div class="instructions-panel" role="note" aria-label="Experiment instructions preview">
+             <p>
+              <b>AI Guide:</b> To use this feature, click on the
+              <b>"AI Guide"</b> button. The AI Guide will assist you
+              in performing the simulation accurately at each step.
+             </p>
+             <p><strong>STEP 1: </strong>Make connections as per the instructions given:</strong></p>
+             <table class="conn-table">
+               <tr>
+                 <th>From</th>
+                 <td>R</td><td>R</td><td>B</td><td>B</td><td>A2</td><td>L</td><td>F</td><td>A</td><td>L2</td><td>A4</td><td>Z4</td><td>I</td><td>J</td><td>H</td><td>H</td>
+               </tr>
+               <tr>
+                 <th>To</th>
+                 <td>C</td><td>E</td><td>G</td><td>A2</td><td>Z2</td><td>D</td><td>Z1</td><td>A1</td><td>A4</td><td>Z4</td><td>K</td><td>J</td><td>L1</td><td>A3</td><td>Z3</td>
+               </tr>
+             </table>
+ 
+             <p><b>Note:</b> Click on the <b>"Auto Connect"</b> button to make all the connections automatically.</p>
+             <p><strong>STEP 2:</strong> Click on <b>"Check"</b> button to check the connections.</p>
+             <p><strong>STEP 3:</strong> If connections are correct, turn ON the MCB.</p>
+             <p><strong>STEP 4:</strong> Now, move the starter handle from left to right</p>
+             <p><strong>STEP 5:</strong> Select the No. of Bulbs from the Lamp Load.</p>
+             <p><strong>STEP 6:</strong> Click on <b>"Add To Table"</b> button to add readings to the Observation Table.</p>
+             <p><strong>STEP 7:</strong> Add different readings by increasing the Lamp Load.</p>
+             <p><strong>STEP 8:</strong> Click on <b>"Graph"</b> button to generate the graph.</p>
+             <p><strong>STEP 9:</strong> Click on <b>"Report"</b> button to view the report.</p>
+             <p><strong>STEP 10:</strong> Click on <b>"Print"</b> button to print the simulation.</p>
+             <p><strong>STEP 11:</strong> Click on <b>"Reset"</b> button to reset the simulation.</p>
+           </div>
+          </div>
+          <button class="pill-btn speak-btn gold-btn" type="button" aria-pressed="false" >
+            <span class="speak-btn__icon" aria-hidden="true">
+              <svg class="speak-btn__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" focusable="false" aria-hidden="true">
+                <path d="M11 5L6 9H3v6h3l5 4V5z" />
+                <path class="speak-btn__wave wave-1" d="M15.5 8.5a4 4 0 010 7" />
+                <path class="speak-btn__wave wave-2" d="M17.8 6.2a7 7 0 010 11.6" />
+                <path class="speak-btn__wave wave-3" d="M20.1 3.9a10 10 0 010 16.2" />
+              </svg>
+            </span>
+            <span class="speak-btn__label">AI Guide</span>
+          </button>
+            <button class="pill-btn gold-btn" type="button">
+              <span class="btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+              </span>
+              <span class="btn-label">Check</span>
+            </button>
+            
+             <button class="pill-btn gold-btn" type="button">
+               <span class="btn-icon" aria-hidden="true">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                   <path d="M10 13a5 5 0 007.07 0l1.41-1.41a5 5 0 00-7.07-7.07L10 5" />
+                   <path d="M14 11a5 5 0 00-7.07 0L5.5 12.5a5 5 0 007.07 7.07L14 19" />
+                 </svg>
+               </span>
+               <span class="btn-label">Auto Connect</span>
+             </button>
+            <button class="pill-btn gold-btn" type="button">
+              <span class="btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <path d="M12 8v8" />
+                  <path d="M8 12h8" />
+                </svg>
+              </span>
+              <span class="btn-label">Add To Table</span>
+            </button>
+            <button class="pill-btn gold-btn" type="button">
+              <span class="btn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                  <path d="M1 4v6h6" />
+                  <path d="M3.51 15a9 9 0 102.13-9.36L1 10" />
+                </svg>
+              </span>
+              <span class="btn-label">Reset</span>
+            </button>
+        </div>
+     </section>
+
+  
+    <div id="instructionModal" class="instruction-overlay is-hidden" role="dialog" aria-modal="true" aria-label="Experiment instructions">
+      <div class="instruction-overlay__backdrop"></div>
+      <div class="instruction-dialog animate-fadeInUp">
+        <button type="button" class="instruction-close" aria-label="Close instructions">&times;</button>
+      <section class="vl-card p-6 instruction-body">
+      
+      <h2 id="instructionTitle" class="text-xl font-semibold mb-4">
+        Experiment Instructions
+      </h2>
+
+      <!-- AI Guide Info -->
+      <p class="mb-4">
+        <strong>AI Guide:</strong> To use this feature, click on the <strong>"AI Guide"</strong> button. The AI Guide will assist you in performing the simulation accurately at each step.
+      </p>
+
+      <!-- Step 1 -->
+      <p class="mb-4">
+        <strong>STEP 1:</strong> Make connections as per the instructions given below:
+      </p>
+     
+          <div class="space-y-8 text-gray-700 text-lg leading-relaxed">
+       
+            <div class="overflow-auto rounded-lg shadow border border-gray-200 instruction-table-wrapper">
+              <table class="min-w-[1100px] w-full table-fixed divide-y divide-gray-200">
+                
+                <caption class="sr-only">Connections mapping between 'From' and 'To' terminals</caption>
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th class="sticky top-0 z-10 px-4 py-3 text-left text-sm font-semibold text-gray-700 bg-gray-50">From</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">R</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">R</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">B</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">B</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">A2</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">L</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">F</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">A</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">L2</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">A4</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">Z4</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">I</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">J</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">H</th>
+                    <th class="sticky top-0 z-10 px-3 py-3 text-center text-xs font-medium text-gray-600 uppercase">H</th>
+                  </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-100 text-sm">
+                  <tr class="hover:bg-gray-50">
+                    <td class="px-4 py-3 font-medium text-gray-800 bg-gray-50">To</td>
+                    <td class="px-3 py-3 text-center">C</td>
+                    <td class="px-3 py-3 text-center">E</td>
+                    <td class="px-3 py-3 text-center">G</td>
+                    <td class="px-3 py-3 text-center">A2</td>
+                    <td class="px-3 py-3 text-center">Z2</td>
+                    <td class="px-3 py-3 text-center">D</td>
+                    <td class="px-3 py-3 text-center">Z1</td>
+                    <td class="px-3 py-3 text-center">A1</td>
+                    <td class="px-3 py-3 text-center">A4</td>
+                    <td class="px-3 py-3 text-center">Z4</td>
+                    <td class="px-3 py-3 text-center">K</td>
+                    <td class="px-3 py-3 text-center">J</td>
+                    <td class="px-3 py-3 text-center">L1</td>
+                    <td class="px-3 py-3 text-center">A3</td>
+                    <td class="px-3 py-3 text-center">Z3</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-3 text-xs text-gray-600 instruction-legend">
+              <span class="inline-block mr-4"><span class="inline-block w-3 h-3 bg-gray-100 mr-1 align-middle rounded-sm"></span>Terminals legend</span>
+              <span class="inline-block mr-4">&bull; <strong>From</strong> = source terminal</span>
+              <span class="inline-block">&bull; <strong>To</strong> = destination terminal</span>
+            </div>
+
+            <div class="flex justify-center my-8">
+              <img src="../../images/Procedure.png" alt="Correct Connections Diagram" class="max-w-full h-auto rounded-lg shadow-lg instruction-image" style="max-height: 500px;">
+            </div>
+
+            <div class="space-y-4 instruction-steplist">
+                <p><b>Note:</b> Click on the <b>"Auto Connect"</b> button to make all the connections automatically.</p>
+                <p><strong>STEP 2:</strong> Click on <b>"Check"</b> button to check the connections.</p>
+                <p><strong>STEP 3:</strong>  If connections are correct, turn ON the MCB.</p>
+                <p><strong>STEP 4:</strong> Now, move the starter handle from left to right</p>
+                <p><strong>STEP 5:</strong> Select the No. of Bulbs from the Lamp Load.</p>
+                <p><strong>STEP 6:</strong> Click on <b>"Add To Table"</b> button to add readings to the Observation Table.</p>
+                <p><strong>STEP 7:</strong> Add different readings by increasing the Lamp Load.</p>
+                <p><strong>STEP 8:</strong> Click on <b>"Graph"</b> button to generate the graph.</p>
+                <p><strong>STEP 9:</strong> Click on <b>"Report"</b> button to view the report.</p>
+                <p><strong>STEP 10:</strong> Click on <b>"Print"</b> button to print the simulation.</p>
+                <p><strong>STEP 11:</strong> Click on <b>"Reset"</b> button to reset the simulation.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>  
+
+  <footer class="panel-footer">
+    <section class="graph-section">
+      <div class="graph-header">
+        <div class="graph-title">
+          <h3>Output Graph</h3>
+        </div>
+     
+      </div>
+      <div class="graph-canvas">
+        <div class="graph-bars" id="graphBars"></div>
+        <div id="graphPlot" class="graph-plot" aria-label="Voltage vs Current graph"></div>
+      </div>
+    </section>
+    <div style="color: white;" class="panel-footer__copyright">&copy; 2026 Virtual Labs IIT Roorkee</div>
+  </footer>
+
+  <div class="chatbot-widget">
+    <div class="chatbot-panel" data-chat-url="https://electrical-machine-exp-2.netlify.app/">
+  <div class="chatbot-panel-header">
+  <div>
+    <p class="chatbot-panel-title">Virtual Lab Assistant</p>
+    <p class="chatbot-panel-caption">Ask anything about this experiment</p>
+  </div>
+
+  <div class="chatbot-panel-actions">
+    <button type="button" class="chatbot-panel-close" aria-label="Close chatbot">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+</div>
+
+      <div class="chatbot-panel-body">
+        <div class="chatbot-panel-placeholder">Loading area for your chatbot. Update the <strong>data-chat-url</strong> to match your deployment.</div>
+        <iframe title="Chatbot assistant" referrerpolicy="no-referrer" scrolling="no"></iframe>
+      </div>
+    </div>
+
+    <div class="chatbot-launcher-row">
+      <button type="button" class="chatbot-launcher" aria-expanded="false" aria-label="Open chatbot assistant">
+        <span class="chatbot-hint-bubble">
+          <span class="chatbot-hint-dot">Hi</span>
+          Ask anything about this experiment
+        </span>
+        <img src="../images/chatbot.png" alt="" aria-hidden="true" class="chatbot-launcher-image">
+      </button>
+      <button
+        type="button"
+        class="components-launcher"
+        data-open-components
+        aria-label="Open components"
+        title="Components"
+      >
+         <img src="../images/component.png" alt="" class="components-launcher__icon" aria-hidden="true">
+      </button>
+    </div>
+  </div>
+
+  <div id="warningModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalMessage">
+    <div class="modal-box danger" role="document">
+      <h2 id="modalTitle">Alert</h2>
+      <p id="modalMessage"></p>
+      <button type="button" class="modal-close-btn" data-modal-close>OK</button>
+    </div>
+  </div>
+
+  <audio id="alertSound" preload="auto"></audio>
+
+  <audio id="chatbot-notification-audio" preload="auto">
+    <source src="../audio/live-chat-353605.mp3" type="audio/mpeg">
+  </audio>
+</body>
+
+<script src="../tracking.js"></script>
+<script src="../script/state.js"></script>
+<script src="../script/speech.js"></script>
+<script src="../script/popup.js"></script>
+<script src="../script/wiring.js"></script>
+<script src="../script/readings.js"></script>
+<script src="../script/tooltips.js"></script>
+<script src="../script/chatbot.js"></script>
+<script src="../script/components.js"></script>
+</html>
+
