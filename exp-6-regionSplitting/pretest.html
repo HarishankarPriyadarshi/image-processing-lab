@@ -913,265 +913,47 @@ Region Splitting and Merging Segmentation
 <script>
 /* ------------------ 20 QUESTIONS ------------------ */
 const questions = [
-  {
-    id: 1,
-    text: 'What is the primary objective of image compression?',
-    choices: [
-      'A) To reduce the number of bits required to store and transmit a digital image',
-      'B) To increase the resolution of a digital image',
-      'C) To convert a color image into grayscale',
-      'D) To encrypt image data for secure transmission'
-    ],
-    answer: 'A',
-    selected: null
-  },
 
-  {
-    id: 2,
-    text: 'Which of the following is a lossless image compression technique?',
-    choices: [
-      'A) JPEG',
-      'B) Run Length Encoding (RLE)',
-      'C) MPEG-2',
-      'D) MP3'
-    ],
-    answer: 'B',
-    selected: null
-  },
+{id:1,text:'In binary image processing, which pixel value typically represents the foreground object?',choices:['A) 0','B) 128','C) 1','D) 255'],answer:'C',selected:null},
 
-  {
-    id: 3,
-    text: 'In lossy image compression:',
-    choices: [
-      'A) All original data is perfectly preserved during decompression',
-      'B) The image size remains unchanged after compression',
-      'C) Some information is permanently discarded during compression',
-      'D) The image is enlarged during decompression'
-    ],
-    answer: 'C',
-    selected: null
-  },
+{id:2,text:'What does the background of a standard binary image represent?',choices:['A) Pixel value = 1','B) Pixel value = 0','C) Pixel value = 128','D) Any non-zero value'],answer:'B',selected:null},
 
-  {
-    id: 4,
-    text: 'What is the smallest indivisible unit of a digital image?',
-    choices: [
-      'A) A bit',
-      'B) A byte',
-      'C) A voxel',
-      'D) A pixel'
-    ],
-    answer: 'D',
-    selected: null
-  },
+{id:3,text:'Which of the following best defines a structuring element in morphological operations?',choices:['A) A filter applied to reduce image noise using Gaussian smoothing','B) A small binary kernel used to probe the shape of objects in an image','C) A matrix that stores the histogram of pixel intensities','D) A lookup table for color space conversion'],answer:'B',selected:null},
 
-  {
-    id: 5,
-    text: 'A standard 8-bit grayscale image uses how many distinct intensity levels?',
-    choices: [
-      'A) 16',
-      'B) 256',
-      'C) 64',
-      'D) 512'
-    ],
-    answer: 'B',
-    selected: null
-  },
+{id:4,text:'Which two operations are considered the fundamental building blocks of morphological image processing?',choices:['A) Convolution and Correlation','B) Opening and Closing','C) Erosion and Dilation','D) Blurring and Sharpening'],answer:'C',selected:null},
 
-  {
-    id: 6,
-    text: 'Why is image compression essential for data storage and transmission?',
-    choices: [
-      'A) It increases image resolution',
-      'B) It converts grayscale images to color',
-      'C) It reduces the storage space and bandwidth required',
-      'D) It improves image brightness'
-    ],
-    answer: 'C',
-    selected: null
-  },
+{id:5,text:'During the erosion operation, the output pixel is set to 1 only when:',choices:['A) At least one pixel under the kernel matches a foreground pixel','B) All pixels under the kernel in the input image are 1','C) The kernel center pixel equals 1','D) Fewer than half the kernel pixels overlap with the foreground'],answer:'B',selected:null},
 
-  {
-    id: 7,
-    text: 'Spatial redundancy in digital images refers to:',
-    choices: [
-      'A) Duplicate image files stored on different storage devices',
-      'B) Extra bits used for metadata or file headers',
-      'C) Temporal changes between successive video frames',
-      'D) Repetition of identical or similar pixel values in neighboring regions of the image'
-    ],
-    answer: 'D',
-    selected: null
-  },
+{id:6,text:'What is the primary effect of applying erosion to a binary image?',choices:['A) The foreground region expands outward','B) Small holes inside objects are filled','C) Boundaries of white (foreground) regions are removed, shrinking the object','D) The image contrast is enhanced'],answer:'C',selected:null},
 
-  {
-    id: 8,
-    text: 'Run Length Encoding primarily exploits which type of redundancy to achieve compression?',
-    choices: [
-      'A) Spatial redundancy — repeated pixel values in adjacent areas',
-      'B) Temporal redundancy',
-      'C) Psychovisual redundancy',
-      'D) Coding redundancy'
-    ],
-    answer: 'A',
-    selected: null
-  },
+{id:7,text:'During dilation, the output pixel is set to 1 when:',choices:['A) All pixels under the kernel are 1','B) At least one pixel under the kernel in the input image is 1','C) No pixel under the kernel is 1','D) The kernel center is perfectly aligned with a background pixel'],answer:'B',selected:null},
 
-  {
-    id: 9,
-    text: 'For the pixel sequence: 0 0 0 0 1 1, the correct RLE representation is:',
-    choices: [
-      'A) (0,4) (1,2)',
-      'B) (4,0) (2,1)',
-      'C) (0,0)(0,0)(0,0)(0,0)(1,1)(1,1)',
-      'D) (0,2) (1,4)'
-    ],
-    answer: 'A',
-    selected: null
-  },
+{id:8,text:'Which morphological operation is analogous to the natural process of soil erosion, gradually wearing away the boundaries of objects?',choices:['A) Dilation','B) Opening','C) Closing','D) Erosion'],answer:'D',selected:null},
 
-  {
-    id: 10,
-    text: 'RLE achieves best compression when the image contains:',
-    choices: [
-      'A) Rapidly alternating pixel values with no consistent runs',
-      'B) Large uniform regions with long consecutive runs of identical pixel values',
-      'C) Noisy random pixel distributions',
-      'D) High-resolution color gradients'
-    ],
-    answer: 'B',
-    selected: null
-  },
+{id:9,text:'What is the correct sequence of operations that defines morphological Opening?',choices:['A) Dilation followed by Erosion','B) Erosion followed by Dilation','C) Two consecutive Erosions','D) Two consecutive Dilations'],answer:'B',selected:null},
 
-  {
-    id: 11,
-    text: 'The compression ratio in RLE is typically computed as:',
-    choices: [
-      'A) Number of runs × 2',
-      'B) (Original data size) − (Encoded data size)',
-      'C) (Encoded data size) / (Original data size)',
-      'D) (Original data size) / (Encoded data size)'
-    ],
-    answer: 'C',
-    selected: null
-  },
+{id:10,text:'What is the correct sequence of operations that defines morphological Closing?',choices:['A) Erosion followed by Dilation','B) Two consecutive Erosions','C) Dilation followed by Erosion','D) Erosion followed by another Erosion'],answer:'C',selected:null},
 
-  {
-    id: 12,
-    text: 'A compression ratio of 0.4 in RLE indicates:',
-    choices: [
-      'A) 40% of the original data was permanently lost',
-      'B) No compression was achieved',
-      'C) The encoded data is 2.5× larger than the original',
-      'D) The encoded data is 40% the size of the original — effective compression'
-    ],
-    answer: 'D',
-    selected: null
-  },
+{id:11,text:'Opening is primarily used to:',choices:['A) Fill small holes or gaps in foreground objects','B) Remove small white noise or objects while preserving larger shapes','C) Expand the boundaries of all objects','D) Convert a grayscale image to binary'],answer:'B',selected:null},
 
-  {
-    id: 13,
-    text: 'A compression ratio greater than 1.0 in RLE means:',
-    choices: [
-      'A) The encoded file is larger than the original (data expansion occurred)',
-      'B) Excellent compression was achieved',
-      'C) The image is completely uniform',
-      'D) The original image had low entropy'
-    ],
-    answer: 'A',
-    selected: null
-  },
+{id:12,text:'Closing is primarily useful for:',choices:['A) Removing large white objects from an image','B) Sharpening edges','C) Filling small holes or gaps inside foreground objects','D) Separating connected components'],answer:'C',selected:null},
 
-  {
-    id: 14,
-    text: 'RLE is most likely to cause data expansion when:',
-    choices: [
-      'A) The image contains large regions of a single color',
-      'B) Pixel values alternate frequently, resulting in runs of length 1',
-      'C) The image is a solid black image',
-      'D) The image has many long horizontal bands'
-    ],
-    answer: 'B',
-    selected: null
-  },
+{id:13,text:'In morphological operations, the kernel is moved over the image in a manner similar to which other image processing technique?',choices:['A) Histogram equalization','B) 2D convolution','C) Fourier transform','D) Median filtering'],answer:'B',selected:null},
 
-  {
-    id: 15,
-    text: 'Which of the following is a common practical application of RLE?',
-    choices: [
-      'A) Fax machine transmission of document images',
-      'B) JPEG compression of digital photographs',
-      'C) MP3 audio encoding',
-      'D) H.265 video streaming'
-    ],
-    answer: 'A',
-    selected: null
-  },
+{id:14,text:'Which of the following is NOT a typical effect of dilation?',choices:['A) Filling small holes in objects','B) Connecting disjoint parts of an object','C) Reducing the size of foreground objects','D) Expanding object boundaries'],answer:'C',selected:null},
 
-  {
-    id: 16,
-    text: 'In information theory, entropy refers to:',
-    choices: [
-      'A) The file size of a compressed image',
-      'B) The average randomness or unpredictability of information content',
-      'C) The spatial resolution of an image',
-      'D) The number of bits per pixel'
-    ],
-    answer: 'B',
-    selected: null
-  },
+{id:15,text:'The size of the structuring element (kernel) primarily controls:',choices:['A) The color depth of the output image','B) The extent or degree to which the morphological operation affects the image','C) The number of color channels in the output','D) The histogram shape of the processed image'],answer:'B',selected:null},
 
-  {
-    id: 17,
-    text: 'An image with high entropy is:',
-    choices: [
-      'A) Easily compressed by RLE due to long uniform runs',
-      'B) Likely to have many repeating pixel values',
-      'C) Harder to compress because it contains more randomness and unpredictability',
-      'D) Always a binary image'
-    ],
-    answer: 'C',
-    selected: null
-  },
+{id:16,text:'The mathematical notation for the dilation of image A by structuring element B is commonly written as:',choices:['A) A ⊖ B','B) A ○ B','C) A ● B','D) A ⊕ B'],answer:'D',selected:null},
 
-  {
-    id: 18,
-    text: "The BMP file format's Run Length Encoding operates in:",
-    choices: [
-      'A) Only one mode (encoded mode)',
-      'B) Three modes: encoded, delta, and end-of-bitmap',
-      'C) Two modes: encoded mode and absolute mode',
-      'D) Only absolute mode'
-    ],
-    answer: 'C',
-    selected: null
-  },
+{id:17,text:'The mathematical notation for the erosion of image A by structuring element B is commonly written as:',choices:['A) A ⊕ B','B) A ⊖ B','C) A ○ B','D) A ● B'],answer:'B',selected:null},
 
-  {
-    id: 19,
-    text: 'Which statement correctly describes a key limitation of RLE?',
-    choices: [
-      'A) For images with frequent pixel value changes, RLE may increase the data size rather than reduce it',
-      'B) RLE cannot be applied to binary images',
-      'C) RLE is too computationally complex for practical implementation',
-      'D) RLE always introduces some loss of image quality'
-    ],
-    answer: 'A',
-    selected: null
-  },
+{id:18,text:'Which morphological operation is most suitable as a preprocessing step to remove salt-and-pepper noise (isolated white dots) from a binary image?',choices:['A) Dilation','B) Closing','C) Opening','D) Gradient'],answer:'C',selected:null},
 
-  {
-    id: 20,
-    text: 'For the sequence: 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 (eleven 2s), the RLE output is:',
-    choices: [
-      'A) 11 individual pairs, each (2,1)',
-      'B) A single pair (2,11)',
-      'C) Two pairs (2,5) and (2,6)',
-      'D) A single pair (11,2)'
-    ],
-    answer: 'B',
-    selected: null
-  }
+{id:19,text:'How can morphological operations be used for edge detection?',choices:['A) By applying a Gaussian blur followed by thresholding','B) By subtracting the eroded image from the original (or dilated) image to highlight boundaries','C) By converting the image to the frequency domain','D) By averaging neighboring pixel values'],answer:'B',selected:null},
+
+{id:20,text:'Which of the following best describes the role of the kernel shape in morphological operations?',choices:['A) It determines the file format of the output image','B) It defines which neighboring pixels are considered during each operation','C) It sets the brightness of the output image','D) It specifies the number of iterations applied'],answer:'B',selected:null}
+
 ];
 
 /* ------------------ SETTINGS ------------------ */

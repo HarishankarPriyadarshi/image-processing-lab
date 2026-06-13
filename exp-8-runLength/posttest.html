@@ -816,46 +816,265 @@ Run-Length Encoding for Image Compression
 <script>
 /* ------------------ 20 QUESTIONS ------------------ */
 const questions = [
+  {
+    id: 1,
+    text: 'Run Length Encoding achieves data compression by:',
+    choices: [
+      'A) Replacing sequences of consecutive identical symbols with a single (value, count) pair',
+      'B) Applying the Discrete Cosine Transform to blocks of pixels',
+      'C) Removing visually imperceptible high-frequency components from the image',
+      'D) Encoding each pixel independently using variable-length binary codes'
+    ],
+    answer: 'A',
+    selected: null
+  },
 
-{id:1,text:'In the simulation, when the kernel is positioned at a pixel during dilation and the explanation reads "Hit — Output = 1", what condition was satisfied?',choices:['A) All kernel positions overlapped with background pixels','B) At least one foreground pixel value 1 was found under a kernel element marked 1','C) The center pixel of the kernel was exactly 0','D) No foreground pixel was found under the kernel'],answer:'B',selected:null},
+  {
+    id: 2,
+    text: 'In Run Length Encoding applied to a grayscale image, the encoded pair (3, 7) is interpreted as:',
+    choices: [
+      'A) The pixel at row 3 has intensity value 7',
+      'B) The intensity value 3 appears consecutively for 7 pixels',
+      'C) There are 3 separate runs, each of length 7',
+      'D) Intensity value 7 appears at position 3 in the scan order'
+    ],
+    answer: 'B',
+    selected: null
+  },
 
-{id:2,text:'During the erosion animation, the explanation shows "Miss — Output = 0" at a certain pixel. What does this mean?',choices:['A) The kernel found at least one foreground pixel in its neighborhood','B) The kernel successfully fit entirely within the foreground','C) At least one position required by the kernel contained a background pixel 0, so the kernel did not fit','D) The current pixel was outside the padded boundary'],answer:'C',selected:null},
+  {
+    id: 3,
+    text: 'Run Length Encoding is classified as a lossless compression technique because:',
+    choices: [
+      'A) It reduces the file size to zero bits when applied to a completely uniform image',
+      'B) It discards only the visually redundant portions of the image that are imperceptible to the human eye',
+      'C) The original image can be exactly reconstructed from the encoded (value, count) pairs without any loss of information',
+      'D) It uses entropy coding internally to recover any pixel values lost during encoding'
+    ],
+    answer: 'C',
+    selected: null
+  },
 
-{id:3,text:'After applying dilation using a 3×3 structuring element to a 5×5 white square, why does the white square become thicker and larger?',choices:['A) Dilation sets output pixels to 1 whenever the kernel overlaps any foreground pixel, causing the white region to expand outward','B) Dilation removes black pixels from the image completely','C) Dilation inverts foreground and background regions','D) Dilation applies Gaussian smoothing before thresholding'],answer:'A',selected:null},
+  {
+    id: 4,
+    text: 'In the context of Run Length Encoding, a "run" is formally defined as:',
+    choices: [
+      'A) The total combined length of all rows in a scanned image',
+      'B) A single encoded output pair (value, count) in the compressed stream',
+      'C) The number of bits required to represent one pixel in the original image',
+      'D) A maximal sequence of consecutive pixels all sharing the same intensity value'
+    ],
+    answer: 'D',
+    selected: null
+  },
 
-{id:4,text:'After applying erosion using a 3×3 structuring element to a 7×7 white square, why does the white region shrink?',choices:['A) Erosion converts all boundary pixels to 1','B) Erosion sets a pixel to 1 only when the structuring element fits completely inside the foreground region; boundary pixels that fail this condition become 0','C) Erosion doubles the size of the black region by adding additional padding','D) Erosion replaces all foreground pixels with the value of the center pixel'],answer:'B',selected:null},
+  {
+    id: 5,
+    text: 'An image contains 1000 pixels. After RLE encoding, 200 encoded pairs are produced. Assuming each pair requires 2 units of storage, the compression ratio is:',
+    choices: [
+      'A) 0.4, since the encoded size is 400 units and the original size is 1000 units',
+      'B) 5.0, since 1000 divided by 200 equals 5',
+      'C) 0.2, since there are 200 pairs out of 1000 pixels',
+      'D) 2.5, since the original is 2.5 times the encoded output'
+    ],
+    answer: 'A',
+    selected: null
+  },
 
-{id:5,text:'During Opening, after erosion followed by dilation, what happens to isolated single-pixel white noise points around a large white object?',choices:['A) The object becomes larger than the original','B) The object returns approximately to its original shape while most isolated noise pixels disappear','C) The image becomes completely black','D) The object doubles in size in all directions'],answer:'B',selected:null},
+  {
+    id: 6,
+    text: 'The theoretical best-case for Run Length Encoding is achieved when:',
+    choices: [
+      'A) Every pixel in the image has a unique and distinct intensity value',
+      'B) The entire image is uniform — all pixels share the same value — so the whole image encodes as a single (value, total_pixel_count) pair',
+      'C) The image contains equal numbers of alternating 0s and 1s',
+      'D) The image has maximum entropy uniformly distributed across all regions'
+    ],
+    answer: 'B',
+    selected: null
+  },
 
-{id:6,text:'If you apply Closing to a binary image with a small hole inside a white object, what would you observe?',choices:['A) The hole grows larger','B) The hole disappears because dilation fills it, and subsequent erosion restores the outer boundary','C) The entire object is removed','D) The hole is converted to a bright white spot'],answer:'B',selected:null},
+  {
+    id: 7,
+    text: 'Adding random salt-and-pepper noise to an image that was previously well-compressed by RLE would:',
+    choices: [
+      'A) Improve the compression ratio by introducing additional symbol variety',
+      'B) Have no measurable effect on the compression ratio of the image',
+      'C) Cause the image to be automatically treated as a binary image',
+      'D) Degrade compression efficiency significantly by breaking long uniform runs into many short, fragmented ones'
+    ],
+    answer: 'D',
+    selected: null
+  },
 
-{id:7,text:'The simulation uses a 9×9 padded grid for a 7×7 input image. What is the purpose of this padding?',choices:['A) To increase image resolution','B) To ensure the 3×3 kernel can be centered on every pixel of the actual 7×7 image without going out of bounds','C) To apply bilateral filtering at the borders','D) To allow the kernel to exceed the image boundary intentionally'],answer:'B',selected:null},
+  {
+    id: 8,
+    text: 'A binary image consists of long horizontal bands of uniform pixel values. When comparing horizontal (row-wise) and vertical (column-wise) RLE scanning applied to this image:',
+    choices: [
+      'A) Horizontal scanning yields a better compression ratio because the long runs naturally align along the rows, producing fewer encoded pairs',
+      'B) Vertical scanning yields a better compression ratio because each column traverses multiple bands',
+      'C) Both scanning directions always produce identical compression ratios for every image',
+      'D) The compression ratio is independent of the scan direction for all types of images'
+    ],
+    answer: 'A',
+    selected: null
+  },
 
-{id:8,text:'During dilation, a pixel that was originally 0 becomes 1 in the output. What is the most likely reason?',choices:['A) The kernel performed an averaging operation','B) A neighboring foreground pixel was within the kernel reach, causing the output to be set to 1','C) All surrounding pixels were also 0','D) The padding replaced the pixel value'],answer:'B',selected:null},
+  {
+    id: 9,
+    text: 'Run Length Encoding results in data expansion rather than compression when:',
+    choices: [
+      'A) The image contains large regions in which adjacent pixels share identical values',
+      'B) Every pixel differs from its immediate neighbor, producing runs of length 1 — each requiring two symbols (value and count) to represent what was originally one symbol',
+      'C) The image is scanned in the vertical direction rather than the horizontal direction',
+      'D) The minimum run length threshold is set to a value greater than 1'
+    ],
+    answer: 'B',
+    selected: null
+  },
 
-{id:9,text:'In morphological edge detection, applying erosion to an image and then subtracting the result from the original produces:',choices:['A) A smoothed version of the image','B) The interior of all objects','C) The boundary pixels of the original foreground objects','D) A fully black image'],answer:'C',selected:null},
+  {
+    id: 10,
+    text: 'To reconstruct the original image from its RLE-encoded representation, the decoder:',
+    choices: [
+      'A) Requires additional side information or metadata beyond the encoded pairs',
+      'B) Applies the inverse Discrete Cosine Transform to each encoded pair',
+      'C) Uses statistical interpolation to estimate pixel values that were lost during compression',
+      'D) Sequentially reads each (value, count) pair and writes the value repeated exactly count times, thereby rebuilding the original pixel sequence'
+    ],
+    answer: 'D',
+    selected: null
+  },
 
-{id:10,text:'If a larger kernel is used instead of a 3×3 kernel in erosion, what is expected?',choices:['A) The foreground objects shrink less','B) The foreground objects shrink more because more boundary pixels fail the fit condition','C) The image remains unchanged','D) The processing time decreases'],answer:'B',selected:null},
+  {
+    id: 11,
+    text: 'An image has an original data size of 5000 symbols. After RLE encoding, 1000 pairs are produced, each requiring 2 symbols. The percentage of space saved is:',
+    choices: [
+      'A) 40%, since encoded size is 2000 and original is 5000',
+      'B) 60%, since space saved = (5000 − 2000) / 5000 × 100',
+      'C) 20%, since 1000 pairs represent 20% of 5000',
+      'D) 80%, since the compression ratio is 0.2'
+    ],
+    answer: 'B',
+    selected: null
+  },
 
-{id:11,text:'After applying Opening with a 3×3 kernel to isolated single-pixel white dots on a black background, what would you expect?',choices:['A) The single-pixel dots grow into 3×3 squares','B) The single-pixel dots are removed because they cannot survive the initial erosion step','C) The single-pixel dots remain unchanged','D) New dots appear where there were none'],answer:'B',selected:null},
+  {
+    id: 12,
+    text: 'Run Length Encoding is fundamentally based on exploiting:',
+    choices: [
+      'A) Temporal redundancy between successive frames in a video sequence',
+      'B) Psychovisual redundancy arising from limitations of the human visual system',
+      'C) Spatial redundancy — the statistical correlation between neighboring pixel values within the same image',
+      'D) Coding redundancy in the probability distribution of individual symbol frequencies'
+    ],
+    answer: 'C',
+    selected: null
+  },
 
-{id:12,text:'If you apply dilation twice in succession to the same binary image, how would the result compare to a single dilation?',choices:['A) Double dilation produces the same result as a single dilation','B) Double dilation expands the foreground region further than a single dilation','C) Double dilation shrinks the image compared to single dilation','D) Double dilation removes all foreground pixels'],answer:'B',selected:null},
+  {
+    id: 13,
+    text: 'Among the following applications, which most naturally and directly benefits from Run Length Encoding?',
+    choices: [
+      'A) Compression of high-resolution digital photographs captured by a DSLR camera',
+      'B) Encoding of audio waveforms for network streaming',
+      'C) Compression of full-color natural scene video content',
+      'D) Facsimile (fax) transmission of typed documents, where large white margins produce long runs of identical background pixels'
+    ],
+    answer: 'D',
+    selected: null
+  },
 
-{id:13,text:'In morphological operations, the term "Hit" in the simulation explanation refers to:',choices:['A) A collision between the kernel and the image boundary','B) A successful match condition that sets the output pixel to 1','C) An error in the processing pipeline','D) A case where the output pixel is set to 0'],answer:'B',selected:null},
+  {
+    id: 14,
+    text: 'A compression ratio of 0.2 achieved by RLE encoding means:',
+    choices: [
+      'A) The encoded representation is only 20% the size of the original data, indicating highly effective compression',
+      'B) The file size increased by 20% as a result of encoding',
+      'C) 20% of the original image data was permanently lost during the encoding process',
+      'D) The compression algorithm identified only 20 distinct runs in the entire image'
+    ],
+    answer: 'A',
+    selected: null
+  },
 
-{id:14,text:'Comparing dilation and erosion on the same binary image, which statement is always true?',choices:['A) The dilated image has fewer white pixels than the eroded image','B) The eroded image has more white pixels than the dilated image','C) The dilated image has an equal or greater number of white pixels compared to the eroded image','D) Both operations produce identical output images'],answer:'C',selected:null},
+  {
+    id: 15,
+    text: 'When a minimum run length threshold is applied during RLE encoding, a run that falls below this threshold is handled by:',
+    choices: [
+      'A) Merging it with the nearest adjacent run of the same pixel value',
+      'B) Storing each pixel in the short run as an individual entry with count = 1, rather than as a single compressed pair, to avoid overhead for very short runs',
+      'C) Discarding those pixels entirely to maintain overall compression efficiency',
+      'D) Rounding the run length up to the minimum threshold value before encoding'
+    ],
+    answer: 'B',
+    selected: null
+  },
 
-{id:15,text:'Which operation and kernel size would produce the most aggressive removal of fine details and thin structures?',choices:['A) Dilation with a 3×3 cross kernel','B) Erosion with a small 1×1 kernel','C) Erosion with a large 5×5 or 7×7 kernel','D) Closing with a 1×1 kernel'],answer:'C',selected:null},
+  {
+    id: 16,
+    text: 'Which of the following correctly identifies a fundamental limitation of Run Length Encoding as a compression method?',
+    choices: [
+      'A) RLE is a lossy technique and cannot guarantee exact reconstruction of the original image',
+      'B) RLE is applicable only to binary images and cannot process grayscale images',
+      'C) RLE requires the image dimensions to be an exact power of 2',
+      'D) RLE provides poor or negative compression for images with complex, non-repetitive content such as natural photographs, where pixel values change continuously'
+    ],
+    answer: 'D',
+    selected: null
+  },
 
-{id:16,text:'Which morphological operation would best restore the original size of objects after erosion has been applied to remove noise?',choices:['A) Applying another round of erosion','B) Applying dilation, completing the Opening sequence','C) Applying a Gaussian filter','D) Applying histogram equalization'],answer:'B',selected:null},
+  {
+    id: 17,
+    text: 'Compared to Huffman coding, Run Length Encoding is best described as:',
+    choices: [
+      'A) More effective for compressing high-entropy natural images with complex spatial content',
+      'B) Better suited for images with high spatial redundancy and long uniform runs, but less versatile as a general-purpose compression method across all image types',
+      'C) Always superior in compression ratio regardless of the image content or structure',
+      'D) A lossy method, whereas Huffman coding is a lossless compression technique'
+    ],
+    answer: 'B',
+    selected: null
+  },
 
-{id:17,text:'A 3×3 kernel with all elements equal to 1 is called a:',choices:['A) Cross-shaped kernel','B) Diamond kernel','C) Square or rectangular kernel','D) Sparse kernel'],answer:'C',selected:null},
+  {
+    id: 18,
+    text: 'Applying RLE to the pixel row: 1 1 1 0 0 1 1 1 1 0, the correct encoded output is:',
+    choices: [
+      'A) (1,3) (0,2) (4,1) (0,1)',
+      'B) (3,1) (2,0) (4,1) (1,0)',
+      'C) (1,0) (2,0) (1,1) (0,1)',
+      'D) (1,3) (0,2) (1,4) (0,1)'
+    ],
+    answer: 'D',
+    selected: null
+  },
 
-{id:18,text:'Which application would most benefit from morphological closing?',choices:['A) Separating overlapping characters in a printed document','B) Filling cracks or small gaps in the outline of a scanned signature','C) Detecting isolated dust particles in a microscopy image','D) Thinning elongated objects'],answer:'B',selected:null},
+  {
+    id: 19,
+    text: 'Run Length Encoding is generally less effective for natural grayscale photographs than for binary document images because:',
+    choices: [
+      'A) Grayscale images inherently contain more pixels per unit area than binary images',
+      'B) Natural grayscale images exhibit smoothly varying and gradually changing pixel intensities rather than long constant runs, resulting in far less spatial redundancy for RLE to exploit',
+      'C) RLE is mathematically unable to encode intensity values in the continuous range of 0 to 255',
+      'D) Grayscale images require 8 bits per pixel, making the RLE algorithm computationally inapplicable'
+    ],
+    answer: 'B',
+    selected: null
+  },
 
-{id:19,text:'Which effect of erosion makes it useful for separating two objects that are barely touching each other?',choices:['A) It fills gaps between objects','B) It removes boundary pixels, which can break a thin connection between objects','C) It expands both objects uniformly','D) It inverts the pixel values'],answer:'B',selected:null},
-
-{id:20,text:'What does zero-padding around a binary image accomplish during morphological processing?',choices:['A) It increases the brightness of boundary pixels','B) It provides a border of background pixels so the kernel can be centered on every pixel, including edge pixels','C) It converts the image from binary to grayscale','D) It adds extra foreground pixels around the image'],answer:'B',selected:null},
+  {
+    id: 20,
+    text: 'If an image possesses very high spatial redundancy — meaning large regions of pixels share identical values — then its RLE compression ratio will be:',
+    choices: [
+      'A) Greater than 1.0, indicating that the encoded output is larger than the original image',
+      'B) Exactly equal to 1.0, indicating that no change in data size occurred after encoding',
+      'C) Less than 1.0, indicating effective compression with a meaningfully smaller encoded representation',
+      'D) Equal to 0.0, indicating that the image data was entirely eliminated by the encoding'
+    ],
+    answer: 'C',
+    selected: null
+  },
 
 ];
 
