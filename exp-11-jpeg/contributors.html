@@ -670,6 +670,48 @@
         height: min(88vh, 620px);
       }
     }
+@media (max-width:640px){
+
+  /* Remove justify on mobile */
+  .content{
+      text-align:left !important;
+      line-height:1.6 !important;
+  }
+
+  .content p,
+  .content li{
+      text-align:left !important;
+      word-spacing:normal !important;
+      letter-spacing:normal !important;
+      line-height:1.6 !important;
+  }
+
+  .content h2,
+  .content h3{
+      text-align:left !important;
+      word-spacing:normal !important;
+      letter-spacing:normal !important;
+      line-height:1.15 !important;
+      display:block !important;
+      width:100%;
+  }
+
+}
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
 
   </style>
 </head>
@@ -725,7 +767,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -813,13 +855,14 @@
     <main class="contributors-main flex-1 lg:ml-64 p-4 sm:p-6 pb-24">
 
       <!-- Breadcrumb -->
-       <nav class="mb-6 text-sm sm:text-base text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-x-2 gap-y-1">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
           <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
           <span>></span>
           <a href="#" class="hover:text-blue-600"></a> JPEG Image Compression Technique</a>
-          <span>></span>Contributors</span>
+          <span>></span>
+          <span class="text-gray-800 font-medium">Contributors</span>
       </nav>
 
       <!-- TITLE CARD -->

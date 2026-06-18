@@ -628,7 +628,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -711,10 +711,10 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-4 lg:p-6 overflow-x-hidden">
 
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
@@ -734,7 +734,7 @@
       </div>
 
 <!-- Theory Content -->
-<section class="section-content vl-card animate-fadeInUp">
+<section class="section-content animate-fadeInUp">
 
 <style>
   .section-content {
@@ -924,32 +924,37 @@
   }
 
   .vector-box::after {
-    content: "]";
-    font-size: 52px;
-    line-height: 1;
-    margin-left: 5px;
-  }
+  content: "]";
+  font-size: 52px;
+  line-height: 1;
+  margin-left: 5px;
+}
 
-  .image-box {
-    text-align: center;
-    margin: 20px 0;
-  }
+.image-box {
+  text-align: center;
+  margin: 20px auto;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
 
-  .image-box img {
-    max-width: 100%;
-    height: auto;
-    display: inline-block;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-  }
+.image-box img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
 
-  .image-box figcaption {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #000;
-    margin-top: 8px;
-    text-align: center;
-  }
+.image-box figcaption {
+  text-align: center;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #555;
+}
 
   .mask-row {
     display: flex;
@@ -1024,6 +1029,164 @@
     padding-left: 20px !important;
     text-align: left;
   }
+
+  html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
+
+/* =========================
+   FINAL CONTENT SPACING FIX
+   Mobile random spacing fix
+   ========================= */
+
+/* Desktop same rahega */
+.theory-section{
+  text-align:justify !important;
+}
+
+.theory-section p{
+  margin:8px 0 12px 0 !important;
+  line-height:1.8 !important;
+  word-spacing:normal !important;
+  letter-spacing:normal !important;
+}
+
+.theory-section h2{
+  margin:0 0 12px 0 !important;
+  line-height:1.35 !important;
+}
+
+.theory-section h3{
+  margin:20px 0 10px 0 !important;
+  line-height:1.35 !important;
+}
+
+.theory-section ul,
+.theory-section ol{
+  margin:10px 0 16px 0 !important;
+}
+
+.theory-section li{
+  margin-bottom:7px !important;
+  line-height:1.75 !important;
+}
+
+.theory-section figure,
+.theory-section .image-box{
+  margin:20px auto !important;
+}
+
+.theory-section figcaption,
+.image-box figcaption{
+  margin-top:7px !important;
+  line-height:1.45 !important;
+}
+
+/* Mobile view clean spacing */
+@media(max-width:640px){
+
+  .section-content{
+    padding:0 !important;
+    overflow:hidden !important;
+  }
+
+  .theory-section{
+    padding:0 12px 75px 12px !important;
+    text-align:left !important;
+    line-height:1.65 !important;
+    overflow-x:hidden !important;
+  }
+
+  .theory-section p,
+  .theory-section li{
+    text-align:left !important;
+    word-spacing:normal !important;
+    letter-spacing:normal !important;
+    line-height:1.65 !important;
+    overflow-wrap:break-word !important;
+    word-break:normal !important;
+    hyphens:none !important;
+  }
+
+  .theory-section p{
+    font-size:0.98rem !important;
+    margin:7px 0 10px 0 !important;
+  }
+
+  .theory-section h2{
+    font-size:1.5rem !important;
+    line-height:1.3 !important;
+    margin:0 0 9px 0 !important;
+    text-align:left !important;
+    word-spacing:normal !important;
+    letter-spacing:normal !important;
+    overflow-wrap:break-word !important;
+    word-break:normal !important;
+  }
+
+  .theory-section h3{
+    font-size:1.18rem !important;
+    line-height:1.3 !important;
+    margin:16px 0 8px 0 !important;
+    text-align:left !important;
+    word-spacing:normal !important;
+    letter-spacing:normal !important;
+  }
+
+  .theory-section h4{
+    font-size:1.08rem !important;
+    line-height:1.3 !important;
+    margin:14px 0 7px 0 !important;
+    text-align:left !important;
+  }
+
+  .theory-section ul,
+  .theory-section ol{
+    padding-left:22px !important;
+    margin:8px 0 14px 0 !important;
+    text-align:left !important;
+  }
+
+  .theory-section li{
+    font-size:0.98rem !important;
+    margin-bottom:6px !important;
+  }
+
+  .theory-section figure,
+  .theory-section .image-box{
+    margin:16px auto !important;
+  }
+
+  .theory-section figcaption,
+  .image-box figcaption{
+    font-size:0.88rem !important;
+    line-height:1.4 !important;
+    margin-top:6px !important;
+    text-align:center !important;
+    word-spacing:normal !important;
+    letter-spacing:normal !important;
+    overflow-wrap:break-word !important;
+    word-break:normal !important;
+  }
+
+  .theory-section br{
+    display:none !important;
+  }
+}
+
+
 </style>
 
 <section class="theory-section">
@@ -1087,7 +1250,7 @@
 
     <figure class="image-box">
       <img src="images/img1.png" alt="Block Diagram of Image Compression Model">
-      <figcaption>Fig. 1 Block Diagram of Image compression model</figcaption>
+      <figcaption><b>Fig. 1 Block Diagram of Image compression model</b></figcaption>
     </figure>
 
     <h3>Compression Methods</h3>
@@ -1108,6 +1271,7 @@
 
         <p>
           <b>Input data:</b> 222222222226666666666666699999999999999999
+          <br>
           <br>
           <b>Code:</b> 2,11 6,14 9,17
         </p>
@@ -1141,15 +1305,19 @@
         <figure class="image-box">
           <img src="images/img4.png" alt="BMP Absolute Coding Mode Options">
           <figcaption>
-            Fig. 2 BMP absolute coding mode options. In this mode, the first byte of the BMP pair is 0
+            <b>Fig. 2 BMP absolute coding mode options. In this mode, the first byte of the BMP pair is 0</b>
           </figcaption>
         </figure>
       </li>
     </ol>
-
+<br>
+  </section>
   </section>
 
-</section>   <section id="progressreport" class="section-content vl-card mb-8 p-6 animate-fadeInUp hidden">
+</section> 
+<br>
+<br>
+  <section id="progressreport" class="section-content vl-card mb-8 p-6 animate-fadeInUp hidden">
           <div class="border-l-4 border-orange-600 pl-4 mb-4 flex items-center justify-between">
             <div class="flex items-center">
               <h2 class="text-2xl font-bold text-gray-800 flex items-center">

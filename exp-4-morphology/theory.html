@@ -8,14 +8,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="./alert-theme.css">
 
-      <style>
+  <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
     body {
       font-family: 'Inter', sans-serif;
     }
 
-    /* Page blur when intro popup is open */
     body.body-blurred #page-wrapper {
       filter: blur(5px);
       pointer-events: none;
@@ -26,7 +25,6 @@
       overflow: hidden;
     }
 
-    /* Custom Animations */
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -81,7 +79,6 @@
       }
     }
 
-    /* Stagger animation for menu items */
     .menu-item:nth-child(1) { animation-delay: 0.1s; }
     .menu-item:nth-child(2) { animation-delay: 0.2s; }
     .menu-item:nth-child(3) { animation-delay: 0.3s; }
@@ -91,13 +88,11 @@
     .menu-item:nth-child(7) { animation-delay: 0.7s; }
     .menu-item:nth-child(8) { animation-delay: 0.8s; }
 
-    /* Section stagger */
     .section-content:nth-child(even) { animation-delay: 0.2s; }
     .section-content:nth-child(odd) { animation-delay: 0.1s; }
 
-    /* Virtual Labs specific styling */
     .vl-header {
-       height: 70px;
+      height: 70px;
       background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
       box-shadow: 0 10px 30px rgba(2, 26, 44, 0.35);
     }
@@ -108,11 +103,11 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.75rem 1rem; /* Increased padding for better breathing room */
+      padding: 0.75rem 1rem;
     }
 
     .top-nav {
-      gap: 1.5rem; /* Increased gap for better spacing */
+      gap: 1.5rem;
       align-items: center;
     }
 
@@ -120,9 +115,9 @@
       position: relative;
       color: #e2e8f0;
       font-weight: 600;
-      padding: 0.5rem 1rem; /* Slightly increased padding */
-      transition: color 150ms ease, transform 150ms ease; /* Added subtle transform */
-      border-radius: 0.375rem; /* Subtle rounding */
+      padding: 0.5rem 1rem;
+      transition: color 150ms ease, transform 150ms ease;
+      border-radius: 0.375rem;
       text-decoration: none;
     }
 
@@ -143,8 +138,8 @@
     .nav-link:hover,
     .nav-link:focus {
       color: #fff;
-      transform: translateY(-1px); /* Subtle lift on hover */
-      background: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.1);
     }
 
     .nav-link:hover::after,
@@ -152,11 +147,10 @@
       transform: scaleX(1);
     }
 
-    /* Logo improvements */
     .logo-container {
       display: flex;
       align-items: center;
-      gap: 0.75rem; /* Consistent gap */
+      gap: 0.75rem;
     }
 
     .logo-glow {
@@ -189,40 +183,42 @@
       margin: 0;
     }
 
-   .flex-1.pt-16 {
-    flex: 1;
-  }
+    .flex-1.pt-16 {
+      flex: 1;
+    }
 
-  .vl-footer {
-    background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
-    color: #e2e8f0;
-    padding: 1.25rem 0;
-    box-shadow: 0 -10px 30px rgba(2, 26, 44, 0.5);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 50;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
+    .vl-footer {
+      background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
+      color: #e2e8f0;
+      padding: 1.25rem 0;
+      box-shadow: 0 -10px 30px rgba(2, 26, 44, 0.5);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 50;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
 
-  .footer-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    text-align: center;
-    padding: 0 1.5rem;
-  }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
 
     .vl-sidebar {
       background: #f8fafc;
       border-right: 1px solid #e2e8f0;
     }
+
     .vl-card {
       border: 1px solid #e2e8f0;
       border-radius: 12px;
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
+
     .menu-item {
       border-left: 3px solid transparent;
       background: rgba(255, 255, 255, 0.6);
@@ -262,7 +258,6 @@
       transform: translateX(0);
     }
 
-    /* Override Tailwind blue accents with lab primary theme */
     .bg-blue-600,
     .hover\:bg-blue-700:hover {
       background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
@@ -393,22 +388,6 @@
       color: #0f172a;
     }
 
-    @media (max-width: 640px) {
-      .chatbot-launcher {
-        width: 64px;
-        height: 64px;
-      }
-
-      .chatbot-launcher-image {
-        width: 50px;
-        height: 50px;
-      }
-
-      .chatbot-hint-bubble {
-        display: none;
-      }
-    }
-
     .chatbot-widget {
       position: fixed;
       bottom: 28px;
@@ -462,7 +441,7 @@
       pointer-events: auto;
     }
 
-   .chatbot-panel-header {
+    .chatbot-panel-header {
       padding: 1.1rem 1.35rem;
       background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
       color: #fff;
@@ -471,7 +450,6 @@
       align-items: center;
       gap: 1rem;
     }
-
 
     .chatbot-panel-title {
       font-size: 1.05rem;
@@ -542,19 +520,32 @@
       display: block;
     }
 
-    /* Improved text alignment in sections */
     .section-text {
-      text-align: left; /* Ensure left alignment for readability */
-      line-height: 1.7; /* Improved line height for better spacing */
-      hyphens: auto; /* Allow soft hyphens for long words */
+      text-align: left;
+      line-height: 1.7;
+      hyphens: auto;
     }
 
     .section-text p {
-      margin-bottom: 1rem; /* Consistent paragraph spacing */
-      text-indent: 0; /* No indentation, use spacing instead */
+      margin-bottom: 1rem;
+      text-indent: 0;
     }
 
     @media (max-width: 640px) {
+      .chatbot-launcher {
+        width: 64px;
+        height: 64px;
+      }
+
+      .chatbot-launcher-image {
+        width: 50px;
+        height: 50px;
+      }
+
+      .chatbot-hint-bubble {
+        display: none;
+      }
+
       .chatbot-widget {
         bottom: 16px;
         right: 16px;
@@ -573,32 +564,28 @@
         height: min(88vh, 620px);
       }
     }
-
   </style>
 </head>
 
 <body class="bg-gray-50 min-h-screen">
 
   <!-- HEADER -->
-    <header class="vl-header shadow-xl fixed top-0 left-0 right-0 z-[1000]">
+  <header class="vl-header shadow-xl fixed top-0 left-0 right-0 z-[1000]">
     <div class="header-inner px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between py-1 w-full">
-        <!-- Logo Section - Absolute Left Corner -->
-        <a href="../../main.html" class="logo-container hover:no-underline focus:no-underline"> <!-- Made logo clickable -->
+        <a href="../../main.html" class="logo-container hover:no-underline focus:no-underline">
           <img 
-             src="./images/image.png" 
+            src="./images/image.png" 
             alt="Virtual Labs Logo" 
             class="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 rounded-xl object-contain bg-white p-1.5 logo-glow"
             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%230b60a8%22 width=%22100%22 height=%22100%22/%3E%3Ctext x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22white%22 font-family=%22Arial%22 font-weight=%22bold%22%3EVL%3C/text%3E%3C/svg%3E'"
           >
           <div class="logo-text">
-          <h1 class="logo-title text-base sm:text-lg lg:text-xl">Virtual Labs</h1>
-          <p class="logo-subtitle text-[10px] sm:text-xs lg:text-sm">IIT Roorkee</p>
-
+            <h1 class="logo-title text-base sm:text-lg lg:text-xl">Virtual Labs</h1>
+            <p class="logo-subtitle text-[10px] sm:text-xs lg:text-sm">IIT Roorkee</p>
           </div>
         </a>
 
-        <!-- Mobile Menu Button - Right Side -->
         <button 
           id="mobile-menu-toggle" 
           class="lg:hidden text-white p-2 menu-button"
@@ -611,98 +598,95 @@
           </svg>
         </button>
 
-        <!-- Desktop Navigation (Optional) -->
-         <nav class="top-nav hidden lg:flex items-center gap-2 lg:gap-3">
-            <a href="../../main.html" class="nav-link">Home</a>
-            <a href="user_input.html?return=theory.html" class="nav-link nav-user-link" data-user-input-link data-redirect-return="theory.html">
-              <span class="nav-user-pill">
-               
-                <span class="nav-user-text" data-user-text>User Input</span>
-              </span>
-            </a>
-           
-          </nav>
+        <nav class="top-nav hidden lg:flex items-center gap-2 lg:gap-3">
+          <a href="../../main.html" class="nav-link">Home</a>
+          <a href="user_input.html?return=theory.html" class="nav-link nav-user-link" data-user-input-link data-redirect-return="theory.html">
+            <span class="nav-user-pill">
+              <span class="nav-user-text" data-user-text>User Input</span>
+            </span>
+          </a>
+        </nav>
       </div>
     </div>
   </header>
 
- <div class="flex pt-[70px] min-h-screen">
+  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
-           <a href="aim.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-    </svg>
-    Aim
-  </a>
+          <a href="aim.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
+            <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Aim
+          </a>
 
-  <a href="theory.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-    </svg>
-    Theory
-  </a>
+          <a href="theory.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
+            <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+            Theory
+          </a>
 
-  <a href="pretest.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-    </svg>
-    Pretest
-  </a>
+          <a href="pretest.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
+            <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Pretest
+          </a>
 
-  <a href="procedure.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2m-6 9l2 2 4-4"></path>
-    </svg>
-    Procedure
-  </a>
+          <a href="procedure.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
+            <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2m-6 9l2 2 4-4"></path>
+            </svg>
+            Procedure
+          </a>
 
-  <a href="simulation.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-    </svg>
-    Simulation
-  </a>
+          <a href="simulation.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
+            <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+            </svg>
+            Simulation
+          </a>
 
-  <a href="posttest.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-    </svg>
-    Posttest
-  </a>
+          <a href="posttest.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
+            <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            Posttest
+          </a>
 
-  <a href="references.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
-    </svg>
-    References
-  </a>
+          <a href="references.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
+            <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+            </svg>
+            References
+          </a>
 
-  <a href="contributors.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
-    <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-    </svg>
-    Contributors
-  </a>
-  <a id="progressReportNav" href="#progressreport" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group" data-progress-report-link>
+          <a href="contributors.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
+            <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            Contributors
+          </a>
 
-              <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-              </svg>
-              Progress report
-            </a>
+          <a id="progressReportNav" href="#progressreport" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group" data-progress-report-link>
+            <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+            Progress report
+          </a>
         </nav>
       </div>
     </aside>
@@ -711,15 +695,15 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-4 lg:p-6 overflow-x-hidden">
 
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2 overflow-hidden">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
         <span>></span>
-        <a href="#" class="hover:text-blue-600"> Morphology Based Edge Detection</a>
+        <a href="#" class="hover:text-blue-600">Morphology Based Edge Detection</a>
         <span>></span>
         <span class="text-gray-800 font-medium">Theory</span>
       </nav>
@@ -728,666 +712,943 @@
       <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
         <div class="px-4 py-3" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
           <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
-             Morphology Based Edge Detection
+            Morphology Based Edge Detection
           </h1>
         </div>
       </div>
 
-<!-- Theory Content -->
-<section class="section-content vl-card animate-fadeInUp">
+      <!-- Theory Content -->
+      <section class="section-content animate-fadeInUp">
 
-<style>
-  .section-content {
-    width: 100%;
-    max-width: none;
-    margin: 0 !important;
-    padding: 0 !important;
+        <style>
+          .theory-section{
+            width:100%;
+            max-width:none;
+            margin:0 !important;
+            padding:0 15px 75px 15px !important;
+            font-family:Arial, Helvetica, sans-serif;
+            color:#222;
+            line-height:1.8;
+            font-size:1.1rem;
+            text-align:justify;
+            box-sizing:border-box;
+          }
+
+          .theory-section *{
+            box-sizing:border-box;
+          }
+
+          .theory-section h2{
+            font-size:2rem;
+            font-weight:700;
+            color:#222;
+            margin:24px 0 12px 0;
+            text-align:left;
+            word-spacing:normal;
+            letter-spacing:normal;
+            line-height:1.4;
+          }
+
+          .theory-section h2:first-child{
+            margin-top:0;
+          }
+
+          .theory-section h3{
+            font-size:1.4rem;
+            font-weight:700;
+            color:#222;
+            margin:22px 0 12px 0;
+            text-align:left;
+            line-height:1.4;
+          }
+
+          .theory-section h4{
+            font-size:1.2rem;
+            font-weight:700;
+            color:#222;
+            margin:18px 0 10px 0;
+            text-align:left;
+            line-height:1.4;
+          }
+
+          .theory-section p{
+            font-size:1.1rem;
+            margin:8px 0 12px 0;
+            line-height:1.8;
+            text-align:justify;
+            color:#000;
+          }
+
+          .theory-section ul{
+            list-style:disc !important;
+            list-style-position:outside !important;
+            padding-left:40px !important;
+            margin:12px 0 20px 0 !important;
+          }
+
+          .theory-section ol{
+            list-style:decimal !important;
+            list-style-position:outside !important;
+            padding-left:40px !important;
+            margin:12px 0 20px 0 !important;
+          }
+
+          .theory-section li{
+            display:list-item !important;
+            font-size:1.1rem;
+            margin-bottom:8px;
+            line-height:1.8;
+            color:#000;
+            text-align:justify;
+          }
+
+          .theory-section b,
+          .theory-section strong{
+            font-weight:700;
+            color:#000;
+          }
+
+          .theory-section figure{
+            text-align:center;
+            margin:25px 0;
+          }
+
+          .theory-section img{
+            max-width:100%;
+            height:auto;
+            display:block;
+            margin:0 auto;
+          }
+
+          .theory-section figcaption{
+            font-size:1rem;
+            font-weight:700;
+            color:#000;
+            margin-top:10px;
+            text-align:center;
+          }
+
+          .theory-section table{
+            width:100%;
+            max-width:100%;
+            border-collapse:collapse;
+            margin:20px 0;
+          }
+
+          .theory-section table,
+          .theory-section th,
+          .theory-section td{
+            border:1px solid #000;
+          }
+
+          .theory-section th,
+          .theory-section td{
+            padding:10px;
+            text-align:left;
+            vertical-align:top;
+            color:#000;
+          }
+
+          .formula-box {
+            text-align: center;
+            margin: 20px auto;
+            font-size: 1.25rem;
+            background: #f7f9fc;
+            border: 1px solid #dce3f0;
+            padding: 14px 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+            overflow-y: visible;
+            color: #000;
+          }
+
+          .math-formula {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 1.35rem;
+            line-height: 1.4;
+            overflow: visible;
+          }
+
+          .math-frac {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            line-height: 1.1;
+            margin: 0 3px;
+          }
+
+          .math-frac .num {
+            border-bottom: 1.8px solid #000;
+            padding: 0 5px 3px 5px;
+          }
+
+          .math-frac .den {
+            padding: 3px 5px 0 5px;
+          }
+
+          .square-group {
+            display: inline-flex;
+            align-items: flex-start;
+            overflow: visible;
+          }
+
+          .square-group sup {
+            font-size: 0.65em;
+            position: relative;
+            top: -5px;
+            margin-left: 2px;
+          }
+
+          .sqrt-formula {
+            display: inline-flex;
+            align-items: flex-start;
+            vertical-align: middle;
+            overflow: visible;
+          }
+
+          .sqrt-sign {
+            font-size: 48px;
+            line-height: 1;
+            margin-top: 7px;
+            margin-right: 2px;
+            color: #000;
+          }
+
+          .sqrt-inner {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border-top: 2px solid #000;
+            padding: 14px 8px 0 8px;
+            overflow: visible;
+          }
+
+          .big-round {
+            font-size: 80px;
+            line-height: 0.75;
+            display: inline-block;
+            vertical-align: middle;
+            font-weight: 300;
+            color: #000;
+          }
+
+          .vector-box {
+            display: inline-flex;
+            align-items: center;
+          }
+
+          .vector-box::before {
+            content: "[";
+            font-size: 52px;
+            line-height: 1;
+            margin-right: 5px;
+          }
+
+          .vector-box::after {
+            content: "]";
+            font-size: 52px;
+            line-height: 1;
+            margin-left: 5px;
+          }
+
+          .image-box {
+            text-align: center;
+            margin: 25px 0;
+          }
+
+          .image-box img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+          }
+
+          .image-box figcaption {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #000;
+            margin-top: 10px;
+            text-align: center;
+          }
+
+          .mask-row {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 18px 0;
+          }
+
+          .mask-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+          }
+
+          .mask-label {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #000;
+          }
+
+          .small-mask td {
+            width: 38px;
+            height: 38px;
+            font-size: 1rem;
+          }
+
+          .comparison-table {
+            width: 100%;
+            max-width: 950px;
+            margin: 18px auto;
+            font-size: 1rem;
+            border-collapse: collapse;
+          }
+
+          .comparison-table th {
+            background-color: #f2f2f2;
+            color: #000;
+            font-weight: 700;
+            padding: 10px;
+            border: 1px solid #333;
+          }
+
+          .comparison-table td {
+            padding: 10px;
+            border: 1px solid #333;
+            vertical-align: top;
+            text-align: left;
+          }
+
+          .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+          }
+
+          .comparison-table ol {
+            margin: 0 !important;
+            padding-left: 20px !important;
+            text-align: left;
+          }
+
+          .theory-section mjx-container,
+          .theory-section .MathJax,
+          .theory-section .MathJax_Display,
+          .theory-section .katex,
+          .theory-section .katex-display{
+            max-width:100%;
+          }
+
+          .theory-section mjx-container[display="true"],
+          .theory-section .MathJax_Display,
+          .theory-section .katex-display{
+            overflow-x:auto;
+            overflow-y:hidden;
+            display:block;
+          }
+
+          @media (max-width:640px){
+            html,
+            body{
+              width:100%;
+              max-width:100%;
+              overflow-x:hidden;
+            }
+
+            *{
+              max-width:100%;
+              box-sizing:border-box;
+            }
+
+            main{
+              overflow-x:hidden;
+            }
+
+            .theory-section{
+              width:100%;
+              overflow-x:hidden;
+              word-wrap:break-word;
+              overflow-wrap:break-word;
+              padding:0 12px 75px 12px !important;
+              font-size:1rem;
+              line-height:1.7;
+            }
+
+            .theory-section h2{
+              font-size:1.8rem;
+              line-height:1.35;
+              word-spacing:0 !important;
+              text-align:left !important;
+            }
+
+            .theory-section h3{
+              font-size:1.3rem;
+              line-height:1.35;
+            }
+
+            .theory-section h4{
+              font-size:1.15rem;
+              line-height:1.35;
+            }
+
+            .theory-section p,
+            .theory-section li{
+              font-size:1rem;
+              line-height:1.7;
+            }
+
+            .theory-section ul,
+            .theory-section ol{
+              padding-left:24px !important;
+            }
+
+            .theory-section table{
+              display:block;
+              width:100%;
+              overflow-x:auto;
+              -webkit-overflow-scrolling:touch;
+              border-collapse:collapse;
+            }
+
+            .theory-section tbody,
+            .theory-section thead{
+              width:max-content;
+              min-width:100%;
+            }
+
+            .theory-section th,
+            .theory-section td{
+              word-wrap:break-word;
+              overflow-wrap:break-word;
+              white-space:normal;
+              font-size:14px;
+              padding:8px;
+            }
+
+            .theory-section td ol,
+            .theory-section td ul{
+              padding-left:18px !important;
+              margin:0;
+            }
+
+            .theory-section img{
+              max-width:100% !important;
+              height:auto !important;
+            }
+
+            .theory-section math,
+            .theory-section mjx-container,
+            .theory-section .MathJax,
+            .theory-section .MathJax_Display,
+            .theory-section .katex,
+            .theory-section .katex-display{
+              max-width:100% !important;
+              overflow-x:auto !important;
+              overflow-y:hidden !important;
+            }
+
+            .formula-box{
+              font-size:1rem;
+              overflow-x:auto;
+            }
+
+            .math-formula{
+              font-size:1rem;
+              flex-wrap:nowrap;
+              min-width:max-content;
+            }
+
+            .sqrt-sign{
+              font-size:40px;
+            }
+
+            .big-round{
+              font-size:58px;
+            }
+
+            .vector-box::before,
+            .vector-box::after{
+              font-size:42px;
+            }
+
+            .theory-section p,
+            .theory-section li,
+            .theory-section h2,
+            .theory-section h3,
+            .theory-section h4,
+            .theory-section figcaption{
+              overflow-wrap:anywhere;
+              word-break:break-word;
+            }
+
+            nav{
+              overflow-x:hidden;
+            }
+
+            .theory-section figcaption{
+              font-size:0.95rem;
+            }
+          }
+
+          /* =========================
+   MOBILE TEXT GAP FIX
+   Code 1 jaisa clean spacing
+   ========================= */
+
+@media (max-width:640px){
+
+  .theory-section{
+    text-align:left !important;
   }
 
-  .theory-section {
-    width: 100%;
-    max-width: none;
-    margin: 0 !important;
-    padding: 0 15px !important;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #222;
-    line-height: 1.8;
-    font-size: 1.1rem;
-    text-align: justify;
+  .theory-section p,
+  .theory-section li{
+    text-align:left !important;
+    word-spacing:normal !important;
+    letter-spacing:normal !important;
+    line-height:1.7 !important;
+    overflow-wrap:break-word !important;
+    word-break:normal !important;
+    hyphens:none !important;
   }
 
-  .theory-section h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #222;
-    margin: 0 0 12px 0 !important;
-    padding: 0 !important;
-    text-align: left;
-    border: none;
-  }
-
-  .theory-section h3 {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #222;
-    margin-top: 20px;
-    margin-bottom: 12px;
-    text-align: left;
-  }
-
-  .theory-section h4 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #222;
-    margin-top: 18px;
-    margin-bottom: 10px;
-  }
-
-  .theory-section p {
-    font-size: 1.1rem;
-    margin: 8px 0 12px 0;
-    line-height: 1.8;
-    text-align: justify;
-    color: #000;
+  .theory-section h2,
+  .theory-section h3,
+  .theory-section h4{
+    text-align:left !important;
+    word-spacing:normal !important;
+    letter-spacing:normal !important;
+    overflow-wrap:break-word !important;
+    word-break:normal !important;
   }
 
   .theory-section ul,
-  .theory-section ol {
-    font-size: 1.1rem;
-    margin: 12px 0 20px 0 !important;
-    padding-left: 40px !important;
-    text-align: justify;
+  .theory-section ol{
+    text-align:left !important;
   }
 
-  .theory-section ol {
-    list-style: decimal !important;
-    list-style-position: outside !important;
+  .theory-section figcaption{
+    text-align:center !important;
+    word-spacing:normal !important;
+    letter-spacing:normal !important;
+    overflow-wrap:break-word !important;
+    word-break:normal !important;
   }
-
-  .theory-section ul {
-    list-style: disc !important;
-    list-style-position: outside !important;
-  }
-
-  .theory-section li {
-    display: list-item !important;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    line-height: 1.8;
-    color: #000;
-    text-align: justify;
-  }
-
-  .theory-section b {
-    font-weight: 700;
-    color: #000;
-  }
-
-  .formula-box {
-    text-align: center;
-    margin: 14px auto;
-    font-size: 1.25rem;
-    background: #f7f9fc;
-    border: 1px solid #dce3f0;
-    padding: 14px 10px;
-    border-radius: 6px;
-    overflow-x: auto;
-    overflow-y: visible;
-    color: #000;
-  }
-
-  .math-formula {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    font-size: 1.35rem;
-    line-height: 1.4;
-    overflow: visible;
-  }
-
-  .math-frac {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    vertical-align: middle;
-    line-height: 1.1;
-    margin: 0 3px;
-  }
-
-  .math-frac .num {
-    border-bottom: 1.8px solid #000;
-    padding: 0 5px 3px 5px;
-  }
-
-  .math-frac .den {
-    padding: 3px 5px 0 5px;
-  }
-
-  .square-group {
-    display: inline-flex;
-    align-items: flex-start;
-    overflow: visible;
-  }
-
-  .square-group sup {
-    font-size: 0.65em;
-    position: relative;
-    top: -5px;
-    margin-left: 2px;
-  }
-
-  .sqrt-formula {
-    display: inline-flex;
-    align-items: flex-start;
-    vertical-align: middle;
-    overflow: visible;
-  }
-
-  .sqrt-sign {
-    font-size: 48px;
-    line-height: 1;
-    margin-top: 7px;
-    margin-right: 2px;
-    color: #000;
-  }
-
-  .sqrt-inner {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    border-top: 2px solid #000;
-    padding: 14px 8px 0 8px;
-    overflow: visible;
-  }
-
-  .big-round {
-    font-size: 80px;
-    line-height: 0.75;
-    display: inline-block;
-    vertical-align: middle;
-    font-weight: 300;
-    color: #000;
-  }
-
-  .vector-box {
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .vector-box::before {
-    content: "[";
-    font-size: 52px;
-    line-height: 1;
-    margin-right: 5px;
-  }
-
-  .vector-box::after {
-    content: "]";
-    font-size: 52px;
-    line-height: 1;
-    margin-left: 5px;
-  }
-
-  .image-box {
-    text-align: center;
-    margin: 20px 0;
-  }
-
-  .image-box img {
-    max-width: 100%;
-    height: auto;
-    display: inline-block;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-  }
-
-  .image-box figcaption {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #000;
-    margin-top: 8px;
-    text-align: center;
-  }
-
-  .mask-row {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin: 18px 0;
-  }
-
-  .mask-box {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .mask-label {
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #000;
-  }
-
-  .theory-section table {
-    border-collapse: collapse;
-    margin: 12px auto;
-    text-align: center;
-  }
-
-  .theory-section td,
-  .theory-section th {
-    border: 1px solid #333;
-    padding: 8px 12px;
-    vertical-align: middle;
-    color: #000;
-  }
-
-  .small-mask td {
-    width: 38px;
-    height: 38px;
-    font-size: 1rem;
-  }
-
-  .comparison-table {
-    width: 100%;
-    max-width: 950px;
-    margin: 18px auto;
-    font-size: 1rem;
-    border-collapse: collapse;
-  }
-
-  .comparison-table th {
-    background-color: #f2f2f2;
-    color: #000;
-    font-weight: 700;
-    padding: 10px;
-    border: 1px solid #333;
-  }
-
-  .comparison-table td {
-    padding: 10px;
-    border: 1px solid #333;
-    vertical-align: top;
-    text-align: left;
-  }
-
-  .comparison-table tr:nth-child(even) {
-    background: #f8f9fa;
-  }
-
-  .comparison-table ol {
-    margin: 0 !important;
-    padding-left: 20px !important;
-    text-align: left;
-  }
-</style>
-
-<section class="theory-section">
-
-  <section>
-
-  <h2>Introduction</h2>
-
-  <p>
-    Image segmentation is the division of an image into regions or categories, which correspond to different objects or parts of objects.
-    Every pixel in an image is allocated to one of a number of these categories.
-  </p>
-
-  <p>A good segmentation is typically one in which:</p>
-
-  <ul>
-    <li>Pixels in the same category have similar grey scale of multivariate values and form a connected region.</li>
-    <li>Neighboring pixels which are in different categories have dissimilar values.</li>
-  </ul>
-
-  <h3>Edge Based Image Segmentation</h3>
-
-  <p>
-    Edge-based segmentation is one of the most popular implementations of segmentation in image processing.
-    It focuses on identifying the edges of different objects in an image.
-    This is a crucial step as it helps you find the features of the various objects present in the image as edges contain a lot of information you can use.
-  </p>
-
-  <p>
-    Edge detection is widely popular because it helps you in removing unwanted and unnecessary information from the image.
-    It reduces the image’s size considerably, making it easier to analyse the same.
-    Algorithms used in edge-based segmentation identify edges in an image according to the differences in texture, contrast, grey level, colour, saturation, and other properties.
-    You can improve the quality of your results by connecting all the edges into edge chains that match the image borders more accurately.
-  </p>
-
-  <h3>Gradient</h3>
-
-  <p>
-    In image processing, a gradient refers to the rate of change of intensity in an image.
-    Mathematically, the gradient is a vector field that points in the direction of the greatest rate of increase of intensity and whose magnitude represents the rate of change in that direction.
-    For edge detection, we are primarily interested in regions of an image where there is a large change in pixel intensity—typically indicating the presence of an edge.
-  </p>
-
-  <p>
-    In image processing, a gradient refers to the directional change in the intensity or color in an image.
-    Mathematically, the gradient of an image function f(x, y) is a vector that points in the direction of the greatest rate of increase off, and whose magnitude is the rate of change in that direction:
-  </p>
-
-  <div class="formula-box">
-    <div class="math-formula">
-      <span>∇f(x, y) =</span>
-
-      <span class="vector-box">
-        <span class="math-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂x</span>
-        </span>
-
-        <span>,</span>
-
-        <span class="math-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂y</span>
-        </span>
-      </span>
-    </div>
-  </div>
-
-  <div style="width: 100%; text-align: center;">
-    <div style="display: inline-block; text-align: left;">
-      <p style="text-align: center !important; margin: 0 0 10px 0;">
-        Where:
-      </p>
-
-      <ul style="text-align: left; margin: 0; padding-left: 20px;">
-        <li>
-          <b>∂f/∂x:</b> the partial derivative in the horizontal direction (gradient in x-direction)
-        </li>
-        <li>
-          <b>∂f/∂y:</b> the partial derivative in the vertical direction (gradient in y-direction)
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <p>The magnitude of the gradient is given by:</p>
-
-  <div class="formula-box">
-    <div class="math-formula">
-      <span>|∇f(x, y)| =</span>
-
-      <span class="sqrt-formula">
-        <span class="sqrt-sign">√</span>
-
-        <span class="sqrt-inner">
-          <span class="square-group">
-            <span class="math-frac">
-              <span class="num">∂f</span>
-              <span class="den">∂x</span>
-            </span>
-            <sup>2</sup>
-          </span>
-
-          <span>+</span>
-
-          <span class="square-group">
-            <span class="math-frac">
-              <span class="num">∂f</span>
-              <span class="den">∂y</span>
-            </span>
-            <sup>2</sup>
-          </span>
-        </span>
-      </span>
-    </div>
-  </div>
-
-  <p>And the direction (angle) of the gradient is:</p>
-
-  <div class="formula-box">
-    <div class="math-formula">
-      <span>θ(x, y) = tan<sup>-1</sup></span>
-
-      <span class="big-round">(</span>
-
-      <span class="math-frac">
-        <span class="num">
-          <span class="math-frac">
-            <span class="num">∂f</span>
-            <span class="den">∂y</span>
-          </span>
-        </span>
-
-        <span class="den">
-          <span class="math-frac">
-            <span class="num">∂f</span>
-            <span class="den">∂x</span>
-          </span>
-        </span>
-      </span>
-
-      <span class="big-round">)</span>
-    </div>
-  </div>
-
-  <h3>Steps in Edge Detection</h3>
-
-  <p>Algorithms for edge detection contain three steps:</p>
-
-  <ol>
-    <li>
-      <b>Filtering:</b>
-      Since gradient computation based on intensity values of only two points are susceptible to noise and other vagaries in discrete computations,
-      filtering is commonly used to improve the performance of an edge detector with respect to noise.
-      However, there is a trade-off between edge strength and noise reduction.
-      More filtering to reduce noise results in a loss of edge strength.
-    </li>
-
-    <li>
-      <b>Enhancement:</b>
-      In order to facilitate the detection of edges, it is essential to determine changes in intensity in the neighborhood of a point.
-      Enhancement emphasizes pixels where there is a significant change in local intensity values and is usually performed by computing the gradient magnitude.
-    </li>
-
-    <li>
-      <b>Detection:</b>
-      We only want points with strong edge content.
-      However, many points in an image have a nonzero value for the gradient, and not all of these points are edges for a particular application.
-      Therefore, some method should be used to determine which points are edge points.
-      Frequently, thresholding provides the criterion used for detection.
-      Examples at the end of this section will clearly illustrate each of these steps using various edge detectors.
-      <br>
-      Many edge detection algorithms include a fourth step:
-    </li>
-
-    <li>
-      <b>Localization:</b>
-      The location of the edge can be estimated with subpixel resolution if required for the application.
-      The edge orientation can also be estimated.
-    </li>
-  </ol>
-
-  <h3>Edge Detectors</h3>
-
-  <ol>
-    <li>
-      <b>First-order derivative</b>
-      <ul>
-        <li>Robert</li>
-        <li>Sobel</li>
-        <li>Perwitt</li>
-      </ul>
-    </li>
-
-    <li>
-      <b>Second-order derivative</b>
-      <ul>
-        <li>Laplacian</li>
-      </ul>
-    </li>
-
-    <li><b>Canny</b></li>
-
-    <li><b>Morphological operations</b></li>
-  </ol>
-
-  <figure class="image-box">
-    <img src="images/img1.png" alt="Edge detection result for medical">
-    <figcaption>Fig. 1 Edge detection result for medical</figcaption>
-  </figure>
-
-  <h3>Morphological Operations</h3>
-
-  <p>
-    Morphological transformations are some simple operations based on the image shape.
-    It is normally performed on binary images.
-    It needs two inputs, one is our original image, second one is called structuring element or kernel which decides the nature of operation.
-    Two basic morphological operators are Erosion and Dilation.
-    Then its variant forms like Opening, Closing, Gradient etc also comes into play.
-  </p>
-
-  <ol type="a">
-    <li>
-      <b>Erosion</b>
-
-      <p>
-        Erosion is a fundamental morphological operation that functions similarly to the natural process of soil erosion —
-        it gradually erodes the boundaries of the foreground object.
-        Typically, the foreground is represented in white (pixel value = 1), and the background in black (pixel value = 0).
-      </p>
-
-      <p>
-        During erosion, a structuring element (or kernel) is slid over the image, much like in 2D convolution.
-        For a pixel in the output image to be set to 1, all pixels under the kernel in the original image must also be 1.
-        If even one pixel under the kernel is 0, the output pixel is set to 0.
-      </p>
-
-      <p>
-        As a result, pixels at the boundaries of white regions are removed, causing the white (foreground) areas to shrink.
-        The extent of erosion depends on the size and shape of the structuring element.
-      </p>
-
-      <figure class="image-box">
-        <img src="images/erosion.png" alt="Example of Erosion">
-        <figcaption>Fig. 2 Example of Erosion</figcaption>
-      </figure>
-
-      <p><b>Effects of Erosion:</b></p>
-
-      <ul>
-        <li>Removes small white noise</li>
-        <li>Separates objects that are connected</li>
-        <li>Reduces thickness of foreground objects</li>
-      </ul>
-    </li>
-
-    <li>
-      <b>Dilation</b>
-
-      <p>
-        Dilation is the morphological operation that performs the inverse of erosion.
-        While erosion reduces the boundaries of foreground objects, dilation expands them.
-      </p>
-
-      <p>
-        In dilation, a structuring element (kernel) slides over the binary image.
-        For each position of the kernel, the corresponding pixel in the output image is set to 1 (white) if at least one pixel under the kernel in the input image is 1.
-        In other words, if any part of the kernel overlaps with a white pixel in the original image, the output pixel is set to white.
-      </p>
-
-      <p>
-        This process increases the size of the foreground objects (white regions), causing them to grow outward by a margin defined by the structuring element.
-      </p>
-
-      <figure class="image-box">
-        <img src="images/dilation.png" alt="Example of Dilation">
-        <figcaption>Fig. 3 Example of Dilation</figcaption>
-      </figure>
-
-      <p><b>Effects of Dilation:</b></p>
-
-      <ul>
-        <li>Expands object boundaries, filling small holes and gaps</li>
-        <li>Useful after erosion to restore object size (a sequence called opening)</li>
-        <li>Bridges small breaks or connects disjoint parts of objects</li>
-        <li>Fills in gaps in object contours or outlines</li>
-      </ul>
-    </li>
-
-    <li>
-      <b>Opening</b>
-
-      <p>
-        Opening is a fundamental morphological operation in image processing, defined as an erosion followed by dilation,
-        using the same structuring element for both steps.
-        It is primarily used to remove small objects or noise from an image while preserving the shape and size of larger foreground objects.
-      </p>
-
-      <p><b>Effects of Opening:</b></p>
-
-      <ul>
-        <li>Removing salt-and-pepper noise from binary images.</li>
-        <li>Eliminating small unwanted objects (e.g., speckles, dots).</li>
-        <li>Separating weakly connected components.</li>
-        <li>Cleaning up scanned documents, microscopy images, etc.</li>
-        <li>Preprocessing step for shape analysis and feature extraction.</li>
-      </ul>
-    </li>
-
-    <li>
-      <b>Closing</b>
-
-      <p>
-        Closing is a fundamental morphological operation that is essentially the reverse of Opening.
-        It is performed by applying Dilation followed by Erosion on a binary image.
-        While Opening focuses on removing small objects and shrinking the foreground,
-        Closing works to fill small holes or gaps in the foreground objects,
-        and it is particularly useful for removing small black points within or around the objects.
-      </p>
-
-      <p><b>Effects of Closing:</b></p>
-
-      <ul>
-        <li>Closing small holes or gaps inside the foreground objects, making them more solid and continuous.</li>
-        <li>Eliminating small black noise points (often referred to as salt noise) that are scattered on or near the objects.</li>
-        <li>Smoothening object contours by closing small imperfections while preserving the general shape of the objects.</li>
-        <li>Joining broken parts of an object, making them appear as a single connected structure.</li>
-      </ul>
-    </li>
-  </ol>
-
-</section>
-</section>
-
-   <section id="progressreport" class="section-content vl-card mb-8 p-6 animate-fadeInUp hidden">
-          <div class="border-l-4 border-orange-600 pl-4 mb-4 flex items-center justify-between">
-            <div class="flex items-center">
-              <h2 class="text-2xl font-bold text-gray-800 flex items-center">
-                Progress Report
-              </h2>
+}
+
+        </style>
+
+        <section class="theory-section">
+
+          <section>
+
+          <h2>Introduction</h2>
+
+          <p>
+            Image segmentation is the division of an image into regions or categories, which correspond to different objects or parts of objects.
+            Every pixel in an image is allocated to one of a number of these categories.
+          </p>
+
+          <p>A good segmentation is typically one in which:</p>
+
+          <ul>
+            <li>Pixels in the same category have similar grey scale of multivariate values and form a connected region.</li>
+            <li>Neighboring pixels which are in different categories have dissimilar values.</li>
+          </ul>
+
+          <h3>Edge Based Image Segmentation</h3>
+
+          <p>
+            Edge-based segmentation is one of the most popular implementations of segmentation in image processing.
+            It focuses on identifying the edges of different objects in an image.
+            This is a crucial step as it helps you find the features of the various objects present in the image as edges contain a lot of information you can use.
+          </p>
+
+          <p>
+            Edge detection is widely popular because it helps you in removing unwanted and unnecessary information from the image.
+            It reduces the image’s size considerably, making it easier to analyse the same.
+            Algorithms used in edge-based segmentation identify edges in an image according to the differences in texture, contrast, grey level, colour, saturation, and other properties.
+            You can improve the quality of your results by connecting all the edges into edge chains that match the image borders more accurately.
+          </p>
+
+          <h2>Gradient</h2>
+
+          <p>
+            In image processing, a gradient refers to the rate of change of intensity in an image.
+            Mathematically, the gradient is a vector field that points in the direction of the greatest rate of increase of intensity and whose magnitude represents the rate of change in that direction.
+            For edge detection, we are primarily interested in regions of an image where there is a large change in pixel intensity—typically indicating the presence of an edge.
+          </p>
+
+          <p>
+            In image processing, a gradient refers to the directional change in the intensity or color in an image.
+            Mathematically, the gradient of an image function f(x, y) is a vector that points in the direction of the greatest rate of increase off, and whose magnitude is the rate of change in that direction:
+          </p>
+ <center style="margin:18px 0;">
+  <math display="block" style="font-size:1.25rem;">
+    <mrow>
+      <mi>&#8711;</mi><mi>f</mi>
+      <mo stretchy="false">(</mo>
+      <mi>x</mi>
+      <mtext>,</mtext>
+      <mi>y</mi>
+      <mo stretchy="false">)</mo>
+
+      <mo>=</mo>
+
+      <mo stretchy="true" minsize="2.2em" maxsize="2.2em">[</mo>
+
+      <mfrac>
+        <mi>&#8706;f</mi>
+        <mi>&#8706;x</mi>
+      </mfrac>
+
+      <mspace width="0.35em"></mspace>
+      <mtext>,</mtext>
+      <mspace width="0.35em"></mspace>
+
+      <mfrac>
+        <mi>&#8706;f</mi>
+        <mi>&#8706;y</mi>
+      </mfrac>
+
+      <mo stretchy="true" minsize="2.2em" maxsize="2.2em">]</mo>
+    </mrow>
+  </math>
+</center>
+          <div style="width: 100%; text-align: center;">
+            <div style="display: inline-block; text-align: left;">
+              <p style="text-align: center !important; margin: 0 0 10px 0;">
+                Where:
+              </p>
+
+              <ul style="text-align: left; margin: 0; padding-left: 20px;">
+                <li>
+                  <b>∂f/∂x:</b> the partial derivative in the horizontal direction (gradient in x-direction)
+                </li>
+                <li>
+                  <b>∂f/∂y:</b> the partial derivative in the vertical direction (gradient in y-direction)
+                </li>
+              </ul>
             </div>
-            <span class="text-sm text-gray-600">Embedded view (opens within this page)</span>
           </div>
-          <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-inner">
-            <iframe
-              src="progressreport.html"
-              title="Progress Report"
-              class="w-full"
-              style="min-height: 900px;"
-              loading="lazy"
-            ></iframe>
-          </div>
+
+          <p>The magnitude of the gradient is given by:</p>
+
+<center style="margin:18px 0;">
+  <math display="block" style="font-size:1.25rem;">
+    <mrow>
+      <mo stretchy="false">|</mo>
+      <mi>&#8711;</mi><mi>f</mi>
+      <mo stretchy="false">(</mo>
+      <mi>x</mi>
+      <mo>,</mo>
+      <mi>y</mi>
+      <mo stretchy="false">)</mo>
+      <mo stretchy="false">|</mo>
+
+      <mo>=</mo>
+
+      <msqrt>
+        <mrow>
+          <msup>
+            <mrow>
+              <mo stretchy="true" minsize="2.2em" maxsize="2.2em">(</mo>
+              <mfrac>
+                <mi>&#8706;f</mi>
+                <mi>&#8706;x</mi>
+              </mfrac>
+              <mo stretchy="true" minsize="2.2em" maxsize="2.2em">)</mo>
+            </mrow>
+            <mn>2</mn>
+          </msup>
+
+          <mo>+</mo>
+
+          <msup>
+            <mrow>
+              <mo stretchy="true" minsize="2.2em" maxsize="2.2em">(</mo>
+              <mfrac>
+                <mi>&#8706;f</mi>
+                <mi>&#8706;y</mi>
+              </mfrac>
+              <mo stretchy="true" minsize="2.2em" maxsize="2.2em">)</mo>
+            </mrow>
+            <mn>2</mn>
+          </msup>
+        </mrow>
+      </msqrt>
+    </mrow>
+  </math>
+</center>
+
+          <p>And the direction (angle) of the gradient is:</p>
+
+        <center style="margin:18px 0;">
+  <math display="block" style="font-size:1.25rem;">
+    <mrow>
+      <mi>&#952;</mi>
+      <mo stretchy="false">(</mo>
+      <mi>x</mi>
+      <mo>,</mo>
+      <mi>y</mi>
+      <mo stretchy="false">)</mo>
+
+      <mo>=</mo>
+
+      <msup>
+        <mi>tan</mi>
+        <mn>-1</mn>
+      </msup>
+
+      <mo stretchy="true" minsize="3em" maxsize="3em">(</mo>
+
+      <mfrac>
+        <mrow>
+          <mfrac>
+            <mi>&#8706;f</mi>
+            <mi>&#8706;y</mi>
+          </mfrac>
+        </mrow>
+
+        <mrow>
+          <mfrac>
+            <mi>&#8706;f</mi>
+            <mi>&#8706;x</mi>
+          </mfrac>
+        </mrow>
+      </mfrac>
+
+      <mo stretchy="true" minsize="3em" maxsize="3em">)</mo>
+    </mrow>
+  </math>
+</center>
+          <h2>Steps in Edge Detection</h2>
+
+          <p>Algorithms for edge detection contain three steps:</p>
+
+          <ol>
+            <li>
+              <b>Filtering:</b>
+              Since gradient computation based on intensity values of only two points are susceptible to noise and other vagaries in discrete computations,
+              filtering is commonly used to improve the performance of an edge detector with respect to noise.
+              However, there is a trade-off between edge strength and noise reduction.
+              More filtering to reduce noise results in a loss of edge strength.
+            </li>
+
+            <li>
+              <b>Enhancement:</b>
+              In order to facilitate the detection of edges, it is essential to determine changes in intensity in the neighborhood of a point.
+              Enhancement emphasizes pixels where there is a significant change in local intensity values and is usually performed by computing the gradient magnitude.
+            </li>
+
+            <li>
+              <b>Detection:</b>
+              We only want points with strong edge content.
+              However, many points in an image have a nonzero value for the gradient, and not all of these points are edges for a particular application.
+              Therefore, some method should be used to determine which points are edge points.
+              Frequently, thresholding provides the criterion used for detection.
+              Examples at the end of this section will clearly illustrate each of these steps using various edge detectors.
+              <br>
+              Many edge detection algorithms include a fourth step:
+            </li>
+
+            <li>
+              <b>Localization:</b>
+              The location of the edge can be estimated with subpixel resolution if required for the application.
+              The edge orientation can also be estimated.
+            </li>
+          </ol>
+
+          <h2>Edge Detectors</h2>
+
+          <ol>
+            <li>
+              <b>First-order derivative</b>
+              <ul>
+                <li>Robert</li>
+                <li>Sobel</li>
+                <li>Perwitt</li>
+              </ul>
+            </li>
+
+            <li>
+              <b>Second-order derivative</b>
+              <ul>
+                <li>Laplacian</li>
+              </ul>
+            </li>
+
+            <li><b>Canny</b></li>
+
+            <li><b>Morphological operations</b></li>
+          </ol>
+
+          <figure>
+            <img src="images/img1.png" alt="Edge detection result for medical">
+            <figcaption>Fig. 1 Edge detection result for medical</figcaption>
+          </figure>
+
+          <h3>Morphological Operations</h3>
+
+          <p>
+            Morphological transformations are some simple operations based on the image shape.
+            It is normally performed on binary images.
+            It needs two inputs, one is our original image, second one is called structuring element or kernel which decides the nature of operation.
+            Two basic morphological operators are Erosion and Dilation.
+            Then its variant forms like Opening, Closing, Gradient etc also comes into play.
+          </p>
+
+          <ol type="a">
+            <li>
+              <b>Erosion</b>
+
+              <p>
+                Erosion is a fundamental morphological operation that functions similarly to the natural process of soil erosion —
+                it gradually erodes the boundaries of the foreground object.
+                Typically, the foreground is represented in white (pixel value = 1), and the background in black (pixel value = 0).
+              </p>
+
+              <p>
+                During erosion, a structuring element (or kernel) is slid over the image, much like in 2D convolution.
+                For a pixel in the output image to be set to 1, all pixels under the kernel in the original image must also be 1.
+                If even one pixel under the kernel is 0, the output pixel is set to 0.
+              </p>
+
+              <p>
+                As a result, pixels at the boundaries of white regions are removed, causing the white (foreground) areas to shrink.
+                The extent of erosion depends on the size and shape of the structuring element.
+              </p>
+
+              <figure>
+                <img src="images/erosion.png" alt="Example of Erosion">
+                <figcaption>Fig. 2 Example of Erosion</figcaption>
+              </figure>
+
+              <p><b>Effects of Erosion:</b></p>
+
+              <ul>
+                <li>Removes small white noise</li>
+                <li>Separates objects that are connected</li>
+                <li>Reduces thickness of foreground objects</li>
+              </ul>
+            </li>
+
+            <li>
+              <b>Dilation</b>
+
+              <p>
+                Dilation is the morphological operation that performs the inverse of erosion.
+                While erosion reduces the boundaries of foreground objects, dilation expands them.
+              </p>
+
+              <p>
+                In dilation, a structuring element (kernel) slides over the binary image.
+                For each position of the kernel, the corresponding pixel in the output image is set to 1 (white) if at least one pixel under the kernel in the input image is 1.
+                In other words, if any part of the kernel overlaps with a white pixel in the original image, the output pixel is set to white.
+              </p>
+
+              <p>
+                This process increases the size of the foreground objects (white regions), causing them to grow outward by a margin defined by the structuring element.
+              </p>
+
+              <figure>
+                <img src="images/dilation.png" alt="Example of Dilation">
+                <figcaption>Fig. 3 Example of Dilation</figcaption>
+              </figure>
+
+              <p><b>Effects of Dilation:</b></p>
+
+              <ul>
+                <li>Expands object boundaries, filling small holes and gaps</li>
+                <li>Useful after erosion to restore object size (a sequence called opening)</li>
+                <li>Bridges small breaks or connects disjoint parts of objects</li>
+                <li>Fills in gaps in object contours or outlines</li>
+              </ul>
+            </li>
+
+            <li>
+              <b>Opening</b>
+
+              <p>
+                Opening is a fundamental morphological operation in image processing, defined as an erosion followed by dilation,
+                using the same structuring element for both steps.
+                It is primarily used to remove small objects or noise from an image while preserving the shape and size of larger foreground objects.
+              </p>
+
+              <p><b>Effects of Opening:</b></p>
+
+              <ul>
+                <li>Removing salt-and-pepper noise from binary images.</li>
+                <li>Eliminating small unwanted objects (e.g., speckles, dots).</li>
+                <li>Separating weakly connected components.</li>
+                <li>Cleaning up scanned documents, microscopy images, etc.</li>
+                <li>Preprocessing step for shape analysis and feature extraction.</li>
+              </ul>
+            </li>
+
+            <li>
+              <b>Closing</b>
+
+              <p>
+                Closing is a fundamental morphological operation that is essentially the reverse of Opening.
+                It is performed by applying Dilation followed by Erosion on a binary image.
+                While Opening focuses on removing small objects and shrinking the foreground,
+                Closing works to fill small holes or gaps in the foreground objects,
+                and it is particularly useful for removing small black points within or around the objects.
+              </p>
+
+              <p><b>Effects of Closing:</b></p>
+
+              <ul>
+                <li>Closing small holes or gaps inside the foreground objects, making them more solid and continuous.</li>
+                <li>Eliminating small black noise points (often referred to as salt noise) that are scattered on or near the objects.</li>
+                <li>Smoothening object contours by closing small imperfections while preserving the general shape of the objects.</li>
+                <li>Joining broken parts of an object, making them appear as a single connected structure.</li>
+              </ul>
+            </li>
+          </ol>
+
+          </section>
         </section>
+      </section>
+
+      <section id="progressreport" class="section-content vl-card mb-8 p-6 animate-fadeInUp hidden">
+        <div class="border-l-4 border-orange-600 pl-4 mb-4 flex items-center justify-between">
+          <div class="flex items-center">
+            <h2 class="text-2xl font-bold text-gray-800 flex items-center">
+              Progress Report
+            </h2>
+          </div>
+          <span class="text-sm text-gray-600">Embedded view (opens within this page)</span>
+        </div>
+        <div class="w-full rounded-xl overflow-hidden border border-gray-200 shadow-inner">
+          <iframe
+            src="progressreport.html"
+            title="Progress Report"
+            class="w-full"
+            style="min-height: 900px;"
+            loading="lazy"
+          ></iframe>
+        </div>
+      </section>
     </main>
   </div>
- <!-- FOOTER -->
-<footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12"> <!-- Key: h-12 = 48px -->
+
+  <!-- FOOTER -->
+  <footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12">
     <div class="footer-inner flex items-center justify-center h-full px-4">
       <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
         &copy; 2026 Virtual Labs IIT Roorkee
       </p>
     </div>
   </footer>
-
 
   <!-- SCRIPT -->
   <script>
@@ -1455,13 +1716,14 @@
         <iframe title="Chatbot assistant" referrerpolicy="no-referrer" scrolling="no"></iframe>
       </div>
     </div>
-      <button type="button" class="chatbot-launcher" aria-expanded="false" aria-label="Open chatbot assistant">
+
+    <button type="button" class="chatbot-launcher" aria-expanded="false" aria-label="Open chatbot assistant">
       <span class="chatbot-hint-bubble">
         <span class="chatbot-hint-dot">Hi </span>
-         Ask anything about this experiment
-        </span>
-        <img src="./images/chatbot.png" alt="" aria-hidden="true" class="chatbot-launcher-image">
-      </button>
+        Ask anything about this experiment
+      </span>
+      <img src="./images/chatbot.png" alt="" aria-hidden="true" class="chatbot-launcher-image">
+    </button>
   </div>
 
   <audio id="chatbot-notification-audio" preload="auto">
@@ -1564,6 +1826,7 @@
   <script src="./user_input_modal.js"></script>
   <script src="./progress_tracker.js"></script>
   <script src="./progress_report_embed.js"></script>
+
   <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
@@ -1594,4 +1857,3 @@
   </script>
 </body>
 </html>
-

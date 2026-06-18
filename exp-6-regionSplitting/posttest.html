@@ -297,11 +297,13 @@
       transform: translateY(-1px);
     }
 
-    .option-label input {
-      accent-color: #0b60a8;
-      width: 18px;
-      height: 18px;
-    }
+.option-label input[type="radio"]{
+  width:22px;
+  height:22px;
+  min-width:22px;
+  min-height:22px;
+  appearance:auto !important;
+}
 
     .option-label input:disabled {
       opacity: 1;
@@ -436,37 +438,107 @@
       font-weight: 700;
       color: #0f172a;
     }
-    @media (max-width: 640px) {
-      .chatbot-launcher {
-        width: 64px;
-        height: 64px;
-      }
-      .chatbot-launcher-image {
-        width: 50px;
-        height: 50px;
-      }
-      .chatbot-hint-bubble {
-        display: none;
-      }
-    }
-    .chatbot-widget {
-      position: fixed;
-      bottom: 28px;
-      right: 28px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 0.9rem;
-      z-index: 90;
-      max-width: calc(100vw - 32px);
-      transition: opacity 180ms ease, transform 180ms ease;
-    }
+/* =========================
+   FINAL CHATBOT FIX
+   Icon + panel dono visible
+   ========================= */
 
-    body.sidebar-open .chatbot-widget {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(12px);
-    }
+.chatbot-widget{
+  position:fixed !important;
+  bottom:28px !important;
+  right:28px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-end !important;
+  gap:0.9rem !important;
+  z-index:9999 !important;
+  width:auto !important;
+  height:auto !important;
+  max-width:calc(100vw - 32px) !important;
+  overflow:visible !important;
+}
+
+.chatbot-launcher{
+  width:74px !important;
+  height:74px !important;
+  min-width:74px !important;
+  min-height:74px !important;
+  max-width:none !important;
+  max-height:none !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  position:relative !important;
+  border-radius:50% !important;
+  overflow:visible !important;
+  z-index:10000 !important;
+}
+
+.chatbot-launcher-image{
+  width:58px !important;
+  height:58px !important;
+  max-width:none !important;
+  max-height:none !important;
+  display:block !important;
+  object-fit:contain !important;
+}
+
+.chatbot-panel{
+  width:min(420px, calc(100vw - 40px)) !important;
+  max-width:min(420px, calc(100vw - 40px)) !important;
+  min-width:320px !important;
+  height:min(600px, calc(100vh - 140px)) !important;
+  position:absolute !important;
+  bottom:90px !important;
+  right:0 !important;
+  overflow:hidden !important;
+  z-index:9999 !important;
+}
+
+.chatbot-panel-body,
+.chatbot-panel iframe,
+.chatbot-panel-placeholder{
+  width:100% !important;
+  max-width:100% !important;
+}
+
+body.sidebar-open .chatbot-widget{
+  opacity:0 !important;
+  pointer-events:none !important;
+  transform:translateY(12px) !important;
+}
+
+@media(max-width:640px){
+
+  .chatbot-widget{
+    bottom:16px !important;
+    right:16px !important;
+    width:auto !important;
+    height:auto !important;
+    max-width:calc(100vw - 24px) !important;
+  }
+
+  .chatbot-launcher{
+    width:64px !important;
+    height:64px !important;
+    min-width:64px !important;
+    min-height:64px !important;
+  }
+
+  .chatbot-launcher-image{
+    width:50px !important;
+    height:50px !important;
+  }
+
+  .chatbot-panel{
+    width:calc(100vw - 24px) !important;
+    max-width:calc(100vw - 24px) !important;
+    min-width:0 !important;
+    height:min(82vh,580px) !important;
+    right:0 !important;
+    bottom:78px !important;
+  }
+}
 
     @media (max-width: 1023px) {
       #sidebar { z-index: 120 !important; }
@@ -477,22 +549,25 @@
       animation: none;
       opacity: 0;
     }
-    .chatbot-panel {
-      width: min(420px, calc(100vw - 40px));
-      height: min(600px, calc(100vh - 140px));
-      background: #ffffff;
-      border-radius: 22px;
-      box-shadow: 0 30px 60px rgba(2, 38, 61, 0.45);
-      border: 1px solid rgba(15, 23, 42, 0.1);
-      transform-origin: bottom right;
-      transform: translateY(12px) scale(0.94);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 220ms ease, transform 220ms ease;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
+.chatbot-panel {
+  width: min(420px, calc(100vw - 40px));
+  height: min(600px, calc(100vh - 140px));
+  background: #ffffff;
+  border-radius: 22px;
+  box-shadow: 0 30px 60px rgba(2, 38, 61, 0.45);
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  transform-origin: bottom right;
+  transform: translateY(12px) scale(0.94);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position:absolute;
+  bottom:90px;
+  right:0;
+}
     .chatbot-panel.open {
       opacity: 1;
       transform: translateY(0) scale(1);
@@ -594,6 +669,135 @@
         height: min(88vh, 620px);
       }
     }
+
+    html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
+
+/* =========================
+   PRETEST FINAL FIX
+   Code 1 like layout
+   ========================= */
+
+html,
+body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+}
+
+*{
+  max-width:100%;
+  box-sizing:border-box;
+}
+
+main{
+  overflow-x:hidden !important;
+}
+
+.option-label{
+  align-items:flex-start !important;
+  max-width:100% !important;
+}
+
+.option-content{
+  display:block !important;
+  width:100% !important;
+  max-width:100% !important;
+  overflow-x:auto !important;
+  color:#000 !important;
+}
+
+@media(max-width:640px){
+
+  main{
+    padding-left:1rem !important;
+    padding-right:1rem !important;
+    overflow-x:hidden !important;
+  }
+
+  .section-content{
+    padding:1rem !important;
+    overflow:hidden !important;
+  }
+
+  .mcq{
+    padding:12px !important;
+  }
+
+  .option-label{
+    padding:10px !important;
+    overflow-x:auto !important;
+  }
+
+  #refresh-btn,
+  #check-btn{
+    font-size:0.9rem !important;
+    padding:8px 10px !important;
+  }
+}
+
+/* Chatbot thin panel fix because of global max-width */
+.chatbot-widget{
+  width:auto !important;
+  height:auto !important;
+  max-width:calc(100vw - 32px) !important;
+}
+
+.chatbot-launcher{
+  max-width:none !important;
+}
+
+.chatbot-panel{
+  width:min(420px, calc(100vw - 40px)) !important;
+  max-width:min(420px, calc(100vw - 40px)) !important;
+  min-width:320px !important;
+  height:min(600px, calc(100vh - 140px)) !important;
+  position:absolute !important;
+  bottom:90px !important;
+  right:0 !important;
+}
+
+.chatbot-panel *{
+  max-width:none !important;
+}
+
+.chatbot-panel-body,
+.chatbot-panel iframe,
+.chatbot-panel-placeholder{
+  width:100% !important;
+  max-width:100% !important;
+}
+
+@media(max-width:640px){
+
+  .chatbot-widget{
+    bottom:16px !important;
+    right:16px !important;
+    width:auto !important;
+    height:auto !important;
+  }
+
+  .chatbot-panel{
+    width:calc(100vw - 24px) !important;
+    max-width:calc(100vw - 24px) !important;
+    min-width:0 !important;
+    height:min(82vh,580px) !important;
+    right:0 !important;
+  }
+}
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -642,7 +846,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -720,9 +924,9 @@
     <!-- MOBILE OVERLAY -->
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-6 overflow-x-hidden">
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-sm text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-1 break-words">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
           <a href="#" class="hover:text-blue-600">Image Processing Lab</a>

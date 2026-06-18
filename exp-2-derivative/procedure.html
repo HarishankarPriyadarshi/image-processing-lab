@@ -809,7 +809,7 @@
     <main class="procedure-main flex-1 lg:ml-64 p-4 sm:p-6 pb-24">
 
       <!-- Breadcrumb -->
-        <nav class="mb-6 text-sm sm:text-base text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-x-2 gap-y-1">
+       <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
@@ -828,104 +828,124 @@
         </div>
       </div>
 
- <!-- Procedure Steps -->
-<section class="section-content vl-card animate-fadeInUp procedure-content">
+<!-- Procedure Steps -->
+<section class="section-content vl-card p-3 sm:p-4 md:p-6 animate-fadeInUp procedure-content">
 
-  <style>
-    .section-content {
-      width: 100%;
-      max-width: none;
-      margin: 0 !important;
-      padding: 0 !important;
-    }
+  <div class="procedure-body text-gray-700 text-base sm:text-lg leading-relaxed">
 
-    .procedure-content {
-      width: 100%;
-      max-width: none;
-      margin: 0 !important;
-      padding: 0 !important;
-      line-height: 1.8;
-      text-align: justify;
-    }
+    <style>
+      .content{
+        width:100%;
+        max-width:none;
+        margin:0 !important;
+        padding:0 !important;
+        line-height:1.8;
+        text-align:justify;
+        overflow-wrap:anywhere;
+      }
 
-    .procedure-section {
-      width: 100%;
-      max-width: none;
-      margin: 0 !important;
-      padding: 0 15px !important;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #222;
-      line-height: 1.8;
-      font-size: 1.1rem;
-      text-align: justify;
-    }
+      .content h2{
+        font-size:clamp(1.5rem,4vw,2rem);
+        font-weight:700;
+        color:#222;
+        margin:0 0 12px 0 !important;
+        padding:0 !important;
+        text-align:left;
+      }
 
-    .procedure-section h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #222;
-      margin: 0 0 12px 0 !important;
-      padding: 0 !important;
-      text-align: left;
-      border: none;
-    }
+      .content h3{
+        font-size:clamp(1.15rem,3vw,1.4rem);
+        font-weight:700;
+        color:#222;
+        margin-top:20px;
+        margin-bottom:12px;
+        text-align:left;
+      }
 
-    .procedure-section h3 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #222;
-      margin-top: 20px;
-      margin-bottom: 12px;
-      text-align: left;
-    }
+      .content p{
+        font-size:1rem;
+        margin:0 0 12px 0;
+        line-height:1.8;
+        color:#000;
+        text-align:justify;
+      }
 
-    .procedure-section ol {
-      list-style: decimal !important;
-      list-style-position: outside !important;
-      padding-left: 40px !important;
-      margin: 12px 0 20px 0 !important;
-      text-align: justify;
-    }
+      .content b{
+        font-weight:700;
+        color:#000;
+      }
 
-    .procedure-section li {
-      display: list-item !important;
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-      line-height: 1.8;
-      color: #000;
-      text-align: justify;
-      padding-left: 0 !important;
-    }
+      @media(max-width:640px){
 
-    .procedure-section b {
-      font-weight: 700;
-      color: #000;
-    }
-  </style>
+        .content{
+          text-align:left !important;
+        }
 
- <section class="procedure-section">
+        .content h2{
+          font-size:1.5rem !important;
+          margin-bottom:10px !important;
+          line-height:1.35 !important;
+          text-align:left !important;
+        }
 
-    <h2>Procedure</h2>
+        .content h3{
+          font-size:1.15rem !important;
+          margin-top:16px !important;
+          margin-bottom:8px !important;
+          line-height:1.35 !important;
+          text-align:left !important;
+        }
 
-    <h3>For Derivative Based Edge Detection</h3>
+        .content p{
+          font-size:0.95rem !important;
+          line-height:1.7 !important;
+          margin-bottom:10px !important;
+          text-align:left !important;
+        }
+      }
 
-    <p><b>Step 1:</b> Select an image from the available sample images or upload your own image using the <b>Upload File</b> button.</p>
+      html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
 
-    <p><b>Step 2:</b> Choose the desired <b>Derivative Order</b> from the available options.</p>
+*{
+    max-width:100%;
+    box-sizing:border-box;
+}
 
-    <p><b>Step 3:</b> If <b>First Order Derivative</b> is selected, choose the required filter such as <b>Sobel</b>, <b>Prewitt</b>, or <b>Robert</b>.</p>
+main{
+    overflow-x:hidden;
+}
 
-    <p><b>Step 4:</b> If <b>Second Order Derivative</b> is selected, select the required kernel size.</p>
+    </style>
 
-    <p><b>Step 5:</b> After selecting all required parameters, click on the <b>Process</b> button.</p>
+    <div class="content">
 
-    <p><b>Step 6:</b> The processed edge-detected image will be displayed on the output screen.</p>
+      <h2>Procedure</h2>
 
-    <p><b>Step 7:</b> Click on the <b>Print</b> button to print or save the result.</p>
+      <h3>For Derivative Based Edge Detection</h3>
 
-</section>
+      <p><b>Step 1:</b> Select an image from the available sample images or upload your own image using the <b>Upload File</b> button.</p>
 
-</section>
+      <p><b>Step 2:</b> Choose the desired <b>Derivative Order</b> from the available options.</p>
+
+      <p><b>Step 3:</b> If <b>First Order Derivative</b> is selected, choose the required filter such as <b>Sobel</b>, <b>Prewitt</b>, or <b>Robert</b>.</p>
+
+      <p><b>Step 4:</b> If <b>Second Order Derivative</b> is selected, select the required kernel size.</p>
+
+      <p><b>Step 5:</b> After selecting all required parameters, click on the <b>Process</b> button.</p>
+
+      <p><b>Step 6:</b> The processed edge-detected image will be displayed on the output screen.</p>
+
+      <p><b>Step 7:</b> Click on the <b>Print</b> button to print or save the result.</p>
+
+    </div>
+
+  </div>
+
 </section>
       <section id="progressreport"
                class="section-content vl-card mb-8 p-4 sm:p-6 animate-fadeInUp hidden">
@@ -958,7 +978,7 @@
 
   
   <!-- FOOTER -->
-<footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12"> <!-- Key: h-12 = 48px -->
+<footer class="vl-footer fixed bottom-0 left-0 right-0 z-[1000] h-12"> <!-- Key: h-12 = 48px -->
     <div class="footer-inner flex items-center justify-center h-full px-4">
       <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
         &copy; 2026 Virtual Labs IIT Roorkee 
