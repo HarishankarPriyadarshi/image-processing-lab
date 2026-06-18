@@ -572,6 +572,21 @@
         height: min(88vh, 620px);
       }
     }
+    html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
 
   </style>
 </head>
@@ -717,7 +732,7 @@
     <!-- MAIN CONTENT -->
     <main class="flex-1 lg:ml-64 p-6">
 
-      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
           <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
@@ -752,6 +767,8 @@
           </ol>
         </div>
       </section>
+      <br>
+      <br>
 
       <section id="progressreport"
                class="section-content vl-card mb-8 p-6 animate-fadeInUp hidden">
@@ -788,7 +805,7 @@
 
   
   <!-- FOOTER -->
-<footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12"> <!-- Key: h-12 = 48px -->
+<footer class="vl-footer fixed bottom-0 left-0 right-0 z-[1000] h-12"> <!-- Key: h-12 = 48px -->
     <div class="footer-inner flex items-center justify-center h-full px-4">
       <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
         &copy; 2026 Virtual Labs IIT Roorkee 

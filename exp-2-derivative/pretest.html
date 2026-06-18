@@ -318,13 +318,13 @@
       transform: translateY(-1px);
     }
 
-    .option-label input {
-      accent-color: #0b60a8;
-      width: 18px;
-      height: 18px;
-      margin-top: 8px;
-      flex-shrink: 0;
-    }
+.option-label input[type="radio"]{
+    width:22px;
+    height:22px;
+    min-width:22px;
+    min-height:22px;
+    appearance:auto !important;
+}
 
     .option-label input:disabled {
       opacity: 1;
@@ -574,6 +574,8 @@
       z-index: 90;
       max-width: calc(100vw - 32px);
       transition: opacity 180ms ease, transform 180ms ease;
+          width:auto !important;
+    height:auto !important;
     }
 
     body.sidebar-open .chatbot-widget {
@@ -608,6 +610,9 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+          position:absolute;
+    bottom:90px;
+    right:0;
     }
 
     .chatbot-panel.open {
@@ -706,39 +711,725 @@
       text-indent: 0;
     }
 
-    @media (max-width: 640px) {
-      .chatbot-launcher {
-        width: 64px;
-        height: 64px;
-      }
+ @media (max-width: 640px) {
+  .chatbot-launcher {
+    width: 64px;
+    height: 64px;
+  }
 
-      .chatbot-launcher-image {
-        width: 50px;
-        height: 50px;
-      }
+  .chatbot-launcher-image {
+    width: 50px;
+    height: 50px;
+  }
 
-      .chatbot-hint-bubble {
-        display: none;
-      }
+  .chatbot-hint-bubble {
+    display: none;
+  }
 
-      .chatbot-widget {
-        bottom: 16px;
-        right: 16px;
-        width: calc(100vw - 24px);
-      }
+  .chatbot-widget{
+    bottom:16px;
+    right:16px;
+  }
 
-      .chatbot-panel {
-        width: 100%;
-        height: min(82vh, 580px);
-        border-radius: 20px;
-      }
-    }
+  .chatbot-panel{
+    width:calc(100vw - 24px);
+    height:min(82vh,580px);
+  }
+}
 
     @media (max-width: 480px) {
       .chatbot-panel {
         height: min(88vh, 620px);
       }
     }
+
+    html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
+
+/* =========================
+   PRETEST FORMULA FIX
+   Theory-like MathML style
+   ========================= */
+
+.option-content{
+  overflow-x:auto !important;
+  max-width:100% !important;
+}
+
+.option-content math,
+.choice-math{
+  font-size:1.2rem !important;
+  vertical-align:middle !important;
+  max-width:100% !important;
+}
+
+.option-content math[display="inline"],
+.choice-math{
+  display:inline-block !important;
+}
+
+/* Old custom formula classes ko control me rakhega */
+.math-choice{
+  font-size:1.15rem !important;
+  line-height:1.5 !important;
+  align-items:center !important;
+}
+
+.q-big-bracket{
+  font-size:1.35em !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+}
+
+/* Matrix options mobile/desktop dono me clean */
+.matrix-option-wrap{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:flex-start !important;
+  max-width:100% !important;
+  overflow-x:auto !important;
+}
+
+.matrix-bracket{
+  font-size:56px !important;
+  line-height:1 !important;
+  font-weight:300 !important;
+}
+
+.matrix-table td{
+  min-width:30px !important;
+  height:28px !important;
+  padding:1px 7px !important;
+  font-size:1rem !important;
+}
+
+/* =========================
+   FINAL MINIMUM FIX
+   Mobile Formula + Chatbot Footer Fix
+   ========================= */
+
+/* 1) Formula options mobile me tootne se bachane ke liye */
+.option-content{
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+}
+
+.option-content:has(math),
+.option-content:has(.matrix-option-wrap),
+.option-content:has(.math-choice){
+  white-space:nowrap !important;
+}
+
+.choice-math,
+.option-content math{
+  display:inline-block !important;
+  white-space:nowrap !important;
+  max-width:none !important;
+  vertical-align:middle !important;
+}
+
+.choice-math *{
+  white-space:nowrap !important;
+}
+
+.math-choice{
+  display:inline-flex !important;
+  flex-wrap:nowrap !important;
+  white-space:nowrap !important;
+  align-items:center !important;
+  max-width:none !important;
+}
+
+.matrix-option-wrap{
+  display:inline-flex !important;
+  flex-wrap:nowrap !important;
+  white-space:nowrap !important;
+  max-width:none !important;
+  overflow-x:visible !important;
+}
+
+.option-label{
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+}
+
+/* Mobile formula size clean */
+@media(max-width:640px){
+
+  .option-content:has(math),
+  .option-content:has(.matrix-option-wrap),
+  .option-content:has(.math-choice){
+    width:100% !important;
+    overflow-x:auto !important;
+    white-space:nowrap !important;
+    padding-bottom:3px !important;
+  }
+
+  .choice-math,
+  .option-content math{
+    font-size:0.95rem !important;
+  }
+
+  .math-choice{
+    font-size:0.95rem !important;
+  }
+
+  .matrix-bracket{
+    font-size:44px !important;
+  }
+
+  .matrix-table td{
+    min-width:24px !important;
+    height:24px !important;
+    padding:1px 5px !important;
+    font-size:0.88rem !important;
+  }
+}
+
+/* 2) Chatbot footer ke peeche chipne se bachane ke liye */
+.chatbot-widget{
+  z-index:2000 !important;
+  bottom:64px !important;
+  right:28px !important;
+  width:auto !important;
+  height:auto !important;
+  overflow:visible !important;
+}
+
+.chatbot-launcher{
+  z-index:2001 !important;
+  max-width:none !important;
+  max-height:none !important;
+}
+
+.chatbot-launcher-image{
+  max-width:none !important;
+  max-height:none !important;
+}
+
+.chatbot-panel{
+  z-index:2000 !important;
+  bottom:90px !important;
+  right:0 !important;
+}
+
+@media(max-width:640px){
+
+  .chatbot-widget{
+    bottom:64px !important;
+    right:16px !important;
+    width:auto !important;
+    height:auto !important;
+  }
+
+  .chatbot-panel{
+    width:calc(100vw - 24px) !important;
+    max-width:calc(100vw - 24px) !important;
+    min-width:0 !important;
+    height:min(82vh,580px) !important;
+    bottom:78px !important;
+    right:0 !important;
+  }
+}
+
+/* Mobile formula size */
+@media(max-width:640px){
+
+  .option-label{
+    overflow-x:auto !important;
+  }
+
+  .option-content math,
+  .choice-math{
+    font-size:1rem !important;
+  }
+
+  .math-choice{
+    font-size:1rem !important;
+  }
+
+  .matrix-bracket{
+    font-size:46px !important;
+  }
+
+  .matrix-table td{
+    min-width:26px !important;
+    height:25px !important;
+    padding:1px 5px !important;
+    font-size:0.9rem !important;
+  }
+}
+
+/* FINAL FORMULA MOBILE FIX */
+
+.option-label{
+  display:flex !important;
+  align-items:flex-start !important;
+  gap:10px !important;
+  max-width:100% !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+}
+
+.option-label input[type="radio"]{
+  flex:0 0 auto !important;
+  width:22px !important;
+  height:22px !important;
+  min-width:22px !important;
+  min-height:22px !important;
+  margin-top:6px !important;
+}
+
+.option-content{
+  display:block !important;
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  color:#000 !important;
+}
+
+.option-content math,
+.choice-math{
+  display:inline-block !important;
+  width:max-content !important;
+  min-width:max-content !important;
+  max-width:none !important;
+  white-space:nowrap !important;
+  vertical-align:middle !important;
+  overflow:visible !important;
+}
+
+.matrix-option-wrap{
+  display:inline-flex !important;
+  align-items:center !important;
+  flex-wrap:nowrap !important;
+  width:max-content !important;
+  min-width:max-content !important;
+  max-width:none !important;
+  white-space:nowrap !important;
+  overflow:visible !important;
+}
+
+@media(max-width:640px){
+
+  .choice-math,
+  .option-content math{
+    font-size:0.9rem !important;
+  }
+
+  .matrix-bracket{
+    font-size:42px !important;
+  }
+
+  .matrix-table td{
+    min-width:23px !important;
+    height:23px !important;
+    padding:1px 4px !important;
+    font-size:0.85rem !important;
+  }
+}
+
+/* ===== FINAL CLEAN FORMULA FIX ===== */
+
+.option-label:has(.choice-math),
+.option-label:has(.matrix-option-wrap){
+  align-items:center !important;
+}
+
+.option-label:has(.choice-math) input[type="radio"],
+.option-label:has(.matrix-option-wrap) input[type="radio"]{
+  margin-top:0 !important;
+}
+
+.formula-choice{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:4px !important;
+  white-space:nowrap !important;
+  vertical-align:middle !important;
+}
+
+.choice-math{
+  display:inline-block !important;
+  width:auto !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  font-size:1.15rem !important;
+  line-height:1.25 !important;
+  vertical-align:middle !important;
+  white-space:nowrap !important;
+  overflow:visible !important;
+}
+
+.choice-math mi[mathvariant="normal"]{
+  font-style:normal !important;
+}
+
+@media(max-width:640px){
+  .choice-math{
+    font-size:0.95rem !important;
+  }
+}
+
+/* ===== FINAL STABLE PRETEST FORMULA FIX - NO MATHML ===== */
+
+.option-label{
+  align-items:center !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+}
+
+.option-label input[type="radio"]{
+  flex:0 0 auto !important;
+  margin-top:0 !important;
+}
+
+.option-content{
+  display:block !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  white-space:nowrap !important;
+  color:#000 !important;
+}
+
+.vl-formula{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:0.35rem !important;
+  white-space:nowrap !important;
+  width:max-content !important;
+  min-width:max-content !important;
+  vertical-align:middle !important;
+  font-family:"Times New Roman", serif !important;
+  font-size:1.25rem !important;
+  color:#000 !important;
+  line-height:1.2 !important;
+}
+
+.vl-frac{
+  display:inline-flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  vertical-align:middle !important;
+  line-height:1 !important;
+}
+
+.vl-num{
+  display:block !important;
+  border-bottom:1.7px solid #000 !important;
+  padding:0 0.38rem 0.14rem !important;
+}
+
+.vl-den{
+  display:block !important;
+  padding:0.14rem 0.38rem 0 !important;
+}
+
+.vl-op{
+  display:inline-block !important;
+  padding:0 0.1rem !important;
+}
+
+.vl-paren{
+  display:inline-block !important;
+  font-size:1.9em !important;
+  line-height:0.75 !important;
+  font-weight:400 !important;
+}
+
+.vl-fn{
+  display:inline-block !important;
+  font-style:normal !important;
+}
+
+.vl-inv{
+  display:inline-block !important;
+  font-size:0.68em !important;
+  line-height:1 !important;
+  transform:translate(-0.12rem, -0.48rem) !important;
+  margin-right:0.05rem !important;
+}
+
+.vl-pow{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:0.04rem !important;
+}
+
+.vl-pow sup{
+  font-size:0.68em !important;
+  line-height:1 !important;
+  align-self:flex-start !important;
+  transform:translateY(-0.22rem) !important;
+}
+
+.vl-sqrt{
+  display:inline-flex !important;
+  align-items:flex-start !important;
+  vertical-align:middle !important;
+}
+
+.vl-radical{
+  display:inline-block !important;
+  font-size:2.35em !important;
+  line-height:0.9 !important;
+  margin-right:-0.08rem !important;
+}
+
+.vl-rootbar{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:0.35rem !important;
+  border-top:1.8px solid #000 !important;
+  padding:0.28rem 0.42rem 0 !important;
+}
+
+@media(max-width:640px){
+  .vl-formula{
+    font-size:1rem !important;
+  }
+
+  .vl-paren{
+    font-size:1.7em !important;
+  }
+
+  .vl-radical{
+    font-size:2.05em !important;
+  }
+}
+
+/* ===== FINAL OVERRIDE: FORMULA CUT FIX ===== */
+
+.option-label{
+  align-items:center !important;
+  overflow:visible !important;
+  min-height:64px !important;
+}
+
+.option-label input[type="radio"]{
+  flex:0 0 auto !important;
+  margin-top:0 !important;
+}
+
+.option-content{
+  display:block !important;
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  max-width:100% !important;
+  overflow:visible !important;
+  white-space:nowrap !important;
+  color:#000 !important;
+  padding-top:10px !important;
+  padding-bottom:10px !important;
+}
+
+.vl-formula{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:0.35rem !important;
+  white-space:nowrap !important;
+  width:max-content !important;
+  min-width:max-content !important;
+  vertical-align:middle !important;
+  font-family:"Times New Roman", serif !important;
+  font-size:1.25rem !important;
+  color:#000 !important;
+  line-height:1.8 !important;
+  padding-top:8px !important;
+  padding-bottom:8px !important;
+}
+
+.vl-frac{
+  display:inline-flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  vertical-align:middle !important;
+  line-height:1.05 !important;
+  padding-top:2px !important;
+  padding-bottom:2px !important;
+}
+
+.vl-num{
+  display:block !important;
+  border-bottom:1.7px solid #000 !important;
+  padding:0 0.38rem 0.16rem !important;
+}
+
+.vl-den{
+  display:block !important;
+  padding:0.16rem 0.38rem 0 !important;
+}
+
+.vl-op{
+  display:inline-block !important;
+  padding:0 0.12rem !important;
+}
+
+.vl-paren{
+  display:inline-flex !important;
+  align-items:center !important;
+  font-size:1.8em !important;
+  line-height:1 !important;
+  font-weight:400 !important;
+}
+
+.vl-fn{
+  display:inline-block !important;
+  font-style:normal !important;
+}
+
+.vl-inv{
+  display:inline-block !important;
+  font-size:0.68em !important;
+  line-height:1 !important;
+  vertical-align:super !important;
+  transform:none !important;
+  margin-left:-0.08rem !important;
+  margin-right:0.06rem !important;
+}
+
+.vl-pow{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:0.04rem !important;
+  overflow:visible !important;
+}
+
+.vl-pow sup{
+  font-size:0.68em !important;
+  line-height:1 !important;
+  vertical-align:super !important;
+  transform:none !important;
+  align-self:flex-start !important;
+  margin-top:-0.1rem !important;
+}
+
+.vl-sqrt{
+  display:inline-flex !important;
+  align-items:center !important;
+  vertical-align:middle !important;
+  overflow:visible !important;
+  padding-top:8px !important;
+  padding-bottom:8px !important;
+}
+
+.vl-radical{
+  display:inline-block !important;
+  font-size:2.25em !important;
+  line-height:1 !important;
+  margin-right:-0.08rem !important;
+}
+
+.vl-rootbar{
+  display:inline-flex !important;
+  align-items:center !important;
+  gap:0.35rem !important;
+  border-top:1.8px solid #000 !important;
+  padding:0.35rem 0.42rem 0 !important;
+  overflow:visible !important;
+}
+
+/* Matrix ko bhi cut hone se bachayega */
+.matrix-option-wrap{
+  overflow:visible !important;
+}
+
+@media(max-width:640px){
+  .option-label{
+    overflow-x:auto !important;
+    overflow-y:visible !important;
+  }
+
+  .option-content{
+    overflow-x:auto !important;
+    overflow-y:visible !important;
+    padding-top:8px !important;
+    padding-bottom:8px !important;
+  }
+
+  .vl-formula{
+    font-size:1rem !important;
+    line-height:1.7 !important;
+  }
+
+  .vl-paren{
+    font-size:1.65em !important;
+  }
+
+  .vl-radical{
+    font-size:2em !important;
+  }
+}
+
+/* ===== FINAL MOBILE OPTION TEXT WRAP FIX ===== */
+
+@media (max-width:640px){
+
+  /* Normal text options mobile me wrap honge */
+  .option-label{
+    max-width:100% !important;
+    width:100% !important;
+    overflow-x:hidden !important;
+    overflow-y:visible !important;
+    align-items:flex-start !important;
+  }
+
+  .option-content{
+    min-width:0 !important;
+    max-width:100% !important;
+    width:100% !important;
+    overflow-x:hidden !important;
+    overflow-y:visible !important;
+    white-space:normal !important;
+    word-break:normal !important;
+    overflow-wrap:break-word !important;
+    line-height:1.5 !important;
+  }
+
+  /* Formula aur matrix wale options ka format same rahega */
+  .option-content:has(.vl-formula),
+  .option-content:has(.matrix-option-wrap){
+    overflow-x:auto !important;
+    overflow-y:visible !important;
+    white-space:nowrap !important;
+  }
+
+  .option-content:has(.vl-formula) .vl-formula,
+  .option-content:has(.matrix-option-wrap) .matrix-option-wrap{
+    width:max-content !important;
+    min-width:max-content !important;
+    white-space:nowrap !important;
+  }
+
+  /* Radio button fixed rahe */
+  .option-label input[type="radio"]{
+    flex:0 0 auto !important;
+    margin-top:4px !important;
+  }
+}
+
+
+
   </style>
 </head>
 
@@ -817,10 +1508,10 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-6 overflow-x-hidden">
 
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-sm text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
@@ -888,7 +1579,7 @@
   </div>
 
   <!-- FOOTER -->
-  <footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12">
+  <footer class="vl-footer fixed bottom-0 left-0 right-0 z-[1000] h-12">
     <div class="footer-inner flex items-center justify-center h-full px-4">
       <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
         &copy; 2026 Virtual Labs IIT Roorkee
@@ -910,6 +1601,43 @@
   <audio id="alertSound" preload="auto"></audio>
 
 <script>
+/* ------------------ 20 QUESTIONS ------------------ */
+/* ------------------ FORMULA HELPERS ------------------ */
+const mkFrac = (num, den) => `
+  <span class="vl-frac">
+    <span class="vl-num">${num}</span>
+    <span class="vl-den">${den}</span>
+  </span>
+`;
+
+const mkParen = (content) => `
+  <span class="vl-paren">(</span>${content}<span class="vl-paren">)</span>
+`;
+
+const mkInv = (fn) => `
+  <span class="vl-fn">${fn}</span><sup class="vl-inv">-1</sup>
+`;
+
+const mkPow2 = (content) => `
+  <span class="vl-pow">${mkParen(content)}<sup>2</sup></span>
+`;
+
+const mkSqrt = (content) => `
+  <span class="vl-sqrt">
+    <span class="vl-radical">√</span>
+    <span class="vl-rootbar">${content}</span>
+  </span>
+`;
+
+const mkFChoice = (label, formula) => `
+  ${label}) <span class="vl-formula">${formula}</span>
+`;
+
+const dfdx = mkFrac("∂f", "∂x");
+const dfdy = mkFrac("∂f", "∂y");
+const d2fdx2 = mkFrac("∂²f", "∂x²");
+const d2fdy2 = mkFrac("∂²f", "∂y²");
+
 /* ------------------ 20 QUESTIONS ------------------ */
 const questions = [
   {
@@ -939,131 +1667,36 @@ const questions = [
   },
 
   {
-    id: 3,
-    text: 'The gradient magnitude |∇f(x,y)| is correctly computed as:',
-    choices: [
-      `A)
-      <span class="math-choice">
-        <span class="q-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂x</span>
-        </span>
-        <span>+</span>
-        <span class="q-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂y</span>
-        </span>
-      </span>`,
+  id: 3,
+  text: 'The gradient magnitude |∇f(x,y)| is correctly computed as:',
+  choices: [
+    mkFChoice("A", `${dfdx}<span class="vl-op">+</span>${dfdy}`),
 
-      `B)
-      <span class="math-choice">
-        <span class="q-big-bracket">(</span>
-        <span class="q-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂x</span>
-        </span>
-        <span class="q-big-bracket">)</span>
-        <span>×</span>
-        <span class="q-big-bracket">(</span>
-        <span class="q-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂y</span>
-        </span>
-        <span class="q-big-bracket">)</span>
-      </span>`,
+    mkFChoice("B", `${mkParen(dfdx)}<span class="vl-op">×</span>${mkParen(dfdy)}`),
 
-      `C)
-      <span class="math-choice">
-        <span class="q-sqrt">
-          <span class="q-sqrt-symbol">√</span>
-          <span class="q-sqrt-content">
-            <span class="q-big-bracket">(</span>
-            <span class="q-frac">
-              <span class="num">∂f</span>
-              <span class="den">∂x</span>
-            </span>
-            <span>)<sup>2</sup></span>
-            <span>+</span>
-            <span class="q-big-bracket">(</span>
-            <span class="q-frac">
-              <span class="num">∂f</span>
-              <span class="den">∂y</span>
-            </span>
-            <span>)<sup>2</sup></span>
-            <span class="q-big-bracket">)</span>
-          </span>
-        </span>
-      </span>`,
+    mkFChoice("C", mkSqrt(`${mkPow2(dfdx)}<span class="vl-op">+</span>${mkPow2(dfdy)}`)),
 
-      `D)
-      <span class="math-choice">
-        <span class="q-frac">
-          <span class="num">∂<sup>2</sup>f</span>
-          <span class="den">∂x<sup>2</sup></span>
-        </span>
-        <span>+</span>
-        <span class="q-frac">
-          <span class="num">∂<sup>2</sup>f</span>
-          <span class="den">∂y<sup>2</sup></span>
-        </span>
-      </span>`
-    ],
-    answer: 'C',
-    selected: null
-  },
+    mkFChoice("D", `${d2fdx2}<span class="vl-op">+</span>${d2fdy2}`)
+  ],
+  answer: 'C',
+  selected: null
+},
 
-  {
-    id: 4,
-    text: 'The direction (angle) of the gradient θ(x,y) is given by:',
-    choices: [
-      `A)
-      <span class="math-choice">
-        tan<sup>-1</sup>
-        <span class="q-big-bracket">(</span>
-        <span class="q-frac">
-          <span class="num">∂f/∂x</span>
-          <span class="den">∂f/∂y</span>
-        </span>
-        <span class="q-big-bracket">)</span>
-      </span>`,
+ {
+  id: 4,
+  text: 'The direction (angle) of the gradient θ(x,y) is given by:',
+  choices: [
+    mkFChoice("A", `${mkInv("tan")}${mkParen(mkFrac("∂f / ∂x", "∂f / ∂y"))}`),
 
-      `B)
-      <span class="math-choice">
-        sin<sup>-1</sup>
-        <span class="q-big-bracket">(</span>
-        <span class="q-frac">
-          <span class="num">∂f/∂y</span>
-          <span class="den">∂f/∂x</span>
-        </span>
-        <span class="q-big-bracket">)</span>
-      </span>`,
+    mkFChoice("B", `${mkInv("sin")}${mkParen(mkFrac("∂f / ∂y", "∂f / ∂x"))}`),
 
-      `C)
-      <span class="math-choice">
-        tan<sup>-1</sup>
-        <span class="q-big-bracket">(</span>
-        <span class="q-frac">
-          <span class="num">∂f/∂y</span>
-          <span class="den">∂f/∂x</span>
-        </span>
-        <span class="q-big-bracket">)</span>
-      </span>`,
+    mkFChoice("C", `${mkInv("tan")}${mkParen(mkFrac("∂f / ∂y", "∂f / ∂x"))}`),
 
-      `D)
-      <span class="math-choice">
-        cos<sup>-1</sup>
-        <span class="q-big-bracket">(</span>
-        <span class="q-frac">
-          <span class="num">∂f/∂x</span>
-          <span class="den">∂f/∂y</span>
-        </span>
-        <span class="q-big-bracket">)</span>
-      </span>`
-    ],
-    answer: 'C',
-    selected: null
-  },
-
+    mkFChoice("D", `${mkInv("cos")}${mkParen(mkFrac("∂f / ∂x", "∂f / ∂y"))}`)
+  ],
+  answer: 'C',
+  selected: null
+},
   {
     id: 5,
     text: 'Which of the following is NOT one of the standard steps in edge detection?',
@@ -1224,73 +1857,21 @@ const questions = [
   },
 
   {
-    id: 12,
-    text: 'The mathematical formula for the Laplacian ∇²f(x,y) is:',
-    choices: [
-      `A)
-      <span class="math-choice">
-        <span class="q-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂x</span>
-        </span>
-        <span>+</span>
-        <span class="q-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂y</span>
-        </span>
-      </span>`,
+  id: 12,
+  text: 'The mathematical formula for the Laplacian ∇²f(x,y) is:',
+  choices: [
+    mkFChoice("A", `${dfdx}<span class="vl-op">+</span>${dfdy}`),
 
-      `B)
-      <span class="math-choice">
-        <span class="q-sqrt">
-          <span class="q-sqrt-symbol">√</span>
-          <span class="q-sqrt-content">
-            <span class="q-frac">
-              <span class="num">∂<sup>2</sup>f</span>
-              <span class="den">∂x<sup>2</sup></span>
-            </span>
-            <span>+</span>
-            <span class="q-frac">
-              <span class="num">∂<sup>2</sup>f</span>
-              <span class="den">∂y<sup>2</sup></span>
-            </span>
-          </span>
-        </span>
-      </span>`,
+    mkFChoice("B", mkSqrt(`${d2fdx2}<span class="vl-op">+</span>${d2fdy2}`)),
 
-      `C)
-      <span class="math-choice">
-        <span class="q-frac">
-          <span class="num">∂<sup>2</sup>f</span>
-          <span class="den">∂x<sup>2</sup></span>
-        </span>
-        <span>+</span>
-        <span class="q-frac">
-          <span class="num">∂<sup>2</sup>f</span>
-          <span class="den">∂y<sup>2</sup></span>
-        </span>
-      </span>`,
+    mkFChoice("C", `${d2fdx2}<span class="vl-op">+</span>${d2fdy2}`),
 
-      `D)
-      <span class="math-choice">
-        <span class="q-big-bracket">(</span>
-        <span class="q-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂x</span>
-        </span>
-        <span>)<sup>2</sup></span>
-        <span>+</span>
-        <span class="q-big-bracket">(</span>
-        <span class="q-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂y</span>
-        </span>
-        <span>)<sup>2</sup></span>
-      </span>`
-    ],
-    answer: 'C',
-    selected: null
-  },
+    mkFChoice("D", `${mkPow2(dfdx)}<span class="vl-op">+</span>${mkPow2(dfdy)}`)
+  ],
+  answer: 'C',
+  selected: null
+},
+
 
   {
     id: 13,

@@ -628,7 +628,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -711,10 +711,10 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-4 lg:p-6">
 
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
@@ -734,7 +734,7 @@
       </div>
 
 <!-- Theory Content -->
-<section class="section-content vl-card animate-fadeInUp">
+<section class="section-content animate-fadeInUp">
 
 <style>
   .section-content {
@@ -754,6 +754,10 @@
     line-height: 1.8;
     font-size: 1.1rem;
     text-align: justify;
+  }
+
+  .theory-section {
+padding-bottom:75x !important;
   }
 
   .theory-section h2 {
@@ -827,13 +831,11 @@
     text-align: center;
     margin: 14px auto;
     font-size: 1.25rem;
-    background: #f7f9fc;
-    border: 1px solid #dce3f0;
-    padding: 14px 10px;
-    border-radius: 6px;
+    background: none;
+    padding: 8px 0px;
+    border: none;
     overflow-x: auto;
-    overflow-y: visible;
-    color: #000;
+
   }
 
   .math-formula {
@@ -1024,6 +1026,365 @@
     padding-left: 20px !important;
     text-align: left;
   }
+
+  .comparison-table{
+  width:100%;
+  max-width:950px;
+  margin:18px auto;
+  font-size:1rem;
+  border-collapse:collapse;
+  table-layout:auto;
+}
+
+.comparison-table th{
+  background-color:#f2f2f2;
+  color:#000;
+  font-weight:700;
+  padding:10px;
+  border:1px solid #333;
+  text-align:center;
+  vertical-align:middle;
+}
+
+.comparison-table td{
+  padding:10px 14px;
+  border:1px solid #333;
+  vertical-align:top;
+  text-align:left;
+  line-height:1.7;
+}
+
+.comparison-table ol{
+  margin:0 !important;
+  padding-left:22px !important;
+  text-align:left !important;
+}
+
+.comparison-table li{
+  text-align:left !important;
+  margin-bottom:8px;
+  line-height:1.7;
+  word-spacing:normal !important;
+  letter-spacing:normal !important;
+}
+
+.comparison-table td:nth-child(1){
+  width:13%;
+  font-weight:700;
+}
+
+.comparison-table td:nth-child(2){
+  width:14%;
+}
+
+.comparison-table td:nth-child(3){
+  width:43%;
+}
+
+.comparison-table td:nth-child(4){
+  width:30%;
+}
+
+@media(max-width:640px){
+  .comparison-table{
+    display:block;
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    table-layout:auto;
+  }
+
+  .comparison-table th,
+  .comparison-table td{
+    white-space:normal;
+    font-size:0.95rem;
+    padding:8px;
+  }
+
+  .comparison-table li{
+    text-align:left !important;
+  }
+}
+
+  @media(max-width:640px){
+
+.theory-section{
+    padding:0 8px 75px 8px !important;
+}
+
+.theory-section h2{
+    font-size:1.55rem;
+    line-height:1.35;
+}
+
+.theory-section h3{
+    font-size:1.25rem;
+}
+
+.theory-section p,
+.theory-section li{
+    font-size:1rem;
+}
+
+.theory-section ul,
+.theory-section ol{
+    padding-left:25px !important;
+}
+
+.formula-box{
+    font-size:1rem;
+}
+
+.math-formula{
+    font-size:1rem;
+}
+
+.comparison-table{
+    display:block;
+    overflow-x:auto;
+}
+
+}
+
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
+
+/* =========================
+   FINAL MOBILE FIX
+   Table + Formula + Caption
+   ========================= */
+
+/* Typo fix: old code me 75x likha hai */
+.theory-section{
+  padding-bottom:75px !important;
+}
+
+/* Main content overflow control */
+main{
+  overflow-x:hidden !important;
+}
+
+.theory-section{
+  width:100% !important;
+  max-width:100% !important;
+  overflow-x:hidden !important;
+  box-sizing:border-box !important;
+}
+
+/* =========================
+   1) MOBILE TABLE FIT FIX
+   ========================= */
+
+.comparison-table{
+  width:100% !important;
+  max-width:100% !important;
+  table-layout:fixed !important;
+  border-collapse:collapse !important;
+}
+
+.comparison-table th,
+.comparison-table td{
+  word-wrap:break-word !important;
+  overflow-wrap:break-word !important;
+  word-break:normal !important;
+  white-space:normal !important;
+}
+
+/* Code 2 me nth-child widths mobile me problem de rahe the */
+@media(max-width:640px){
+
+  .comparison-table{
+    display:table !important;
+    width:100% !important;
+    max-width:100% !important;
+    table-layout:fixed !important;
+    overflow-x:hidden !important;
+    font-size:0.85rem !important;
+  }
+
+  .comparison-table th,
+  .comparison-table td{
+    padding:7px !important;
+    font-size:0.85rem !important;
+    line-height:1.5 !important;
+    vertical-align:top !important;
+  }
+
+  .comparison-table td:nth-child(1),
+  .comparison-table td:nth-child(2),
+  .comparison-table td:nth-child(3),
+  .comparison-table td:nth-child(4){
+    width:auto !important;
+  }
+
+  .comparison-table ol{
+    padding-left:16px !important;
+    margin:0 !important;
+  }
+
+  .comparison-table li{
+    font-size:0.85rem !important;
+    line-height:1.5 !important;
+    margin-bottom:6px !important;
+    text-align:left !important;
+  }
+}
+
+/* =========================
+   2) FORMULA SIZE FIX
+   ========================= */
+
+/* Inline style font-size:1.8rem ko override karega */
+.theory-section math,
+.theory-section math[display="block"]{
+  font-size:1.25rem !important;
+  max-width:100% !important;
+}
+
+.theory-section center{
+  max-width:100% !important;
+  overflow-x:auto !important;
+  overflow-y:hidden !important;
+  display:block !important;
+  text-align:center !important;
+}
+
+.formula-box{
+  font-size:1.1rem !important;
+  line-height:1.6 !important;
+  max-width:100% !important;
+  overflow-x:auto !important;
+  white-space:normal !important;
+  word-break:break-word !important;
+}
+
+@media(max-width:640px){
+
+  .theory-section math,
+  .theory-section math[display="block"]{
+    font-size:1rem !important;
+  }
+
+  .formula-box{
+    font-size:0.95rem !important;
+    line-height:1.5 !important;
+    padding:6px 0 !important;
+  }
+}
+
+/* =========================
+   3) FIGURE CAPTION MOBILE FIX
+   ========================= */
+
+.image-box{
+  width:100% !important;
+  max-width:100% !important;
+  text-align:center !important;
+  overflow-x:hidden !important;
+}
+
+.image-box img{
+  max-width:100% !important;
+  height:auto !important;
+  display:block !important;
+  margin:0 auto !important;
+}
+
+.image-box figcaption{
+  max-width:100% !important;
+  padding:0 8px !important;
+  text-align:center !important;
+  line-height:1.6 !important;
+  overflow-wrap:break-word !important;
+  word-break:normal !important;
+}
+
+@media(max-width:640px){
+
+  .image-box figcaption{
+    font-size:0.9rem !important;
+    line-height:1.5 !important;
+    padding:0 6px !important;
+  }
+}
+
+/* =========================
+   FIG. 3 CAPTION FIX
+   Desktop normal + Mobile like Code 1
+   ========================= */
+
+/* Desktop: caption normal single flow rahega */
+.detector-caption{
+  width:100% !important;
+  max-width:900px !important;
+  margin:10px auto 0 auto !important;
+  padding:0 10px !important;
+  text-align:center !important;
+  font-size:1rem !important;
+  font-weight:700 !important;
+  line-height:1.6 !important;
+  color:#000 !important;
+  box-sizing:border-box !important;
+}
+
+/* Desktop me sab inline rahe, line-by-line force nahi hoga */
+.detector-caption .fig-main-title,
+.detector-caption .caption-lines,
+.detector-caption .caption-lines span{
+  display:inline !important;
+  text-align:center !important;
+}
+
+/* Mobile me Code 1 jaisa format */
+@media(max-width:640px){
+
+  .detector-caption{
+    max-width:100% !important;
+    font-size:0.9rem !important;
+    line-height:1.5 !important;
+    padding:0 6px !important;
+    text-align:center !important;
+  }
+
+  /* Fig. 3 wali first line center */
+  .detector-caption .fig-main-title{
+    display:block !important;
+    text-align:center !important;
+    font-weight:700 !important;
+    margin-bottom:6px !important;
+  }
+
+  /* a,b,c,d wali lines left side se start */
+  .detector-caption .caption-lines{
+    display:block !important;
+    text-align:left !important;
+    width:100% !important;
+    margin:0 auto !important;
+  }
+
+  .detector-caption .caption-lines span{
+    display:block !important;
+    text-align:left !important;
+    line-height:1.5 !important;
+    margin:2px 0 !important;
+  }
+}
+
+
+
 </style>
 
 <section class="theory-section">
@@ -1042,7 +1403,7 @@
     <li>Neighboring pixels which are in different categories have dissimilar values.</li>
   </ul>
 
-  <h3>Edge Based Image Segmentation</h3>
+  <h2>Edge Based Image Segmentation</h2>
 
   <p>
     Edge-based segmentation is one of the most popular implementations of segmentation in image processing.
@@ -1057,7 +1418,7 @@
     You can improve the quality of your results by connecting all the edges into edge chains that match the image borders more accurately.
   </p>
 
-  <h3>Gradient</h3>
+  <h2>Gradient</h2>
 
   <p>
     In image processing, a gradient refers to the rate of change of intensity in an image.
@@ -1070,26 +1431,23 @@
     Mathematically, the gradient of an image function f(x, y) is a vector that points in the direction of the greatest rate of increase of f, and whose magnitude is the rate of change in that direction:
   </p>
 
-  <div class="formula-box">
-    <div class="math-formula">
-      <span>∇f(x, y) =</span>
-
-      <span class="vector-box">
-        <span class="math-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂x</span>
-        </span>
-
-        <span>,</span>
-
-        <span class="math-frac">
-          <span class="num">∂f</span>
-          <span class="den">∂y</span>
-        </span>
-      </span>
-    </div>
-  </div>
-
+                           <center>
+                          <math display="block" style="font-size: 1.8rem;text-align: justify">
+                            <mi>&#8711;</mi><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">)</mo>
+                            <mo>=</mo>
+                            <mrow>
+                              <mo>[</mo>
+                               <mfrac><mi>&#8706;f</mi><mi>&#8706;x</mi></mfrac>
+                               
+                                <mo>,</mo>
+                                <mfrac><mi>&#8706;f</mi><mi>&#8706;y</mi></mfrac>
+                               
+                            <mo>]</mo>
+                            </mrow>
+                            
+                          </math> 
+                          <br>
+                         </center>
  <div style="width: 100%; text-align: center;">
   <div style="display: inline-block; text-align: left;">
     <p style="text-align: center !important; margin: 0 0 10px 0;">
@@ -1109,69 +1467,48 @@
 
   <p>The magnitude of the gradient is given by:</p>
 
-  <div class="formula-box">
-    <div class="math-formula">
-      <span>|∇f(x, y)| =</span>
-
-      <span class="sqrt-formula">
-        <span class="sqrt-sign">√</span>
-
-        <span class="sqrt-inner">
-          <span class="big-round">(</span>
-
-          <span class="square-group">
-            <span class="math-frac">
-              <span class="num">∂f</span>
-              <span class="den">∂x</span>
-            </span>
-            <sup>2</sup>
-          </span>
-
-          <span>+</span>
-
-          <span class="square-group">
-            <span class="math-frac">
-              <span class="num">∂f</span>
-              <span class="den">∂y</span>
-            </span>
-            <sup>2</sup>
-          </span>
-
-          <span class="big-round">)</span>
-        </span>
-      </span>
-    </div>
-  </div>
-
+ <center>
+                          <math display="block" style="font-size: 1.8rem;text-align: justify">
+                            <mo stretchy="false">|</mo>
+                            <mi>&#8711;</mi><mi>f</mi>
+                            <mo stretchy="false">(</mo>
+                            <mi>x</mi>
+                            <mo>,</mo>
+                            <mi>y</mi>
+                            <mo stretchy="false">)</mo>
+                            <mo stretchy="false">|</mo>
+                            <mo>=</mo>
+                            <msqrt>
+                              <msup>
+                                <mfrac><mi>&#8706;f</mi><mi>&#8706;x</mi></mfrac>
+                                <mn>2</mn>
+                              </msup>
+                              <mo>+</mo>
+                              <msup>
+                                <mfrac><mi>&#8706;f</mi><mi>&#8706;y</mi></mfrac>
+                                <mn>2</mn>
+                              </msup>
+                            </msqrt>
+                          </math>
+                         </center>
   <p>And the direction (angle) of the gradient is:</p>
 
-  <div class="formula-box">
-    <div class="math-formula">
-      <span>θ(x, y) = tan<sup>-1</sup></span>
+                           <center>
+                          <math display="block" style="font-size: 1.8rem;text-align: justify">
+                            <mi>&#952;</mi><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">)</mo>
+                            <mo>=</mo>
+                            <msup><mo>tan</mo><mn>-1</mn></msup>
+                            <mo>(</mo>
+                            <mfrac>
+                              <mrow><mfrac><mi>&#8706;f</mi><mi>&#8706;y</mi></mfrac></mrow>
+                              <mrow><mfrac><mi>&#8706;f</mi><mi>&#8706;x</mi></mfrac></mrow>
+                            </mfrac>
+                            <mo>)</mo>
+                          </math>
+                          
+                         </center>
 
-      <span class="big-round">(</span>
-
-      <span class="math-frac">
-        <span class="num">
-          <span class="math-frac">
-            <span class="num">∂f</span>
-            <span class="den">∂y</span>
-          </span>
-        </span>
-
-        <span class="den">
-          <span class="math-frac">
-            <span class="num">∂f</span>
-            <span class="den">∂x</span>
-          </span>
-        </span>
-      </span>
-
-      <span class="big-round">)</span>
-    </div>
-  </div>
-
-  <h3>Steps in Edge Detection</h3>
+  <h2>Steps in Edge Detection</h2>
 
   <p>Algorithms for edge detection contain the following steps:</p>
 
@@ -1206,7 +1543,7 @@
     </li>
   </ol>
 
-  <h3>Edge Detectors</h3>
+  <h2>Edge Detectors</h2>
 
   <ol>
     <li>
@@ -1235,7 +1572,7 @@
     <figcaption>Fig. 1 Edge Detection Result for Medical Image</figcaption>
   </figure>
 
-  <h3>1. First Order Derivative Operators</h3>
+  <h2>1. First Order Derivative Operators</h2>
 
   <p>
     First order derivative operators are used in image processing to detect edges by measuring the rate of change in intensity.
@@ -1243,7 +1580,7 @@
     The most commonly used first-order derivative operators include:
   </p>
 
-  <ol type="a">
+  <ul type="a">
     <li>
       <b>Robert Operator</b>
 
@@ -1307,21 +1644,24 @@
         The Sobel operator is the magnitude of the gradient computed by:
       </p>
 
-      <div class="formula-box">
-        <div class="math-formula">
-          <span>M =</span>
-
-          <span class="sqrt-formula">
-            <span class="sqrt-sign">√</span>
-
-            <span class="sqrt-inner">
-              <span>S<sub>x</sub><sup>2</sup></span>
-              <span>+</span>
-              <span>S<sub>y</sub><sup>2</sup></span>
-            </span>
-          </span>
-        </div>
-      </div>
+                                  <center>
+                                    <math display="block" style="font-size: 1.8rem;text-align: justify">
+                                      <mo>M</mo>
+                                      <mo>=</mo>
+                                      <msqrt stretchy="false">
+                                        <msup>
+                                          <msub><mi>S</mi><mi>x</mi></msub>
+                                          <mn>2</mn>
+                                        </msup>
+                                        <mo>+</mo>
+                                        <msup>
+                                          <msub><mi>S</mi><mi>y</mi></msub>
+                                          <mn>2</mn>
+                                        </msup>
+                                      </msqrt>
+                                    </math>
+                                    
+                                    </center><br>
 
       <p>Where the partial derivatives are computed by:</p>
 
@@ -1410,9 +1750,9 @@
         The performance of this edge detector is also shown in the figures at the end of this section.
       </p>
     </li>
-  </ol>
+  </ul>
 
-  <h3>2. Second Order Derivative Operators</h3>
+  <h2>2. Second Order Derivative Operators</h2>
 
   <p>
     The edge detectors discussed earlier computed the first derivative and, if it was above a threshold, the presence of an edge point was assumed.
@@ -1423,7 +1763,7 @@
     There are two operators in two dimensions that correspond to the second derivative: the Laplacian and second directional derivative.
   </p>
 
-  <ol type="a">
+  <ul type="a">
     <li>
       <b>Laplacian Operator</b>
 
@@ -1433,39 +1773,53 @@
         The formula for the Laplacian of a function f(x, y) is:
       </p>
 
-      <div class="formula-box">
-        <div class="math-formula">
-          <span>∇<sup>2</sup>f(x, y) =</span>
-
-          <span class="math-frac">
-            <span class="num">∂<sup>2</sup>f</span>
-            <span class="den">∂x<sup>2</sup></span>
-          </span>
-
-          <span>+</span>
-
-          <span class="math-frac">
-            <span class="num">∂<sup>2</sup>f</span>
-            <span class="den">∂y<sup>2</sup></span>
-          </span>
-        </div>
-      </div>
+      <center>
+                                    <math display="block" style="font-size: 1.8rem;text-align: justify">
+                                      <msup><mo>&#8711;</mo><mn>2</mn></msup>
+                                      <mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="false">)</mo>
+                                      <mo>=</mo>
+                                      <mfrac>
+                                        <mrow><msup><mo>&#8706;</mo><mn>2</mn></msup>
+                                          <mi>f</mi>
+                                        </mrow>
+                                        
+                                        <msup><mi>&#8706;x</mi><mn>2</mn></msup>
+                                      </mfrac>
+                                      
+                                      <mo>+</mo>
+                                      <mfrac>
+                                        <mrow><msup><mo>&#8706;</mo><mn>2</mn></msup>
+                                          <mi>f</mi>
+                                        </mrow>
+                                        
+                                        <msup><mi>&#8706;y</mi><mn>2</mn></msup>
+                                      </mfrac>
+                                      
+                                    </math>
+                                    
+                                  </center>
+                                  <br>
+      
 
       <figure class="image-box">
         <img src="images/img2.png" alt="Comparison of various edge detectors">
-        <figcaption>
-          Fig. 3 A Comparison of Various Edge Detectors. (a) Original Image. (b) Filtered Image.
-          (c) Simple Gradient Using 1 x 2 and 2 x 1 Masks, T = 32.
-          (d) Gradient Using 2 x 2 Masks, T = 64.
-          (e) Roberts Cross Operator, T = 64.
-          (f) Sobel Operator, T = 225.
-          (g) Prewitt Operator, T = 225.
-        </figcaption>
+<figcaption class="detector-caption">
+  <span class="fig-main-title">Fig. 3 A Comparison of Various Edge Detectors.</span>
+  <span class="caption-lines">
+    <span>(a) Original Image.</span>
+    <span>(b) Filtered Image.</span>
+    <span>(c) Simple Gradient Using 1 x 2 and 2 x 1 Masks, T = 32.</span>
+    <span>(d) Gradient Using 2 x 2 Masks, T = 64.</span>
+    <span>(e) Roberts Cross Operator, T = 64.</span>
+    <span>(f) Sobel Operator, T = 225.</span>
+    <span>(g) Prewitt Operator, T = 225.</span>
+  </span>
+</figcaption>
       </figure>
     </li>
-  </ol>
+  </ul>
 
-     <h3>Comparison of Edge Detectors</h3>
+     <h2>Comparison of Edge Detectors</h2>
 
   <table class="comparison-table">
     <thead>
@@ -1552,6 +1906,8 @@
       </tr>
     </tbody>
   </table>
+  <br>
+  <br>
 
 </section>
 
@@ -1793,4 +2149,3 @@
   </script>
 </body>
 </html>
-
