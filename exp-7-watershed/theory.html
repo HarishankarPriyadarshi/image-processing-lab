@@ -574,6 +574,39 @@
       }
     }
 
+    .theory-section p,
+.theory-section li{
+    text-align:justify;
+}
+.theory-section{
+    padding-bottom:75px !important;
+}
+
+@media (max-width:640px){
+
+  .theory-section p,
+  .theory-section li{
+      text-align:left !important;
+      line-height:1.75;
+  }
+
+}
+
+@media (max-width:640px){
+
+  .content h2{
+      display:block !important;
+      line-height:1.05 !important;
+      margin-top:14px !important;
+      margin-bottom:6px !important;
+      padding:0 !important;
+      letter-spacing:0 !important;
+      word-spacing:0 !important;
+  }
+
+}
+
+
   </style>
 </head>
 
@@ -628,7 +661,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -711,10 +744,10 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-4 lg:p-6 overflow-x-hidden">
 
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2 overflow-hidden">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">
@@ -740,16 +773,18 @@ Watershed-Based Image Segmentation</a>
 
 <!-- Theory Content -->
 <section class="section-content vl-card p-4 animate-fadeInUp">
-
-<div class="text-gray-700 text-lg leading-relaxed">
+<div class="theory-section">
 
 <style>
-.content{
+.theory-section{
     width:100%;
     max-width:none;
-    margin:0;
-    padding:0;
+    margin:0 !important;
+    padding:0 15px !important;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#222;
     line-height:1.8;
+    font-size:1.1rem;
     text-align:justify;
 }
 
@@ -772,6 +807,8 @@ Watershed-Based Image Segmentation</a>
     color:#222;
     font-weight:700;
 }
+
+
 
 .content p,
 .content li{
@@ -831,6 +868,130 @@ Watershed-Based Image Segmentation</a>
     padding:10px;
     text-align:left;
 }
+
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
+.theory-section p,
+.theory-section li{
+    text-align:justify;
+}
+
+@media (max-width:640px){
+
+  .theory-section p,
+  .theory-section li{
+      text-align:left !important;
+      line-height:1.75;
+  }
+
+}
+@media (max-width:640px){
+
+  main{
+      padding:12px !important;
+  }
+
+  .section-content{
+      padding:14px !important;
+  }
+
+}
+@media (max-width:640px){
+
+  nav{
+      word-break:break-word;
+      line-height:1.4;
+  }
+
+}
+
+.mobile-break br{
+    display:none;
+}
+
+@media (max-width:640px){
+
+  .mobile-caption{
+      text-align:left !important;
+      font-weight:700 !important;
+  }
+
+  .mobile-caption b{
+      display:block;
+      text-align:center !important;
+      margin-bottom:10px;
+  }
+
+  .mobile-break{
+      display:block;
+      text-align:left !important;
+      line-height:1.8;
+  }
+
+  .mobile-break br{
+      display:block;
+  }
+}
+/* ===== MOBILE ONLY FIXES ===== */
+@media (max-width:640px){
+
+  /* 1. Headings ke niche extra gap kam */
+  .content h2{
+      display:block !important;
+      line-height:1.05 !important;
+      margin-top:14px !important;
+      margin-bottom:6px !important;
+      padding:0 !important;
+      letter-spacing:0 !important;
+      word-spacing:0 !important;
+  }
+
+  .content h3{
+      display:block !important;
+      line-height:1.05 !important;
+      margin-top:14px !important;
+      margin-bottom:6px !important;
+      padding:0 !important;
+      letter-spacing:0 !important;
+      word-spacing:0 !important;
+  }
+
+  /* Heading ke baad image bahut door na lage */
+  .content figure{
+      margin-top:12px !important;
+      margin-bottom:18px !important;
+  }
+
+  .content img{
+      margin:12px auto !important;
+  }
+
+  /* 2. Figure caption Sampling jaisi */
+  .content figcaption{
+      text-align:left !important;
+      font-weight:700 !important;
+      line-height:1.7 !important;
+  }
+
+  .content figcaption b{
+      display:block;
+      text-align:center !important;
+      margin-bottom:8px !important;
+  }
+}
 </style>
 
 <div class="content">
@@ -848,202 +1009,19 @@ The algorithm can pick up the gray level from surrounding pixels.
 
 <figure>
     <img src="images/img1.png" alt="Segmented Image">
-    <figcaption>
-        <b>Fig. 1 (a) Original Image (b) Segmented Image</b>
-    </figcaption>
-</figure>
+<figcaption class="mobile-caption">
+<b>Fig. 1 Segmented Image</b>
 
-<h2>1. Region Growing Segmentation</h2>
-
-<p>
-Region-growing methods rely mainly on the assumption that neighbouring pixels within one region have similar values.
-The common procedure is to compare one pixel with its neighbours.
-If a similarity criterion is satisfied, the pixel can be set to belong to the cluster as one or more of its neighbours.
-The selection of the similarity criterion is significant, and the results are influenced by noise in all instances.
-</p>
-
-<p>
-This method takes a set of seeds as input along with the image.
-The seeds mark each of the objects to be segmented.
-The regions are iteratively grown by comparison of all unallocated neighbouring pixels to the regions.
-The difference between a pixel’s intensity value and the region’s mean is used as a measure of similarity.
-The pixel with the smallest difference measured in this way is assigned to the respective region.
-This process continues until all pixels are assigned to a region.
-Because seeded region growing requires seeds as additional input, the segmentation results are dependent on the choice of seeds, and noise in the image can cause the seeds to be poorly placed.
-</p>
-
-<figure>
-    <img src="images/img2.png" alt="Region Growing">
-    <figcaption>
-        <b>Fig. 2 (a) with seed marks (b) smallest region growing (c) expanded region growing</b>
-    </figcaption>
-</figure>
-
-<h3>Algorithm Steps</h3>
-
-<ol>
-    <li>
-        <b>Seed Point Selection</b><br>
-        Seed points can be selected manually or automatically using methods like edge detection, corner detection, or region-based statistics.
-        The choice of seed points significantly affects the final segmentation result.
-    </li>
-
-    <li>
-        <b>Defining the Similarity Criteria</b><br>
-        A similarity measure must be defined to determine whether a pixel is similar enough to be included in a region.
-        Common criteria include:
-        <ul>
-            <li>Absolute intensity difference: |I<sub>neighbor</sub> − I<sub>seed</sub>| &lt; T</li>
-            <li>Euclidean distance in colour space</li>
-            <li>Texture similarity</li>
-        </ul>
-    </li>
-
-    <li>
-        <b>Region Growing Process</b><br>
-        The algorithm begins with the seed and checks all neighbouring pixels.
-        If a neighbouring pixel satisfies the similarity condition, it is included in the region, and its own neighbours are checked in the next iteration.
-        The region grows outward until no more pixels meet the criteria.
-    </li>
-
-    <li>
-        <b>Stopping Condition</b><br>
-        The process stops when:
-        <ul>
-            <li>No further pixels meet the inclusion criteria.</li>
-            <li>A maximum region size is reached.</li>
-            <li>All pixels in the image have been classified.</li>
-        </ul>
-    </li>
-</ol>
-
-
-<h2>2. Region Splitting Segmentation</h2>
-
-<p>
-Region splitting is an important approach to image segmentation that systematically divides an image into smaller regions to identify homogeneous areas based on certain criteria, such as intensity, colour, or texture.
-This technique is commonly used in image analysis tasks where identifying uniform regions is essential for further processing or object recognition.
-</p>
-
-<p>
-The main idea behind region splitting is to start with the entire image as a single region and progressively split it into smaller subregions.
-This division continues recursively until all resulting regions satisfy a predefined homogeneity condition.
-The process is often implemented using a quadtree data structure, where each non-homogeneous region is split into four equal quadrants.
-This method is particularly effective for images that contain large uniform areas and works well in scenarios where boundary detection is difficult using edge-based methods.
-</p>
-
-<h3>Algorithm Steps</h3>
-
-<ol>
-    <li>
-        <b>Initialization:</b>
-        Begin by considering the whole image as a single region.
-    </li>
-
-    <li>
-        <b>Homogeneity Test:</b>
-        Evaluate whether the current region satisfies a given homogeneity criterion.
-        Common criteria include intensity variance, range of pixel values, or texture similarity.
-    </li>
-
-    <li>
-        <b>Splitting:</b>
-        If the region is found to be non-homogeneous, it is divided into four smaller rectangular subregions (typically equal in size).
-    </li>
-
-    <li>
-        <b>Recursion:</b>
-        Apply the same homogeneity test to each of the newly created subregions.
-        Continue this process recursively for every non-homogeneous region.
-    </li>
-
-    <li>
-        <b>Termination:</b>
-        The splitting process stops when all regions are homogeneous, or a minimum region size is reached.
-    </li>
-
-    <li>
-        <b>Optional Merging:</b>
-        Sometimes, a post-processing step is applied to merge adjacent regions that are similar, reducing over-segmentation.
-    </li>
-</ol>
-
-<figure>
-    <img src="images/img3.png" alt="Region Splitting">
-    <figcaption>
-        <b>Fig. 3 (a) Original Image (b) Region Splitting Segmented Image</b>
-    </figcaption>
+<span class="mobile-break">
+(a) Original Image<br>
+(b) Segmented Image
+</span>
+</figcaption>
 </figure>
 
 
-<h2>3. Region Merging</h2>
 
-<p>
-Region merging is an image segmentation technique that follows a bottom-up approach to segment an image into regions based on pixel similarity.
-Unlike region growing, which starts from individual seed points, region merging begins by over-segmenting the image into small homogeneous regions and then merges adjacent regions that meet certain similarity criteria.
-This technique is effective for obtaining large and meaningful regions while minimizing the impact of noise and irrelevant details.
-</p>
-
-<p>
-In region merging, the image is first divided into several small regions (often based on pixel intensity or colour).
-These initial regions, known as superpixels, serve as the basic units for merging.
-The algorithm then evaluates the similarity between neighbouring superpixels and merges them into larger regions if they meet predefined similarity criteria, such as intensity, colour, or texture.
-The process continues iteratively, merging the regions that are most alike, until the entire image is segmented into a set of final regions.
-The success of region merging depends on the selection of initial superpixels, the similarity threshold, and the merging strategy.
-</p>
-
-<h3>Algorithm Steps</h3>
-
-<ol>
-    <li>
-        <b>Initialization:</b>
-        Begin by considering the whole image as a single region.
-    </li>
-
-    <li>
-        <b>Initial Superpixel Generation</b><br>
-        The first step in region merging is to divide the image into small regions or superpixels.
-        Various methods, such as SLIC (Simple Linear Iterative Clustering) or k-means clustering, are commonly used to generate these initial superpixels.
-        Each superpixel represents a relatively homogeneous region of the image.
-    </li>
-
-    <li>
-        <b>Similarity Measurement</b><br>
-        A similarity measure is defined to assess how closely two neighbouring regions (superpixels) match.
-        The similarity criteria may be based on:
-        <ul>
-            <li>Intensity difference: Differences in pixel intensities between adjacent regions.</li>
-            <li>Colour similarity: Using colour spaces like RGB or HSV to measure the distance between regions.</li>
-            <li>Texture similarity: Measures based on texture features, such as entropy or contrast.</li>
-        </ul>
-    </li>
-
-    <li>
-        <b>Region Merging Process</b><br>
-        Starting with the initial set of superpixels, the algorithm compares adjacent regions and merges them if their similarity exceeds a predefined threshold.
-        The merging process continues iteratively, considering neighbouring regions until no more regions can be merged.
-    </li>
-
-    <li>
-        <b>Stopping Condition</b>
-        <ul>
-            <li>No neighbouring regions meet the similarity threshold.</li>
-            <li>A maximum number of regions is reached.</li>
-            <li>The desired segmentation granularity is achieved.</li>
-        </ul>
-    </li>
-</ol>
-
-<h3>Applications</h3>
-
-<ul>
-    <li>Medical imaging for identifying homogeneous tissues or pathological regions.</li>
-    <li>Remote sensing where different land-cover types need to be segmented based on spectral similarity.</li>
-    <li>Industrial inspection for detecting defects or irregularities on surfaces.</li>
-</ul>
-
-
-<h2>4. Watershed Image Segmentation</h2>
+<h2>Watershed Image Segmentation</h2>
 
 <p>
 Watershed image segmentation is a powerful technique used in image processing to partition an image into distinct regions based on the landscape analogy of a watershed.
@@ -1088,10 +1066,17 @@ The final output clearly segments individual objects, even when they are touchin
 
 <figure>
     <img src="images/img4.png" alt="Watershed Segmentation">
-    <figcaption>
-        <b>Fig. 4 (a) Original Image (b) Marker Image (c) Watershed Output Image</b>
-    </figcaption>
+<figcaption class="mobile-caption">
+<b>Fig. 2 Watershed Segmentation</b>
+
+<span class="mobile-break">
+(a) Original Image<br>
+(b) Marker Image<br>
+(c) Watershed Output Image
+</span>
+</figcaption>
 </figure>
+<br>
 
 
 </div>

@@ -572,6 +572,19 @@
       .chatbot-panel {
         height: min(88vh, 620px);
       }
+
+      .where-block{
+    text-align:center;
+    margin:20px 0;
+}
+
+.where-block p{
+    text-align:center !important;
+    margin:6px 0;
+}
+
+
+
     }
 
   </style>
@@ -628,7 +641,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -711,10 +724,10 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-4 lg:p-6 overflow-x-hidden">
 
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2 overflow-hidden">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">
@@ -739,101 +752,305 @@ Canny Edge Detection</a>
       </div>
 
 <!-- Theory Content -->
-<section class="section-content vl-card p-4 animate-fadeInUp">
-
-<div class="text-gray-700 text-lg leading-relaxed">
+<section class="section-content animate-fadeInUp">
 
 <style>
-.content{
+.theory-section{
     width:100%;
     max-width:none;
-    margin:0;
-    padding:0;
+    margin:0 !important;
+    padding:0 15px 75px 15px !important;
+    font-family:Arial, Helvetica, sans-serif;
+    color:#222;
     line-height:1.8;
+    font-size:1.1rem;
+    text-align:justify;
+    box-sizing:border-box;
+
+}
+
+.theory-section{
+    width:100%;
+    max-width:100%;
+    margin:0 auto;
+    overflow-x:hidden;
+    box-sizing:border-box;
+}
+
+.theory-section *{
+    box-sizing:border-box;
+}
+
+.theory-section h2{
+    font-size:2rem;
+    font-weight:700;
+    color:#222;
+    margin:24px 0 12px 0;
+    text-align:left;
+    word-spacing:normal;
+    letter-spacing:normal;
+    line-height:1.4;
+}
+
+.theory-section h2:first-child{
+    margin-top:0;
+}
+
+.theory-section p{
+    font-size:1.1rem;
+    margin:8px 0 12px 0;
+    line-height:1.8;
+    text-align:justify;
+    color:#000;
+}
+
+.theory-section ul{
+    list-style:disc !important;
+    list-style-position:outside !important;
+    padding-left:40px !important;
+    margin:12px 0 20px 0 !important;
+}
+
+.theory-section ol{
+    list-style:decimal !important;
+    list-style-position:outside !important;
+    padding-left:40px !important;
+    margin:12px 0 20px 0 !important;
+}
+
+.theory-section li{
+    display:list-item !important;
+    font-size:1.1rem;
+    margin-bottom:8px;
+    line-height:1.8;
+    color:#000;
     text-align:justify;
 }
 
-.content h2:first-child{
-    margin-top:0 !important;
-}
-
-.content h2{
-    font-size:2rem;
-    margin-top:24px;
-    margin-bottom:12px;
-    color:#222;
+.theory-section b,
+.theory-section strong{
     font-weight:700;
+    color:#000;
 }
 
-.content h3{
-    font-size:1.5rem;
-    margin-top:20px;
-    margin-bottom:10px;
-    color:#222;
-    font-weight:700;
-}
-
-.content p,
-.content li{
-    font-size:1.1rem;
-}
-
-.content ul{
-    list-style:disc !important;
-    padding-left:40px !important;
-    margin:12px 0;
-}
-
-.content ol{
-    list-style:decimal !important;
-    padding-left:40px !important;
-    margin:12px 0;
-}
-
-.content li{
-    display:list-item !important;
-    margin-bottom:8px;
-}
-
-.content img{
-    max-width:100%;
-    height:auto;
-    display:block;
-    margin:20px auto;
-}
-
-.content figure{
+.theory-section figure{
     text-align:center;
     margin:25px 0;
 }
 
-.content figcaption{
-    color:#000 !important;
-    font-weight:700 !important;
-    font-size:1rem !important;
-    margin-top:10px;
+.theory-section img{
+    max-width:100%;
+    height:auto;
+    display:block;
+    margin:0 auto;
 }
 
-.content table{
+.theory-section figcaption{
+    font-size:1rem;
+    font-weight:700;
+    color:#000;
+    margin-top:10px;
+    text-align:center;
+}
+
+/* Table styling */
+.theory-section table{
     width:100%;
+    max-width:100%;
     border-collapse:collapse;
     margin:20px 0;
 }
 
-.content table,
-.content th,
-.content td{
+.theory-section table,
+.theory-section th,
+.theory-section td{
     border:1px solid #000;
 }
 
-.content th,
-.content td{
+.theory-section th,
+.theory-section td{
     padding:10px;
     text-align:left;
+    vertical-align:top;
+    color:#000;
+}
+
+/* Maths formula safe handling */
+.theory-section mjx-container,
+.theory-section .MathJax,
+.theory-section .MathJax_Display,
+.theory-section .katex,
+.theory-section .katex-display{
+    max-width:100%;
+}
+
+.theory-section mjx-container[display="true"],
+.theory-section .MathJax_Display,
+.theory-section .katex-display{
+    overflow-x:auto;
+    overflow-y:hidden;
+    display:block;
+}
+
+@media (max-width:640px){
+
+    .theory-section{
+        width:100% !important;
+        max-width:100% !important;
+        margin:0 auto !important;
+        padding:0 12px 75px 12px !important;
+        overflow-x:hidden !important;
+    }
+
+    .theory-section table{
+        width:100%;
+        border-collapse:collapse;
+        table-layout:fixed;
+        display:table;
+    }
+
+    .theory-section th,
+    .theory-section td{
+        word-wrap:break-word;
+        overflow-wrap:break-word;
+        white-space:normal;
+        font-size:14px;
+        padding:8px;
+    }
+
+}
+
+/* Mobile Table Fix */
+@media (max-width:640px){
+
+    .theory-section table{
+        width:100%;
+        border-collapse:collapse;
+        table-layout:fixed;
+        display:table;
+    }
+
+    .theory-section th,
+    .theory-section td{
+        word-wrap:break-word;
+        overflow-wrap:break-word;
+        white-space:normal;
+        font-size:14px;
+        padding:8px;
+    }
+
+    .theory-section td ol,
+    .theory-section td ul{
+        padding-left:18px !important;
+        margin:0;
+    }
+
+
+
+    .theory-section th,
+    .theory-section td{
+        padding:8px;
+        font-size:0.95rem;
+        white-space:normal;
+    }
+  
+
+    .theory-section mjx-container[display="true"],
+    .theory-section .MathJax_Display,
+    .theory-section .katex-display{
+        overflow-x:auto;
+        overflow-y:hidden;
+        font-size:0.95em;
+    }
+
+    .theory-section figcaption{
+        font-size:0.95rem;
+    }
+
+    /* =========================
+   MOBILE FULL WIDTH FIX
+   ========================= */
+
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
+
+/* Theory section */
+.theory-section{
+    width:100%;
+    overflow-x:hidden;
+    word-wrap:break-word;
+    overflow-wrap:break-word;
+}
+
+/* Images */
+.theory-section img{
+    max-width:100% !important;
+    height:auto !important;
+}
+
+/* Math formulas */
+.theory-section math,
+.theory-section mjx-container,
+.theory-section .MathJax,
+.theory-section .MathJax_Display,
+.theory-section .katex,
+.theory-section .katex-display{
+    max-width:100% !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+}
+
+/* Tables */
+.theory-section table{
+    display:block;
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+.theory-section tbody,
+.theory-section thead{
+    width:max-content;
+    min-width:100%;
+}
+
+.theory-section th,
+.theory-section td{
+    white-space:normal;
+    word-break:break-word;
+}
+
+/* Long text */
+.theory-section p,
+.theory-section li,
+.theory-section h2,
+.theory-section figcaption{
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+
+/* Breadcrumb */
+nav{
+    overflow-x:hidden;
+}
+
 }
 </style>
 
-<div class="content">
+<div class="theory-section">
 
 <h2>Introduction</h2>
 
@@ -868,24 +1085,16 @@ In image processing, a gradient refers to the rate of change of intensity in an 
 For edge detection, gradients are important because edges generally occur where there is a significant change in pixel intensity.
 </p>
 
-<center style="margin:25px 0;">
-    <math display="block">
-<mi>∇</mi><mi>f</mi><mo>(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo>)</mo>
-<mo>=</mo>
-<mo>[</mo>
-<mfrac><mi>∂f</mi><mi>∂x</mi></mfrac>
-<mo>,</mo>
-<mfrac><mi>∂f</mi><mi>∂y</mi></mfrac>
-<mo>]</mo>
-</math>
-</center>
 
-<p>Where:</p>
 
-<ul>
-    <li>∂f/∂x : Partial derivative in the horizontal direction.</li>
-    <li>∂f/∂y : Partial derivative in the vertical direction.</li>
-</ul>
+
+<div class="mobile-caption mobile-break" style="text-align:center; margin:20px 0;">
+    <b>Where:</b><br>
+
+    ∂f/∂x : Partial derivative in the horizontal direction.<br>
+
+    ∂f/∂y : Partial derivative in the vertical direction.
+</div>
 
 <p>The magnitude of the gradient is:</p>
 
@@ -949,7 +1158,7 @@ For edge detection, gradients are important because edges generally occur where 
 
 <ol>
     <li>
-        First-Order Derivative
+        <b>First-Order Derivative</b>
         <ul>
             <li>Roberts</li>
             <li>Sobel</li>
@@ -958,15 +1167,15 @@ For edge detection, gradients are important because edges generally occur where 
     </li>
 
     <li>
-        Second-Order Derivative
+        <b>Second-Order Derivative</b>
         <ul>
             <li>Laplacian</li>
         </ul>
     </li>
 
-    <li>Canny</li>
+    <li><b>Canny</b></li>
 
-    <li>Morphological Operations</li>
+    <li><b>Morphological Operations</b></li>
 </ol>
 
 <figure>
@@ -1198,7 +1407,6 @@ of various image processing and computer vision applications, including medical 
 industrial inspection, and autonomous systems.
 </p>
 
-</div>
 
 </div>
 

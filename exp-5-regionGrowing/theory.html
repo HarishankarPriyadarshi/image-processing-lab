@@ -572,7 +572,47 @@
       .chatbot-panel {
         height: min(88vh, 620px);
       }
-    }
+    .mobile-break{
+    display:none;
+}
+
+}
+
+.mobile-break{
+  display:none;
+}
+
+.mobile-only{
+  display:none;
+}
+
+.desktop-only{
+  display:inline;
+}
+
+@media (max-width:640px){
+
+  .desktop-only{
+    display:none;
+  }
+
+  .mobile-only{
+    display:block;
+    text-align:left;
+    font-weight:700;
+    line-height:1.8;
+  }
+
+  .mobile-only b{
+    display:block;
+    text-align:center;
+    margin-bottom:8px;
+    font-weight:700;
+  }
+
+}
+
+    
 
   </style>
 </head>
@@ -628,7 +668,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -711,10 +751,10 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-4 lg:p-8 pb-48 overflow-x-hidden">
 
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2 overflow-hidden">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">
@@ -739,9 +779,9 @@ Region Growing Segmentation</a>
       </div>
 
 <!-- Theory Content -->
-<section class="section-content vl-card p-4 animate-fadeInUp">
+<section class="section-content animate-fadeInUp">
 
-<div class="text-gray-700 text-lg leading-relaxed">
+<div class="theory-section">
 
 <style>
 .content{
@@ -831,6 +871,122 @@ Region Growing Segmentation</a>
     padding:10px;
     text-align:left;
 }
+
+/* =========================
+   MOBILE FULL WIDTH FIX
+   ========================= */
+
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
+
+.content{
+    width:100%;
+    overflow-x:hidden;
+    overflow-wrap:break-word;
+    word-wrap:break-word;
+}
+
+.content img{
+    max-width:100% !important;
+    height:auto !important;
+}
+
+.content table{
+    display:block;
+    width:100%;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+}
+
+.content th,
+.content td{
+    white-space:normal;
+    word-break:break-word;
+}
+
+.content p,
+.content li,
+.content h2,
+.content h3{
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+
+.content math,
+.content mjx-container,
+.content .MathJax,
+.content .MathJax_Display,
+.content .katex,
+.content .katex-display{
+    max-width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+}
+
+@media (max-width:640px){
+
+    .content{
+        padding:0;
+        font-size:1rem;
+        text-align:justify !important;
+}
+    
+
+    .content h2{
+        font-size:1.8rem;
+        line-height:1.35;
+        margin-top:18px !important;
+        margin-bottom:8px !important;
+    }
+
+    .content h3{
+        font-size:1.4rem;
+        line-height:1.35;
+        margin-top:14px !important;
+        margin-bottom:6px !important;
+    }
+
+    .content figure{
+        margin:18px 0 !important;
+    }
+
+    .content p,
+    .content li{
+        font-size:1rem;
+        line-height:1.7;
+            overflow-wrap:anywhere;
+    word-break:break-word;
+    }
+
+    
+
+    .content ul,
+    .content ol{
+        padding-left:24px;
+    }
+
+    main{
+        padding-bottom:20px !important;
+      }
+
+
+}
+
+    
+
+
 </style>
 
 <div class="content">
@@ -848,9 +1004,19 @@ The algorithm can pick up the gray level from surrounding pixels.
 
 <figure>
     <img src="images/img1.png" alt="Segmented Image">
-    <figcaption>
-        <b>Fig. 1 (a) Original Image (b) Segmented Image</b>
-    </figcaption>
+<figcaption>
+
+<span class="desktop-only">
+<b>Fig. 1 (a) Original Image (b) Segmented Image</b>
+</span>
+
+<span class="mobile-only">
+<b>Fig. 1</b>
+(a) Original Image<br>
+(b) Segmented Image
+</span>
+
+</figcaption>
 </figure>
 
 <h2>1. Region Growing Segmentation</h2>
@@ -874,9 +1040,20 @@ Because seeded region growing requires seeds as additional input, the segmentati
 
 <figure>
     <img src="images/img2.png" alt="Region Growing">
-    <figcaption>
-        <b>Fig. 2 (a) with seed marks (b) smallest region growing (c) expanded region growing</b>
-    </figcaption>
+<figcaption class="mobile-caption">
+
+<span class="desktop-only">
+<b>Fig. 2 (a) with seed marks (b) smallest region growing (c) expanded region growing</b>
+</span>
+
+<span class="mobile-only">
+<b>Fig. 2</b>
+(a) with seed marks<br>
+(b) smallest region growing<br>
+(c) expanded region growing
+</span>
+
+</figcaption>
 </figure>
 
 <h3>Algorithm Steps</h3>
@@ -916,6 +1093,8 @@ Because seeded region growing requires seeds as additional input, the segmentati
             <li>A maximum region size is reached.</li>
             <li>All pixels in the image have been classified.</li>
         </ul>
+        <br>
+        <br>
     </li>
 </ol>
 

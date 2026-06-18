@@ -574,6 +574,55 @@
       }
     }
 
+@media (max-width:640px){
+
+  /* Remove justify on mobile */
+  .content{
+      text-align:left !important;
+      line-height:1.6 !important;
+  }
+
+  .content p,
+  .content li{
+      text-align:left !important;
+      word-spacing:normal !important;
+      letter-spacing:normal !important;
+      line-height:1.6 !important;
+  }
+
+  .content h2,
+  .content h3{
+      text-align:left !important;
+      word-spacing:normal !important;
+      letter-spacing:normal !important;
+      line-height:1.15 !important;
+      display:block !important;
+      width:100%;
+  }
+
+}
+
+/* ===== FORMULA MOBILE FIX ===== */
+
+@media (max-width:640px){
+
+  center{
+      display:block;
+      width:100%;
+      overflow-x:auto;
+      text-align:center;
+  }
+
+  center math{
+      display:inline-block !important;
+      font-size:0.55rem !important;
+      max-width:none !important;
+  }
+
+}
+
+
+
   </style>
 </head>
 
@@ -628,7 +677,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -711,10 +760,10 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-4 lg:p-6 overflow-x-hidden">
 
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">
@@ -830,6 +879,99 @@ Image Processing Lab</a>
     padding:10px;
     text-align:left;
 }
+
+html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
+
+/* ===== MOBILE FIX ===== */
+
+@media (max-width:640px){
+
+  .content{
+      line-height:1.65 !important;
+  }
+
+  .content h2{
+      font-size:1.45rem !important;
+      line-height:1.1 !important;
+      margin-top:14px !important;
+      margin-bottom:6px !important;
+      padding:0 !important;
+  }
+
+  .content h3{
+      font-size:1.2rem !important;
+      line-height:1.15 !important;
+      margin-top:12px !important;
+      margin-bottom:4px !important;
+  }
+
+  .content p{
+      line-height:1.6 !important;
+      margin-bottom:10px !important;
+  }
+
+  .content li{
+      line-height:1.55 !important;
+      margin-bottom:5px !important;
+  }
+
+  .content figure{
+      margin:12px 0 !important;
+  }
+
+  .content img{
+      margin:10px auto !important;
+  }
+
+  .content table{
+      display:block;
+      overflow-x:auto;
+      white-space:nowrap;
+      width:100%;
+  }
+
+}
+
+@media (max-width:640px){
+
+  .content table{
+      width:100% !important;
+      border-collapse:collapse;
+      table-layout:fixed;
+      display:table;
+  }
+
+  .content th,
+  .content td{
+      word-wrap:break-word;
+      overflow-wrap:break-word;
+      white-space:normal;
+      font-size:14px;
+      padding:8px;
+  }
+
+  .content td ol,
+  .content td ul{
+      padding-left:18px !important;
+      margin:0;
+  }
+
+}
+
 </style>
 
 <div class="content">
@@ -1123,6 +1265,7 @@ DST is widely used in solving partial differential equations, signal processing,
 
 <h2>4. Comparison: DCT vs DST</h2>
 
+<div class="table-wrapper">
 <table border="1" style="width:100%; border-collapse:collapse; text-align:center;">
     <thead>
         <tr>
@@ -1163,6 +1306,7 @@ DST is widely used in solving partial differential equations, signal processing,
         </tr>
     </tbody>
 </table>
+</div>
 
 <h2>Conclusion</h2>
 
@@ -1172,6 +1316,8 @@ Transform-based techniques such as the Discrete Cosine Transform (DCT) and Discr
 Among these techniques, DCT is the most widely used due to its excellent energy compaction capability and its adoption in popular standards such as JPEG and MPEG.
 Proper use of image compression techniques enables efficient storage, faster transmission, and effective management of digital image data.
 </p>
+<br>
+<br>
 
 
 </div>

@@ -103,8 +103,9 @@
     }
 
     .header-inner {
-      max-width: 1200px;
-      margin: 0 auto;
+      width:100%;
+  max-width:100%;
+  margin:0;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -205,6 +206,7 @@
     bottom: 0;
     left: 0;
     right: 0;
+    width:100%;
   }
 
   .footer-inner {
@@ -573,6 +575,47 @@
       }
     }
 
+    @media (max-width: 640px){
+
+  main{
+    padding-left:12px !important;
+    padding-right:12px !important;
+  }
+
+  .section-content{
+    padding:16px !important;
+  }
+
+  .footer-inner{
+    padding-left:8px !important;
+    padding-right:8px !important;
+  }
+
+  .logo-title{
+    font-size:16px !important;
+  }
+
+  .logo-subtitle{
+    font-size:11px !important;
+  }
+}
+
+@media (max-width:640px){
+
+  .logo-title{
+      font-size:14px !important;
+  }
+
+  .logo-subtitle{
+      font-size:10px !important;
+  }
+
+  .header-inner{
+      padding-left:10px;
+      padding-right:10px;
+  }
+}
+
   </style>
 </head>
 
@@ -627,7 +670,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-60 sm:w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -715,9 +758,9 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-4 md:p-6 pb-20">
 
-      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 flex flex-wrap items-center gap-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
@@ -740,8 +783,8 @@
       <section class="section-content vl-card p-6 animate-fadeInUp">
         
 
-        <div class="space-y-4 text-gray-700 text-lg">
-          <ol class="list-decimal list-inside space-y-3 pl-4">
+        <div class="space-y-4 text-gray-700 text-base md:text-lg">
+          <ol class="list-decimal space-y-3 pl-5">
             <li>R. C. Gonzalez and R. E. Woods, <i>Digital Image Processing</i>, 4<sup>th</sup> ed. Pearson, 2018.</li>
             <li>A. K. Jain, <i>Fundamentals of Digital Image Processing</i>. Prentice Hall, 1989.</li>
             <li>T. K. Bose, <i>Digital Signal and Image Processing</i>. John Wiley & Sons, 2004.</li>

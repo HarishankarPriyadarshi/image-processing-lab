@@ -809,7 +809,7 @@
     <main class="procedure-main flex-1 lg:ml-64 p-4 sm:p-6 pb-24">
 
       <!-- Breadcrumb -->
-        <nav class="mb-6 text-sm sm:text-base text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-x-2 gap-y-1">
+        <nav class="mb-6 text-m sm:text-base text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-x-2 gap-y-1">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Labs</a>
@@ -832,7 +832,7 @@
 
      <!-- Procedure Steps -->
 <!-- Procedure Steps -->
-<section class="section-content vl-card p-4 animate-fadeInUp procedure-content">
+<section class="section-content vl-card p-3 sm:p-4 md:p-6 animate-fadeInUp procedure-content">
 
     <div class="procedure-body text-gray-700 text-base sm:text-lg leading-relaxed">
 
@@ -847,7 +847,7 @@
         }
 
         .content h2{
-            font-size:2rem;
+            font-size:clamp(1.5rem,4vw,2rem);
             font-weight:700;
             color:#222;
             margin:0 0 12px 0 !important;
@@ -856,7 +856,7 @@
         }
 
         .content h3{
-            font-size:1.4rem;
+            font-size:clamp(1.15rem,3vw,1.4rem);
             font-weight:700;
             color:#222;
             margin-top:20px;
@@ -864,11 +864,31 @@
         }
 
         .content p{
-            font-size:1.1rem;
-            margin-bottom:10px;
-            line-height:1.8;
-            color:#000;
+            font-size:1rem;
+    margin-bottom:12px;
+    line-height:1.8;
         }
+
+        @media (max-width:640px){
+
+    .content{
+        text-align:left;
+    }
+
+    .content ol{
+        padding-left:25px !important;
+    }
+
+    .content h2{
+        margin-bottom:10px !important;
+    }
+
+    .content h3{
+        margin-top:16px;
+        margin-bottom:8px;
+    }
+}
+
         </style>
 
         <div class="content">

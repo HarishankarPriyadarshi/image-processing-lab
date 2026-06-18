@@ -714,6 +714,22 @@
       box-shadow: 0 6px 16px rgba(11, 96, 168, 0.12);
     }
 
+    html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    max-width:100%;
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
+
   </style>
 </head>
 
@@ -858,7 +874,7 @@
     <main class="flex-1 lg:ml-64 p-6">
 
       <!-- Breadcrumb -->
-        <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
+        <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Lab</a>

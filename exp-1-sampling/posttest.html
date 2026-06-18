@@ -297,10 +297,12 @@
       transform: translateY(-1px);
     }
 
-    .option-label input {
-      accent-color: #0b60a8;
-      width: 18px;
-      height: 18px;
+    .option-label input[type="radio"]{
+        width:22px;
+        height:22px;
+        min-width:22px;
+        min-height:22px;
+        appearance:auto !important;
     }
 
     .option-label input:disabled {
@@ -460,6 +462,8 @@
       z-index: 90;
       max-width: calc(100vw - 32px);
       transition: opacity 180ms ease, transform 180ms ease;
+          width:auto !important;
+    height:auto !important;
     }
 
     body.sidebar-open .chatbot-widget {
@@ -492,6 +496,9 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+          position:absolute;
+    bottom:90px;
+    right:0;
     }
     .chatbot-panel.open {
       opacity: 1;
@@ -577,23 +584,37 @@
       margin-bottom: 1rem; /* Consistent paragraph spacing */
       text-indent: 0; /* No indentation, use spacing instead */
     }
-    @media (max-width: 640px) {
-      .chatbot-widget {
-        bottom: 16px;
-        right: 16px;
-        width: calc(100vw - 24px);
-      }
-      .chatbot-panel {
-        width: 100%;
-        height: min(82vh, 580px);
-        border-radius: 20px;
-      }
-    }
+@media (max-width:640px){
+  .chatbot-widget{
+      bottom:16px;
+      right:16px;
+  }
+
+  .chatbot-panel{
+      width:calc(100vw - 24px);
+      height:min(82vh,580px);
+  }
+}
     @media (max-width: 480px) {
       .chatbot-panel {
         height: min(88vh, 620px);
       }
     }
+
+    html,
+body{
+    width:100%;
+    max-width:100%;
+    overflow-x:hidden;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+main{
+    overflow-x:hidden;
+}
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -642,7 +663,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-12 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -722,7 +743,7 @@
     <!-- MAIN CONTENT -->
     <main class="flex-1 lg:ml-64 p-6">
       <!-- Breadcrumb -->
-      <nav class="mb-6 text-sm text-gray-600 animate-slideInLeft flex items-center space-x-2">
+      <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
         <span>></span>
         <a href="#" class="hover:text-blue-600">Image Processing Lab</a>
