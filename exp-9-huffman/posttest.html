@@ -174,7 +174,7 @@
     box-shadow: 0 -10px 30px rgba(2, 26, 44, 0.5);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 50;
+    z-index: 1010;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -460,6 +460,7 @@
       z-index: 90;
       max-width: calc(100vw - 32px);
       transition: opacity 180ms ease, transform 180ms ease;
+      pointer-events: none;
     }
 
     body.sidebar-open .chatbot-widget {
@@ -594,6 +595,20 @@
         height: min(88vh, 620px);
       }
     }
+    .chatbot-launcher,
+    .chatbot-panel.open {
+      pointer-events: auto;
+    }
+    #warningModal:not(.show) {
+      pointer-events: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    #warningModal.show {
+      pointer-events: auto !important;
+      visibility: visible !important;
+    }
   </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -642,7 +657,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-24">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -720,7 +735,7 @@
     <!-- MOBILE OVERLAY -->
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-6 pb-24">
       <!-- Breadcrumb -->
       <nav class="mb-6 text-sm text-gray-600 animate-slideInLeft flex items-center space-x-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
@@ -790,7 +805,7 @@
     </main>
   </div>
   <!-- FOOTER -->
-  <footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12"> <!-- Key: h-12 = 48px -->
+  <footer class="vl-footer fixed bottom-0 left-0 right-0 z-[1010] h-12"> <!-- Key: h-12 = 48px -->
     <div class="footer-inner flex items-center justify-center h-full px-4">
       <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
         &copy; 2026 Virtual Labs IIT Roorkee
@@ -949,8 +964,8 @@ const questions = [
       text: "Which factor has the greatest impact on the compression ratio achieved by Huffman Coding?",
       choices: [
         "A) Symbol frequency distribution",
-        "B) File name length",
-        "C) File name length",
+        "B) Number of colors in the image",
+        "C) File size before compression",
         "D) Alphabetical order of symbols"
       ],
       answer:'A',selected:null

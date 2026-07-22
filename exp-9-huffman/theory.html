@@ -200,7 +200,7 @@
     box-shadow: 0 -10px 30px rgba(2, 26, 44, 0.5);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 50;
+    z-index: 1010;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -628,7 +628,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-24">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -748,7 +748,7 @@ Huffman Coding for Lossless Image Compression</a>
     width:100%;
     max-width:none;
     margin:0;
-    padding:0;
+    padding:0 8px 0 20px;
     line-height:1.8;
     text-align:justify;
 }
@@ -809,6 +809,62 @@ Huffman Coding for Lossless Image Compression</a>
 
 .content figcaption b{
     color:#000 !important;
+}
+
+.content h2,
+.content h3 {
+  text-align: left;
+}
+
+@media (max-width: 640px) {
+  .content {
+    padding: 0 4px 0 14px;
+  }
+
+  .content h2 {
+    font-size: 1.5rem;
+  }
+
+  .content h3 {
+    font-size: 1.15rem;
+  }
+
+  .content p,
+  .content li {
+    text-align: left;
+  }
+}
+
+.content table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1rem;
+}
+
+.content th,
+.content td {
+  border: 1px solid #999;
+  padding: 8px 12px;
+  text-align: center;
+  vertical-align: top;
+}
+
+.content th {
+  background: #f3f4f6;
+  font-weight: 700;
+  color: #111827;
+}
+
+@media (max-width: 640px) {
+  .content table {
+    font-size: 0.85rem;
+  }
+  .content th,
+  .content td {
+    padding: 6px 8px;
+  }
 }
 </style>
 
@@ -914,13 +970,15 @@ Huffman Coding for Lossless Image Compression</a>
 
     <h2>Time Complexity</h2>
     <p>Assuming the input contains n symbols and k unique symbols, the time complexity of the Huffman Coding process is as follows:</p>
-    <table border="1" cellpadding="8" style="border-collapse:collapse; margin:20px auto; font-size:1.1rem;">
+    <div style="overflow-x:auto;">
+    <table>
       <tr><th>Operation</th><th>Time Complexity</th></tr>
       <tr><td>Frequency Calculation</td><td>O(n)</td></tr>
       <tr><td>Huffman Tree Construction (using Priority Queue)</td><td>O(k log k)</td></tr>
       <tr><td>Encoding</td><td>O(n)</td></tr>
       <tr><td>Decoding</td><td>O(n)</td></tr>
     </table>
+    </div>
     <p>Using a priority queue (min-heap) significantly improves the efficiency of Huffman tree construction by allowing the two least frequent nodes to be selected efficiently during each iteration.</p>
 
      <h2>Worked Example: "ABEACADABEA"</h2>
@@ -935,7 +993,7 @@ Huffman Coding for Lossless Image Compression</a>
 
     <center>
       <img src="images/figure1.png" style="max-width: 500px; width: 100%; height: auto;" />
-      <figcaption style="font-weight: bold;">Fig. 1 Huffman tree for the message "ABEACADABEA" showing 0 and 1 branch assignments</figcaption>
+      <figcaption style="font-weight: bold;">Fig. 4 Huffman tree for the message "ABEACADABEA" showing 0 and 1 branch assignments</figcaption>
     </center>
 
     <p>According to the above Huffman tree, the obtained codeword for each symbol is shown below:</p>
@@ -989,7 +1047,7 @@ Huffman Coding for Lossless Image Compression</a>
     </main>
   </div>
  <!-- FOOTER -->
-<footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12"> <!-- Key: h-12 = 48px -->
+<footer class="vl-footer fixed bottom-0 left-0 right-0 z-[1010] h-12"> <!-- Key: h-12 = 48px -->
     <div class="footer-inner flex items-center justify-center h-full px-4">
       <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
         &copy; 2026 Virtual Labs IIT Roorkee

@@ -174,7 +174,7 @@
     box-shadow: 0 -10px 30px rgba(2, 26, 44, 0.5);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 50;
+    z-index: 1010;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -279,17 +279,21 @@
     }
 
     .option-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      margin-top: 8px;
-      border: 1px solid #e2e8f0;
-      border-radius: 12px;
-      background: linear-gradient(120deg, #ffffff, #f8fbff);
-      transition: all 160ms ease;
-      cursor: pointer;
-    }
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-top: 8px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #ffffff, #f8fbff);
+  transition: all 160ms ease;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
 
     .option-label:hover {
       border-color: #93c5fd;
@@ -460,6 +464,7 @@
       z-index: 90;
       max-width: calc(100vw - 32px);
       transition: opacity 180ms ease, transform 180ms ease;
+      pointer-events: none;
     }
 
     body.sidebar-open .chatbot-widget {
@@ -493,6 +498,16 @@
       display: flex;
       flex-direction: column;
     }
+
+    body.chatbot-panel-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.chatbot-panel,
+.chatbot-panel-body {
+  overscroll-behavior: contain;
+}
     .chatbot-panel.open {
       opacity: 1;
       transform: translateY(0) scale(1);
@@ -589,10 +604,36 @@
         border-radius: 20px;
       }
     }
+    .chatbot-launcher,
+    .chatbot-panel.open {
+      pointer-events: auto;
+    }
     @media (max-width: 480px) {
       .chatbot-panel {
         height: min(88vh, 620px);
       }
+    }
+    #warningModal:not(.show) {
+      pointer-events: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+
+    #warningModal.show {
+      pointer-events: auto !important;
+      visibility: visible !important;
+    }
+
+    .option-label {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    #check-btn, #refresh-btn {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
     }
   </style>
 </head>
@@ -642,7 +683,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-24">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -720,7 +761,7 @@
     <!-- MOBILE OVERLAY -->
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-6 pb-24">
       <!-- Breadcrumb -->
       <nav class="mb-6 text-sm text-gray-600 animate-slideInLeft flex items-center space-x-2">
         <a href="#" class="hover:text-blue-600 transition-colors">Home</a>
@@ -788,7 +829,7 @@
     </main>
   </div>
   <!-- FOOTER -->
-  <footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12"> <!-- Key: h-12 = 48px -->
+  <footer class="vl-footer fixed bottom-0 left-0 right-0 z-[1010] h-12"> <!-- Key: h-12 = 48px -->
     <div class="footer-inner flex items-center justify-center h-full px-4">
       <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
         &copy; 2026 Virtual Labs IIT Roorkee
@@ -1160,16 +1201,19 @@ function playMappedAlertAudio(soundEl, message) {
    const onClose = popupOnClose;
    popupOnClose = null;
 
+  modal.style.setProperty("pointer-events", "none", "important");
+  document.body.classList.remove("is-modal-open");
+
    if (box) {
      box.classList.add("closing");
    }
 
    window.setTimeout(() => {
      modal.classList.remove("show");
+     modal.style.removeProperty("pointer-events"); 
      if (box) {
        box.classList.remove("closing");
      }
-     document.body.classList.remove("is-modal-open");
      if (onClose) onClose();
    }, 450);
 
@@ -1387,6 +1431,7 @@ showPopup(pretestWelcomeMessage, "Welcome to the Pretest section");
         panel.classList.add('open');
         toggleBtn.setAttribute('aria-expanded', 'true');
         widget.classList.add('chatbot-open');
+        document.body.classList.add('chatbot-panel-open');
 
         if (chatUrl && chatUrl !== '#') {
           if (!isLoaded) {
@@ -1407,6 +1452,7 @@ showPopup(pretestWelcomeMessage, "Welcome to the Pretest section");
         panel.classList.remove('open');
         toggleBtn.setAttribute('aria-expanded', 'false');
         widget.classList.remove('chatbot-open');
+        document.body.classList.remove('chatbot-panel-open');
         if (autoCloseTimer) {
           clearTimeout(autoCloseTimer);
           autoCloseTimer = null;

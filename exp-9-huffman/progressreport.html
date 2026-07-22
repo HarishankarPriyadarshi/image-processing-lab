@@ -853,8 +853,8 @@
           <section class="report-section">
             <h2 class="report-section-title">Experiment Timeline</h2>
             <div class="space-y-2 text-sm text-slate-800">
-              <div><span class="report-label">Session Start:</span> ${escapeHTML(formatTimelineDateTime(start) || start || "-")}</div>
-              <div><span class="report-label">Simulation Start:</span> ${escapeHTML(simulationTiming.startDisplay)}</div>
+              <div><span class="report-label">Session Start:</span> ${formatTimelineDateTime(start) ? escapeHTML(formatTimelineDateTime(start)) : renderMinusGlyph()}</div>
+              <div><span class="report-label">Simulation Start:</span> ${simulationTiming.startDisplay === "-" ? renderMinusGlyph() : escapeHTML(simulationTiming.startDisplay)}</div>
             </div>
           </section>
           <section class="report-section">
@@ -889,7 +889,7 @@
 
         <section id="reportSimulationSection" class="report-section">
           <h2 class="report-section-title">Simulation Report</h2>
-          <p id="simulationReportStatus" class="report-muted">---</p>
+          <p id="simulationReportStatus" class="report-muted">Loading simulation report&hellip;</p>
           <div class="report-frame-wrap">
             <iframe id="simulationReportFrame" class="w-full hidden" loading="lazy" style="min-height:540px; border:none;"></iframe>
           </div>
@@ -930,6 +930,14 @@
         hour12: true
       });
       return `${datePart}, ${timePart}`;
+    }
+
+    // Renders a small inline SVG minus glyph instead of a literal "-" character.
+    // html2canvas + custom web fonts can silently drop or mis-render a bare
+    // hyphen-minus glyph in the exported PDF snapshot; an SVG rect always
+    // rasterizes correctly regardless of font-loading timing.
+    function renderMinusGlyph() {
+      return '<svg class="report-minus-glyph" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" focusable="false" style="display:inline-block;vertical-align:middle;"><rect x="1" y="4" width="8" height="2" rx="1" fill="currentColor"/></svg>';
     }
 
     function decodeHtmlEntities(value) {
@@ -999,36 +1007,17 @@
       };
     }
 
+    // NOTE: this used to contain hardcoded text substitutions specific to the
+    // "DC Shunt Generator" (Exp-2) report copied over as a starting template.
+    // Those regexes are irrelevant to the Huffman Coding report and have been
+    // removed. If the Huffman simulation report needs its own text fixups,
+    // add Huffman-specific replacements here instead.
     function normalizeSimulationReportHtml(html) {
       if (!html || typeof html !== "string") return html;
 
       return html
         .replace(/(<\/(?:span|strong|b|em)>)(?=[A-Za-z0-9])/g, "$1 ")
-        .replace(/text-align\s*:\s*justify\s*;?/gi, "text-align:left;")
-        .replace(
-          /<p><span class="label">Experiment Title:<\/span>\s*To study the Load Characteristics of DC shunt generator<\/p>/g,
-          '<p><span class="label">Experiment Title:</span> To Study the Load Characteristics of a DC Shunt Generator</p>'
-        )
-        .replace(
-          /<p style="text-align:left;">To study the external characteristic of a DC shunt generator by varying the lamp load, measuring the terminal voltage and load current, and plotting the terminal voltage versus load current [^<]* curve\.<\/p>/g,
-          '<p style="text-align:left;">To study the load characteristics of a DC shunt generator by varying the lamp load, measuring terminal voltage and load current, and plotting the V-I characteristic curve.</p>'
-        )
-        .replace(
-          /<p style="text-align:left;">Connections were completed as instructed, supply was switched ON, lamp load was varied, and the corresponding load current and terminal voltage readings were recorded, and a graph was generated between terminal voltage and load current\.<\/p>/g,
-          '<p style="text-align:left;">The circuit connections were completed as per the procedure. The supply was switched on, the lamp load was varied step by step, the corresponding load current and terminal voltage readings were recorded, and the load characteristic graph was plotted.</p>'
-        )
-        .replace(
-          /<h3>Components and key Parameters<\/h3>/g,
-          '<h3>Components and Key Parameters</h3>'
-        )
-        .replace(
-          /<li>3-Point Starter: 220V DC, 7\.5 HP<\/li>/g,
-          '<li>3-Point Starter: 220 V DC, 7.5 HP</li>'
-        )
-        .replace(
-          /<li>Bulbs: 10 [^<]* 200 W each<\/li>/g,
-          '<li>Bulbs: 10 x 200 W each</li>'
-        );
+        .replace(/text-align\s*:\s*justify\s*;?/gi, "text-align:left;");
     }
 
     function getSimulationReportData() {
@@ -1177,6 +1166,20 @@
       }
     }
 
+    // Captures every part of the embedded simulation report so nothing is
+    // silently skipped in the downloaded PDF, regardless of what markup/CSS
+    // classes the simulation report itself happens to use.
+    //
+    // Priority order:
+    //   1. If the simulation report author explicit "page break" wrappers
+    //      (class="report-page"), use those directly - one PDF page each.
+    //   2. Otherwise, capture EVERY direct child of the report root
+    //      individually (generic - works no matter what the child elements
+    //      are called). This is what actually fixes reports (like the
+    //      Huffman one) that don't use the old DC-generator-specific
+    //      ".header-row" / ".section" class names.
+    //   3. Absolute last resort: capture the whole root as one big canvas so
+    //      at least everything appears in the PDF (paginated, not squeezed).
     async function captureSimulationExportCanvases(frameEl, scale) {
       if (!frameEl || frameEl.classList.contains("hidden")) return [];
 
@@ -1200,32 +1203,20 @@
         return pageCanvases;
       }
 
-      const header = reportRoot.querySelector(".header-row");
-      const sections = Array.from(reportRoot.querySelectorAll(".section"));
-      const groups = [];
-
-      const introGroup = [];
-      if (header) introGroup.push(header);
-      if (sections[0]) introGroup.push(sections[0]);
-      if (sections[1]) introGroup.push(sections[1]);
-      if (introGroup.length) groups.push(introGroup);
-
-      const observationAndGraphGroup = [];
-      if (sections[2]) observationAndGraphGroup.push(sections[2]);
-      if (sections[3]) observationAndGraphGroup.push(sections[3]);
-      if (observationAndGraphGroup.length) groups.push(observationAndGraphGroup);
-
-      for (let i = 4; i < sections.length; i++) {
-        groups.push([sections[i]]);
+      const topLevelNodes = Array.from(reportRoot.children || []).filter(
+        (node) => node.nodeType === 1 && getVisibleElementHeight(node) > 0
+      );
+      if (topLevelNodes.length) {
+        const nodeCanvases = [];
+        for (const node of topLevelNodes) {
+          const canvas = await captureSimulationGroupCanvas(reportDoc, [node], scale);
+          if (canvas) nodeCanvases.push(canvas);
+        }
+        if (nodeCanvases.length) return nodeCanvases;
       }
 
-      const canvases = [];
-      for (const group of groups) {
-        const canvas = await captureSimulationGroupCanvas(reportDoc, group, scale);
-        if (canvas) canvases.push(canvas);
-      }
-
-      return canvases;
+      const wholeCanvas = await captureSimulationGroupCanvas(reportDoc, [reportRoot], scale);
+      return wholeCanvas ? [wholeCanvas] : [];
     }
 
     function sleep(ms = 0) {
@@ -1451,6 +1442,27 @@
       }
     }
 
+    // Chooses per-canvas: fit small sections onto one page, but paginate
+    // (slice across multiple pages) any canvas that is unusually tall so it
+    // never gets squeezed down to an unreadable thumbnail. This matters most
+    // for the generic top-level-child fallback above, where a single child
+    // (e.g. a big Huffman tree diagram) can be much taller than a normal
+    // section card.
+    function addSimulationCanvasToPdf(pdf, canvas, margin = 24) {
+      if (!pdf || !canvas || !canvas.width || !canvas.height) return;
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const usableWidth = pageWidth - margin * 2;
+      const usableHeight = pageHeight - margin * 2;
+      const aspectHeightAtFullWidth = (canvas.height * usableWidth) / canvas.width;
+
+      if (aspectHeightAtFullWidth <= usableHeight * 1.15) {
+        addCanvasFittedSinglePage(pdf, canvas, margin);
+      } else {
+        appendCanvasPaged(pdf, canvas, { margin, startNewPage: false });
+      }
+    }
+
     async function prepareExportNodes() {
       const sourceNode = reportContainer || contentEl;
       if (!sourceNode) return null;
@@ -1626,7 +1638,7 @@
 
         for (const simulationCanvas of simulationCanvases) {
           pdf.addPage();
-          addCanvasFittedSinglePage(pdf, simulationCanvas, 24);
+          addSimulationCanvasToPdf(pdf, simulationCanvas, 24);
         }
 
         pdf.save("progress-report.pdf");
@@ -1655,10 +1667,13 @@
       if (!data || !data.type) return;
 
       if (data.type === "vlab:simulation_report_generated") {
-        const latestSimulationReport = getSimulationReportData();
-        if (latestSimulationReport?.html) {
-          currentSimulationReport = latestSimulationReport;
-          renderSimulationReport(latestSimulationReport);
+        if (data.html) {
+          currentSimulationReport = { html: data.html, updatedAt: data.updatedAt };
+          renderSimulationReport(currentSimulationReport);
+          try {
+            localStorage.setItem("vlab_exp2_simulation_report_html", data.html);
+            localStorage.setItem("vlab_exp2_simulation_report_updated_at", data.updatedAt || "");
+          } catch {}
         }
         scheduleEmbeddedHeightSync();
         return;
@@ -1683,4 +1698,3 @@
   </script>
 </body>
 </html>
-

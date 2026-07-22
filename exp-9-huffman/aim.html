@@ -267,7 +267,7 @@
       box-shadow: 0 -10px 30px rgba(2, 26, 44, 0.5);
       backdrop-filter: blur(10px);
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      z-index: 50;
+      z-index: 1010;
       position: fixed;
       bottom: 0;
       left: 0;
@@ -755,6 +755,16 @@
       display: flex;
       flex-direction: column;
     }
+
+    body.chatbot-panel-open {
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.chatbot-panel,
+.chatbot-panel-body {
+  overscroll-behavior: contain;
+}
 
     .chatbot-panel.open {
       opacity: 1;
@@ -1382,7 +1392,7 @@
 
     <div class="flex pt-[70px] min-h-screen">
       <!-- Sidebar -->
-      <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+      <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-24">
         <div class="px-4">
           <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
           <nav class="space-y-1">
@@ -1604,7 +1614,7 @@
     </div>
 
     <!-- Footer -->
-    <footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12">
+    <footer class="vl-footer fixed bottom-0 left-0 right-0 z-[1010] h-12">
       <div class="footer-inner flex items-center justify-center h-full px-4">
         <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
           &copy; 2026 Virtual Labs IIT Roorkee
@@ -2367,6 +2377,7 @@
         panel.classList.add('open');
         toggleBtn.setAttribute('aria-expanded', 'true');
         widget.classList.add('chatbot-open');
+        document.body.classList.add('chatbot-panel-open');
 
         if (chatUrl && chatUrl !== '#') {
           if (!isLoaded) {
@@ -2387,6 +2398,7 @@
         panel.classList.remove('open');
         toggleBtn.setAttribute('aria-expanded', 'false');
         widget.classList.remove('chatbot-open');
+        document.body.classList.remove('chatbot-panel-open');
 
         if (autoCloseTimer) {
           clearTimeout(autoCloseTimer);
@@ -3376,8 +3388,7 @@
   }, true);
 
   // If user loads aim.html#progressreport directly without user form
-  if (window.location.hash === "#progressreport" && (!VLProgress.hasUser() || !hasSimulationReport())) {
-    const needUser = !VLProgress.hasUser();
+  if (window.location.hash === "#progressreport") {
     const needSim = !hasSimulationReport();
     const msg = getAimProgressReportAccessAlertMessage(needUser, needSim);
     showAimAlert(msg, "Instructions");

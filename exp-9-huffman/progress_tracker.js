@@ -1,9 +1,3 @@
-/* File: progress_tracker.js
-   Include on every page:
-   <script src="./progress_tracker.js"></script>
-   <script>VLProgress.initPage();</script>
-*/
-
 (function () {
   const KEY = "vlab_exp2_progress_v1";
   const VERSION = 1;

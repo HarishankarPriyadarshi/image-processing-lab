@@ -201,7 +201,7 @@
     box-shadow: 0 -10px 30px rgba(2, 26, 44, 0.5);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 50;
+    z-index: 1010;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -718,7 +718,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-       <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+       <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-24">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -888,6 +888,19 @@
             <li>Click the <b>Print</b> button to print the result.</li>
             </ol>
           </p>
+      <h2>Simulation Concept Procedure</h2>
+      <p>
+        <ol type="1">
+        <li>Click on the <b>Guided Tutor</b> button to start the step-by-step walkthrough, or refer to the <b>Instructions</b> button for a quick summary of the process.</li>
+        <li>Select an input mode — choose a symbol (Plus, Minus, Multiply, Divide) from the Symbol box, or switch to Text Input mode and type a custom string.</li>
+        <li>Click the <b>Analyze Frequency</b> button to compute and display the frequency of each character/symbol in the Frequency Table.</li>
+        <li>Click the <b>Generate</b> button to initialize the Huffman Tree with each character as a leaf node.</li>
+        <li>Click <b>Next Step</b> repeatedly to build the tree — the two lowest-frequency nodes are merged at each step. Use <b>Prev Step</b> to go back and review any step.</li>
+        <li>Once all nodes are merged into a single root, the tree is complete and the <b>Encoded Table</b> displays the final binary Huffman code for each character.</li>
+        <li>Refer to the <b>Tree Description</b> panel below the visualization for a written explanation of each merge step.</li>
+        <li>Click the <b>Reset</b> button to clear the simulation and start over with a new input.</li>
+        </ol>
+      </p>
 </div>
 
     </div>
@@ -925,7 +938,7 @@
 
   
   <!-- FOOTER -->
-<footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12"> <!-- Key: h-12 = 48px -->
+<footer class="vl-footer fixed bottom-0 left-0 right-0 z-[1010] h-12"> <!-- Key: h-12 = 48px -->
     <div class="footer-inner flex items-center justify-center h-full px-4">
       <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
         &copy; 2026 Virtual Labs IIT Roorkee 

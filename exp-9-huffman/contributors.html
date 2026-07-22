@@ -200,7 +200,7 @@
     box-shadow: 0 -10px 30px rgba(2, 26, 44, 0.5);
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 50;
+    z-index: 1010;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -579,6 +579,11 @@
       table-layout: fixed;
     }
 
+    .contributors-table th,
+    .contributors-table td {
+    overflow-wrap: anywhere;
+    }
+
     @media (max-width: 1023px) {
       .contributors-main {
         padding: 1rem !important;
@@ -725,7 +730,7 @@
 
  <div class="flex pt-[70px] min-h-screen">
     <!-- Sidebar -->
-    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-6">
+    <aside id="sidebar" class="vl-sidebar w-64 fixed left-0 top-[70px] bottom-0 z-[999] overflow-y-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out pb-24">
       <div class="px-4">
         <h2 class="text-lg font-semibold text-gray-800 mb-6 border-b border-gray-200 pb-4">Experiment Navigation</h2>
         <nav class="space-y-1">
@@ -840,6 +845,13 @@
 
         <div class="contributors-table-wrap mt-4">
           <table class="contributors-table border border-gray-300 bg-white rounded-lg">
+          <colgroup>
+            <col style="width: 8%">
+            <col style="width: 22%">
+            <col style="width: 30%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+          </colgroup>  
             <thead class="bg-gray-100">
               <tr class="text-left text-gray-700 text-center">
                 <th class="border p-2">S.No.</th>
@@ -880,27 +892,20 @@
     <tbody>
       <tr class="text-gray-700 text-center">
         <td class="border p-2" data-label="S.No.">1</td>
-        <td class="border p-2" data-label="Name">Dr. Rajeev Kumar</td>
-        <td class="border p-2" data-label="Email ID">rajeev.kumar@ee.iitr.ac.in</td>
-        <td class="border p-2" data-label="Institute">PEC Chandigarh</td>
-        <td class="border p-2" data-label="Position">Assistant Professor</td>
-      </tr>
-
-      <tr class="text-gray-700 text-center">
-        <td class="border p-2" data-label="S.No.">2</td>
-        <td class="border p-2" data-label="Name">Ms. Pragya Daksh</td>
-        <td class="border p-2" data-label="Email ID">prgdaksh@gmail.com</td>
+        <td class="border p-2" data-label="Name">Harishankar Priyadarshi</td>
+        <td class="border p-2" data-label="Email ID">harishankarpriyadarshi423@gmail.com</td>
         <td class="border p-2" data-label="Institute">IIT Roorkee</td>
         <td class="border p-2" data-label="Position">Project Associate</td>
       </tr>
 
       <tr class="text-gray-700 text-center">
-        <td class="border p-2" data-label="S.No.">3</td>
-        <td class="border p-2" data-label="Name">Mr. Naman Munjal</td>
-        <td class="border p-2" data-label="Email ID">74naman@gmail.com</td>
-        <td class="border p-2" data-label="Institute">PEC Chandigarh</td>
+        <td class="border p-2" data-label="S.No.">2</td>
+        <td class="border p-2" data-label="Name">Aditi Sharma</td>
+        <td class="border p-2" data-label="Email ID">aditi7045sharma@gmail.com</td>
+        <td class="border p-2" data-label="Institute">UIT Shimla</td>
         <td class="border p-2" data-label="Position">Intern</td>
       </tr>
+    
     </tbody>
   </table>
 </div>
@@ -937,7 +942,7 @@
 
   
   <!-- FOOTER -->
-<footer class="vl-footer fixed bottom-0 left-0 right-0 z-50 h-12"> <!-- Key: h-12 = 48px -->
+<footer class="vl-footer fixed bottom-0 left-0 right-0 z-[1010] h-12"> <!-- Key: h-12 = 48px -->
     <div class="footer-inner flex items-center justify-center h-full px-4">
       <p class="text-xs md:text-sm text-center text-sky-100 font-medium tracking-wide">
         &copy; 2026 Virtual Labs IIT Roorkee
