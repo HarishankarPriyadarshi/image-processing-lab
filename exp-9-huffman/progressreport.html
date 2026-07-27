@@ -381,9 +381,6 @@
       <div>
         <h1 class="text-3xl font-bold text-slate-900">Progress Report</h1>
       </div>
-      <div class="flex flex-wrap gap-2">
-        <button id="downloadBtn" class="px-4 py-2 font-semibold">Download</button>
-      </div>
     </div>
 
     <div id="content" class="space-y-6"></div>
@@ -1515,13 +1512,6 @@
         "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
       }[c]));
     }
-
-    // Buttons
-    
-    const downloadBtn = document.getElementById("downloadBtn");
-
-    
-    downloadBtn?.addEventListener("click", downloadReportCanvas);
 
     window.addEventListener("beforeprint", () => {
       expandSimulationFrameForPrint();

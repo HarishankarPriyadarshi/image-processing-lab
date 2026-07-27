@@ -417,7 +417,7 @@
       flex-direction: column;
       align-items: flex-end;
       gap: 0.9rem;
-      z-index: 90;
+      z-index: 2000;
       max-width: calc(100vw - 32px);
       transition: opacity 180ms ease, transform 180ms ease;
     }
@@ -802,7 +802,7 @@
     Procedure
   </a>
 
-    <a href="./simulation/static/index.html" target="_blank" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group">
+    <a href="./simulation/static/index.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group" data-simulation-link>
     <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -894,7 +894,7 @@
               </a>
             </section>
               <section id="v2-card" class="section-content vl-card p-6 animate-fadeInUp cta-card">
-            <a href="./simulation/static/index.html" target="_blank" class="cta-link">
+            <a href="./simulation/static/index.html" target class="cta-link" data-simulation-link>
               <span>Link Of Simulation</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M5 12h14"></path>
@@ -903,7 +903,7 @@
             </a>
             </section>
        </div>
-
+      
       <section id="progressreport"
                class="section-content vl-card mb-8 p-6 animate-fadeInUp hidden">
 
@@ -1228,24 +1228,24 @@
     })();
 
     (function initSimulationLinkReminder() {
-      const links = document.querySelectorAll('a[href*="simulation/static/index.html"]');
-      if (!links.length) return;
+  const links = document.querySelectorAll('a[href*="simulation/static/index.html"]');
+  if (!links.length) return;
 
-      links.forEach((link) => {
-        link.addEventListener('click', (event) => {
-          const url = link.getAttribute('href') || link.href;
-          if (!url) return;
-          event.preventDefault();
-        showPopup(SIMULATION_DEMO_REMINDER_ALERT_MESSAGE, 'Reminder', {
-          mode: 'confirm',
-          center: true,
-          onYes: () => {
-            window.open(url, '_blank');
-          }
-        });
-        });
-      });
-    })();
+  links.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const url = link.getAttribute('href') || link.href;
+      if (!url) return;
+      event.preventDefault();
+    showPopup(SIMULATION_DEMO_REMINDER_ALERT_MESSAGE, 'Reminder', {
+      mode: 'confirm',
+      center: true,
+      onYes: () => {
+        window.open(url, '_blank');
+      }
+    });
+    });
+  });
+})();
   </script>
 
   <script>

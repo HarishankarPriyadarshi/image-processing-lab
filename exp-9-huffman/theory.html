@@ -417,7 +417,7 @@
       flex-direction: column;
       align-items: flex-end;
       gap: 0.9rem;
-      z-index: 90;
+      z-index: 2000;
       max-width: calc(100vw - 32px);
       transition: opacity 180ms ease, transform 180ms ease;
     }
@@ -711,7 +711,7 @@
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
     <!-- MAIN CONTENT -->
-    <main class="flex-1 lg:ml-64 p-6">
+    <main class="flex-1 lg:ml-64 p-6 pb-24">
 
       <!-- Breadcrumb -->
       <nav class="mb-6 text-m text-gray-600 animate-slideInLeft flex items-center space-x-2">
@@ -818,7 +818,7 @@ Huffman Coding for Lossless Image Compression</a>
 
 @media (max-width: 640px) {
   .content {
-    padding: 0 4px 0 14px;
+    padding-left: 20px !important;
   }
 
   .content h2 {
@@ -827,19 +827,30 @@ Huffman Coding for Lossless Image Compression</a>
 
   .content h3 {
     font-size: 1.15rem;
+    margin-top: 0px;
+  }
+
+  .content h2 + h3,
+  .content h2 + div > h3:first-child {
+    margin-top: 0;
   }
 
   .content p,
   .content li {
-    text-align: left;
+    text-align: justify;
+  }
+
+  .content p:first-of-type {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
   }
 }
 
 .content table {
   width: 100%;
-  max-width: 100%;
+  max-width: 500px;
   border-collapse: collapse;
-  margin: 20px 0;
+  margin: 20px auto;
   font-size: 1rem;
 }
 
@@ -925,8 +936,7 @@ Huffman Coding for Lossless Image Compression</a>
     <p>This variable-length coding scheme minimizes the average code length and improves compression efficiency. Owing to its efficiency and lossless nature, Huffman Coding is widely employed in image compression standards such as JPEG and in file compression applications.</p>
 
     <h2>Image Compression Model </h2>
-    <p> 
-      The following figure shows an image compression system is composed of two distinct functional components: an encoder and decoder. The encoder performs compression and decoder performs the complementary operation of decompression. Both operations can be performed in software. Input image is fed into the encoder, which creates a compressed representation of the input. 
+    <p>The following figure shows an image compression system is composed of two distinct functional components: an encoder and decoder. The encoder performs compression and decoder performs the complementary operation of decompression. Both operations can be performed in software. Input image is fed into the encoder, which creates a compressed representation of the input. 
       When the compressed representation is presented to its complementary decoder, a reconstructed image is generated. </p>
 
       <center>
@@ -935,8 +945,8 @@ Huffman Coding for Lossless Image Compression</a>
     </center>
 
     <h2>Compression Methods</h2>
-     <ol type="A" style="font-size: 1.8rem;text-align: justify">
-      <h3>Huffman coding</h3>
+     <div style="font-size: 1.8rem; text-align: justify">
+      <h3>Huffman Coding</h3>
       <p>Provides a data representation with the smallest possible number of code symbols per source symbol (when coding the symbols of an information source individually) Huffman code construction is done in two steps:
     <ol>
     <li><b>Source reductions:</b> Create a series of source reductions by ordering the probabilities of the symbols and then combine the symbols of lowest probability to form new symbols recursively. 
@@ -956,12 +966,12 @@ Huffman Coding for Lossless Image Compression</a>
     The average length of this code is: L<sub>avg</sub> = (0.4)(1) + (0.3)(3) + (0.1)(4) + (0.06)(5) + (0.04)(5) = 2.2 bits/pixels 
     </li>
      </ol>
+    </div>
 
     <h2>Average Code Length</h2>
     <p>The average code length represents the average number of bits required to encode one symbol and is given by:</p>
     <p style="text-align:center;">L<sub>avg</sub> = Σ P(x<sub>i</sub>) L(x<sub>i</sub>)</p>
     <p>where P(x<sub>i</sub>) is the probability of occurrence of symbol x<sub>i</sub>, and L(x<sub>i</sub>) is the length of the Huffman code assigned to that symbol. The objective of Huffman Coding is to minimize L<sub>avg</sub>, thereby improving compression efficiency.</p>
-
 
     <h2>Compression Ratio</h2>
     <p>The effectiveness of a compression algorithm is measured using the Compression Ratio (CR):</p>
@@ -978,10 +988,11 @@ Huffman Coding for Lossless Image Compression</a>
       <tr><td>Encoding</td><td>O(n)</td></tr>
       <tr><td>Decoding</td><td>O(n)</td></tr>
     </table>
+    <p style="text-align:center; font-weight:bold; margin-top:10px;">Table 1: Time Complexity of Huffman Coding Operations</p>
     </div>
     <p>Using a priority queue (min-heap) significantly improves the efficiency of Huffman tree construction by allowing the two least frequent nodes to be selected efficiently during each iteration.</p>
 
-     <h2>Worked Example: "ABEACADABEA"</h2>
+    <h2>Worked Example: "ABEACADABEA"</h2>
     <p>To demonstrate the working of Huffman Coding, consider the message "ABEACADABEA". First, the frequency of occurrence of each symbol is determined, as shown below:</p>
 
     <center>
