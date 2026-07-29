@@ -1393,6 +1393,10 @@
       pdf.addImage(canvas.toDataURL("image/png"), "PNG", x, y, renderWidth, renderHeight, undefined, "FAST");
     }
 
+    // NOTE: this slicing helper is kept for reference but is no longer called
+    // by addSimulationCanvasToPdf below - slicing a diagram at a fixed pixel
+    // height cuts straight through tree nodes/edges wherever the slice line
+    // happens to land, regardless of the diagram's actual layout.
     function appendCanvasPaged(pdf, canvas, { margin = 24, startNewPage = true } = {}) {
       if (!pdf || !canvas || !canvas.width || !canvas.height) return;
       const pageWidth = pdf.internal.pageSize.getWidth();
@@ -1439,25 +1443,16 @@
       }
     }
 
-    // Chooses per-canvas: fit small sections onto one page, but paginate
-    // (slice across multiple pages) any canvas that is unusually tall so it
-    // never gets squeezed down to an unreadable thumbnail. This matters most
-    // for the generic top-level-child fallback above, where a single child
-    // (e.g. a big Huffman tree diagram) can be much taller than a normal
-    // section card.
+    // Diagrams (like the Huffman tree) should never be sliced mid-node —
+    // always shrink to fit a single page, switching to landscape when the
+    // diagram is wider than it is tall so it doesn't get squeezed too small.
     function addSimulationCanvasToPdf(pdf, canvas, margin = 24) {
       if (!pdf || !canvas || !canvas.width || !canvas.height) return;
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const usableWidth = pageWidth - margin * 2;
-      const usableHeight = pageHeight - margin * 2;
-      const aspectHeightAtFullWidth = (canvas.height * usableWidth) / canvas.width;
-
-      if (aspectHeightAtFullWidth <= usableHeight * 1.15) {
-        addCanvasFittedSinglePage(pdf, canvas, margin);
-      } else {
-        appendCanvasPaged(pdf, canvas, { margin, startNewPage: false });
+      if (canvas.width > canvas.height * 1.3) {
+        pdf.deletePage(pdf.internal.getNumberOfPages());
+        pdf.addPage("a4", "landscape");
       }
+      addCanvasFittedSinglePage(pdf, canvas, margin);
     }
 
     async function prepareExportNodes() {
