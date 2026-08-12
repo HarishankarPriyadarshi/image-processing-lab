@@ -192,6 +192,9 @@
    .flex-1.pt-16 {
     flex: 1;
   }
+  main.flex-1 {
+  padding-bottom: 6rem;
+  }
 
   .vl-footer {
     background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);
@@ -312,6 +315,7 @@
       position: relative;
       z-index: 1;
       overflow: visible;
+      pointer-events: auto;
     }
 
     .chatbot-launcher::before,
@@ -420,6 +424,7 @@
       z-index: 2000;
       max-width: calc(100vw - 32px);
       transition: opacity 180ms ease, transform 180ms ease;
+      pointer-events: none;
     }
 
     body.sidebar-open .chatbot-widget {
@@ -592,6 +597,19 @@
       width: 30%;
     }
 
+    @media (max-width: 640px) {
+      .division {
+        flex-direction: column;
+        height: auto;
+        gap: 1rem;
+      }
+      #v1-card, #v2-card {
+        width: 90%;
+        height: auto;
+        min-height: 90px;
+      }
+    }
+
     /* 3D CTA cards */
     .cta-card {
       background: linear-gradient(135deg, #e8f5ff 0%, #d4edff 50%, #e8f5ff 100%);
@@ -614,14 +632,16 @@
       pointer-events: none;
     }
 
-    .cta-card:hover {
-      transform: perspective(900px) translateZ(16px) translateY(-6px) rotateX(3deg) rotateY(-2deg);
-      box-shadow: 0 22px 44px rgba(11, 96, 168, 0.22), 0 12px 28px rgba(11, 96, 168, 0.16);
-      border-color: rgba(11, 96, 168, 0.35);
-    }
+    @media (hover: hover) and (pointer: fine) {
+      .cta-card:hover {
+        transform: perspective(900px) translateZ(16px) translateY(-6px) rotateX(3deg) rotateY(-2deg);
+        box-shadow: 0 22px 44px rgba(11, 96, 168, 0.22), 0 12px 28px rgba(11, 96, 168, 0.16);
+        border-color: rgba(11, 96, 168, 0.35);
+      }
 
-    .cta-card:hover::after {
-      transform: translateX(0);
+      .cta-card:hover::after {
+        transform: translateX(0);
+      }
     }
 
     .cta-link {
@@ -645,9 +665,11 @@
       height: 22px;
     }
 
-    .cta-card:hover .cta-link {
-      transform: translateY(-1px);
-      color: #084c8a;
+    @media (hover: hover) and (pointer: fine) {
+      .cta-card:hover .cta-link {
+        transform: translateY(-1px);
+        color: #084c8a;
+      }
     }
 
     @keyframes ctaAttentionPulse {
@@ -802,7 +824,7 @@
     Procedure
   </a>
 
-    <a href="./simulation/static/index.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group" data-simulation-link>
+    <a href="./simulation/static/index.html" class="menu-item flex items-center px-4 py-3 text-gray-700 rounded-lg group" data-simulation-link data-page="simulation.html">
     <svg class="w-5 h-5 mr-3 opacity-70 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
         d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
@@ -849,7 +871,34 @@
         </nav>
       </div>
     </aside>
+    <script>
+     (function () {
+  var hash = window.location.hash;
+  var page = window.location.pathname.split('/').pop() || 'index.html';
+  var links = document.querySelectorAll('.menu-item');
+  links.forEach(function (l) { l.classList.remove('active'); });
 
+  var target = null;
+  if (hash === '#progressreport') {
+    target = document.getElementById('progressReportNav');
+
+    // NEW: actually reveal the progress report section on direct load
+    document.querySelectorAll('.section-content').forEach(function (sec) {
+      sec.classList.add('hidden');
+    });
+    var reportSection = document.getElementById('progressreport');
+    if (reportSection) reportSection.classList.remove('hidden');
+  }
+  if (!target) {
+    links.forEach(function (l) {
+      var dataPage = l.getAttribute('data-page');
+      var href = (l.getAttribute('href') || '').split('#')[0];
+      if (dataPage === page || href === page) target = l;
+    });
+  }
+  if (target) target.classList.add('active');
+})(); 
+    </script>
 
     <!-- MOBILE OVERLAY -->
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
@@ -968,6 +1017,8 @@
           class="w-full h-full object-contain bg-transparent"
           controls
           preload="metadata"
+          playsinline
+          webkit-playsinline
         >
           <source src="./videos/demo.mp4" type="video/mp4">
           Your browser does not support the video tag.
@@ -1145,6 +1196,20 @@
       popupOnNo = null;
       popupMode = 'alert';
 
+      // Run the callback IMMEDIATELY (synchronously, inside the tap handler).
+      // Mobile browsers only allow window.open()/window.location changes
+      // when they happen directly inside a user gesture - wrapping this in
+      // setTimeout (as before) breaks that and silently blocks the action.
+      if (mode === 'confirm') {
+        if (action === 'yes') {
+          if (onYes) onYes();
+        } else {
+          if (onNo) onNo();
+        }
+      } else {
+        if (onClose) onClose();
+      }
+
       if (box) {
         box.classList.add('closing');
       }
@@ -1155,15 +1220,6 @@
           box.classList.remove('closing');
         }
         document.body.classList.remove('is-modal-open');
-        if (mode === 'confirm') {
-          if (action === 'yes') {
-            if (onYes) onYes();
-          } else {
-            if (onNo) onNo();
-          }
-        } else {
-          if (onClose) onClose();
-        }
       }, 450);
 
       if (sound && typeof sound.pause === 'function') {
@@ -1240,7 +1296,8 @@
       mode: 'confirm',
       center: true,
       onYes: () => {
-        window.open(url, '_blank');
+  
+        window.location.href = url;
       }
     });
     });

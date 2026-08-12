@@ -273,6 +273,17 @@
     } catch {
       progressSection.scrollIntoView();
     }
+
+    // The section (and therefore the iframe's wrapping container) may have
+    // just changed from display:none to visible, or from a narrow hidden
+    // sidebar layout to full width. Re-sync the iframe's explicit pixel
+    // width now that it actually has a real, on-screen size to measure -
+    // otherwise a width computed while hidden/narrow can stick and cause
+    // the embedded report to render cut off on phones.
+    window.requestAnimationFrame(() => {
+      getEmbeddedProgressIframes().forEach(syncEmbeddedProgressIframeWidth);
+    });
+
     return true;
   }
 
@@ -282,6 +293,29 @@
 
   function getEmbeddedProgressIframes(root = document) {
     return Array.from(root.querySelectorAll('iframe[title="Progress Report"]'));
+  }
+
+  // Force an explicit pixel width on the OUTER progress-report iframe.
+  //
+  // This mirrors the fix already applied inside progressreport.html for its
+  // own nested simulation-report iframe: on mobile, an iframe that only has
+  // a CSS width (e.g. Tailwind's w-full / width:100%) can get its internal
+  // document laid out at an assumed desktop width first, and only shrunk
+  // down visually afterwards. Because progressreport.html measures ITS OWN
+  // width (via clientWidth) to size things internally, if this outer iframe
+  // is still sized against that stale assumed width, everything nested
+  // inside - including the already-fixed inner iframe - inherits the wrong
+  // width and the report shows up cut off / blank / too small.
+  function syncEmbeddedProgressIframeWidth(frame) {
+    if (!frame) return;
+    const wrap = frame.parentElement;
+    const wrapWidth = wrap?.clientWidth || frame.getBoundingClientRect().width;
+    if (!wrapWidth) return;
+    const nextWidth = Math.round(wrapWidth);
+    const currentWidth = parseFloat(frame.style.width) || 0;
+    if (Math.abs(currentWidth - nextWidth) <= 1) return;
+    frame.style.width = `${nextWidth}px`;
+    frame.setAttribute('width', String(nextWidth));
   }
 
   function requestEmbeddedProgressHeight(frame) {
@@ -311,12 +345,21 @@
     getEmbeddedProgressIframes(root).forEach((frame) => {
       frame.style.overflow = 'hidden';
       frame.setAttribute('scrolling', 'no');
+      // Set the width immediately (covers the case where the frame is
+      // already visible when this runs), then again once it finishes
+      // loading (covers the case where its container's size only settles
+      // after layout/fonts/etc. finish).
+      syncEmbeddedProgressIframeWidth(frame);
 
       if (frame.dataset.progressHeightBound === '1') return;
       frame.dataset.progressHeightBound = '1';
       frame.addEventListener('load', () => {
+        syncEmbeddedProgressIframeWidth(frame);
         requestEmbeddedProgressHeight(frame);
-        window.setTimeout(() => requestEmbeddedProgressHeight(frame), 250);
+        window.setTimeout(() => {
+          syncEmbeddedProgressIframeWidth(frame);
+          requestEmbeddedProgressHeight(frame);
+        }, 250);
         window.setTimeout(() => requestEmbeddedProgressHeight(frame), 1000);
       });
     });
@@ -422,26 +465,35 @@
   }
 
   function setActiveMenu() {
-    const page = getPageName();
-    const hash = window.location.hash;
-    const links = Array.from(document.querySelectorAll('.menu-item'));
-    links.forEach((link) => link.classList.remove('active'));
+  const page = getPageName();
+  const hash = window.location.hash;
+  const links = Array.from(document.querySelectorAll('.menu-item'));
+  links.forEach((link) => link.classList.remove('active'));
 
-    let activeLink = null;
-    for (const link of links) {
-      const href = link.getAttribute('href') || '';
-      const [targetPage, targetHash] = href.split('#');
-      if (hash === '#progressreport' && targetHash === 'progressreport') {
-        activeLink = link;
-        break;
-      }
-      if (!targetHash && targetPage && targetPage === page) {
-        activeLink = link;
-      }
+  if (hash === '#progressreport') {
+    const progressLink =
+      document.getElementById('progressReportNav') ||
+      links.find((link) => (link.getAttribute('href') || '') === '#progressreport');
+    if (progressLink) {
+      progressLink.classList.add('active');
+      return;
     }
-
-    if (activeLink) activeLink.classList.add('active');
   }
+
+  const pageLink = links.find((link) => {
+    const dataPage = link.getAttribute('data-page');
+    if (dataPage) return dataPage === page;
+    const href = (link.getAttribute('href') || '').split('#')[0];
+    return href && href === page;
+  });
+  if (pageLink) pageLink.classList.add('active');
+}
+
+function setActiveMenuSafe() {
+  setActiveMenu();
+  window.requestAnimationFrame(() => setActiveMenu());
+  window.setTimeout(() => setActiveMenu(), 50);
+}
 
   function init() {
     if (initialized) return;
@@ -452,6 +504,14 @@
     ensureProgressNoHoverStyles();
     forceSameTabProgressLinks();
     prepareEmbeddedProgressFrames();
+
+    // Re-sync the embedded iframe's width on resize / orientation change,
+    // same as the load-time sync above. This is what keeps the report from
+    // going back out of sync if the user rotates their phone or the mobile
+    // browser's viewport changes after the page has already loaded.
+    window.addEventListener('resize', () => {
+      getEmbeddedProgressIframes().forEach(syncEmbeddedProgressIframeWidth);
+    });
 
     const pageName = getPageName();
     const isAimPage = pageName === 'aim.html';
@@ -656,17 +716,18 @@
     }
 
     const handleProgressLinkClick = (event) => {
-      const embedded = shouldEmbedProgress();
-      if (canAccessProgressReport()) {
-        syncProgressReportUI();
-        if (embedded) {
-          event.preventDefault();
-          event.stopImmediatePropagation();
-          showEmbeddedProgressSection();
-          try { history.replaceState({}, '', '#progressreport'); } catch {}
-        }
-        return;
-      }
+  const embedded = shouldEmbedProgress();
+  if (canAccessProgressReport()) {
+    syncProgressReportUI();
+    if (embedded) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      showEmbeddedProgressSection();
+      try { history.replaceState({}, '', '#progressreport'); } catch {}
+      setActiveMenu();
+    }
+    return;
+  }
       event.preventDefault();
       event.stopImmediatePropagation();
 
@@ -715,6 +776,7 @@
         event.stopImmediatePropagation();
         showEmbeddedProgressSection();
         try { history.replaceState({}, '', '#progressreport'); } catch {}
+        setActiveMenu();
         return;
       }
 
@@ -742,6 +804,7 @@
             showProgressReportLockedAlert();
           }
         }
+        setActiveMenu();
       });
     }
 
@@ -822,6 +885,7 @@
         if (shouldEmbedProgress()) {
           showEmbeddedProgressSection();
           try { history.replaceState({}, '', '#progressreport'); } catch {}
+          setActiveMenu();
         }
         return;
       }
@@ -857,4 +921,3 @@
     document.addEventListener('DOMContentLoaded', init);
   }
 })();
-

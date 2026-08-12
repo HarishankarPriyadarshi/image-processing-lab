@@ -706,7 +706,27 @@
         </nav>
       </div>
     </aside>
+    <script>
+      (function () {
+        var hash = window.location.hash;
+        var page = window.location.pathname.split('/').pop() || 'index.html';
+        var links = document.querySelectorAll('.menu-item');
+        links.forEach(function (l) { l.classList.remove('active'); });
 
+        var target = null;
+        if (hash === '#progressreport') {
+          target = document.getElementById('progressReportNav');
+        }
+        if (!target) {
+          links.forEach(function (l) {
+            var dataPage = l.getAttribute('data-page');
+            var href = (l.getAttribute('href') || '').split('#')[0];
+            if (dataPage === page || href === page) target = l;
+          });
+        }
+        if (target) target.classList.add('active');
+      })();
+    </script>
     <!-- MOBILE OVERLAY -->
     <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden hidden"></div>
 
@@ -888,11 +908,9 @@ Huffman Coding for Lossless Image Compression</a>
     </p>
     <p> Based on the reconstruction quality, image compression techniques are broadly classified into two categories:</p>
 
-    <p><b>1. Lossless Compression:</b> Lossless compression reconstructs the original image exactly after decompression, ensuring that no information is lost during the compression process. It is suitable for applications where perfect reconstruction is required, such as medical imaging, scientific imaging, and document storage. Huffman Coding is one of the most widely used lossless compression techniques.</p>
+    <p style="padding-left: 20px;"><b>1. Lossless Compression:</b> Lossless compression reconstructs the original image exactly after decompression, ensuring that no information is lost during the compression process. It is suitable for applications where perfect reconstruction is required, such as medical imaging, scientific imaging, and document storage. Huffman Coding is one of the most widely used lossless compression techniques.</p>
 
-    <p><b>2. Lossy Compression:</b> Lossy compression achieves higher compression ratios by discarding visually insignificant information that has minimal impact on perceived image quality. Although the reconstructed image is not identical to the original image, it is often visually acceptable for human observation. JPEG is one of the most widely used lossy image compression standards and combines transform coding with entropy coding techniques, including Huffman Coding, to achieve efficient compression.</p>
-
-    
+    <p style="padding-left: 20px;"><b>2. Lossy Compression:</b> Lossy compression achieves higher compression ratios by discarding visually insignificant information that has minimal impact on perceived image quality. Although the reconstructed image is not identical to the original image, it is often visually acceptable for human observation. JPEG is one of the most widely used lossy image compression standards and combines transform coding with entropy coding techniques, including Huffman Coding, to achieve efficient compression.</p>
 
     <h2>Huffman Coding</h2>
 
@@ -992,12 +1010,12 @@ Huffman Coding for Lossless Image Compression</a>
     </div>
     <p>Using a priority queue (min-heap) significantly improves the efficiency of Huffman tree construction by allowing the two least frequent nodes to be selected efficiently during each iteration.</p>
 
-    <h2>Worked Example: "ABEACADABEA"</h2>
+    <h2>Example: "ABEACADABEA"</h2>
     <p>To demonstrate the working of Huffman Coding, consider the message "ABEACADABEA". First, the frequency of occurrence of each symbol is determined, as shown below:</p>
 
     <center>
       <img src="images/table1.png" style="max-width: 500px; width: 100%; height: auto;" />
-      <figcaption style="font-weight: bold;">Table 1: The frequencies and probabilities of the text "ABEACADABEA"</figcaption>
+      <figcaption style="font-weight: bold;">Table 2: The frequencies and probabilities of the text "ABEACADABEA"</figcaption>
     </center>
 
     <p>Based on these frequencies, the two lowest-frequency symbols are repeatedly combined to construct the Huffman tree, assigning '0' to the left branch and '1' to the right branch, as shown in the figure below:</p>
@@ -1011,7 +1029,7 @@ Huffman Coding for Lossless Image Compression</a>
 
     <center>
       <img src="images/table2.png" style="max-width: 500px; width: 100%; height: auto;" />
-      <figcaption style="font-weight: bold;">Table 2: Generated Huffman codes for each symbol</figcaption>
+      <figcaption style="font-weight: bold;">Table 3: Generated Huffman codes for each symbol</figcaption>
     </center>
 
     <p>The total number of bits required to encode "ABEACADABEA" using these codes is:</p>
@@ -1238,37 +1256,37 @@ Huffman Coding for Lossless Image Compression</a>
       }
     })();
   </script>   
-
+  
   <script src="./user_input_modal.js"></script>
   <script src="./progress_tracker.js"></script>
   <script src="./progress_report_embed.js"></script>
   <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        const targetId = this.getAttribute('href').substring(1);
-        if (!targetId) return;
+  anchor.addEventListener('click', function (e) {
+    const targetId = this.getAttribute('href').substring(1);
+    if (!targetId) return;
 
-        const targetSection = document.getElementById(targetId);
-        if (!targetSection) return;
+    const targetSection = document.getElementById(targetId);
+    if (!targetSection) return;
 
-        e.preventDefault();
+    e.preventDefault();
 
-        document.querySelectorAll('.section-content').forEach(sec => {
-          sec.classList.add('hidden');
-        });
-
-        targetSection.classList.remove('hidden');
-
-        document.querySelectorAll('.menu-item').forEach(item => {
-          item.classList.remove('active');
-        });
-
-        const menuItem = this.closest('.menu-item');
-        if (menuItem) menuItem.classList.add('active');
-
-        targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      });
+    document.querySelectorAll('.section-content').forEach(sec => {
+      sec.classList.add('hidden');
     });
+
+    targetSection.classList.remove('hidden');
+
+    document.querySelectorAll('.menu-item').forEach(item => {
+      item.classList.remove('active');
+    });
+
+    const menuItem = this.closest('.menu-item');
+    if (menuItem) menuItem.classList.add('active');
+
+    targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
   </script>
 </body>
 </html>

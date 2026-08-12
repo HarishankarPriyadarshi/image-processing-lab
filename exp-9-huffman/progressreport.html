@@ -96,7 +96,6 @@
       gap: 1rem !important;
     }
 
- 
     #downloadBtn {
       border-radius: 4px !important;
       font-weight: 600 !important;
@@ -104,15 +103,29 @@
       font-size: 14px !important;
       line-height: 1.2 !important;
       padding: 0.5rem 0.9rem !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
     }
- 
+
     #downloadBtn {
       background: #1f2937 !important;
       color: #ffffff !important;
       border: 1px solid #1f2937 !important;
     }
-    
+
     #downloadBtn:hover { background: #111827 !important; }
+    #downloadBtn:disabled { opacity: 0.65 !important; cursor: not-allowed !important; }
+
+    .report-footer-actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 1.5rem;
+    }
+    @media print {
+      .report-footer-actions { display: none !important; }
+    }
 
     .report-section {
       background: #ffffff;
@@ -132,6 +145,11 @@
       margin: 0 0 10px;
       color: #111827;
     }
+    @media (max-width: 480px) {
+  .report-section-title { font-size: 15px; }
+  .report-muted { font-size: 12px; }
+  .report-section { padding: 12px; }
+}
     .report-section p,
     .report-muted,
     .report-cell-muted,
@@ -384,6 +402,8 @@
     </div>
 
     <div id="content" class="space-y-6"></div>
+
+    
   </div>
 
   <footer class="vl-footer" role="contentinfo">
@@ -434,6 +454,7 @@
     const reportLockedNotice = document.getElementById("reportLockedNotice");
     const reportLockedCTA = document.getElementById("reportLockedCTA");
     const contentEl = document.getElementById("content");
+    const downloadBtn = document.getElementById("downloadBtn");
     let currentSimulationReport = null;
     let simulationPrintSnapshotEl = null;
     let printFrameOriginalHeight = null;
@@ -501,16 +522,90 @@
       });
     }
 
-    function cleanupSimulationFrameAutoResize(iframe) {
-      if (!iframe) return;
-      try { iframe.__vlabFrameResizeObserver?.disconnect?.(); } catch {}
-      try { iframe.__vlabFrameMutationObserver?.disconnect?.(); } catch {}
-      try { iframe.__vlabFrameWindow?.removeEventListener?.("resize", iframe.__vlabFrameResizeHandler); } catch {}
-      iframe.__vlabFrameResizeObserver = null;
-      iframe.__vlabFrameMutationObserver = null;
-      iframe.__vlabFrameWindow = null;
-      iframe.__vlabFrameResizeHandler = null;
+    // ===== Replace the EXISTING cleanupSimulationFrameAutoResize with this: =====
+function cleanupSimulationFrameAutoResize(iframe) {
+  if (!iframe) return;
+  try { iframe.__vlabFrameResizeObserver?.disconnect?.(); } catch {}
+  try { iframe.__vlabWrapResizeObserver?.disconnect?.(); } catch {}   // NEW line
+  try { iframe.__vlabFrameMutationObserver?.disconnect?.(); } catch {}
+  try { iframe.__vlabFrameWindow?.removeEventListener?.("resize", iframe.__vlabFrameResizeHandler); } catch {}
+  iframe.__vlabFrameResizeObserver = null;
+  iframe.__vlabWrapResizeObserver = null;   // NEW line
+  iframe.__vlabFrameMutationObserver = null;
+  iframe.__vlabFrameWindow = null;
+  iframe.__vlabFrameResizeHandler = null;
+}
+
+// ===== Replace the EXISTING attachSimulationFrameAutoResize with this: =====
+function attachSimulationFrameAutoResize(iframe) {
+  if (!iframe) return;
+  cleanupSimulationFrameAutoResize(iframe);
+
+  const setup = () => {
+    let doc = null;
+    try {
+      doc = iframe.contentDocument;
+    } catch (error) {
+      return;
     }
+    if (!doc) return;
+
+    ensureReadableSimulationReportTypography(doc);
+
+    syncSimulationReportFrameHeight(iframe);
+    try { iframe.contentWindow?.__vlabFitReport?.(); } catch (e) {}
+    syncSimulationReportFrameHeight(iframe);
+
+    const resizeHandler = () => {
+      syncSimulationReportFrameHeight(iframe);
+      try { iframe.contentWindow?.__vlabFitReport?.(); } catch (e) {}
+      syncSimulationReportFrameHeight(iframe);
+    };
+    iframe.__vlabFrameResizeHandler = resizeHandler;
+
+    if (typeof ResizeObserver === "function") {
+      const resizeObserver = new ResizeObserver(resizeHandler);
+      if (doc.documentElement) resizeObserver.observe(doc.documentElement);
+      if (doc.body && doc.body !== doc.documentElement) resizeObserver.observe(doc.body);
+      iframe.__vlabFrameResizeObserver = resizeObserver;
+    }
+
+    // NEW: watch the WRAP element in THIS (outer) document. This fires the
+    // moment a hidden (0x0) ancestor becomes visible and the wrap gets a
+    // real width -- 'resize' never fires just from removing a 'hidden' class.
+    const wrap = iframe.closest(".report-frame-wrap");
+    if (wrap && typeof ResizeObserver === "function") {
+      const wrapObserver = new ResizeObserver(resizeHandler);
+      wrapObserver.observe(wrap);
+      iframe.__vlabWrapResizeObserver = wrapObserver;
+    }
+
+    if (typeof MutationObserver === "function") {
+      const mutationObserver = new MutationObserver(resizeHandler);
+      const mutationTarget = doc.body || doc.documentElement;
+      if (mutationTarget) {
+        mutationObserver.observe(mutationTarget, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
+        iframe.__vlabFrameMutationObserver = mutationObserver;
+      }
+    }
+
+    try {
+      iframe.__vlabFrameWindow = doc.defaultView || null;
+      iframe.__vlabFrameWindow?.addEventListener?.("resize", resizeHandler);
+    } catch (error) {}
+
+    waitForDocumentFonts(doc).then(resizeHandler);
+    window.setTimeout(resizeHandler, 80);
+    window.setTimeout(resizeHandler, 400);
+    window.setTimeout(resizeHandler, 1200);
+  };
+
+  iframe.addEventListener("load", setup, { once: true });
+}
 
     function ensureReadableSimulationReportTypography(doc) {
       if (!doc) return;
@@ -615,36 +710,46 @@
     }
 
     function syncSimulationReportFrameHeight(iframe) {
-      if (!iframe || iframe.classList.contains("hidden")) return;
+  if (!iframe || iframe.classList.contains("hidden")) return;
 
-      let doc = null;
-      try {
-        doc = iframe.contentDocument;
-      } catch (error) {
-        return;
-      }
-      if (!doc) return;
+  // Force explicit pixel width so mobile browsers don't render this
+  // iframe's content at an assumed desktop width and then shrink it down.
+  const wrap = iframe.closest(".report-frame-wrap");
+  const wrapWidth = wrap?.clientWidth || iframe.parentElement?.clientWidth;
+  if (wrapWidth) {
+    iframe.style.width = `${wrapWidth}px`;
+    iframe.setAttribute("width", String(wrapWidth));
+  }
 
-      try {
-        if (doc.documentElement) doc.documentElement.style.overflow = "hidden";
-        if (doc.body) doc.body.style.overflow = "hidden";
-      } catch (error) {}
+  let doc = null;
+  try {
+    doc = iframe.contentDocument;
+  } catch (error) {
+    return;
+  }
+  if (!doc) return;
 
-      iframe.setAttribute("scrolling", "no");
-      iframe.style.overflow = "hidden";
+  try {
+    if (doc.documentElement) doc.documentElement.style.overflow = "hidden";
+    if (doc.body) doc.body.style.overflow = "hidden";
+  } catch (error) {}
 
-      const nextHeight = Math.max(
-        540,
-        getIframeContentHeight(doc)
-      );
+  iframe.setAttribute("scrolling", "no");
+  iframe.style.overflow = "hidden";
 
-      const currentHeight = parseFloat(iframe.style.height) || 0;
-      if (Math.abs(currentHeight - nextHeight) > 1) {
-        iframe.style.height = `${nextHeight}px`;
-        iframe.style.minHeight = `${nextHeight}px`;
-        scheduleEmbeddedHeightSync();
-      }
-    }
+  const nextHeight = Math.max(
+    540,
+    getIframeContentHeight(doc)
+  );
+
+  const currentHeight = parseFloat(iframe.style.height) || 0;
+  if (Math.abs(currentHeight - nextHeight) > 1) {
+    iframe.style.height = `${nextHeight}px`;
+    iframe.style.minHeight = `${nextHeight}px`;
+    scheduleEmbeddedHeightSync();
+  }
+}
+
 
     function attachSimulationFrameAutoResize(iframe) {
       if (!iframe) return;
@@ -660,9 +765,25 @@
         if (!doc) return;
 
         ensureReadableSimulationReportTypography(doc);
+
+        // IMPORTANT: force the iframe to its correct (mobile) pixel width
+        // FIRST. Only after the iframe's box - and therefore the report
+        // document's internal layout viewport - actually matches the real
+        // on-screen width should we ask the report to fit/scale itself.
+        // Calling __vlabFitReport() before this forced resize made it
+        // compute its scale against the iframe's stale/assumed desktop
+        // width, which is why the report showed up cut off / blank / too
+        // small on phones.
+        syncSimulationReportFrameHeight(iframe);
+        try { iframe.contentWindow?.__vlabFitReport?.(); } catch (e) {}
+        // Re-measure height since fitting can change the rendered size.
         syncSimulationReportFrameHeight(iframe);
 
-        const resizeHandler = () => syncSimulationReportFrameHeight(iframe);
+        const resizeHandler = () => {
+          syncSimulationReportFrameHeight(iframe);
+          try { iframe.contentWindow?.__vlabFitReport?.(); } catch (e) {}
+          syncSimulationReportFrameHeight(iframe);
+        };
         iframe.__vlabFrameResizeHandler = resizeHandler;
 
         if (typeof ResizeObserver === "function") {
@@ -950,7 +1071,7 @@
 
       function extract(label) {
         const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-        const match = html.match(new RegExp(`<span class="label">${escaped}:<\\/span><br>\\s*([^<]+)`, "i"));
+        const match = html.match(new RegExp(`<span class="label">${escaped}:<\\/span>\\s*(?:<br\\s*/?>)?\\s*([^<]+)`, "i"));
         return match && match[1] ? decodeHtmlEntities(match[1].trim()) : null;
       }
 
@@ -1004,11 +1125,6 @@
       };
     }
 
-    // NOTE: this used to contain hardcoded text substitutions specific to the
-    // "DC Shunt Generator" (Exp-2) report copied over as a starting template.
-    // Those regexes are irrelevant to the Huffman Coding report and have been
-    // removed. If the Huffman simulation report needs its own text fixups,
-    // add Huffman-specific replacements here instead.
     function normalizeSimulationReportHtml(html) {
       if (!html || typeof html !== "string") return html;
 
@@ -1118,7 +1234,7 @@
       if (!reportDoc || !Array.isArray(nodes) || !nodes.length) return null;
       if (typeof html2canvas !== "function") return null;
 
-       ensureReadableSimulationReportTypography(reportDoc);
+      ensureReadableSimulationReportTypography(reportDoc);
 
       const host = reportDoc.createElement("div");
       host.style.position = "fixed";
@@ -1163,20 +1279,6 @@
       }
     }
 
-    // Captures every part of the embedded simulation report so nothing is
-    // silently skipped in the downloaded PDF, regardless of what markup/CSS
-    // classes the simulation report itself happens to use.
-    //
-    // Priority order:
-    //   1. If the simulation report author explicit "page break" wrappers
-    //      (class="report-page"), use those directly - one PDF page each.
-    //   2. Otherwise, capture EVERY direct child of the report root
-    //      individually (generic - works no matter what the child elements
-    //      are called). This is what actually fixes reports (like the
-    //      Huffman one) that don't use the old DC-generator-specific
-    //      ".header-row" / ".section" class names.
-    //   3. Absolute last resort: capture the whole root as one big canvas so
-    //      at least everything appears in the PDF (paginated, not squeezed).
     async function captureSimulationExportCanvases(frameEl, scale) {
       if (!frameEl || frameEl.classList.contains("hidden")) return [];
 
@@ -1393,10 +1495,6 @@
       pdf.addImage(canvas.toDataURL("image/png"), "PNG", x, y, renderWidth, renderHeight, undefined, "FAST");
     }
 
-    // NOTE: this slicing helper is kept for reference but is no longer called
-    // by addSimulationCanvasToPdf below - slicing a diagram at a fixed pixel
-    // height cuts straight through tree nodes/edges wherever the slice line
-    // happens to land, regardless of the diagram's actual layout.
     function appendCanvasPaged(pdf, canvas, { margin = 24, startNewPage = true } = {}) {
       if (!pdf || !canvas || !canvas.width || !canvas.height) return;
       const pageWidth = pdf.internal.pageSize.getWidth();
@@ -1443,9 +1541,6 @@
       }
     }
 
-    // Diagrams (like the Huffman tree) should never be sliced mid-node —
-    // always shrink to fit a single page, switching to landscape when the
-    // diagram is wider than it is tall so it doesn't get squeezed too small.
     function addSimulationCanvasToPdf(pdf, canvas, margin = 24) {
       if (!pdf || !canvas || !canvas.width || !canvas.height) return;
       if (canvas.width > canvas.height * 1.3) {
@@ -1459,7 +1554,7 @@
       const sourceNode = reportContainer || contentEl;
       if (!sourceNode) return null;
 
-      const width = sourceNode.offsetWidth || sourceNode.clientWidth || 900;
+      const width = 900;
       const wrappers = [];
       const appendWrapper = (wrapper) => {
         document.body.appendChild(wrapper);
@@ -1470,7 +1565,7 @@
       const firstPageClone = sourceNode.cloneNode(true);
       firstPageClone.style.width = "100%";
       firstPageClone.style.maxWidth = "none";
-      const firstPageActions = firstPageClone.querySelector("#downloadBtn")?.parentElement;
+      const firstPageActions = firstPageClone.querySelector("#downloadBtn")?.closest(".report-footer-actions");
       if (firstPageActions) firstPageActions.remove();
       firstPageClone.querySelector("#reportSimulationSection")?.remove();
       firstPageWrapper.appendChild(firstPageClone);
@@ -1516,7 +1611,6 @@
       restoreSimulationFrameAfterPrint();
     });
 
-    // Legacy export (kept for reference)
     async function downloadReport() {
       if (!contentEl) {
         showReportAlert("Report is not ready yet. Please reload and try again.", "Download Failed");
@@ -1561,7 +1655,6 @@
       }
     }
 
-    // More reliable export using html2canvas snapshot (multi-page)
     async function downloadReportCanvas() {
       if (!reportContainer || !contentEl) {
         showReportAlert("Report is not ready yet. Please reload and try again.", "Download Failed");
@@ -1584,14 +1677,14 @@
       }
 
       const btn = downloadBtn;
-      const originalLabel = btn?.textContent;
+      const originalHtml = btn?.innerHTML;
 
       let exportCleanup = null;
 
       try {
         if (btn) {
           btn.disabled = true;
-          btn.textContent = "Preparing PDF...";
+          btn.innerHTML = "Preparing PDF...";
         }
 
         const latestSimReport = getSimulationReportData();
@@ -1634,14 +1727,20 @@
         if (exportCleanup) exportCleanup();
         if (btn) {
           btn.disabled = false;
-          if (typeof originalLabel === "string") btn.textContent = originalLabel;
+          if (typeof originalHtml === "string") btn.innerHTML = originalHtml;
         }
       }
     }
 
+    downloadBtn?.addEventListener("click", () => downloadReportCanvas());
+
     reportLockedCTA?.addEventListener("click", () => redirectToUserInputForm("progressreport.html"));
 
-    window.addEventListener("resize", scheduleEmbeddedHeightSync);
+    window.addEventListener("resize", () => {
+  const frameEl = document.getElementById("simulationReportFrame");
+  if (frameEl) syncSimulationReportFrameHeight(frameEl);
+  scheduleEmbeddedHeightSync();
+});
     window.addEventListener("load", scheduleEmbeddedHeightSync);
     window.addEventListener("message", (event) => {
       const allowedOrigin = window.location.origin;
@@ -1678,7 +1777,21 @@
       const toggle = document.getElementById("mobile-menu-toggle");
       const nav = document.querySelector(".top-nav");
       if (!toggle || !nav) return;
-      toggle.addEventListener("click", () => nav.classList.toggle("hidden"));
+      toggle.addEventListener("click", () => {
+        nav.classList.toggle("hidden");
+        nav.classList.toggle("flex");
+        nav.classList.toggle("flex-col");
+        nav.classList.toggle("absolute");
+        nav.classList.toggle("top-full");
+        nav.classList.toggle("left-0");
+        nav.classList.toggle("right-0");
+        nav.classList.toggle("bg-white");
+        nav.classList.toggle("border-b");
+        nav.classList.toggle("border-slate-200");
+        nav.classList.toggle("p-3");
+        nav.classList.toggle("shadow-md");
+        nav.classList.toggle("z-30");
+      });
     })();
   </script>
 </body>
