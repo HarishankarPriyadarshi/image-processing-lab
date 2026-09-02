@@ -823,6 +823,53 @@
     color: #000;
   }
 
+  /* Listen-to-theory controls; speech behaviour lives in theory_speech.js. */
+  .speech-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+    margin: 0 0 1.25rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid #bfdbfe;
+    border-radius: 0.75rem;
+    background: #eff6ff;
+  }
+
+  .speech-control-button {
+    border: 0;
+    border-radius: 0.5rem;
+    padding: 0.55rem 0.9rem;
+    background: #0b60a8;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .speech-control-button:hover,
+  .speech-control-button:focus-visible {
+    background: #064073;
+    transform: translateY(-1px);
+    outline: 2px solid #93c5fd;
+    outline-offset: 2px;
+  }
+
+  .speech-control-button[hidden] { display: none; }
+
+  .speech-status {
+    color: #1e3a5f;
+    font-size: 0.95rem;
+  }
+
+  .speech-active {
+    background: rgba(147, 197, 253, 0.55);
+    border-radius: 0.3rem;
+    box-shadow: 0 0 0 0.18rem rgba(147, 197, 253, 0.24);
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+  }
+
   .formula-box {
     text-align: center;
     margin: 14px auto;
@@ -1189,7 +1236,16 @@ main{
 
 </style>
 
-<section class="theory-section">
+<section class="theory-section" data-theory-content>
+
+  <div class="speech-controls" data-speech-ignore aria-label="Theory audio controls">
+    <button type="button" class="speech-control-button" data-speech-action="start" aria-label="Listen to theory">🔊 Listen to Theory</button>
+    <button type="button" class="speech-control-button" data-speech-action="pause" aria-label="Pause theory reading" hidden>⏸ Pause</button>
+    <button type="button" class="speech-control-button" data-speech-action="resume" aria-label="Resume theory reading" hidden>▶ Resume</button>
+    <button type="button" class="speech-control-button" data-speech-action="stop" aria-label="Stop theory reading" hidden>⏹ Stop</button>
+    <button type="button" class="speech-control-button" data-speech-action="restart" aria-label="Restart theory reading" hidden>↻ Restart</button>
+    <span class="speech-status" role="status" aria-live="polite" data-speech-status></span>
+  </div>
 
   <section>
 
@@ -1523,6 +1579,7 @@ main{
   <script src="./user_input_modal.js"></script>
   <script src="./progress_tracker.js"></script>
   <script src="./progress_report_embed.js"></script>
+  <script src="./theory_speech.js"></script>
   <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
