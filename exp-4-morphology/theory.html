@@ -1572,11 +1572,14 @@
     font-size: 0.95rem;
   }
 
-  .speech-active {
+  .speech-sentence-part {
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .speech-sentence-part.speech-active {
     background: rgba(147, 197, 253, 0.55);
     border-radius: 0.3rem;
     box-shadow: 0 0 0 0.18rem rgba(147, 197, 253, 0.24);
-    transition: background 0.25s ease, box-shadow 0.25s ease;
   }
 
           </style>
