@@ -1062,11 +1062,11 @@
         );
       } else {
         playButton.textContent =
-          "▶ Play";
+          "▶ Read";
 
         playButton.setAttribute(
           "aria-label",
-          "Play theory reading"
+          "Read theory reading"
         );
 
         playButton.setAttribute(
