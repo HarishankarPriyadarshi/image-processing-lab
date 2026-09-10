@@ -923,7 +923,7 @@
               Morphology Based Edge Detection
             </h1>
                           <!-- TTS BUTTONS -->
-      <div
+      <!-- <div
         class="speech-controls flex items-center gap-2"
         data-speech-ignore
         aria-label="Theory audio controls"
@@ -958,7 +958,47 @@
         </button>
 
         
-      </div>
+      </div> -->
+      <div
+  class="speech-controls flex items-center gap-2"
+  data-speech-ignore
+  aria-label="Text to Speech controls"
+>
+  <!-- Previous sentence -->
+  <button
+    type="button"
+    class="speech-control-button"
+    data-speech-action="previous"
+    aria-label="Previous sentence"
+    title="Previous sentence"
+  >
+    ‹
+  </button>
+
+  <!-- Play / Pause / Resume -->
+  <button
+    type="button"
+    class="speech-control-button"
+    data-speech-action="toggle"
+    aria-label="Play theory reading"
+    title="Play"
+  >
+    ▶ Play
+  </button>
+
+  <!-- Next sentence -->
+  <button
+    type="button"
+    class="speech-control-button"
+    data-speech-action="next"
+    aria-label="Next sentence"
+    title="Next sentence"
+  >
+    ›
+  </button>
+
+
+</div>
 
           </div>
         </div>
@@ -2104,7 +2144,7 @@
       });
     </script>
 
-    <div class="chatbot-widget">
+    <!-- <div class="chatbot-widget">
       <div
         class="chatbot-panel"
         data-chat-url="https://electrical-machine-exp-2.netlify.app/"
@@ -2166,7 +2206,7 @@
           class="chatbot-launcher-image"
         />
       </button>
-    </div>
+    </div> -->
 
     <audio id="chatbot-notification-audio" preload="auto">
       <source src="./audio/live-chat-353605.mp3" type="audio/mpeg" />
