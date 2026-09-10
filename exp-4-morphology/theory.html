@@ -922,49 +922,46 @@
             >
               Morphology Based Edge Detection
             </h1>
-                          <!-- TTS BUTTONS -->
+            <!-- TTS BUTTONS -->
 
-      <div
-  class="speech-controls flex items-center gap-2"
-  data-speech-ignore
-  aria-label="Text to Speech controls"
->
-  <!-- Previous sentence -->
-  <button
-    type="button"
-    class="speech-control-button"
-    data-speech-action="previous"
-    aria-label="Previous sentence"
-    title="Previous sentence"
-  >
-    ‹
-  </button>
+            <div
+              class="speech-controls flex items-center gap-2"
+              data-speech-ignore
+              aria-label="Text to Speech controls"
+            >
+              <!-- Previous sentence -->
+              <button
+                type="button"
+                class="speech-control-button"
+                data-speech-action="previous"
+                aria-label="Previous sentence"
+                title="Previous sentence"
+              >
+                ‹
+              </button>
 
-  <!-- Play / Pause / Resume -->
-  <button
-    type="button"
-    class="speech-control-button"
-    data-speech-action="toggle"
-    aria-label="Play theory reading"
-    title="Play"
-  >
-    ▶ Play
-  </button>
+              <!-- Play / Pause / Resume -->
+              <button
+                type="button"
+                class="speech-control-button"
+                data-speech-action="toggle"
+                aria-label="Play theory reading"
+                title="Play"
+              >
+                ▶ Play
+              </button>
 
-  <!-- Next sentence -->
-  <button
-    type="button"
-    class="speech-control-button"
-    data-speech-action="next"
-    aria-label="Next sentence"
-    title="Next sentence"
-  >
-    ›
-  </button>
-
-
-</div>
-
+              <!-- Next sentence -->
+              <button
+                type="button"
+                class="speech-control-button"
+                data-speech-action="next"
+                aria-label="Next sentence"
+                title="Next sentence"
+              >
+                ›
+              </button>
+            </div>
           </div>
         </div>
 
@@ -1491,69 +1488,70 @@
                 word-break: normal !important;
               }
             }
-            
-  /* Listen-to-theory controls; speech behaviour lives in theory_speech.js. */
-  .tts-box {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-  }
-  .speech-controls {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0rem 0rem;
-    border-radius: 0.75rem;
-    
-  }
 
-  .speech-control-button {
-    max-height: 35px;
-    border: 0;
-    border-radius: 0.5rem;
-    padding: 0rem 0.9rem;
-    background:  #fff;
-    color: #0b60a8;
-    font: inherit;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.2s ease;
-  }
+            /* Listen-to-theory controls; speech behaviour lives in theory_speech.js. */
+            .tts-box {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .speech-controls {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              gap: 0.65rem;
+              padding: 0rem 0rem;
+              border-radius: 0.75rem;
+            }
 
-  .speech-control-button:hover,
-  .speech-control-button:focus-visible {
-    background: #064073;
-    transform: translateY(-1px);
-    outline: 2px solid #93c5fd;
-    outline-offset: 2px;
-  }
+            .speech-control-button {
+              max-height: 35px;
+              border: 0;
+              border-radius: 0.5rem;
+              padding: 0rem 0.9rem;
+              background: #fff;
+              color: #0b60a8;
+              font: inherit;
+              font-weight: 600;
+              cursor: pointer;
+              transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+            }
 
-  .speech-control-button[hidden] { display: none; }
+            .speech-control-button:hover,
+            .speech-control-button:focus-visible {
+              background: #064073;
+              transform: translateY(-1px);
+              outline: 2px solid #93c5fd;
+              outline-offset: 2px;
+            }
 
-  .speech-status {
-    color: #1e3a5f;
-    font-size: 0.95rem;
-  }
+            .speech-control-button[hidden] {
+              display: none;
+            }
 
-  .speech-sentence-part {
-    transition: background 0.25s ease, box-shadow 0.25s ease;
-  }
+            .speech-status {
+              color: #1e3a5f;
+              font-size: 0.95rem;
+            }
 
-  .speech-sentence-part.speech-active {
-    background: rgba(147, 197, 253, 0.55);
-    border-radius: 0.3rem;
-    box-shadow: 0 0 0 0.18rem rgba(147, 197, 253, 0.24);
-  }
+            .speech-sentence-part {
+              transition:
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+            }
 
+            .speech-sentence-part.speech-active {
+              background: rgba(147, 197, 253, 0.55);
+              border-radius: 0.3rem;
+              box-shadow: 0 0 0 0.18rem rgba(147, 197, 253, 0.24);
+            }
           </style>
 
           <section class="theory-section" data-theory-content>
-
             <section>
               <h2>Introduction</h2>
-              
 
               <p>
                 Image segmentation is the division of an image into regions or
