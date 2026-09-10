@@ -596,10 +596,21 @@
 
     updateSpeechControls();
 
+    let speechText =
+      item.sentences[currentSentenceIndex];
+
+    if (currentSentenceIndex === 0) {
+      const ordinalPrefix =
+        getOrdinalPrefixForElement(item.element);
+
+      if (ordinalPrefix) {
+        speechText =
+          ordinalPrefix + ", " + speechText;
+      }
+    }
+
     const utterance =
-      new SpeechSynthesisUtterance(
-        item.sentences[currentSentenceIndex]
-      );
+      new SpeechSynthesisUtterance(speechText);
 
     utterance.onend = () => {
       if (
@@ -1106,6 +1117,98 @@
         )
         .filter(Boolean) || [text]
     );
+  }
+
+  /* ============================================================
+     ORDERED LIST ORDINAL HELPERS
+     ============================================================ */
+
+  function numberToOrdinalWord(n) {
+    if (typeof n !== "number" || n < 1) {
+      return "";
+    }
+
+    const words = {
+      1: "First",
+      2: "Second",
+      3: "Third",
+      4: "Fourth",
+      5: "Fifth",
+      6: "Sixth",
+      7: "Seventh",
+      8: "Eighth",
+      9: "Ninth",
+      10: "Tenth",
+      11: "Eleventh",
+      12: "Twelfth",
+      13: "Thirteenth",
+      14: "Fourteenth",
+      15: "Fifteenth",
+      16: "Sixteenth",
+      17: "Seventeenth",
+      18: "Eighteenth",
+      19: "Nineteenth",
+      20: "Twentieth",
+      21: "Twenty-first",
+      22: "Twenty-second",
+      23: "Twenty-third",
+      24: "Twenty-fourth",
+      25: "Twenty-fifth",
+      26: "Twenty-sixth",
+      27: "Twenty-seventh",
+      28: "Twenty-eighth",
+      29: "Twenty-ninth",
+      30: "Thirtieth",
+    };
+
+    if (words[n]) {
+      return words[n];
+    }
+
+    return "Item " + n;
+  }
+
+  function getOrdinalPrefixForElement(element) {
+    if (
+      !element ||
+      element.tagName !== "LI"
+    ) {
+      return null;
+    }
+
+    const list = element.parentElement;
+
+    if (
+      !list ||
+      list.tagName !== "OL"
+    ) {
+      return null;
+    }
+
+    const siblings = Array.from(list.children).filter(
+      (child) => child.tagName === "LI"
+    );
+
+    const zeroBasedIndex =
+      siblings.indexOf(element);
+
+    if (zeroBasedIndex === -1) {
+      return null;
+    }
+
+    let startAttr = parseInt(
+      list.getAttribute("start"),
+      10
+    );
+
+    if (isNaN(startAttr)) {
+      startAttr = 1;
+    }
+
+    const ordinal =
+      startAttr + zeroBasedIndex;
+
+    return numberToOrdinalWord(ordinal);
   }
 
   /* ============================================================
