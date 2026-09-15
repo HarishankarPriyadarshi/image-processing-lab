@@ -825,10 +825,110 @@
 
       <!-- TITLE CARD -->
       <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
-        <div class="px-4 py-3" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
+        <div  class="px-4 py-3 tts-box" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
           <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
             Watershed-Based Image Segmentation
           </h1>
+                        <!-- TTS BUTTONS -->
+
+            <div
+              class="speech-controls flex items-center gap-2"
+              data-speech-ignore
+              aria-label="Text to Speech controls"
+            >
+              <!-- Previous sentence -->
+              <button
+                type="button"
+                class="speech-control-button"
+                data-speech-action="previous"
+                aria-label="Previous sentence"
+                title="Previous sentence"
+              >
+                ‹
+              </button>
+
+              <!-- Play / Pause / Resume -->
+              <button
+                type="button"
+                class="speech-control-button"
+                data-speech-action="toggle"
+                aria-label="Play theory reading"
+                title="Play"
+              >
+                ▶ Play
+              </button>
+
+              <!-- Next sentence -->
+              <button
+                type="button"
+                class="speech-control-button"
+                data-speech-action="next"
+                aria-label="Next sentence"
+                title="Next sentence"
+              >
+                ›
+              </button>
+                        <style>
+            /* Listen-to-theory controls; speech behaviour lives in theory_speech.js. */
+            .tts-box {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .speech-controls {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: center;
+              gap: 0.65rem;
+              padding: 0rem 0rem;
+              border-radius: 0.75rem;
+            }
+
+            .speech-control-button {
+              max-height: 35px;
+              border: 0;
+              border-radius: 0.5rem;
+              padding: 0rem 0.9rem;
+              background: #fff;
+              color: #0b60a8;
+              font: inherit;
+              font-weight: 600;
+              cursor: pointer;
+              transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+            }
+
+            .speech-control-button:hover,
+            .speech-control-button:focus-visible {
+             
+              transform: translateY(-1px);
+              outline: 2px solid #93c5fd;
+              outline-offset: 2px;
+            }
+
+            .speech-control-button[hidden] {
+              display: none;
+            }
+
+            .speech-status {
+              color: #1e3a5f;
+              font-size: 0.95rem;
+            }
+
+            .speech-sentence-part {
+              transition:
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+            }
+
+            .speech-sentence-part.speech-active {
+              background: rgba(147, 197, 253, 0.55);
+              border-radius: 0.3rem;
+              box-shadow: 0 0 0 0.18rem rgba(147, 197, 253, 0.24);
+            }
+          </style>
+            </div>
         </div>
       </div>
 
@@ -864,7 +964,7 @@
         }
         </style>
 
-        <div class="content">
+        <div data-theory-content class="content">
 
             <h2>Procedure</h2>
 
@@ -1098,6 +1198,7 @@
   <script src="./user_input_modal.js"></script>
   <script src="./progress_tracker.js"></script>
   <script src="./progress_report_embed.js"></script>
+  <script src="./textTospeech.js"></script>
   <script>
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
