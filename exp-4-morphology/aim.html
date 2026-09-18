@@ -456,10 +456,29 @@
       transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
       position: relative;
       isolation: isolate;
-      z-index: 1;
+      z-index: 10;
       margin: 0 auto;
       contain: layout paint;
     }
+    #intro-video-wrapper {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  min-height: 0;
+
+  background: var(--intro-video-bg);
+  border: 1px solid rgba(11, 96, 168, 0.22);
+  border-radius: 18px;
+
+  box-shadow: 0 20px 42px rgba(2, 12, 32, 0.28);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  position: relative;
+  }
 
     #intro-video-wrapper::before {
       content: '';
@@ -1076,43 +1095,55 @@
       animation: intro-badge-pulse 2.6s ease-in-out infinite;
     }
 
-    #intro-right {
-      display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
-      gap: clamp(0.75rem, 1.6vw, 1rem);
-      width: 100%;
-      min-height: 0;
-      position: relative;
-      padding: clamp(0.7rem, 1.4vw, 0.95rem);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(243, 247, 255, 0.92));
-      border-radius: 1.2rem;
-      border: 1px solid rgba(14, 165, 233, 0.15);
-      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    }
+#intro-right {
+  display: grid;
+  grid-template-rows: 30% 70%;
+  gap: clamp(0.75rem, 1.6vw, 1rem);
+  width: 100%;
+  min-height: 0;
+  position: relative;
+  padding: clamp(0.7rem, 1.4vw, 0.95rem);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(243, 247, 255, 0.92)
+  );
+  border-radius: 1.2rem;
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  box-shadow:
+    0 14px 32px rgba(15, 23, 42, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+    
+#intro-text {
+  height: 100%;
+  min-height: 0;
+  max-height: none;
 
-    #intro-text {
-      min-height: clamp(150px, 24vh, 240px);
-      height: 100%;
-      padding: clamp(0.95rem, 1.5vw, 1.2rem);
-      font-size: clamp(0.98rem, 0.35vw + 0.92rem, 1.08rem);
-      line-height: 1.65;
-      color: var(--lab-ink);
-      letter-spacing: 0.01em;
-      border: 1px solid rgba(11, 96, 168, 0.2);
-      background: var(--intro-text-bg);
-      overflow-y: auto;
-      scrollbar-gutter: stable;
-      border-radius: 18px;
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        0 14px 30px rgba(15, 23, 42, 0.1);
-      position: relative;
-      z-index: 2;
-      margin-bottom: 0;
-      contain: layout paint;
-    }
+  padding: clamp(0.95rem, 1.5vw, 1.2rem);
+  font-size: clamp(0.98rem, 0.35vw + 0.92rem, 1.08rem);
+  line-height: 1.65;
 
+  color: var(--lab-ink);
+  letter-spacing: 0.01em;
+
+  border: 1px solid rgba(11, 96, 168, 0.2);
+  background: var(--intro-text-bg);
+
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+
+  border-radius: 18px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 14px 30px rgba(15, 23, 42, 0.1);
+
+  position: relative;
+  z-index: 2;
+  margin-bottom: 0;
+  contain: layout paint;
+}
     #intro-text::before {
       content: '';
       position: absolute;
@@ -1147,10 +1178,18 @@
     #intro-play:hover,
     #intro-pause:hover,
     #intro-skip:hover {
-      background: linear-gradient(135deg, #064073, #021a2c);
+      background: linear-gradient(135deg, #071d30, #010c14);
       transform: translateY(-1px);
       box-shadow: 0 16px 26px rgba(2, 26, 44, 0.35);
     }
+    #intro-play:disabled,
+#intro-pause:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none !important;
+  box-shadow: none !important;
+}
 
     @media (min-width: 1200px) and (min-height: 820px) {
       #intro-modal .modal-container::before,
@@ -1230,7 +1269,7 @@
       }
 
       #intro-video-wrapper {
-        max-height: min(26vh, 240px);
+        min-height: min(26vh, 240px);
       }
 
       #intro-modal .controls {
@@ -1771,7 +1810,7 @@
           <span class="intro-title-chip">Guided Intro</span>
           <h3 id="intro-modal-title">Introduction of Morphology based edge detection</h3>
         </div>
-        <p class="intro-subtitle">Review the experiment flow, then continue to the aim section when you are ready.</p>
+        <!-- <p class="intro-subtitle">Review the experiment flow, then continue to the aim section when you are ready.</p> -->
       </div>
 
       <div id="intro-grid" class="flex-1 w-full grid grid-cols-1 lg:grid-cols-[0.42fr_1.58fr] gap-3 mt-2 min-h-0 px-3 pb-3">
@@ -1810,8 +1849,8 @@
             <video
               id="intro-video"
               class="w-full object-contain"
-              /* src="./videos/intro.mp4" */
-              src="#"
+              src="./videos/intro_morpho.mp4"
+
               preload="metadata"
               muted
               playsinline
@@ -1863,8 +1902,8 @@
       </div>
 
       <!-- Audio (UPDATED: removed autoplay attribute; controlled by JS) -->
-      <audio id="intro-audio" src="#" preload="auto"></audio>
-            <!-- <audio id="intro-audio" src="./audio/Intropanelvoice.wav" preload="auto"></audio> -->
+      
+            <audio id="intro-audio" src="./audio/Intropanelvoice.wav" preload="auto"></audio>
 
     </div>
   </div>
@@ -1978,18 +2017,74 @@
   <script>
     const DEFAULT_CUE_LEAD = 0.65; // seconds before narration to reveal text
     const introCues = [
-      { start: 0, end: 18, text: "Welcome to the experiment “To Study the Load Characteristics of a DC Shunt Generator.” In this experiment, you will learn how to determine and analyze the load characteristics of a DC shunt generator, and how to plot the external characteristics under varying load conditions." },
-      { start: 19, end: 42, text: "To guide you throughout the learning process, this experiment is organized into several key sections. We begin with the Aim, which clearly states what you will learn and why the experiment is important. This is followed by the Theory section, where you will find all the essential concepts and foundational knowledge required to understand the working and behavior of a DC shunt generator." },
-      { start: 43, end: 62, text: "Before you proceed to the simulation, the Pretest section helps you evaluate your basic understanding of the topic. Here, you will receive five questions at a time. Each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded and reflected in your Progress Report." },
-      { start: 63, end: 87, text: "Next, you can move on to the Procedure section, which outlines the step-by-step instructions required to perform the experiment correctly. The most important part of the experiment is the Simulation section, where you will first see a Demo tab to understand the basic procedure, followed by the actual Simulation tab, where you can use the virtual setup to perform the experiment yourself." },
-      { start: 88, end: 107, text: "After completing the simulation, the Posttest section helps you evaluate your understanding of the experiment. Similar to the Pretest, you will receive five questions at a time, and each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded again in your Progress Report." },
-      { start: 108, end: 117, text: "Finally, the References and Contributors sections provide the supporting resources and acknowledge the team involved in the development of this experiment." },
-      { start: 118, end: 134, text: "A Progress Report is also available for you, where you can track your real-time progress throughout the experiment. To access this feature, please enter your details such as name, email ID, and designation in the User Input tab. All your activities across the experiments will be recorded in one place." },
-      { start: 135, end: 154, text: "This report allows you to monitor your learning journey in detail, including your pre-test and post-test performance, such as the number of questions attempted and marks obtained. It also records the total time taken to complete the experiment and provides a detailed simulation summary of your activity." },
-      { start: 155, end: 167, text: "In addition, the Progress Report displays your basic information along with the report date, completing the Progress Report as a comprehensive and personalized record of your experiment." },
-      { start: 168, end: 174, text: "Together, these sections ensure a smooth, structured, and engaging learning experience from start to finish." },
- 
-    ];
+
+  {
+    start: 0,
+    end: 15,
+    text: "Welcome to the experiment “Morphology Based Edge Detection.” In this experiment, you will learn how morphological image processing techniques can be used for edge detection, and how different morphological operations affect the structure and boundaries of objects in an image."
+  },
+
+  {
+    start: 16,
+    end: 40,
+    text: "To guide you throughout the learning process, this experiment is organized into several key sections. We begin with the Aim, which clearly states what you will learn and why the experiment is important. This is followed by the Theory section, where you will find all the essential concepts and foundational knowledge required to understand morphology based edge detection."
+  },
+
+  {
+    start: 41,
+    end: 58,
+    text: "To make the theory easier to understand, a Text-to-Speech feature is available. You can use the Previous, Play or Pause, and Next controls to listen to the theory sentence by sentence. The currently spoken sentence is highlighted, making it easier to follow along while reading."
+  },
+
+  {
+    start: 59,
+    end: 78,
+    text: "Before you proceed to the simulation, the Pretest section helps you evaluate your basic understanding of the topic. Here, you will receive five questions at a time. Each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded and reflected in your Progress Report."
+  },
+
+  {
+    start: 79,
+    end: 104,
+    text: "Next, you can move on to the Procedure section, which outlines the step-by-step instructions required to perform the experiment correctly. The most important part of the experiment is the Simulation section, where you will first see a Demo tab to understand the basic procedure, followed by the actual Simulation tab, where you can use the virtual setup to perform the experiment yourself."
+  },
+
+  {
+    start: 105,
+    end: 129,
+    text: "After completing the simulation, the Posttest section helps you evaluate your understanding of the experiment. Similar to the Pretest, you will receive five questions at a time, and each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded again in your Progress Report."
+  },
+
+  {
+    start: 130,
+    end: 139,
+    text: "Finally, the References and Contributors sections provide the supporting resources and acknowledge the team involved in the development of this experiment."
+  },
+
+  {
+    start: 140,
+    end: 158,
+    text: "A Progress Report is also available for you, where you can track your real-time progress throughout the experiment. To access this feature, please enter your details such as name, email ID, and designation in the User Input tab. All your activities across the experiments will be recorded in one place."
+  },
+
+  {
+    start: 159,
+    end: 174,
+    text: "This report allows you to monitor your learning journey in detail, including your pre-test and post-test performance, such as the number of questions attempted and marks obtained. It also records the total time taken to complete the experiment and provides a detailed simulation summary of your activity."
+  },
+
+  {
+    start: 175,
+    end: 187,
+    text: "In addition, the Progress Report displays your basic information along with the report date, completing the Progress Report as a comprehensive and personalized record of your experiment."
+  },
+
+  {
+    start: 188,
+    end: 193,
+    text: "Together, these sections ensure a smooth, structured, and engaging learning experience from start to finish."
+  }
+
+];
 
     const INTRO_STORAGE_KEY = 'dcShuntIntroShown:aim';
     const INTRO_STORAGE_VERSION = '1';
@@ -3488,5 +3583,42 @@
 </script>
 
 </body>
+<script>
+  const introVideo = document.getElementById("intro-video");
+  const introPlay = document.getElementById("intro-play");
+  const introPause = document.getElementById("intro-pause");
+
+  // Update button state
+  function updateVideoButtons() {
+    if (introVideo.paused || introVideo.ended) {
+      // Video is paused/stopped
+      introPlay.disabled = false;
+      introPause.disabled = true;
+    } else {
+      // Video is playing
+      introPlay.disabled = true;
+      introPause.disabled = false;
+    }
+  }
+
+  // Play button
+  introPlay.addEventListener("click", () => {
+    introVideo.play();
+  });
+
+  // Pause button
+  introPause.addEventListener("click", () => {
+    introVideo.pause();
+  });
+
+  // Video events
+  introVideo.addEventListener("play", updateVideoButtons);
+  introVideo.addEventListener("playing", updateVideoButtons);
+  introVideo.addEventListener("pause", updateVideoButtons);
+  introVideo.addEventListener("ended", updateVideoButtons);
+
+  // Set correct initial state
+  updateVideoButtons();
+</script>
 </html>
 
