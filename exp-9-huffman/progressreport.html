@@ -1459,7 +1459,7 @@ function attachSimulationFrameAutoResize(iframe) {
         try {
           await prepareSimulationPrintSnapshot();
         } catch (error) {
-          console.error("Print snapshot preparation failed", error);
+          //console.error("Print snapshot preparation failed", error);
           clearSimulationPrintSnapshot();
         }
         window.print();
@@ -1645,7 +1645,7 @@ function attachSimulationFrameAutoResize(iframe) {
           }
         });
       } catch (error) {
-        console.error("Progress report PDF export failed", error);
+        //console.error("Progress report PDF export failed", error);
         showReportAlert("Unable to create the PDF. Please try again or use Print.", "Download Failed");
       } finally {
         if (btn) {
@@ -1721,7 +1721,7 @@ function attachSimulationFrameAutoResize(iframe) {
 
         pdf.save("progress-report.pdf");
       } catch (error) {
-        console.error("Progress report PDF export failed", error);
+        //console.error("Progress report PDF export failed", error);
         showReportAlert("Unable to create the PDF. Please try again or use Print.", "Download Failed");
       } finally {
         if (exportCleanup) exportCleanup();
