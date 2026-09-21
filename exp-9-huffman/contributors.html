@@ -420,6 +420,12 @@
       z-index: 2000;
       max-width: calc(100vw - 32px);
       transition: opacity 180ms ease, transform 180ms ease;
+      pointer-events: none;
+    }
+
+    .chatbot-launcher,
+    .chatbot-panel.open {
+    pointer-events: auto;
     }
 
     body.sidebar-open .chatbot-widget {
