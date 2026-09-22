@@ -455,10 +455,30 @@
       transition: opacity 180ms ease, transform 180ms ease, box-shadow 180ms ease;
       position: relative;
       isolation: isolate;
-      z-index: 1;
+      z-index: 10;
       margin: 0 auto;
       contain: layout paint;
     }
+        #intro-video-wrapper {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  min-height: 0;
+
+  background: var(--intro-video-bg);
+  border: 1px solid rgba(11, 96, 168, 0.22);
+  border-radius: 18px;
+
+  box-shadow: 0 20px 42px rgba(2, 12, 32, 0.28);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  position: relative;
+  }
+
 
     #intro-video-wrapper::before {
       content: '';
@@ -1075,42 +1095,56 @@
       animation: intro-badge-pulse 2.6s ease-in-out infinite;
     }
 
-    #intro-right {
-      display: grid;
-      grid-template-rows: minmax(0, 1fr) auto;
-      gap: clamp(0.75rem, 1.6vw, 1rem);
-      width: 100%;
-      min-height: 0;
-      position: relative;
-      padding: clamp(0.7rem, 1.4vw, 0.95rem);
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(243, 247, 255, 0.92));
-      border-radius: 1.2rem;
-      border: 1px solid rgba(14, 165, 233, 0.15);
-      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.12),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    }
+#intro-right {
+  display: grid;
+  grid-template-rows: 30% 70%;
+  gap: clamp(0.75rem, 1.6vw, 1rem);
+  width: 100%;
+  min-height: 0;
+  position: relative;
+  padding: clamp(0.7rem, 1.4vw, 0.95rem);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.95),
+    rgba(243, 247, 255, 0.92)
+  );
+  border-radius: 1.2rem;
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  box-shadow:
+    0 14px 32px rgba(15, 23, 42, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+    
+#intro-text {
+  height: 100%;
+  min-height: 0;
+  max-height: none;
 
-    #intro-text {
-      min-height: clamp(150px, 24vh, 240px);
-      height: 100%;
-      padding: clamp(0.95rem, 1.5vw, 1.2rem);
-      font-size: clamp(0.98rem, 0.35vw + 0.92rem, 1.08rem);
-      line-height: 1.65;
-      color: var(--lab-ink);
-      letter-spacing: 0.01em;
-      border: 1px solid rgba(11, 96, 168, 0.2);
-      background: var(--intro-text-bg);
-      overflow-y: auto;
-      scrollbar-gutter: stable;
-      border-radius: 18px;
-      box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        0 14px 30px rgba(15, 23, 42, 0.1);
-      position: relative;
-      z-index: 2;
-      margin-bottom: 0;
-      contain: layout paint;
-    }
+  padding: clamp(0.95rem, 1.5vw, 1.2rem);
+  font-size: clamp(0.98rem, 0.35vw + 0.92rem, 1.08rem);
+  line-height: 1.65;
+
+  color: var(--lab-ink);
+  letter-spacing: 0.01em;
+
+  border: 1px solid rgba(11, 96, 168, 0.2);
+  background: var(--intro-text-bg);
+
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+
+  border-radius: 18px;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 14px 30px rgba(15, 23, 42, 0.1);
+
+  position: relative;
+  z-index: 2;
+  margin-bottom: 0;
+  contain: layout paint;
+}
+
 
     #intro-text::before {
       content: '';
@@ -1146,11 +1180,18 @@
     #intro-play:hover,
     #intro-pause:hover,
     #intro-skip:hover {
-      background: linear-gradient(135deg, #064073, #021a2c);
+      background: linear-gradient(135deg, #071d30, #010c14);
       transform: translateY(-1px);
       box-shadow: 0 16px 26px rgba(2, 26, 44, 0.35);
     }
-
+  #intro-play:disabled,
+#intro-pause:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none !important;
+  box-shadow: none !important;
+}
     @media (min-width: 1200px) and (min-height: 820px) {
       #intro-modal .modal-container::before,
       #intro-modal .modal-container::after,
@@ -1229,7 +1270,7 @@
       }
 
       #intro-video-wrapper {
-        max-height: min(26vh, 240px);
+        min-height: min(26vh, 240px);
       }
 
       #intro-modal .controls {
@@ -1671,9 +1712,10 @@
       <div class="intro-header">
         <div class="intro-title-row">
           <span class="intro-title-chip">Guided Intro</span>
-          <h3 id="intro-modal-title">Introduction of DC Shunt Generator Load Characteristics</h3>
+          <h3 id="intro-modal-title">Introduction to The Sampling and Quantization
+</h3>
         </div>
-        <p class="intro-subtitle">Review the experiment flow, then continue to the aim section when you are ready.</p>
+        <!-- <p class="intro-subtitle">Review the experiment flow, then continue to the aim section when you are ready.</p> -->
       </div>
 
       <div id="intro-grid" class="flex-1 w-full grid grid-cols-1 lg:grid-cols-[0.42fr_1.58fr] gap-3 mt-2 min-h-0 px-3 pb-3">
@@ -3388,4 +3430,41 @@
 </script>
 
 </body>
+<script>
+  const introVideo = document.getElementById("intro-video");
+  const introPlay = document.getElementById("intro-play");
+  const introPause = document.getElementById("intro-pause");
+
+  // Update button state
+  function updateVideoButtons() {
+    if (introVideo.paused || introVideo.ended) {
+      // Video is paused/stopped
+      introPlay.disabled = false;
+      introPause.disabled = true;
+    } else {
+      // Video is playing
+      introPlay.disabled = true;
+      introPause.disabled = false;
+    }
+  }
+
+  // Play button
+  introPlay.addEventListener("click", () => {
+    introVideo.play();
+  });
+
+  // Pause button
+  introPause.addEventListener("click", () => {
+    introVideo.pause();
+  });
+
+  // Video events
+  introVideo.addEventListener("play", updateVideoButtons);
+  introVideo.addEventListener("playing", updateVideoButtons);
+  introVideo.addEventListener("pause", updateVideoButtons);
+  introVideo.addEventListener("ended", updateVideoButtons);
+
+  // Set correct initial state
+  updateVideoButtons();
+</script>
 </html>
