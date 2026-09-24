@@ -5,26 +5,26 @@
 */
 
 (function () {
-  const KEY = "vlab_exp2_progress_v1";
+  const KEY = "vlab_exp4_progress_v1";
   const VERSION = 1;
 
   const nowISO = () => new Date().toISOString();
 
-  const GENERAL_PROGRESS_KEYS = [
-    "vlab_exp2_pretest_score",
-    "vlab_exp2_pretest_total",
-    "vlab_exp2_pretest_attempted_ids",
-    "vlab_exp2_pretest_correct_ids",
-    "vlab_exp2_pretest_updated_at",
-    "vlab_exp2_posttest_score",
-    "vlab_exp2_posttest_total",
-    "vlab_exp2_posttest_attempted_ids",
-    "vlab_exp2_posttest_correct_ids",
-    "vlab_exp2_posttest_updated_at",
-    "vlab_exp2_simulation_report_html",
-    "vlab_exp2_simulation_report_updated_at"
-  ];
-  const USER_PROGRESS_SUFFIXES = GENERAL_PROGRESS_KEYS.map((key) => key.replace(/^vlab_exp2_/, ""));
+const GENERAL_PROGRESS_KEYS = [
+  "vlab_exp4_pretest_score",
+  "vlab_exp4_pretest_total",
+  "vlab_exp4_pretest_attempted_ids",
+  "vlab_exp4_pretest_correct_ids",
+  "vlab_exp4_pretest_updated_at",
+  "vlab_exp4_posttest_score",
+  "vlab_exp4_posttest_total",
+  "vlab_exp4_posttest_attempted_ids",
+  "vlab_exp4_posttest_correct_ids",
+  "vlab_exp4_posttest_updated_at",
+  "vlab_exp4_simulation_report_html",
+  "vlab_exp4_simulation_report_updated_at"
+];
+  const USER_PROGRESS_SUFFIXES = GENERAL_PROGRESS_KEYS.map((key) => key.replace(/^vlab_exp4_/, ""));
   const RESET_LOCAL_STORAGE_KEYS = [
     "vlab_exp2_user_input_draft"
   ];
@@ -34,7 +34,7 @@
     "vlab_exp2_prompted_once"
   ];
 
-  const WINDOW_NAME_PREFIX = "VLAB_EXP2::";
+  const WINDOW_NAME_PREFIX = "VLAB_EXP4::";
 
   function safeParse(json, fallback) {
     try {
@@ -160,8 +160,8 @@
     try {
       const activeHash = localStorage.getItem("vlab_exp2_active_user_hash") || "";
       const keys = [];
-      if (activeHash) keys.push(`vlab_exp2_user_${activeHash}_simulation_report_html`);
-      keys.push("vlab_exp2_simulation_report_html");
+      if (activeHash) keys.push(`vlab_exp4_user_${activeHash}_simulation_report_html`);
+      keys.push("vlab_exp4_simulation_report_html");
       for (const k of keys) {
         const html = localStorage.getItem(k);
         if (html && String(html).trim()) return true;
@@ -169,10 +169,10 @@
     } catch {}
 
     try {
-      const PREFIX = "VLAB_EXP2::";
+      const PREFIX = "VLAB_EXP4::";
       if (typeof window.name === "string" && window.name.startsWith(PREFIX)) {
         const data = JSON.parse(window.name.slice(PREFIX.length)) || {};
-        const html = (data["vlab_exp2_simulation_report_html"] || "").toString();
+        const html = (data["vlab_exp4_simulation_report_html"] || "").toString();
         if (html.trim()) return true;
       }
     } catch {}
@@ -544,7 +544,7 @@
 
   function removeUserScopedProgress(userHash) {
     if (!userHash) return;
-    const prefix = `vlab_exp2_user_${userHash}_`;
+    const prefix = `vlab_exp4_user_${userHash}_`;
     try {
       for (const suffix of USER_PROGRESS_SUFFIXES) {
         localStorage.removeItem(prefix + suffix);
@@ -554,7 +554,7 @@
 
   function hasUserScopedProgress(userHash) {
     if (!userHash) return false;
-    const prefix = `vlab_exp2_user_${userHash}_`;
+    const prefix = `vlab_exp4_user_${userHash}_`;
     try {
       return USER_PROGRESS_SUFFIXES.some((suffix) => {
         const value = localStorage.getItem(prefix + suffix);
@@ -569,7 +569,7 @@
     if (!userHash) return;
     try {
       let movedAny = false;
-      const prefix = `vlab_exp2_user_${userHash}_`;
+      const prefix = `vlab_exp4_user_${userHash}_`;
 
       for (let i = 0; i < GENERAL_PROGRESS_KEYS.length; i++) {
         const key = GENERAL_PROGRESS_KEYS[i];
@@ -733,16 +733,22 @@
     } catch {}
 
     // window.name user data
-    try {
-      const wn = loadWindowNameData();
-      delete wn.vlab_exp2_user_name;
-      delete wn.vlab_exp2_user_email;
-      delete wn.vlab_exp2_user_designation;
-      delete wn.vlab_exp2_user_submitted_at;
-      delete wn.vlab_exp2_simulation_report_html;
-      delete wn.vlab_exp2_simulation_report_updated_at;
-      saveWindowNameData(wn);
-    } catch {}
+// window.name user data
+try {
+  const wn = loadWindowNameData();
+
+  // Common user identity — KEEP exp2
+  delete wn.vlab_exp2_user_name;
+  delete wn.vlab_exp2_user_email;
+  delete wn.vlab_exp2_user_designation;
+  delete wn.vlab_exp2_user_submitted_at;
+
+  // Exp 4 simulation report
+  delete wn.vlab_exp4_simulation_report_html;
+  delete wn.vlab_exp4_simulation_report_updated_at;
+
+  saveWindowNameData(wn);
+} catch {}
   }
 
   // capture exit

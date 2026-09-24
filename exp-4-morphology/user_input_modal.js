@@ -569,25 +569,25 @@
         if (!html.trim()) return;
 
         try {
-          localStorage.setItem("vlab_exp2_simulation_report_html", html);
-          localStorage.setItem("vlab_exp2_simulation_report_updated_at", updatedAt);
+          localStorage.setItem("vlab_exp4_simulation_report_html", html);
+          localStorage.setItem("vlab_exp4_simulation_report_updated_at", updatedAt);
 
           const activeHash = localStorage.getItem("vlab_exp2_active_user_hash");
           if (activeHash) {
-            localStorage.setItem(`vlab_exp2_user_${activeHash}_simulation_report_html`, html);
-            localStorage.setItem(`vlab_exp2_user_${activeHash}_simulation_report_updated_at`, updatedAt);
+            localStorage.setItem(`vlab_exp4_user_${activeHash}_simulation_report_html`, html);
+            localStorage.setItem(`vlab_exp4_user_${activeHash}_simulation_report_updated_at`, updatedAt);
           }
         } catch {}
 
         // window.name fallback for file://
         try {
-          const PREFIX = "VLAB_EXP2::";
+          const PREFIX = "VLAB_EXP4::";
           let wn = {};
           if (typeof window.name === "string" && window.name.startsWith(PREFIX)) {
             wn = JSON.parse(window.name.slice(PREFIX.length)) || {};
           }
-          wn["vlab_exp2_simulation_report_html"] = html;
-          wn["vlab_exp2_simulation_report_updated_at"] = updatedAt;
+          wn["vlab_exp4_simulation_report_html"] = html;
+          wn["vlab_exp4_simulation_report_updated_at"] = updatedAt;
           window.name = PREFIX + JSON.stringify(wn);
         } catch {}
         syncProgressReportLinks();

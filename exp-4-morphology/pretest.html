@@ -1038,15 +1038,15 @@ const refreshBtn = document.getElementById("refresh-btn");
 const checkBtn = document.getElementById("check-btn");
 
 const ASSESSMENT_KEYS = {
-  score: "vlab_exp2_pretest_score",
-  total: "vlab_exp2_pretest_total",
-  attemptedIds: "vlab_exp2_pretest_attempted_ids",
-  correctIds: "vlab_exp2_pretest_correct_ids",
-  updatedAt: "vlab_exp2_pretest_updated_at"
+  score: "vlab_exp4_pretest_score",
+  total: "vlab_exp4_pretest_total",
+  attemptedIds: "vlab_exp4_pretest_attempted_ids",
+  correctIds: "vlab_exp4_pretest_correct_ids",
+  updatedAt: "vlab_exp4_pretest_updated_at"
 };
 
 function readWindowNameData() {
-  const PREFIX = "VLAB_EXP2::";
+  const PREFIX = "VLAB_EXP4::";
   try {
     if (typeof window.name === "string" && window.name.startsWith(PREFIX)) {
       return JSON.parse(window.name.slice(PREFIX.length)) || {};
@@ -1059,7 +1059,7 @@ function getUserScopedStorageKey(baseKey) {
   try {
     const activeHash = localStorage.getItem("vlab_exp2_active_user_hash");
     if (!activeHash) return "";
-    return `vlab_exp2_user_${activeHash}_${baseKey.replace(/^vlab_exp2_/, "")}`;
+    return `vlab_exp4_user_${activeHash}_${baseKey.replace(/^vlab_exp4_/, "")}`;
   } catch (e) {
     return "";
   }
@@ -1174,7 +1174,7 @@ function persistAssessmentTotals() {
   } catch (e) {}
 
   try {
-    const PREFIX = "VLAB_EXP2::";
+    const PREFIX = "VLAB_EXP4::";
     let data = {};
     if (typeof window.name === "string" && window.name.startsWith(PREFIX)) {
       data = JSON.parse(window.name.slice(PREFIX.length)) || {};
