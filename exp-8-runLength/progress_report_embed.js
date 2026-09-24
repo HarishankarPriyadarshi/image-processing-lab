@@ -756,7 +756,7 @@
       const state = VP().getState();
       if (VP().hasUser()) return;
       if (state.flags && state.flags.reportDeclined) return;
-      const sessionKey = 'vlab_exp2_prompted_once';
+      const sessionKey = 'vlab_exp8_prompted_once';
       try {
         if (sessionStorage.getItem(sessionKey) === '1') return;
         sessionStorage.setItem(sessionKey, '1');
@@ -785,25 +785,25 @@
         const updatedAt = (data.updatedAt || String(Date.now())).toString();
         if (html && html.trim()) {
           try {
-            localStorage.setItem('vlab_exp2_simulation_report_html', html);
-            localStorage.setItem('vlab_exp2_simulation_report_updated_at', updatedAt);
+            localStorage.setItem('vlab_exp8_simulation_report_html', html);
+            localStorage.setItem('vlab_exp8_simulation_report_updated_at', updatedAt);
             const activeHash = localStorage.getItem('vlab_exp2_active_user_hash');
             if (activeHash) {
-              localStorage.setItem(`vlab_exp2_user_${activeHash}_simulation_report_html`, html);
-              localStorage.setItem(`vlab_exp2_user_${activeHash}_simulation_report_updated_at`, updatedAt);
+              localStorage.setItem(`vlab_exp8_user_${activeHash}_simulation_report_html`, html);
+              localStorage.setItem(`vlab_exp8_user_${activeHash}_simulation_report_updated_at`, updatedAt);
             }
           } catch (e) {}
 
           // Also persist in window.name (helps file:// navigation in the same tab).
           try {
-            const PREFIX = 'VLAB_EXP2::';
+            const PREFIX = 'VLAB_EXP8::';
             if (html.length <= 1500000) { // ~1.5MB safety guard
               let wn = {};
               if (typeof window.name === 'string' && window.name.startsWith(PREFIX)) {
                 wn = JSON.parse(window.name.slice(PREFIX.length)) || {};
               }
-              wn['vlab_exp2_simulation_report_html'] = html;
-              wn['vlab_exp2_simulation_report_updated_at'] = updatedAt;
+              wn['vlab_exp8_simulation_report_html'] = html;
+              wn['vlab_exp8_simulation_report_updated_at'] = updatedAt;
               window.name = PREFIX + JSON.stringify(wn);
             }
           } catch (e) {}
