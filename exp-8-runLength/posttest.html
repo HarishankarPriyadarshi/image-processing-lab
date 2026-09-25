@@ -1300,7 +1300,7 @@ const ASSESSMENT_KEYS = {
 };
 
 function readWindowNameData() {
-  const PREFIX = "VLAB_EXP2::";
+  const PREFIX = "VLAB_EXP8::";
   try {
     if (typeof window.name === "string" && window.name.startsWith(PREFIX)) {
       return JSON.parse(window.name.slice(PREFIX.length)) || {};
@@ -1311,7 +1311,7 @@ function readWindowNameData() {
 
 function getUserScopedStorageKey(baseKey) {
   try {
-    const activeHash = localStorage.getItem("vlab_exp2_active_user_hash");
+    const activeHash = localStorage.getItem("vlab_exp_active_user_hash");
     if (!activeHash) return "";
     return `vlab_exp8_user_${activeHash}_${baseKey.replace(/^vlab_exp8_/, "")}`;
   } catch (e) {
@@ -1427,7 +1427,7 @@ function persistAssessmentTotals() {
   } catch (e) {}
 
   try {
-    const PREFIX = "VLAB_EXP2::";
+    const PREFIX = "VLAB_EXP8::";
     let data = {};
     if (typeof window.name === "string" && window.name.startsWith(PREFIX)) {
       data = JSON.parse(window.name.slice(PREFIX.length)) || {};

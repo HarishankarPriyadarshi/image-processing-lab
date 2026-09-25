@@ -3775,7 +3775,7 @@ const introCues = [
             : "";
           let prevHash = "";
           try {
-            prevHash = localStorage.getItem("vlab_exp2_active_user_hash") || "";
+            prevHash = localStorage.getItem("vlab_exp_active_user_hash") || "";
           } catch {}
 
           const state = loadState();
@@ -3792,9 +3792,9 @@ const introCues = [
 
           try {
             if (newHash) {
-              localStorage.setItem("vlab_exp2_active_user_hash", newHash);
+              localStorage.setItem("vlab_exp_active_user_hash", newHash);
             } else {
-              localStorage.removeItem("vlab_exp2_active_user_hash");
+              localStorage.removeItem("vlab_exp_active_user_hash");
             }
           } catch {
             // ignore storage errors
@@ -3825,10 +3825,10 @@ const introCues = [
           }
 
           setWindowNameValues({
-            vlab_exp8_user_name: trimmedUser.name,
-            vlab_exp8_user_email: trimmedUser.email,
-            vlab_exp8_user_designation: trimmedUser.designation,
-            vlab_exp8_user_submitted_at: state.user.submittedAt,
+            vlab_exp_user_name: trimmedUser.name,
+            vlab_exp_user_email: trimmedUser.email,
+            vlab_exp_user_designation: trimmedUser.designation,
+            vlab_exp_user_submitted_at: state.user.submittedAt,
           });
 
           saveState(state);
@@ -3873,14 +3873,14 @@ const introCues = [
           let activeHash = "";
           try {
             activeHash =
-              localStorage.getItem("vlab_exp2_active_user_hash") || "";
+              localStorage.getItem("vlab_exp_active_user_hash") || "";
           } catch {}
 
           try {
             localStorage.removeItem(KEY);
           } catch {}
           try {
-            localStorage.removeItem("vlab_exp2_active_user_hash");
+            localStorage.removeItem("vlab_exp_active_user_hash");
           } catch {}
           clearGeneralProgressKeys();
           removeUserScopedProgress(activeHash);
@@ -3899,10 +3899,10 @@ const introCues = [
 
           try {
             const wn = loadWindowNameData();
-            delete wn.vlab_exp8_user_name;
-            delete wn.vlab_exp8_user_email;
-            delete wn.vlab_exp8_user_designation;
-            delete wn.vlab_exp8_user_submitted_at;
+            delete wn.vlab_exp_user_name;
+            delete wn.vlab_exp_user_email;
+            delete wn.vlab_exp_user_designation;
+            delete wn.vlab_exp_user_submitted_at;
             delete wn.vlab_exp8_simulation_report_html;
             delete wn.vlab_exp8_simulation_report_updated_at;
             saveWindowNameData(wn);
@@ -4388,7 +4388,7 @@ const introCues = [
                   updatedAt,
                 );
                 const activeHash = localStorage.getItem(
-                  "vlab_exp2_active_user_hash",
+                  "vlab_exp_active_user_hash",
                 );
                 if (activeHash) {
                   localStorage.setItem(
@@ -4455,7 +4455,7 @@ const introCues = [
         function hasSimulationReport() {
           try {
             const activeHash =
-              localStorage.getItem("vlab_exp2_active_user_hash") || "";
+              localStorage.getItem("vlab_exp_active_user_hash") || "";
             const keys = [];
             if (activeHash)
               keys.push(`vlab_exp8_user_${activeHash}_simulation_report_html`);
