@@ -1848,7 +1848,7 @@
             <video
               id="intro-video"
               class="w-full object-contain"
-              src="./videos/intro.mp4"
+              src="./videos/intro_derivative.mp4"
               preload="metadata"
               muted
               playsinline
@@ -1900,7 +1900,7 @@
       </div>
 
       <!-- Audio (UPDATED: removed autoplay attribute; controlled by JS) -->
-      <audio id="intro-audio" src="./audio/Intropanelvoice.wav" preload="auto"></audio>
+      <audio id="intro-audio" src="./audio/Intropanelvoice_derivative.wav" preload="auto"></audio>
 
     </div>
   </div>
@@ -2013,19 +2013,76 @@
   <!-- INTRO POPUP SCRIPT (auto-open based on data-intro-autoshow) -->
   <script>
     const DEFAULT_CUE_LEAD = 0.65; // seconds before narration to reveal text
-    const introCues = [
-      { start: 0, end: 18, text: "Welcome to the experiment “To Study the Load Characteristics of a DC Shunt Generator.” In this experiment, you will learn how to determine and analyze the load characteristics of a DC shunt generator, and how to plot the external characteristics under varying load conditions." },
-      { start: 19, end: 42, text: "To guide you throughout the learning process, this experiment is organized into several key sections. We begin with the Aim, which clearly states what you will learn and why the experiment is important. This is followed by the Theory section, where you will find all the essential concepts and foundational knowledge required to understand the working and behavior of a DC shunt generator." },
-      { start: 43, end: 62, text: "Before you proceed to the simulation, the Pretest section helps you evaluate your basic understanding of the topic. Here, you will receive five questions at a time. Each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded and reflected in your Progress Report." },
-      { start: 63, end: 87, text: "Next, you can move on to the Procedure section, which outlines the step-by-step instructions required to perform the experiment correctly. The most important part of the experiment is the Simulation section, where you will first see a Demo tab to understand the basic procedure, followed by the actual Simulation tab, where you can use the virtual setup to perform the experiment yourself." },
-      { start: 88, end: 107, text: "After completing the simulation, the Posttest section helps you evaluate your understanding of the experiment. Similar to the Pretest, you will receive five questions at a time, and each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded again in your Progress Report." },
-      { start: 108, end: 117, text: "Finally, the References and Contributors sections provide the supporting resources and acknowledge the team involved in the development of this experiment." },
-      { start: 118, end: 134, text: "A Progress Report is also available for you, where you can track your real-time progress throughout the experiment. To access this feature, please enter your details such as name, email ID, and designation in the User Input tab. All your activities across the experiments will be recorded in one place." },
-      { start: 135, end: 154, text: "This report allows you to monitor your learning journey in detail, including your pre-test and post-test performance, such as the number of questions attempted and marks obtained. It also records the total time taken to complete the experiment and provides a detailed simulation summary of your activity." },
-      { start: 155, end: 167, text: "In addition, the Progress Report displays your basic information along with the report date, completing the Progress Report as a comprehensive and personalized record of your experiment." },
-      { start: 168, end: 174, text: "Together, these sections ensure a smooth, structured, and engaging learning experience from start to finish." },
- 
-    ];
+const introCues = [
+
+  {
+    start: 0,
+    end: 23,
+    text: "Welcome to the experiment Derivative-Based Edge Detection. In this experiment, you will learn how derivative-based image processing techniques can be used to detect edges by analyzing changes in pixel intensity. You will also observe how first- and second-order derivatives help identify significant intensity transitions corresponding to the boundaries and structures of objects in an image."
+  },
+
+  {
+    start: 24,
+    end: 47,
+    text: "To guide you throughout the learning process, this experiment is organized into several key sections. We begin with the Aim, which clearly states what you will learn and why the experiment is important. This is followed by the Theory section, where you will find all the essential concepts and foundational knowledge required to understand derivative-based edge detection and its operators."
+  },
+
+  {
+    start: 48,
+    end: 63,
+    text: "To make the theory easier to understand, a Text-to-Speech feature is available. You can use the Previous, Play or Pause, and Next controls to listen to the theory sentence by sentence. The currently spoken sentence is highlighted, making it easier to follow along while reading."
+  },
+
+  {
+    start: 64,
+    end: 83,
+    text: "Before you proceed to the simulation, the Pretest section helps you evaluate your basic understanding of the topic. Here, you will receive five questions at a time. Each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded and reflected in your Progress Report."
+  },
+
+  {
+    start: 84,
+    end: 111,
+    text: "Next, you can move on to the Procedure section, which outlines the step-by-step instructions required to perform the experiment correctly. The most important part of the experiment is the Simulation section, where you will first see a Demo tab to understand the basic procedure, followed by the actual Simulation tab, where you can use the virtual setup to perform derivative-based edge detection using different operators."
+  },
+
+  {
+    start: 112,
+    end: 134,
+    text: "After completing the simulation, the Posttest section helps you evaluate your understanding of the experiment. Similar to the Pretest, you will receive five questions at a time, and each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded again in your Progress Report."
+  },
+
+  {
+    start: 135,
+    end: 144,
+    text: "Finally, the References and Contributors sections provide the supporting resources and acknowledge the team involved in the development of this experiment."
+  },
+
+  {
+    start: 145,
+    end: 167,
+    text: "A Progress Report is also available for you, where you can track your real-time progress throughout the experiment. To access this feature, please enter your details such as name, email ID, and designation in the User Input tab. All your activities across the experiments will be recorded in one place."
+  },
+
+  {
+    start: 168,
+    end: 188,
+    text: "This report allows you to monitor your learning journey in detail, including your pre-test and post-test performance, such as the number of questions attempted and marks obtained. It also records the total time taken to complete the experiment and provides a detailed simulation summary of your activity."
+  },
+
+  {
+    start: 189,
+    end: 201,
+    text: "In addition, the Progress Report displays your basic information along with the report date, completing the Progress Report as a comprehensive and personalized record of your experiment."
+  },
+
+  {
+    start: 202,
+    end: 208,
+    text: "Together, these sections ensure a smooth, structured, and engaging learning experience from start to finish."
+  }
+
+];
+
 
     const INTRO_STORAGE_KEY = 'dcShuntIntroShown:aim';
     const INTRO_STORAGE_VERSION = '1';

@@ -23,6 +23,10 @@
 
 <!-- experiment Folder name structure-->
 
-#example for first (Sampling and Quantization) experiment
-    exp-1-sampling
+Done
 
+2. Derivative-Based Edge Detection
+4. Morphology-Based Edge Detection 
+7. Watershed-Based Image Segmentation
+8. Run-Length Encoding for Image Compression
+9. Huffman Coding for Lossless Image Compression
