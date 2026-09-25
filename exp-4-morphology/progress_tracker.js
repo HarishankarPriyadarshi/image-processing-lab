@@ -26,12 +26,12 @@ const GENERAL_PROGRESS_KEYS = [
 ];
   const USER_PROGRESS_SUFFIXES = GENERAL_PROGRESS_KEYS.map((key) => key.replace(/^vlab_exp4_/, ""));
   const RESET_LOCAL_STORAGE_KEYS = [
-    "vlab_exp2_user_input_draft"
+    "vlab_exp4_user_input_draft"
   ];
   const RESET_SESSION_STORAGE_KEYS = [
-    "vlab_exp2_current_page",
-    "vlab_exp2_page_enter_ms",
-    "vlab_exp2_prompted_once"
+    "vlab_exp4_current_page",
+    "vlab_exp4_page_enter_ms",
+    "vlab_exp4_prompted_once"
   ];
 
   const WINDOW_NAME_PREFIX = "VLAB_EXP4::";
@@ -121,11 +121,11 @@ const GENERAL_PROGRESS_KEYS = [
     try {
       if (!merged.user || !(merged.user.name && merged.user.email && merged.user.designation)) {
         const wn = loadWindowNameData();
-        const name = (wn.vlab_exp2_user_name || "").toString().trim();
-        const email = (wn.vlab_exp2_user_email || "").toString().trim();
-        const designation = (wn.vlab_exp2_user_designation || "").toString().trim();
+        const name = (wn.vlab_exp_user_name || "").toString().trim();
+        const email = (wn.vlab_exp_user_email || "").toString().trim();
+        const designation = (wn.vlab_exp_user_designation || "").toString().trim();
         if (name && email && designation) {
-          merged.user = { name, email, designation, submittedAt: wn.vlab_exp2_user_submitted_at || nowISO() };
+          merged.user = { name, email, designation, submittedAt: wn.vlab_exp_user_submitted_at || nowISO() };
         }
       }
     } catch {}
@@ -158,7 +158,7 @@ const GENERAL_PROGRESS_KEYS = [
   /* ------------------ PROGRESS REPORT ACCESS GUARD ------------------ */
   function hasSimulationReport() {
     try {
-      const activeHash = localStorage.getItem("vlab_exp2_active_user_hash") || "";
+      const activeHash = localStorage.getItem("vlab_exp_active_user_hash") || "";
       const keys = [];
       if (activeHash) keys.push(`vlab_exp4_user_${activeHash}_simulation_report_html`);
       keys.push("vlab_exp4_simulation_report_html");
@@ -475,8 +475,8 @@ const GENERAL_PROGRESS_KEYS = [
     save(state);
 
     try {
-      sessionStorage.setItem("vlab_exp2_current_page", p);
-      sessionStorage.setItem("vlab_exp2_page_enter_ms", String(Date.now()));
+      sessionStorage.setItem("vlab_exp4_current_page", p);
+      sessionStorage.setItem("vlab_exp4_page_enter_ms", String(Date.now()));
     } catch {}
   }
 
@@ -484,13 +484,13 @@ const GENERAL_PROGRESS_KEYS = [
     const state = load();
 
     const p = (() => {
-      try { return sessionStorage.getItem("vlab_exp2_current_page") || pageName(); }
+      try { return sessionStorage.getItem("vlab_exp4_current_page") || pageName(); }
       catch { return pageName(); }
     })();
 
     let enterMs = null;
     try {
-      const s = sessionStorage.getItem("vlab_exp2_page_enter_ms");
+      const s = sessionStorage.getItem("vlab_exp4_page_enter_ms");
       enterMs = s ? Number(s) : null;
     } catch {}
 
@@ -601,7 +601,7 @@ const GENERAL_PROGRESS_KEYS = [
     const newHash = normalizedEmail ? computeUserHash(normalizedEmail) : "";
 
     let prevHash = "";
-    try { prevHash = localStorage.getItem("vlab_exp2_active_user_hash") || ""; } catch {}
+    try { prevHash = localStorage.getItem("vlab_exp_active_user_hash") || ""; } catch {}
 
     const state = load();
     const isNewUserByEmail = recordUserHistory(state, trimmedUser);
@@ -610,8 +610,8 @@ const GENERAL_PROGRESS_KEYS = [
     state.flags.reportDeclined = false;
 
     try {
-      if (newHash) localStorage.setItem("vlab_exp2_active_user_hash", newHash);
-      else localStorage.removeItem("vlab_exp2_active_user_hash");
+      if (newHash) localStorage.setItem("vlab_exp_active_user_hash", newHash);
+      else localStorage.removeItem("vlab_exp_active_user_hash");
     } catch {}
 
     if (newHash) {
@@ -636,10 +636,10 @@ const GENERAL_PROGRESS_KEYS = [
     }
 
     setWindowNameValues({
-      vlab_exp2_user_name: trimmedUser.name,
-      vlab_exp2_user_email: trimmedUser.email,
-      vlab_exp2_user_designation: trimmedUser.designation,
-      vlab_exp2_user_submitted_at: state.user.submittedAt
+      vlab_exp_user_name: trimmedUser.name,
+      vlab_exp_user_email: trimmedUser.email,
+      vlab_exp_user_designation: trimmedUser.designation,
+      vlab_exp_user_submitted_at: state.user.submittedAt
     });
 
     save(state);
@@ -709,13 +709,13 @@ const GENERAL_PROGRESS_KEYS = [
 
   function resetAll() {
     let activeHash = "";
-    try { activeHash = localStorage.getItem("vlab_exp2_active_user_hash") || ""; } catch {}
+    try { activeHash = localStorage.getItem("vlab_exp_active_user_hash") || ""; } catch {}
 
     // remove main state
     try { localStorage.removeItem(KEY); } catch {}
 
     // remove active hash
-    try { localStorage.removeItem("vlab_exp2_active_user_hash"); } catch {}
+    try { localStorage.removeItem("vlab_exp_active_user_hash"); } catch {}
 
     // remove general keys
     clearGeneralProgressKeys();
@@ -737,11 +737,11 @@ const GENERAL_PROGRESS_KEYS = [
 try {
   const wn = loadWindowNameData();
 
-  // Common user identity — KEEP exp2
-  delete wn.vlab_exp2_user_name;
-  delete wn.vlab_exp2_user_email;
-  delete wn.vlab_exp2_user_designation;
-  delete wn.vlab_exp2_user_submitted_at;
+  // Common user identity — KEEP 
+  delete wn.vlab_exp_user_name;
+  delete wn.vlab_exp_user_email;
+  delete wn.vlab_exp_user_designation;
+  delete wn.vlab_exp_user_submitted_at;
 
   // Exp 4 simulation report
   delete wn.vlab_exp4_simulation_report_html;

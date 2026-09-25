@@ -1016,7 +1016,7 @@ function readWindowNameData() {
 
 function getUserScopedStorageKey(baseKey) {
   try {
-    const activeHash = localStorage.getItem("vlab_exp2_active_user_hash");
+    const activeHash = localStorage.getItem("vlab_exp_active_user_hash");
     if (!activeHash) return "";
     return `vlab_exp4_user_${activeHash}_${baseKey.replace(/^vlab_exp4_/, "")}`;
   } catch (e) {

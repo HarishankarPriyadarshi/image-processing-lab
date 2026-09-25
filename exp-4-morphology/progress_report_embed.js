@@ -756,7 +756,7 @@
       const state = VP().getState();
       if (VP().hasUser()) return;
       if (state.flags && state.flags.reportDeclined) return;
-      const sessionKey = 'vlab_exp2_prompted_once';
+      const sessionKey = 'vlab_exp4_prompted_once';
       try {
         if (sessionStorage.getItem(sessionKey) === '1') return;
         sessionStorage.setItem(sessionKey, '1');
@@ -787,7 +787,7 @@
           try {
             localStorage.setItem('vlab_exp4_simulation_report_html', html);
             localStorage.setItem('vlab_exp4_simulation_report_updated_at', updatedAt);
-            const activeHash = localStorage.getItem('vlab_exp2_active_user_hash');
+            const activeHash = localStorage.getItem('vlab_exp_active_user_hash');
             if (activeHash) {
               localStorage.setItem(`vlab_exp4_user_${activeHash}_simulation_report_html`, html);
               localStorage.setItem(`vlab_exp4_user_${activeHash}_simulation_report_updated_at`, updatedAt);
