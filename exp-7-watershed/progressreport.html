@@ -1035,8 +1035,8 @@
       try {
         const activeHash = localStorage.getItem("vlab_exp2_active_user_hash");
         const keys = [];
-        if (activeHash) keys.push(`vlab_exp2_user_${activeHash}_simulation_report_html`);
-        keys.push("vlab_exp2_simulation_report_html");
+        if (activeHash) keys.push(`vlab_exp7_user_${activeHash}_simulation_report_html`);
+        keys.push("vlab_exp7_simulation_report_html");
 
         for (const key of keys) {
           const html = localStorage.getItem(key);
@@ -1048,14 +1048,14 @@
       } catch {}
 
       try {
-        const PREFIX = "VLAB_EXP2::";
+        const PREFIX = "VLAB_EXP7::";
         if (typeof window.name === "string" && window.name.startsWith(PREFIX)) {
           const data = JSON.parse(window.name.slice(PREFIX.length)) || {};
-          const html = (data["vlab_exp2_simulation_report_html"] || "").toString();
+          const html = (data["vlab_exp7_simulation_report_html"] || "").toString();
           if (html && html.trim()) {
             return {
               html: normalizeSimulationReportHtml(html),
-              updatedAt: data["vlab_exp2_simulation_report_updated_at"] || null
+              updatedAt: data["vlab_exp7_simulation_report_updated_at"] || null
             };
           }
         }
@@ -1071,15 +1071,15 @@
 
         if (activeHash) {
           candidates.push({
-            score: `vlab_exp2_user_${activeHash}_${type}_score`,
-            total: `vlab_exp2_user_${activeHash}_${type}_total`,
-            updated: `vlab_exp2_user_${activeHash}_${type}_updated_at`
+            score: `vlab_exp7_user_${activeHash}_${type}_score`,
+            total: `vlab_exp7_user_${activeHash}_${type}_total`,
+            updated: `vlab_exp7_user_${activeHash}_${type}_updated_at`
           });
         }
         candidates.push({
-          score: `vlab_exp2_${type}_score`,
-          total: `vlab_exp2_${type}_total`,
-          updated: `vlab_exp2_${type}_updated_at`
+          score: `vlab_exp7_${type}_score`,
+          total: `vlab_exp7_${type}_total`,
+          updated: `vlab_exp7_${type}_updated_at`
         });
 
         for (const c of candidates) {

@@ -5,36 +5,36 @@
 */
 
 (function () {
-  const KEY = "vlab_exp2_progress_v1";
+  const KEY = "vlab_exp7_progress_v1";
   const VERSION = 1;
 
   const nowISO = () => new Date().toISOString();
 
   const GENERAL_PROGRESS_KEYS = [
-    "vlab_exp2_pretest_score",
-    "vlab_exp2_pretest_total",
-    "vlab_exp2_pretest_attempted_ids",
-    "vlab_exp2_pretest_correct_ids",
-    "vlab_exp2_pretest_updated_at",
-    "vlab_exp2_posttest_score",
-    "vlab_exp2_posttest_total",
-    "vlab_exp2_posttest_attempted_ids",
-    "vlab_exp2_posttest_correct_ids",
-    "vlab_exp2_posttest_updated_at",
-    "vlab_exp2_simulation_report_html",
-    "vlab_exp2_simulation_report_updated_at"
+    "vlab_exp7_pretest_score",
+    "vlab_exp7_pretest_total",
+    "vlab_exp7_pretest_attempted_ids",
+    "vlab_exp7_pretest_correct_ids",
+    "vlab_exp7_pretest_updated_at",
+    "vlab_exp7_posttest_score",
+    "vlab_exp7_posttest_total",
+    "vlab_exp7_posttest_attempted_ids",
+    "vlab_exp7_posttest_correct_ids",
+    "vlab_exp7_posttest_updated_at",
+    "vlab_exp7_simulation_report_html",
+    "vlab_exp7_simulation_report_updated_at"
   ];
-  const USER_PROGRESS_SUFFIXES = GENERAL_PROGRESS_KEYS.map((key) => key.replace(/^vlab_exp2_/, ""));
+  const USER_PROGRESS_SUFFIXES = GENERAL_PROGRESS_KEYS.map((key) => key.replace(/^vlab_exp7_/, ""));
   const RESET_LOCAL_STORAGE_KEYS = [
-    "vlab_exp2_user_input_draft"
+    "vlab_exp7_user_input_draft"
   ];
   const RESET_SESSION_STORAGE_KEYS = [
-    "vlab_exp2_current_page",
-    "vlab_exp2_page_enter_ms",
-    "vlab_exp2_prompted_once"
+    "vlab_exp7_current_page",
+    "vlab_exp7_page_enter_ms",
+    "vlab_exp7_prompted_once"
   ];
 
-  const WINDOW_NAME_PREFIX = "VLAB_EXP2::";
+  const WINDOW_NAME_PREFIX = "VLAB_EXP7::";
 
   function safeParse(json, fallback) {
     try {
@@ -121,11 +121,11 @@
     try {
       if (!merged.user || !(merged.user.name && merged.user.email && merged.user.designation)) {
         const wn = loadWindowNameData();
-        const name = (wn.vlab_exp2_user_name || "").toString().trim();
-        const email = (wn.vlab_exp2_user_email || "").toString().trim();
-        const designation = (wn.vlab_exp2_user_designation || "").toString().trim();
+        const name = (wn.vlab_exp7_user_name || "").toString().trim();
+        const email = (wn.vlab_exp7_user_email || "").toString().trim();
+        const designation = (wn.vlab_exp7_user_designation || "").toString().trim();
         if (name && email && designation) {
-          merged.user = { name, email, designation, submittedAt: wn.vlab_exp2_user_submitted_at || nowISO() };
+          merged.user = { name, email, designation, submittedAt: wn.vlab_exp7_user_submitted_at || nowISO() };
         }
       }
     } catch {}
@@ -160,8 +160,8 @@
     try {
       const activeHash = localStorage.getItem("vlab_exp2_active_user_hash") || "";
       const keys = [];
-      if (activeHash) keys.push(`vlab_exp2_user_${activeHash}_simulation_report_html`);
-      keys.push("vlab_exp2_simulation_report_html");
+      if (activeHash) keys.push(`vlab_exp7_user_${activeHash}_simulation_report_html`);
+      keys.push("vlab_exp7_simulation_report_html");
       for (const k of keys) {
         const html = localStorage.getItem(k);
         if (html && String(html).trim()) return true;
@@ -169,10 +169,10 @@
     } catch {}
 
     try {
-      const PREFIX = "VLAB_EXP2::";
+      const PREFIX = "VLAB_EXP7::";
       if (typeof window.name === "string" && window.name.startsWith(PREFIX)) {
         const data = JSON.parse(window.name.slice(PREFIX.length)) || {};
-        const html = (data["vlab_exp2_simulation_report_html"] || "").toString();
+        const html = (data["vlab_exp7_simulation_report_html"] || "").toString();
         if (html.trim()) return true;
       }
     } catch {}
@@ -475,8 +475,8 @@
     save(state);
 
     try {
-      sessionStorage.setItem("vlab_exp2_current_page", p);
-      sessionStorage.setItem("vlab_exp2_page_enter_ms", String(Date.now()));
+      sessionStorage.setItem("vlab_exp7_current_page", p);
+      sessionStorage.setItem("vlab_exp7_page_enter_ms", String(Date.now()));
     } catch {}
   }
 
@@ -484,13 +484,13 @@
     const state = load();
 
     const p = (() => {
-      try { return sessionStorage.getItem("vlab_exp2_current_page") || pageName(); }
+      try { return sessionStorage.getItem("vlab_exp7_current_page") || pageName(); }
       catch { return pageName(); }
     })();
 
     let enterMs = null;
     try {
-      const s = sessionStorage.getItem("vlab_exp2_page_enter_ms");
+      const s = sessionStorage.getItem("vlab_exp7_page_enter_ms");
       enterMs = s ? Number(s) : null;
     } catch {}
 
@@ -544,7 +544,7 @@
 
   function removeUserScopedProgress(userHash) {
     if (!userHash) return;
-    const prefix = `vlab_exp2_user_${userHash}_`;
+    const prefix = `vlab_exp7_user_${userHash}_`;
     try {
       for (const suffix of USER_PROGRESS_SUFFIXES) {
         localStorage.removeItem(prefix + suffix);
@@ -554,7 +554,7 @@
 
   function hasUserScopedProgress(userHash) {
     if (!userHash) return false;
-    const prefix = `vlab_exp2_user_${userHash}_`;
+    const prefix = `vlab_exp7_user_${userHash}_`;
     try {
       return USER_PROGRESS_SUFFIXES.some((suffix) => {
         const value = localStorage.getItem(prefix + suffix);
@@ -569,7 +569,7 @@
     if (!userHash) return;
     try {
       let movedAny = false;
-      const prefix = `vlab_exp2_user_${userHash}_`;
+      const prefix = `vlab_exp7_user_${userHash}_`;
 
       for (let i = 0; i < GENERAL_PROGRESS_KEYS.length; i++) {
         const key = GENERAL_PROGRESS_KEYS[i];
@@ -636,10 +636,10 @@
     }
 
     setWindowNameValues({
-      vlab_exp2_user_name: trimmedUser.name,
-      vlab_exp2_user_email: trimmedUser.email,
-      vlab_exp2_user_designation: trimmedUser.designation,
-      vlab_exp2_user_submitted_at: state.user.submittedAt
+      vlab_exp7_user_name: trimmedUser.name,
+      vlab_exp7_user_email: trimmedUser.email,
+      vlab_exp7_user_designation: trimmedUser.designation,
+      vlab_exp7_user_submitted_at: state.user.submittedAt
     });
 
     save(state);
@@ -735,12 +735,12 @@
     // window.name user data
     try {
       const wn = loadWindowNameData();
-      delete wn.vlab_exp2_user_name;
-      delete wn.vlab_exp2_user_email;
-      delete wn.vlab_exp2_user_designation;
-      delete wn.vlab_exp2_user_submitted_at;
-      delete wn.vlab_exp2_simulation_report_html;
-      delete wn.vlab_exp2_simulation_report_updated_at;
+      delete wn.vlab_exp7_user_name;
+      delete wn.vlab_exp7_user_email;
+      delete wn.vlab_exp7_user_designation;
+      delete wn.vlab_exp7_user_submitted_at;
+      delete wn.vlab_exp7_simulation_report_html;
+      delete wn.vlab_exp7_simulation_report_updated_at;
       saveWindowNameData(wn);
     } catch {}
   }
