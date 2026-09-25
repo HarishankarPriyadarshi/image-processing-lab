@@ -572,7 +572,7 @@
           localStorage.setItem("vlab_exp7_simulation_report_html", html);
           localStorage.setItem("vlab_exp7_simulation_report_updated_at", updatedAt);
 
-          const activeHash = localStorage.getItem("vlab_exp2_active_user_hash");
+          const activeHash = localStorage.getItem("vlab_exp_active_user_hash");
           if (activeHash) {
             localStorage.setItem(`vlab_exp7_user_${activeHash}_simulation_report_html`, html);
             localStorage.setItem(`vlab_exp7_user_${activeHash}_simulation_report_updated_at`, updatedAt);
