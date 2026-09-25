@@ -6,7 +6,8 @@ const VLABS_LOGO_URL = new URL(
   "../../../assets/images/vlabsLogo.png",
   import.meta.url,
 ).href;
-const REPORT_KEY = "vlab_exp7_watershed_concept_report";
+const REPORT_KEY = "vlab_exp2_derivative_concept_report";
+const REPORT_HTML_KEY = "vlab_exp2_derivative_concept_report_html";
 
 const escapeHTML = (value) =>
   String(value ?? "").replace(
@@ -18,6 +19,8 @@ const escapeHTML = (value) =>
   );
 const formatTime = (value) =>
   value ? new Date(value).toLocaleTimeString() : "--:--:--";
+const operatorName = (operator) =>
+  String(operator || "").replace(/^\w/, (letter) => letter.toUpperCase());
 function formatDuration(start, end) {
   if (!start || !end) return "--:--:--";
   const seconds = Math.max(
@@ -34,76 +37,185 @@ function formatDuration(start, end) {
 }
 function readReport() {
   try {
-    return JSON.parse(localStorage.getItem(REPORT_KEY) || "{}");
+    const data = JSON.parse(localStorage.getItem(REPORT_KEY) || "{}");
+    return Array.isArray(data.results) ? data : { results: [] };
   } catch {
-    return {};
+    return { results: [] };
   }
 }
-function renderInput(matrix) {
+const cloneMatrix = (matrix) =>
+  Array.isArray(matrix)
+    ? matrix.map((row) => (Array.isArray(row) ? [...row] : []))
+    : [];
+const isCompleteResult = (entry) =>
+  Boolean(
+    entry?.operator &&
+    entry?.input?.length &&
+    entry?.kernelX?.length &&
+    entry?.output?.length,
+  );
+function renderMatrix(matrix, type = "input") {
+  if (!Array.isArray(matrix) || !matrix.length || !Array.isArray(matrix[0]))
+    return '<p class="empty">No data available.</p>';
+  const maximum =
+    type === "output"
+      ? Math.max(
+          ...matrix.flat().map((value) => Math.abs(Number(value) || 0)),
+          1,
+        )
+      : 1;
+  const cells = matrix
+    .flat()
+    .map((cell) => {
+      const value = Number(cell) || 0,
+        shade =
+          type === "output"
+            ? Math.max(
+                0,
+                Math.min(255, Math.round((Math.abs(value) / maximum) * 255)),
+              )
+            : null;
+      const style =
+        type === "output"
+          ? ' style="background:rgb(' +
+            shade +
+            "," +
+            shade +
+            "," +
+            shade +
+            ");color:" +
+            (shade > 145 ? "#111827" : "#fff") +
+            '"'
+          : "";
+      const className =
+        type === "input" ? (value ? "one" : "zero") : "kernel-cell";
+      return (
+        '<i class="' + className + '"' + style + ">" + escapeHTML(cell) + "</i>"
+      );
+    })
+    .join("");
   return (
     '<div class="matrix" style="grid-template-columns:repeat(' +
     matrix[0].length +
     ',24px)">' +
-    matrix
-      .flat()
-      .map(
-        (cell) => '<i class="' + (cell ? "one" : "zero") + '">' + cell + "</i>",
-      )
-      .join("") +
+    cells +
     "</div>"
   );
 }
-function boundaryClasses(matrix, row, col) {
-  if (matrix[row][col] !== 1) return "";
-  const isValley = (nextRow, nextColumn) =>
-    nextRow < 0 ||
-    nextRow >= matrix.length ||
-    nextColumn < 0 ||
-    nextColumn >= matrix[0].length ||
-    matrix[nextRow][nextColumn] === 0;
-  return [
-    isValley(row - 1, col) && "boundary-top",
-    isValley(row + 1, col) && "boundary-bottom",
-    isValley(row, col - 1) && "boundary-left",
-    isValley(row, col + 1) && "boundary-right",
-  ]
-    .filter(Boolean)
-    .join(" ");
+function renderKernels(entry) {
+  const x =
+    '<div class="kernel"><h4>' +
+    (entry.kernelY?.length ? "Kernel X" : "Kernel") +
+    "</h4>" +
+    renderMatrix(entry.kernelX, "kernel") +
+    "</div>";
+  const y = entry.kernelY?.length
+    ? '<div class="kernel"><h4>Kernel Y</h4>' +
+      renderMatrix(entry.kernelY, "kernel") +
+      "</div>"
+    : "";
+  return '<div class="kernel-pair">' + x + y + "</div>";
 }
-function renderOutput(matrix) {
-  const cells = matrix
-    .map((row, y) =>
-      row
-        .map((cell, x) => {
-          const boundaries = boundaryClasses(matrix, y, x);
-          return (
-            '<i class="' +
-            (cell ? "terrain " + boundaries : "water") +
-            '">' +
-            cell +
-            "</i>"
-          );
-        })
-        .join(""),
-    )
-    .join("");
+
+function buildSummary(results) {
+  const firstOrder = results
+    .filter((entry) => entry.derivativeOrder === "First-order")
+    .map((entry) => operatorName(entry.operator));
+
+  const secondOrder = results
+    .filter((entry) => entry.derivativeOrder === "Second-order")
+    .map((entry) => operatorName(entry.operator));
+
+  const total = results.length;
+  const parts = [];
+
+  if (firstOrder.length) {
+    parts.push(
+      "first-order derivative operators (" + firstOrder.join(", ") + ")",
+    );
+  }
+
+  if (secondOrder.length) {
+    parts.push(
+      "the second-order derivative operator" +
+        (secondOrder.length > 1 ? "s" : "") +
+        " (" +
+        secondOrder.join(", ") +
+        ")",
+    );
+  }
+
   return (
-    '<div class="matrix output-matrix" style="grid-template-columns:repeat(' +
-    matrix[0].length +
-    ',24px)">' +
-    cells +
-    '</div><div class="legend"><span><b class="terrain"></b>Elevated terrain</span><span><b class="water"></b>Flooded valley / catchment region</span><span><b class="boundary"></b>Watershed boundary</span></div>'
+    "A total of " +
+    total +
+    " derivative operator" +
+    (total > 1 ? "s were" : " was") +
+    " applied to selected binary image patterns. " +
+    parts.join(" and ") +
+    " were used to detect intensity transitions and object boundaries. " +
+    "The resulting edge maps were generated from the corresponding derivative responses, " +
+    "allowing the detected edge structure of each selected image to be observed."
   );
 }
 function buildReport(data) {
-  if (!data?.input || data.finalStep !== 2) return null;
-  const name = escapeHTML(data.imageName || "Plus");
-  const date = new Date(data.updatedAt || Date.now()).toLocaleDateString(
-    "en-US",
-    { month: "long", day: "numeric", year: "numeric" },
-  );
+  const results = (data?.results || []).filter(isCompleteResult);
+  if (!results.length) return null;
+  const completedOperations = new Set(results.map((entry) => entry.operator))
+    .size;
+  const started = results
+    .map((entry) => entry.startedAt)
+    .filter(Boolean)
+    .sort()[0];
+  const completed = results
+    .map((entry) => entry.completedAt || entry.updatedAt)
+    .filter(Boolean)
+    .sort()
+    .at(-1);
+  const date = new Date(completed || Date.now()).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  const executionOrder =
+    '<ol class="execution-order">' +
+    results
+      .map(
+        (entry) => "<li>" + escapeHTML(operatorName(entry.operator)) + "</li>",
+      )
+      .join("") +
+    "</ol>";
+  const sections = results
+    .map(
+      (entry) =>
+        '<section class="section operator-section"><div class="operator-heading"><h2>' +
+        escapeHTML(operatorName(entry.operator)) +
+        " Operator</h2><span>Derivative Order: " +
+        escapeHTML(entry.derivativeOrder) +
+        '</span></div><div class="result-row"><div class="result"><h3>Input Image</h3><p>' +
+        escapeHTML(entry.imageName) +
+        " (" +
+        entry.input.length +
+        " × " +
+        (entry.input[0]?.length || 0) +
+        ")</p>" +
+        renderMatrix(entry.input) +
+        '</div><div class="result"><h3>Kernel(s)</h3><p>Kernel Size: ' +
+        escapeHTML(entry.kernelSize) +
+        "</p>" +
+        renderKernels(entry) +
+        '</div><div class="result"><h3>Final Edge Output</h3><p>' +
+        entry.output.length +
+        " × " +
+        (entry.output[0]?.length || 0) +
+        "</p>" +
+        renderMatrix(entry.output, "output") +
+        '</div></div><div class="observation"><h3>Observation</h3><p>' +
+        escapeHTML(entry.observation) +
+        "</p></div></section>",
+    )
+    .join("");
   const css =
-    "*{box-sizing:border-box}body{margin:0;background:#eef4fb;color:#1f2d3d;font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.65}#scale{width:944px;padding:30px 22px 44px}.page{max-width:900px;margin:auto;padding:26px 28px;background:#fff;border-radius:18px}h2,h3{margin-top:0;color:#243b53}h2{font-size:23px}h3{font-size:17px}p{font-size:15px}.header{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:24px}.logo{width:78px;height:70px;object-fit:contain}.title{flex:1;text-align:center;border-bottom:3px solid #2f7bfa;padding-bottom:14px}.section{background:#f6f9fc;border:1px solid #e0e8f2;border-radius:14px;padding:22px 24px;margin-bottom:24px}.top{display:flex;justify-content:space-between;gap:14px}.badge,.stamp{margin:0;padding:8px 14px;border-radius:20px;font-size:13px;font-weight:600}.badge{background:#e8f1ff;color:#1f62d0}.stamp{background:#fff;border:1px solid #dce5ef;color:#50657c}.label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#60778f;font-weight:700}.experiment{font-size:25px;font-weight:700;color:#16324b;margin:0 0 18px}.cards,.results{display:flex;gap:12px;flex-wrap:wrap}.card,.result{flex:1 1 150px;background:#fff;border:1px solid #dde6f0;border-radius:14px;padding:14px}.card span{display:block;font-weight:600}.result{flex-basis:380px}.matrix{display:grid;gap:2px;width:max-content;border:1px solid #d1d5db;padding:8px;background:#f9fafb}.matrix i{display:flex;width:24px;height:24px;align-items:center;justify-content:center;border:1px solid #d1d5db;font-style:normal;font-size:11px;font-weight:700}.zero{background:#111827;color:#fff}.one{background:#fff;color:#111827}.terrain{background:#24a148;color:#fff}.water{background:#33ccff;color:#12324a}.output-matrix{gap:0}.output-matrix i{border:0}.boundary-top{border-top:3px solid #ef4444!important}.boundary-bottom{border-bottom:3px solid #ef4444!important}.boundary-left{border-left:3px solid #ef4444!important}.boundary-right{border-right:3px solid #ef4444!important}.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;font-size:12px}.legend span{display:flex;align-items:center;gap:5px}.legend b{height:14px;width:14px;border:1px solid #16324b}.legend .boundary{background:#fff;box-shadow:inset 0 0 0 3px #ef4444}@media print{body{background:#fff}.page{border-radius:0}#scale{width:100%;padding:0}}";
+    "*{box-sizing:border-box}body{margin:0;background:#eef4fb;color:#1f2d3d;font-family:Inter,Segoe UI,Arial,sans-serif;line-height:1.5}#scale{width:944px;padding:30px 22px 44px}.page{max-width:900px;margin:auto;padding:26px 28px;background:#fff;border-radius:18px}h2,h3,h4{margin-top:0;color:#243b53}h2{font-size:23px}h3{font-size:16px;margin-bottom:5px}h4{font-size:15px;margin-bottom:6px}p{font-size:15px;margin:0 0 10px}.header{display:flex;align-items:center;justify-content:center;gap:20px;margin-bottom:24px}.logo{width:78px;height:70px;object-fit:contain}.title{flex:1;text-align:center;border-bottom:3px solid #2f7bfa;padding-bottom:14px}.section{background:#f6f9fc;border:1px solid #e0e8f2;border-radius:14px;padding:18px 20px;margin-bottom:18px}.top,.operator-heading{display:flex;justify-content:space-between;gap:14px;align-items:flex-start}.badge,.stamp,.operator-heading span{margin:0;padding:8px 14px;border-radius:20px;font-size:13px;font-weight:600}.badge,.operator-heading span{background:#e8f1ff;color:#1f62d0}.stamp{background:#fff;border:1px solid #dce5ef;color:#50657c}.label{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#60778f;font-weight:700}.experiment{font-size:25px;font-weight:700;color:#16324b;margin:0 0 18px}.cards{display:flex;gap:12px;flex-wrap:wrap}.card{flex:1 1 150px;background:#fff;border:1px solid #dde6f0;border-radius:14px;padding:14px}.card span{display:block;font-weight:600;font-size:15px;}.execution-order{margin:0;padding-left:25px;font-size:14px}.execution-order li{padding:2px 0}.result-row{display:flex;gap:10px;align-items:stretch}.result{flex:1 1 0;background:#fff;border:1px solid #dde6f0;border-radius:12px;padding:12px;min-width:0}.matrix{display:grid;gap:2px;width:max-content;max-width:100%;border:1px solid #d1d5db;padding:6px;background:#f9fafb}.matrix i{display:flex;width:24px;height:24px;align-items:center;justify-content:center;border:1px solid #d1d5db;font-style:normal;font-size:10px;font-weight:700}.zero{background:#111827;color:#fff}.one{background:#fff;color:#111827}.kernel-cell{background:#edf3fa;color:#16324b}.kernel-pair{display:flex;gap:8px;flex-wrap:wrap}.kernel{min-width:0}.observation{margin-top:12px;padding:12px 14px;background:#fff;border-radius:0 10px 10px 0}.observation p{margin:0}.empty{color:#60778f}@media print{body{background:#fff}.page{border-radius:0}#scale{width:100%;padding:0}}";
   return (
     '<!doctype html><html><head><meta charset="UTF-8"><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><style>' +
     css +
@@ -113,50 +225,53 @@ function buildReport(data) {
     VLABS_LOGO_URL +
     '"></div><section class="section"><div class="top"><p class="badge">Image Processing Lab</p><p class="stamp">Generated on ' +
     date +
-    '</p></div><p class="label">Experiment Title</p><p class="experiment">Watershed Concept Simulation</p><h2>Experiment Overview</h2><div class="cards"><div class="card"><span>Start Time:</span>' +
-    formatTime(data.startedAt) +
+    '</p></div><p class="label">Experiment Title</p><p class="experiment">Derivative-Based Edge Detection</p><div class="cards"><div class="card"><span>Start Time:</span>' +
+    formatTime(started) +
     '</div><div class="card"><span>End Time:</span>' +
-    formatTime(data.completedAt) +
+    formatTime(completed) +
     '</div><div class="card"><span>Total Time Spent:</span>' +
-    formatDuration(data.startedAt, data.completedAt) +
-    '</div></div></section><section class="section"><h2>Aim</h2><p>To understand the basic concept of watershed-based image segmentation by representing a binary image as a topographic surface and observing terrain formation, flooding of valleys, and the formation of watershed boundaries between different regions.</p><h2>Simulation Summary</h2><p>The Watershed Concept Simulation demonstrates image segmentation using a topographic interpretation of a binary image. The selected binary ' +
-    name +
-    ' image is represented as a terrain consisting of elevated regions and lower valleys. Water is then progressively introduced into the valleys, allowing the formation of distinct catchment regions. As flooding progresses, boundaries are established between neighboring regions, representing the watershed lines used to separate different image regions.</p></section><section class="section"><div class="results"><div class="result"><h2>Selected Binary Image/Input</h2><h3>' +
-    name +
-    " Binary Image (" +
-    data.input.length +
-    " × " +
-    (data.input[0]?.length || 0) +
-    ")</h3>" +
-    renderInput(data.input) +
-    '</div><div class="result"><h2>Final Simulation Output</h2><p>The final topographic terrain shows elevated regions, flooded valleys/catchment regions, and watershed boundaries.</p>' +
-    renderOutput(data.input) +
-    "</div></div></section></main></div></div></body></html>"
+    formatDuration(started, completed) +
+    '</div><div class="card"><span>Completed Operations:</span>' +
+    completedOperations +
+    '/5</div></div></section><section class="section"><h2>Aim</h2><p>To study derivative-based edge detection by applying first-order and second-order derivative operators to digital images and observe the resulting edge information.</p><h2>Simulation Summary</h2><p>' +
+    escapeHTML(buildSummary(results)) +
+    "</p> </p><h2>Execution Order</h2><p>" +
+    executionOrder +
+    '</p></section><section class="section">' +
+    sections +
+    "</main></div></div></body></html>"
   );
 }
-export function hasWatershedReportData() {
-  const data = readReport();
-  return Boolean(data.input && data.finalStep === 2);
+export function hasDerivativeReportData() {
+  return readReport().results.some(isCompleteResult);
 }
-export function appendWatershedConceptSimulation(entry) {
-  if (!entry?.input || entry.finalStep !== 2) return null;
-  const data = {
+export function appendDerivativeSimulation(entry) {
+  if (!isCompleteResult(entry)) return null;
+  const report = readReport();
+  const result = {
     ...entry,
-    input: entry.input.map((row) => [...row]),
+    input: cloneMatrix(entry.input),
+    kernelX: cloneMatrix(entry.kernelX),
+    kernelY: cloneMatrix(entry.kernelY),
+    output: cloneMatrix(entry.output),
     updatedAt: entry.completedAt || new Date().toISOString(),
   };
-  const html = buildReport(data);
+  report.results = report.results.filter(
+    (item) => item.operator !== result.operator,
+  );
+  report.results.push(result);
+  const html = buildReport(report);
   try {
-    localStorage.setItem(REPORT_KEY, JSON.stringify(data));
-    localStorage.setItem("vlab_exp7_watershed_concept_report_html", html);
+    localStorage.setItem(REPORT_KEY, JSON.stringify(report));
+    localStorage.setItem(REPORT_HTML_KEY, html);
     localStorage.setItem("progressreport.html", html);
     localStorage.setItem("vlab:simulation_report_html", html);
   } catch (error) {
-    console.error("Could not save Watershed report", error);
+    console.error("Could not save derivative report", error);
   }
-  return data;
+  return result;
 }
-export function downloadWatershedReport() {
+export function downloadDerivativeReport() {
   const html = buildReport(readReport());
   if (!html) return false;
   const iframe = document.createElement("iframe");
@@ -225,13 +340,13 @@ export function downloadWatershedReport() {
           link = document.createElement("a");
         link.href = url;
         link.download =
-          "watershed_concept_simulation_report_" + Date.now() + ".pdf";
+          "derivative_edge_detection_report_" + Date.now() + ".pdf";
         document.body.appendChild(link);
         link.click();
         link.remove();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
       } catch (error) {
-        console.error("Could not download Watershed report", error);
+        console.error("Could not download derivative report", error);
         window.alert(
           "Could not generate the PDF report. Please check your internet connection and try again.",
         );

@@ -1033,7 +1033,7 @@
 
     function getSimulationReportData() {
       try {
-        const activeHash = localStorage.getItem("vlab_exp2_active_user_hash");
+        const activeHash = localStorage.getItem("vlab_exp_active_user_hash");
         const keys = [];
         if (activeHash) keys.push(`vlab_exp2_user_${activeHash}_simulation_report_html`);
         keys.push("vlab_exp2_simulation_report_html");
@@ -1066,7 +1066,7 @@
 
     function getAssessmentData(type) {
       try {
-        const activeHash = localStorage.getItem("vlab_exp2_active_user_hash");
+        const activeHash = localStorage.getItem("vlab_exp_active_user_hash");
         const candidates = [];
 
         if (activeHash) {

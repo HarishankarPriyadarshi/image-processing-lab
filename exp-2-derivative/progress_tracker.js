@@ -121,11 +121,11 @@
     try {
       if (!merged.user || !(merged.user.name && merged.user.email && merged.user.designation)) {
         const wn = loadWindowNameData();
-        const name = (wn.vlab_exp2_user_name || "").toString().trim();
-        const email = (wn.vlab_exp2_user_email || "").toString().trim();
-        const designation = (wn.vlab_exp2_user_designation || "").toString().trim();
+        const name = (wn.vlab_exp_user_name || "").toString().trim();
+        const email = (wn.vlab_exp_user_email || "").toString().trim();
+        const designation = (wn.vlab_exp_user_designation || "").toString().trim();
         if (name && email && designation) {
-          merged.user = { name, email, designation, submittedAt: wn.vlab_exp2_user_submitted_at || nowISO() };
+          merged.user = { name, email, designation, submittedAt: wn.vlab_exp_user_submitted_at || nowISO() };
         }
       }
     } catch {}
@@ -158,7 +158,7 @@
   /* ------------------ PROGRESS REPORT ACCESS GUARD ------------------ */
   function hasSimulationReport() {
     try {
-      const activeHash = localStorage.getItem("vlab_exp2_active_user_hash") || "";
+      const activeHash = localStorage.getItem("vlab_exp_active_user_hash") || "";
       const keys = [];
       if (activeHash) keys.push(`vlab_exp2_user_${activeHash}_simulation_report_html`);
       keys.push("vlab_exp2_simulation_report_html");
@@ -601,7 +601,7 @@
     const newHash = normalizedEmail ? computeUserHash(normalizedEmail) : "";
 
     let prevHash = "";
-    try { prevHash = localStorage.getItem("vlab_exp2_active_user_hash") || ""; } catch {}
+    try { prevHash = localStorage.getItem("vlab_exp_active_user_hash") || ""; } catch {}
 
     const state = load();
     const isNewUserByEmail = recordUserHistory(state, trimmedUser);
@@ -610,8 +610,8 @@
     state.flags.reportDeclined = false;
 
     try {
-      if (newHash) localStorage.setItem("vlab_exp2_active_user_hash", newHash);
-      else localStorage.removeItem("vlab_exp2_active_user_hash");
+      if (newHash) localStorage.setItem("vlab_exp_active_user_hash", newHash);
+      else localStorage.removeItem("vlab_exp_active_user_hash");
     } catch {}
 
     if (newHash) {
@@ -636,10 +636,10 @@
     }
 
     setWindowNameValues({
-      vlab_exp2_user_name: trimmedUser.name,
-      vlab_exp2_user_email: trimmedUser.email,
-      vlab_exp2_user_designation: trimmedUser.designation,
-      vlab_exp2_user_submitted_at: state.user.submittedAt
+      vlab_exp_user_name: trimmedUser.name,
+      vlab_exp_user_email: trimmedUser.email,
+      vlab_exp_user_designation: trimmedUser.designation,
+      vlab_exp_user_submitted_at: state.user.submittedAt
     });
 
     save(state);
@@ -709,13 +709,13 @@
 
   function resetAll() {
     let activeHash = "";
-    try { activeHash = localStorage.getItem("vlab_exp2_active_user_hash") || ""; } catch {}
+    try { activeHash = localStorage.getItem("vlab_exp_active_user_hash") || ""; } catch {}
 
     // remove main state
     try { localStorage.removeItem(KEY); } catch {}
 
     // remove active hash
-    try { localStorage.removeItem("vlab_exp2_active_user_hash"); } catch {}
+    try { localStorage.removeItem("vlab_exp_active_user_hash"); } catch {}
 
     // remove general keys
     clearGeneralProgressKeys();
@@ -735,10 +735,10 @@
     // window.name user data
     try {
       const wn = loadWindowNameData();
-      delete wn.vlab_exp2_user_name;
-      delete wn.vlab_exp2_user_email;
-      delete wn.vlab_exp2_user_designation;
-      delete wn.vlab_exp2_user_submitted_at;
+      delete wn.vlab_exp_user_name;
+      delete wn.vlab_exp_user_email;
+      delete wn.vlab_exp_user_designation;
+      delete wn.vlab_exp_user_submitted_at;
       delete wn.vlab_exp2_simulation_report_html;
       delete wn.vlab_exp2_simulation_report_updated_at;
       saveWindowNameData(wn);
