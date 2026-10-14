@@ -558,6 +558,8 @@
     .procedure-main {
       min-width: 0;
       padding-bottom: 6rem;
+      overflow-x: clip;
+      overflow-y: visible;
     }
 
     .procedure-content {
@@ -820,7 +822,7 @@
       </nav>
 
       <!-- TITLE CARD -->
-      <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
+      <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg procedure-audio-sticky">
        <div class="px-4 py-3 tts-box" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
           <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
             Derivative-Based Edge Detection
@@ -830,7 +832,8 @@
             <div
               class="speech-controls flex items-center gap-2"
               data-speech-ignore
-              aria-label="Text to Speech controls"
+              aria-label="Recorded audio controls"
+              data-audio-key="1.para.procedure"
             >
               <!-- Previous sentence -->
               <button
@@ -848,7 +851,7 @@
                 type="button"
                 class="speech-control-button"
                 data-speech-action="toggle"
-                aria-label="Play theory reading"
+                aria-label="Play recorded audio"
                 title="Play"
               >
                 ▶ Play
@@ -864,8 +867,14 @@
               >
                 ›
               </button>
+              <label class="speech-speed-control">
+                Speed
+                <input type="range" data-speech-speed min="0.5" max="2" step="0.1" value="1" aria-label="Playback speed">
+                <span data-speech-speed-value>1x</span>
+              </label>
+
                         <style>
-            /* Listen-to-theory controls; speech behaviour lives in theory_speech.js. */
+            /* Recorded audio controls. */
             .tts-box {
               display: flex;
               justify-content: space-between;
@@ -907,9 +916,28 @@
               display: none;
             }
 
+            .speech-control-button:disabled {
+              cursor: not-allowed;
+              opacity: 0.55;
+            }
+
             .speech-status {
-              color: #1e3a5f;
-              font-size: 0.95rem;
+              max-width: 14rem;
+              color: #fff;
+              font-size: 0.8rem;
+            }
+
+            .speech-speed-control {
+              display: inline-flex;
+              align-items: center;
+              gap: 0.35rem;
+              color: #fff;
+              font-size: 0.8rem;
+            }
+
+            .speech-speed-control input {
+              width: 5rem;
+              accent-color: #93c5fd;
             }
 
             .speech-sentence-part {
@@ -922,6 +950,18 @@
               background: rgba(147, 197, 253, 0.55);
               border-radius: 0.3rem;
               box-shadow: 0 0 0 0.18rem rgba(147, 197, 253, 0.24);
+            }
+
+            .speech-highlight-active {
+              background: rgba(147, 197, 253, 0.55);
+              border-radius: 0.3rem;
+              box-shadow: 0 0 0 0.18rem rgba(147, 197, 253, 0.24);
+            }
+
+            .content h2.speech-highlight-active,
+            .content h3.speech-highlight-active {
+              width: fit-content;
+              max-width: 100%;
             }
           </style>
             </div>
@@ -960,6 +1000,12 @@
         margin-top:20px;
         margin-bottom:12px;
         text-align:left;
+      }
+
+      .procedure-audio-sticky {
+        position: sticky;
+        top: 70px;
+        z-index: 20;
       }
 
       .content p{
@@ -1008,7 +1054,7 @@
 body{
     width:100%;
     max-width:100%;
-    overflow-x:hidden;
+    overflow-x:clip;
 }
 
 *{
@@ -1024,23 +1070,23 @@ main{
 
     <div data-theory-content class="content">
 
-      <h2>Procedure</h2>
+      <h2 data-recorded-audio-heading="1.para.procedure">Procedure</h2>
 
-      <h3>For Derivative Based Edge Detection</h3>
+      <h3 data-recorded-audio-heading="1.para.procedure">For Derivative Based Edge Detection</h3>
 
-      <p><b>Step 1:</b> Select an image from the available sample images or upload your own image using the <b>Upload File</b> button.</p>
+      <p data-recorded-audio-text data-recorded-audio-key="1.para.procedure"><b>Step 1:</b> Select an image from the available sample images or upload your own image using the <b>Upload File</b> button.</p>
 
-      <p><b>Step 2:</b> Choose the desired <b>Derivative Order</b> from the available options.</p>
+      <p data-recorded-audio-text data-recorded-audio-key="1.para.procedure"><b>Step 2:</b> Choose the desired <b>Derivative Order</b> from the available options.</p>
 
-      <p><b>Step 3:</b> If <b>First Order Derivative</b> is selected, choose the required filter such as <b>Sobel</b>, <b>Prewitt</b>, or <b>Robert</b>.</p>
+      <p data-recorded-audio-text data-recorded-audio-key="1.para.procedure"><b>Step 3:</b> If <b>First Order Derivative</b> is selected, choose the required filter such as <b>Sobel</b>, <b>Prewitt</b>, or <b>Robert</b>.</p>
 
-      <p><b>Step 4:</b> If <b>Second Order Derivative</b> is selected, select the required kernel size.</p>
+      <p data-recorded-audio-text data-recorded-audio-key="1.para.procedure"><b>Step 4:</b> If <b>Second Order Derivative</b> is selected, select the required kernel size.</p>
 
-      <p><b>Step 5:</b> After selecting all required parameters, click on the <b>Process</b> button.</p>
+      <p data-recorded-audio-text data-recorded-audio-key="1.para.procedure"><b>Step 5:</b> After selecting all required parameters, click on the <b>Process</b> button.</p>
 
-      <p><b>Step 6:</b> The processed edge-detected image will be displayed on the output screen.</p>
+      <p data-recorded-audio-text data-recorded-audio-key="1.para.procedure"><b>Step 6:</b> The processed edge-detected image will be displayed on the output screen.</p>
 
-      <p><b>Step 7:</b> Click on the <b>Print</b> button to print or save the result.</p>
+      <p data-recorded-audio-text data-recorded-audio-key="1.para.procedure"><b>Step 7:</b> Click on the <b>Print</b> button to print or save the result.</p>
 
     </div>
 

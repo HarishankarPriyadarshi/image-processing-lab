@@ -1,1244 +1,424 @@
-/* ============================================================
-   Virtual Labs - Text to Speech Reader
-   Controls:
-   - Previous sentence
-   - Play / Pause / Resume
-   - Next sentence
-
-   Speech is generated one sentence at a time.
-   ============================================================ */
-
 (function () {
   "use strict";
 
-  const THEORY_CONTAINER_SELECTOR = "[data-theory-content]";
-  const READING_SELECTOR = "h2, h3, h4, p, li, figcaption";
+  const AUDIO_DIR = "./audio/theoryAudio/";
+  const JSON_URL = "./textToSpeech.json";
+  const TEXT = "[data-recorded-audio-text]";
+  const SPLITTER = typeof Intl.Segmenter === "function"
+    ? new Intl.Segmenter(undefined, { granularity: "sentence" })
+    : null;
 
-  const IGNORE_SELECTOR =
-    "[data-speech-ignore], script, style, noscript, [hidden], [aria-hidden='true']";
-
-  const NO_WALK_SELECTOR =
-    "img, svg, script, style, noscript, [data-speech-ignore], [hidden], [aria-hidden='true']";
-
-  const PREPARED_MARKER = "data-speech-prepared";
-
-  let readingItems = [];
-  let currentIndex = 0;
-  let currentSentenceIndex = 0;
-
-  let speechSessionId = 0;
-  let activeElement = null;
-  let currentSentenceSelector = null;
-
-  let isPaused = false;
-  let isReading = false;
-
-  function initializeSpeechReader() {
-    const container = document.querySelector(
-      THEORY_CONTAINER_SELECTOR
-    );
-
-    const controls = document.querySelector(".speech-controls");
-
-    if (!container || !controls) {
-      return;
-    }
-
-    const supported =
-      "speechSynthesis" in window &&
-      "SpeechSynthesisUtterance" in window;
-
-    controls.querySelectorAll("button").forEach((button) => {
-      button.addEventListener("click", () => {
-        handleAction(button.dataset.speechAction);
-      });
-
-      if (!supported) {
-        button.disabled = true;
-      }
-    });
-
-    if (!supported) {
-      setStatus(
-        "Text-to-speech is not supported by this browser."
-      );
-      return;
-    }
-
-    window.addEventListener("beforeunload", () => {
-      window.speechSynthesis.cancel();
-    });
-
-    updateSpeechControls();
+  function sentences(text) {
+    const value = text.replace(/\s+/g, " ").trim();
+    return (SPLITTER
+      ? Array.from(SPLITTER.segment(value), (part) => part.segment.trim())
+      : value.match(/[^.!?]+(?:[.!?]+|$)/g) || [value]
+    ).filter(Boolean);
   }
 
-  /* ============================================================
-     ACTION HANDLER
-     ============================================================ */
-
-  function handleAction(action) {
-    switch (action) {
-      case "toggle":
-        togglePlayPause();
-        break;
-
-      case "previous":
-        previousSentence();
-        break;
-
-      case "next":
-        nextSentence();
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  /* ============================================================
-     EXTRACT THEORY CONTENT
-     ============================================================ */
-
-  function extractReadableContent() {
-    const container = document.querySelector(
-      THEORY_CONTAINER_SELECTOR
-    );
-
-    if (!container) {
-      return [];
-    }
-
-    return Array.from(
-      container.querySelectorAll(READING_SELECTOR)
-    )
-      .filter((element) => {
-        if (element.closest(IGNORE_SELECTOR)) {
-          return false;
+  function sentenceRanges(text) {
+    let normalized = "";
+    const sourceOffsets = [];
+    for (let index = 0; index < text.length; index += 1) {
+      if (/\s/.test(text[index])) {
+        if (normalized && !normalized.endsWith(" ")) {
+          normalized += " ";
+          sourceOffsets.push(index);
         }
-
-        if (element.offsetParent === null) {
-          return false;
-        }
-
-        /*
-         * Prevent nested list elements from being
-         * read more than once.
-         */
-        const parentListItem =
-          element.parentElement &&
-          element.parentElement.closest("li");
-
-        return !parentListItem;
-      })
-      .map((element) => ({
-        element,
-        text: element.textContent
-          .replace(/\s+/g, " ")
-          .trim(),
-      }))
-      .filter((item) => item.text.length > 0)
-      .map((item) => ({
-        ...item,
-        sentences: splitIntoSentences(item.text),
-      }))
-      .filter(
-        (item) => item.sentences.length > 0
-      );
-  }
-
-  /* ============================================================
-     DOM TEXT NODE MAPPING
-     ============================================================ */
-
-  function shouldSkipWalk(node) {
-    if (node.nodeType !== 1) return false;
-    if (node.matches && node.matches(NO_WALK_SELECTOR)) return true;
-    return false;
-  }
-
-  function collectTextNodes(root) {
-    const segments = [];
-    let normalizedOffset = 0;
-
-    function traverse(node) {
-      if (node.nodeType === 3) {
-        const rawText = node.nodeValue;
-        const normalizedText = rawText.replace(/\s+/g, " ");
-        if (normalizedText.length > 0) {
-          segments.push({
-            textNode: node,
-            rawText: rawText,
-            normalizedText: normalizedText,
-            normalizedStart: normalizedOffset,
-            normalizedEnd: normalizedOffset + normalizedText.length,
-          });
-          normalizedOffset += normalizedText.length;
-        }
-        return;
-      }
-
-      if (node.nodeType === 1) {
-        if (node !== root && shouldSkipWalk(node)) {
-          const skippedText = node.textContent || "";
-          const skippedNorm = skippedText.replace(/\s+/g, " ");
-          normalizedOffset += skippedNorm.length;
-          return;
-        }
-
-        let child = node.firstChild;
-        while (child) {
-          traverse(child);
-          child = child.nextSibling;
-        }
-      }
-    }
-
-    traverse(root);
-
-    return {
-      segments: segments,
-      totalNormalizedLength: normalizedOffset,
-    };
-  }
-
-  function buildTextNodeMap(root) {
-    return collectTextNodes(root);
-  }
-
-  function normalizeText(text) {
-    return text.replace(/\s+/g, " ");
-  }
-
-  function findSentenceRangesInSegments(
-    textNodeMap,
-    sentenceNormalizedStart,
-    sentenceNormalizedEnd
-  ) {
-    const ranges = [];
-    const segments = textNodeMap.segments;
-
-    for (const seg of segments) {
-      const overlapStart = Math.max(
-        seg.normalizedStart,
-        sentenceNormalizedStart
-      );
-      const overlapEnd = Math.min(
-        seg.normalizedEnd,
-        sentenceNormalizedEnd
-      );
-
-      if (overlapStart < overlapEnd) {
-        const relStartNorm =
-          overlapStart - seg.normalizedStart;
-        const relEndNorm = overlapEnd - seg.normalizedStart;
-
-        const rawRange =
-          mapNormalizedRangeToRaw(
-            seg.rawText,
-            relStartNorm,
-            relEndNorm
-          );
-
-        ranges.push({
-          textNode: seg.textNode,
-          rawStart: rawRange.rawStart,
-          rawEnd: rawRange.rawEnd,
-        });
-      }
-    }
-
-    return ranges;
-  }
-
-  function mapNormalizedRangeToRaw(
-    rawText,
-    normStart,
-    normEnd
-  ) {
-    let rawPos = 0;
-    let normPos = 0;
-    let rawStart = 0;
-    let rawEnd = 0;
-    let startFound = false;
-
-    while (rawPos < rawText.length && normPos <= normEnd) {
-      const ch = rawText[rawPos];
-      const isWhitespace = /\s/.test(ch);
-
-      if (isWhitespace) {
-        if (normPos === normStart && !startFound) {
-          rawStart = rawPos;
-          startFound = true;
-        }
-        if (normPos === normEnd) {
-          rawEnd = rawPos;
-          return { rawStart, rawEnd };
-        }
-        let runStart = rawPos;
-        while (
-          rawPos < rawText.length &&
-          /\s/.test(rawText[rawPos])
-        ) {
-          rawPos++;
-        }
-        normPos++;
-        continue;
-      }
-
-      if (normPos === normStart && !startFound) {
-        rawStart = rawPos;
-        startFound = true;
-      }
-      if (normPos === normEnd) {
-        rawEnd = rawPos;
-        return { rawStart, rawEnd };
-      }
-
-      rawPos++;
-      normPos++;
-    }
-
-    if (!startFound) {
-      rawStart = rawPos;
-    }
-    rawEnd = rawPos;
-    return { rawStart, rawEnd };
-  }
-
-  /* ============================================================
-     PREPARE SENTENCE HIGHLIGHTING (IDEMPOTENT)
-     ============================================================ */
-
-  function prepareSentenceHighlighting(item, itemIndex) {
-    const element = item.element;
-    const sentences = item.sentences;
-
-    if (element.hasAttribute(PREPARED_MARKER)) {
-      return;
-    }
-
-    const textNodeMap = buildTextNodeMap(element);
-
-    if (textNodeMap.segments.length === 0) {
-      element.setAttribute(PREPARED_MARKER, "true");
-      return;
-    }
-
-    const normalizedFullText = sentences.join(" ");
-    const textContentNorm = normalizeText(
-      element.textContent
-    );
-
-    const sentenceOffsets = [];
-    let searchPos = 0;
-
-    for (let s = 0; s < sentences.length; s++) {
-      const sentenceNorm = sentences[s];
-      const idx = textContentNorm.indexOf(
-        sentenceNorm,
-        searchPos
-      );
-
-      if (idx === -1) {
-        sentenceOffsets.push(null);
-        continue;
-      }
-
-      const start = idx;
-      const end = idx + sentenceNorm.length;
-      sentenceOffsets.push({ start, end });
-      searchPos = end;
-    }
-
-    const wrapOps = [];
-
-    for (let s = 0; s < sentenceOffsets.length; s++) {
-      const offsets = sentenceOffsets[s];
-      if (!offsets) continue;
-
-      const ranges = findSentenceRangesInSegments(
-        textNodeMap,
-        offsets.start,
-        offsets.end
-      );
-
-      for (const range of ranges) {
-        wrapOps.push({
-          textNode: range.textNode,
-          rawStart: range.rawStart,
-          rawEnd: range.rawEnd,
-          sentenceId: itemIndex + "-" + s,
-        });
-      }
-    }
-
-    const byTextNode = new Map();
-    for (const op of wrapOps) {
-      if (!byTextNode.has(op.textNode)) {
-        byTextNode.set(op.textNode, []);
-      }
-      byTextNode.get(op.textNode).push(op);
-    }
-
-    byTextNode.forEach((ops, textNode) => {
-      ops.sort((a, b) => a.rawStart - b.rawStart);
-      wrapTextNodeRanges(textNode, ops);
-    });
-
-    element.setAttribute(PREPARED_MARKER, "true");
-  }
-
-  function wrapTextNodeRanges(textNode, ops) {
-    const parent = textNode.parentNode;
-    if (!parent) return;
-
-    const rawText = textNode.nodeValue;
-
-    const validOps = ops.filter(
-      (op) => op.rawStart < op.rawEnd && op.rawEnd <= rawText.length
-    );
-
-    if (validOps.length === 0) return;
-
-    let currentPos = 0;
-    const frag = document.createDocumentFragment();
-
-    for (let i = 0; i < validOps.length; i++) {
-      const op = validOps[i];
-
-      if (op.rawStart > currentPos) {
-        const beforeText = rawText.slice(
-          currentPos,
-          op.rawStart
-        );
-        frag.appendChild(
-          document.createTextNode(beforeText)
-        );
-      }
-
-      const wrappedText = rawText.slice(
-        op.rawStart,
-        op.rawEnd
-      );
-      const span = document.createElement("span");
-      span.className = "speech-sentence-part";
-      span.setAttribute(
-        "data-speech-sentence",
-        op.sentenceId
-      );
-      span.textContent = wrappedText;
-      frag.appendChild(span);
-
-      currentPos = op.rawEnd;
-    }
-
-    if (currentPos < rawText.length) {
-      const afterText = rawText.slice(currentPos);
-      frag.appendChild(document.createTextNode(afterText));
-    }
-
-    parent.replaceChild(frag, textNode);
-  }
-
-  /* ============================================================
-     HIGHLIGHT CONTROL
-     ============================================================ */
-
-  function clearSentenceHighlights() {
-    const container = document.querySelector(
-      THEORY_CONTAINER_SELECTOR
-    );
-    if (!container) return;
-
-    const parts = container.querySelectorAll(
-      ".speech-sentence-part.speech-active"
-    );
-    parts.forEach((el) => {
-      el.classList.remove("speech-active");
-    });
-
-    currentSentenceSelector = null;
-  }
-
-  function highlightCurrentSentence() {
-    clearSentenceHighlights();
-
-    if (!readingItems.length) return;
-    const item = readingItems[currentIndex];
-    if (!item) return;
-
-    prepareSentenceHighlighting(item, currentIndex);
-
-    const sentenceId =
-      currentIndex + "-" + currentSentenceIndex;
-    const selector =
-      '[data-speech-sentence="' + sentenceId + '"]';
-    currentSentenceSelector = selector;
-
-    const container = document.querySelector(
-      THEORY_CONTAINER_SELECTOR
-    );
-    if (!container) return;
-
-    const parts = container.querySelectorAll(selector);
-    parts.forEach((el) => {
-      el.classList.add("speech-active");
-    });
-
-    scrollSentenceIntoView(parts);
-  }
-
-  function scrollSentenceIntoView(sentenceParts) {
-    if (!sentenceParts || sentenceParts.length === 0) {
-      return;
-    }
-
-    let firstEl = sentenceParts[0];
-    if (sentenceParts.length > 1) {
-      let minTop = Infinity;
-      for (const el of sentenceParts) {
-        const top = el.getBoundingClientRect().top;
-        if (top < minTop) {
-          minTop = top;
-          firstEl = el;
-        }
-      }
-    }
-
-    const bounds = firstEl.getBoundingClientRect();
-    const comfortablyVisible =
-      bounds.top >= 110 &&
-      bounds.bottom <= window.innerHeight - 70;
-
-    if (!comfortablyVisible) {
-      firstEl.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    }
-  }
-
-  /* ============================================================
-     PLAY / PAUSE / RESUME
-     ============================================================ */
-
-  function togglePlayPause() {
-    if (!readingItems.length) {
-      readingItems = extractReadableContent();
-    }
-
-    if (!readingItems.length) {
-      setStatus(
-        "There is no theory text available to read."
-      );
-      return;
-    }
-
-    if (isPaused) {
-      resumeReading();
-      return;
-    }
-
-    if (
-      window.speechSynthesis.speaking ||
-      isReading
-    ) {
-      pauseReading();
-      return;
-    }
-
-    if (
-      currentIndex >= readingItems.length ||
-      !readingItems[currentIndex]?.sentences[
-        currentSentenceIndex
-      ]
-    ) {
-      currentIndex = 0;
-      currentSentenceIndex = 0;
-    }
-
-    startCurrentSentence();
-  }
-
-  /* ============================================================
-     START CURRENT SENTENCE
-     ============================================================ */
-
-  function startCurrentSentence() {
-    if (!readingItems.length) {
-      return;
-    }
-
-    const item = readingItems[currentIndex];
-
-    if (
-      !item ||
-      !item.sentences[currentSentenceIndex]
-    ) {
-      finishReading();
-      return;
-    }
-
-    speechSessionId += 1;
-
-    const sessionId = speechSessionId;
-
-    window.speechSynthesis.cancel();
-
-    isPaused = false;
-    isReading = true;
-
-    setActiveItem(item.element);
-
-    setStatus(
-      `Reading sentence ${getCurrentSentenceNumber()} of ${getTotalSentenceCount()}.`
-    );
-
-    updateSpeechControls();
-
-    let speechText =
-      item.sentences[currentSentenceIndex];
-
-    if (currentSentenceIndex === 0) {
-      const ordinalPrefix =
-        getOrdinalPrefixForElement(item.element);
-
-      if (ordinalPrefix) {
-        speechText =
-          ordinalPrefix + ", " + speechText;
-      }
-    }
-
-    const utterance =
-      new SpeechSynthesisUtterance(speechText);
-
-    utterance.onend = () => {
-      if (
-        sessionId !== speechSessionId ||
-        isPaused
-      ) {
-        return;
-      }
-
-      moveToNextSentence();
-    };
-
-    utterance.onerror = (event) => {
-      if (
-        sessionId !== speechSessionId ||
-        event.error === "canceled" ||
-        event.error === "interrupted"
-      ) {
-        return;
-      }
-
-      isReading = false;
-      isPaused = false;
-
-      setStatus(
-        "Reading was interrupted."
-      );
-
-      updateSpeechControls();
-    };
-
-    window.speechSynthesis.speak(utterance);
-  }
-
-  /* ============================================================
-     PAUSE
-     ============================================================ */
-
-  function pauseReading() {
-    if (
-      !window.speechSynthesis.speaking ||
-      isPaused
-    ) {
-      return;
-    }
-
-    window.speechSynthesis.pause();
-
-    isPaused = true;
-    isReading = true;
-
-    setStatus("Reading paused.");
-
-    updateSpeechControls();
-  }
-
-  /* ============================================================
-     RESUME
-     ============================================================ */
-
-  function resumeReading() {
-    if (!isPaused) {
-      return;
-    }
-
-    window.speechSynthesis.resume();
-
-    isPaused = false;
-    isReading = true;
-
-    setStatus(
-      `Reading sentence ${getCurrentSentenceNumber()} of ${getTotalSentenceCount()}.`
-    );
-
-    updateSpeechControls();
-  }
-
-  /* ============================================================
-     PREVIOUS SENTENCE
-     ============================================================ */
-
-  function previousSentence() {
-    if (!readingItems.length) {
-      readingItems = extractReadableContent();
-    }
-
-    if (!readingItems.length) {
-      setStatus(
-        "There is no theory text available to read."
-      );
-      return;
-    }
-
-    const wasPaused = isPaused;
-
-    const wasReading =
-      isReading ||
-      window.speechSynthesis.speaking ||
-      window.speechSynthesis.pending;
-
-    const previousPosition =
-      getPreviousPosition();
-
-    if (!previousPosition) {
-      setStatus(
-        "Already at the first sentence."
-      );
-      return;
-    }
-
-    speechSessionId += 1;
-
-    window.speechSynthesis.cancel();
-
-    currentIndex =
-      previousPosition.itemIndex;
-
-    currentSentenceIndex =
-      previousPosition.sentenceIndex;
-
-    isPaused = wasPaused;
-    isReading = wasReading;
-
-    setActiveItem(
-      readingItems[currentIndex].element
-    );
-
-    if (wasReading && !wasPaused) {
-      const sessionId = speechSessionId;
-
-      setStatus(
-        `Reading sentence ${getCurrentSentenceNumber()} of ${getTotalSentenceCount()}.`
-      );
-
-      window.setTimeout(() => {
-        if (sessionId !== speechSessionId) {
-          return;
-        }
-
-        startCurrentSentence();
-      }, 50);
-    } else {
-      setStatus(
-        `Selected sentence ${getCurrentSentenceNumber()} of ${getTotalSentenceCount()}.`
-      );
-
-      updateSpeechControls();
-    }
-  }
-
-  /* ============================================================
-     NEXT SENTENCE
-     ============================================================ */
-
-  function nextSentence() {
-    if (!readingItems.length) {
-      readingItems = extractReadableContent();
-    }
-
-    if (!readingItems.length) {
-      setStatus(
-        "There is no theory text available to read."
-      );
-      return;
-    }
-
-    const nextPosition =
-      getNextPosition();
-
-    if (!nextPosition) {
-      finishReading();
-      return;
-    }
-
-    const wasPaused = isPaused;
-
-    const wasReading =
-      isReading ||
-      window.speechSynthesis.speaking ||
-      window.speechSynthesis.pending;
-
-    speechSessionId += 1;
-
-    window.speechSynthesis.cancel();
-
-    currentIndex =
-      nextPosition.itemIndex;
-
-    currentSentenceIndex =
-      nextPosition.sentenceIndex;
-
-    isPaused = wasPaused;
-    isReading = wasReading;
-
-    setActiveItem(
-      readingItems[currentIndex].element
-    );
-
-    if (wasReading && !wasPaused) {
-      const sessionId = speechSessionId;
-
-      setStatus(
-        `Reading sentence ${getCurrentSentenceNumber()} of ${getTotalSentenceCount()}.`
-      );
-
-      window.setTimeout(() => {
-        if (sessionId !== speechSessionId) {
-          return;
-        }
-
-        startCurrentSentence();
-      }, 50);
-    } else {
-      setStatus(
-        `Selected sentence ${getCurrentSentenceNumber()} of ${getTotalSentenceCount()}.`
-      );
-
-      updateSpeechControls();
-    }
-  }
-
-  /* ============================================================
-     AUTOMATICALLY MOVE TO NEXT SENTENCE
-     ============================================================ */
-
-  function moveToNextSentence() {
-    const nextPosition =
-      getNextPosition();
-
-    if (!nextPosition) {
-      finishReading();
-      return;
-    }
-
-    currentIndex =
-      nextPosition.itemIndex;
-
-    currentSentenceIndex =
-      nextPosition.sentenceIndex;
-
-    startCurrentSentence();
-  }
-
-  /* ============================================================
-     NEXT POSITION
-     ============================================================ */
-
-  function getNextPosition() {
-    if (!readingItems.length) {
-      return null;
-    }
-
-    let itemIndex = currentIndex;
-
-    let sentenceIndex =
-      currentSentenceIndex + 1;
-
-    if (
-      sentenceIndex <
-      readingItems[itemIndex].sentences.length
-    ) {
-      return {
-        itemIndex,
-        sentenceIndex,
-      };
-    }
-
-    itemIndex += 1;
-
-    while (
-      itemIndex < readingItems.length
-    ) {
-      if (
-        readingItems[itemIndex]
-          .sentences.length > 0
-      ) {
-        return {
-          itemIndex,
-          sentenceIndex: 0,
-        };
-      }
-
-      itemIndex += 1;
-    }
-
-    return null;
-  }
-
-  /* ============================================================
-     PREVIOUS POSITION
-     ============================================================ */
-
-  function getPreviousPosition() {
-    if (!readingItems.length) {
-      return null;
-    }
-
-    let itemIndex = currentIndex;
-
-    let sentenceIndex =
-      currentSentenceIndex - 1;
-
-    if (sentenceIndex >= 0) {
-      return {
-        itemIndex,
-        sentenceIndex,
-      };
-    }
-
-    itemIndex -= 1;
-
-    while (itemIndex >= 0) {
-      const sentenceCount =
-        readingItems[itemIndex]
-          .sentences.length;
-
-      if (sentenceCount > 0) {
-        return {
-          itemIndex,
-          sentenceIndex:
-            sentenceCount - 1,
-        };
-      }
-
-      itemIndex -= 1;
-    }
-
-    return null;
-  }
-
-  /* ============================================================
-     SENTENCE COUNTERS
-     ============================================================ */
-
-  function getTotalSentenceCount() {
-    return readingItems.reduce(
-      (total, item) =>
-        total + item.sentences.length,
-      0
-    );
-  }
-
-  function getCurrentSentenceNumber() {
-    let number = 0;
-
-    for (
-      let i = 0;
-      i < currentIndex;
-      i += 1
-    ) {
-      number +=
-        readingItems[i].sentences.length;
-    }
-
-    return (
-      number +
-      currentSentenceIndex +
-      1
-    );
-  }
-
-  /* ============================================================
-     FINISH
-     ============================================================ */
-
-  function finishReading() {
-    speechSessionId += 1;
-
-    window.speechSynthesis.cancel();
-
-    isPaused = false;
-    isReading = false;
-
-    currentIndex = 0;
-    currentSentenceIndex = 0;
-
-    clearActiveHighlight();
-
-    setStatus(
-      "Reading completed."
-    );
-
-    updateSpeechControls();
-  }
-
-  /* ============================================================
-     ACTIVE THEORY ELEMENT (SENTENCE-LEVEL HIGHLIGHT)
-     ============================================================ */
-
-  function setActiveItem(element) {
-    activeElement = element;
-    highlightCurrentSentence();
-  }
-
-  function clearActiveHighlight() {
-    clearSentenceHighlights();
-    activeElement = null;
-  }
-
-  /* ============================================================
-     UPDATE BUTTONS
-     ============================================================ */
-
-  function updateSpeechControls() {
-    const playButton =
-      document.querySelector(
-        '[data-speech-action="toggle"]'
-      );
-
-    const previousButton =
-      document.querySelector(
-        '[data-speech-action="previous"]'
-      );
-
-    const nextButton =
-      document.querySelector(
-        '[data-speech-action="next"]'
-      );
-
-    if (playButton) {
-      if (isPaused) {
-        playButton.textContent =
-          "▶ Resume";
-
-        playButton.setAttribute(
-          "aria-label",
-          "Resume theory reading"
-        );
-
-        playButton.setAttribute(
-          "title",
-          "Resume"
-        );
-      } else if (
-        isReading ||
-        window.speechSynthesis.speaking
-      ) {
-        playButton.textContent =
-          "⏸ Pause";
-
-        playButton.setAttribute(
-          "aria-label",
-          "Pause theory reading"
-        );
-
-        playButton.setAttribute(
-          "title",
-          "Pause"
-        );
       } else {
-        playButton.textContent =
-          "▶ Read";
-
-        playButton.setAttribute(
-          "aria-label",
-          "Read theory reading"
-        );
-
-        playButton.setAttribute(
-          "title",
-          "Play"
-        );
+        normalized += text[index];
+        sourceOffsets.push(index);
       }
     }
-
-    if (previousButton) {
-      previousButton.disabled =
-        !readingItems.length ||
-        !getPreviousPosition();
+    if (normalized.endsWith(" ")) {
+      normalized = normalized.slice(0, -1);
+      sourceOffsets.pop();
     }
 
-    if (nextButton) {
-      nextButton.disabled =
-        !readingItems.length ||
-        !getNextPosition();
-    }
+    let searchFrom = 0;
+    return sentences(normalized).map((text) => {
+      const start = normalized.indexOf(text, searchFrom);
+      if (start < 0) throw new Error("Could not map a sentence to its source text.");
+      const end = start + text.length;
+      searchFrom = end;
+      return { text, start: sourceOffsets[start], end: sourceOffsets[end - 1] + 1 };
+    });
   }
 
-  /* ============================================================
-     SENTENCE SPLITTING
-     ============================================================ */
-
-  function splitIntoSentences(text) {
-    if (
-      "Intl" in window &&
-      typeof Intl.Segmenter === "function"
-    ) {
-      return Array.from(
-        new Intl.Segmenter(undefined, {
-          granularity: "sentence",
-        }).segment(text),
-        (segment) =>
-          segment.segment.trim()
-      ).filter(Boolean);
+  function wrapTextRange(element, start, end) {
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+    const textNodes = [];
+    let textLength = 0;
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      textNodes.push({ node, start: textLength, end: textLength + node.length });
+      textLength += node.length;
     }
+    const startNode = textNodes.find((item) => start >= item.start && start < item.end);
+    const endNode = textNodes.find((item) => end > item.start && end <= item.end);
+    if (!startNode || !endNode) throw new Error("Could not wrap a sentence in the transcript.");
 
-    return (
-      text
-        .match(
-          /[^.!?]+(?:[.!?]+|$)/g
-        )
-        ?.map((sentence) =>
-          sentence.trim()
-        )
-        .filter(Boolean) || [text]
-    );
+    const range = document.createRange();
+    range.setStart(startNode.node, start - startNode.start);
+    range.setEnd(endNode.node, end - endNode.start);
+    const span = document.createElement("span");
+    span.className = "speech-sentence-part";
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+    return span;
   }
 
-  /* ============================================================
-     ORDERED LIST ORDINAL HELPERS
-     ============================================================ */
-
-  function numberToOrdinalWord(n) {
-    if (typeof n !== "number" || n < 1) {
-      return "";
+  function mediaPath(key) {
+    if (key === "1.para.aim") {
+      return "./audio/AimAudio/1.para.aim.wav";
+    }
+    if (key === "1.para.procedure") {
+      return "./audio/procedureAudio/1.para.procedure.wav";
     }
 
-    const words = {
-      1: "First",
-      2: "Second",
-      3: "Third",
-      4: "Fourth",
-      5: "Fifth",
-      6: "Sixth",
-      7: "Seventh",
-      8: "Eighth",
-      9: "Ninth",
-      10: "Tenth",
-      11: "Eleventh",
-      12: "Twelfth",
-      13: "Thirteenth",
-      14: "Fourteenth",
-      15: "Fifteenth",
-      16: "Sixteenth",
-      17: "Seventeenth",
-      18: "Eighteenth",
-      19: "Nineteenth",
-      20: "Twentieth",
-      21: "Twenty-first",
-      22: "Twenty-second",
-      23: "Twenty-third",
-      24: "Twenty-fourth",
-      25: "Twenty-fifth",
-      26: "Twenty-sixth",
-      27: "Twenty-seventh",
-      28: "Twenty-eighth",
-      29: "Twenty-ninth",
-      30: "Thirtieth",
+    const extension = key === "1.para.intro" || key === "3.para.gradient"
+      ? "wav"
+      : "mp3";
+    return `${AUDIO_DIR}${key}.${extension}`;
+  }
+
+  function elementsFor(key) {
+    const explicit = Array.from(document.querySelectorAll(TEXT))
+      .filter((element) => element.dataset.recordedAudioKey === key);
+    if (explicit.length) return explicit;
+
+    const section = sectionFor(key);
+    if (!section) return [];
+    return Array.from(section.root.querySelectorAll(
+      "p, li, figcaption, .formula-box, .comparison-table td"
+    )).filter((element) => {
+      return section.contains(element) &&
+        !(element.matches("li") && element.querySelector("p, li")) &&
+        (!element.closest(".comparison-table") || element.matches("td"));
+    });
+  }
+
+  function sectionFor(key) {
+    const root = document.querySelector("[data-theory-content]");
+    const headings = Array.from(root?.querySelectorAll("h2[data-audio-section]") || []);
+    const index = headings.findIndex((heading) => heading.dataset.audioSection === key);
+    if (index < 0) return null;
+
+    const heading = headings[index];
+    const next = headings[index + 1];
+    return {
+      root,
+      heading,
+      contains(element) {
+        const afterHeading = element === heading ||
+          Boolean(heading.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_FOLLOWING);
+        const afterNext = next &&
+          Boolean(next.compareDocumentPosition(element) & Node.DOCUMENT_POSITION_FOLLOWING);
+        return afterHeading && !afterNext;
+      },
+    };
+  }
+
+  function highlightsFor(key, section, transcriptElements) {
+    const root = section?.root || document.querySelector("[data-theory-content]");
+    const extras = Array.from(document.querySelectorAll(
+      `[data-recorded-audio-heading="${key}"]`
+    ));
+    if (section) {
+      extras.push(section.heading);
+      extras.push(...Array.from(section.root.querySelectorAll("center"))
+        .filter((element) => section.contains(element) && element.querySelector("math")));
+    }
+    if (root && section) {
+      extras.push(...Array.from(root.querySelectorAll("b")).filter((bold) =>
+        section.contains(bold) &&
+      !transcriptElements.some((element) => element.contains(bold))
+      ));
+    }
+    return extras;
+  }
+
+  function init(controls) {
+    const audio = new Audio();
+    const status = controls.querySelector("[data-speech-status]");
+    const playButton = controls.querySelector('[data-speech-action="toggle"]');
+    const previous = controls.querySelector('[data-speech-action="previous"]');
+    const next = controls.querySelector('[data-speech-action="next"]');
+    const speed = controls.querySelector("[data-speech-speed]");
+    const speedLabel = controls.querySelector("[data-speech-speed-value]");
+    const sections = [];
+    let parts = [];
+    let active = 0;
+    let loadedKey = "";
+    let loadToken = 0;
+    let pending = null;
+    let pendingSeek = null;
+    let playbackComplete = false;
+    let playbackRate = Number(speed?.value || 1);
+    if (!Number.isFinite(playbackRate) || playbackRate <= 0) playbackRate = 1;
+
+    const say = (message) => {
+      if (status) status.textContent = message;
+    };
+    const applyPlaybackRate = () => {
+      audio.playbackRate = playbackRate;
+      if (speedLabel) speedLabel.textContent = `${playbackRate}x`;
+    };
+    const current = () => parts[active];
+    const highlight = (part) => {
+      parts.forEach((item) => {
+        item.element.classList.remove("speech-active");
+        item.highlights.forEach((element) => element.classList.remove("speech-highlight-active"));
+      });
+      if (part?.timing) {
+        part.element.classList.add("speech-active");
+        part.highlights.forEach((element) => element.classList.add("speech-highlight-active"));
+      }
+    };
+    const updateButtons = () => {
+      if (playButton) {
+        const playing = !audio.paused && !audio.ended;
+        playButton.disabled = audio.readyState < 1;
+        playButton.textContent = playing ? "⏸ Pause" : "▶ Play";
+        playButton.setAttribute("aria-label", playing ? "Pause audio" : "Play audio");
+      }
+      if (previous) previous.disabled = active <= 0;
+      if (next) next.disabled = active >= parts.length - 1;
     };
 
-    if (words[n]) {
-      return words[n];
+    function playPart(part) {
+      playbackComplete = false;
+      highlight(part);
+      const seek = part.timing?.start ?? 0;
+      applyPlaybackRate();
+      if (part.key !== loadedKey) {
+        loadedKey = part.key;
+        pending = { token: ++loadToken, part };
+        audio.src = mediaPath(part.key);
+        audio.load();
+        say(`Loading ${part.key}…`);
+      } else if (audio.readyState < 1) {
+        pending = { token: loadToken, part };
+      } else {
+        if (part.timing || audio.ended) {
+          pendingSeek = part.timing ? part : null;
+          audio.currentTime = seek;
+        }
+        audio.play().catch((error) => say(`Playback failed: ${error.message}`));
+      }
+      updateButtons();
     }
 
-    return "Item " + n;
-  }
-
-  function getOrdinalPrefixForElement(element) {
-    if (
-      !element ||
-      element.tagName !== "LI"
-    ) {
-      return null;
+    function go(offset) {
+      const destination = active + offset;
+      if (destination < 0 || destination >= parts.length) return;
+      active = destination;
+      playPart(current());
     }
 
-    const list = element.parentElement;
+    controls.querySelectorAll("[data-speech-action]").forEach((button) => {
+      button.addEventListener("click", () => {
+        if (button.dataset.speechAction === "previous") return go(-1);
+        if (button.dataset.speechAction === "next") return go(1);
+        if (audio.paused) {
+          if (playbackComplete) active = 0;
+          playPart(current());
+        }
+        else audio.pause();
+      });
+    });
 
-    if (
-      !list ||
-      list.tagName !== "OL"
-    ) {
-      return null;
+    if (speed) {
+      speed.addEventListener("input", () => {
+        playbackRate = Number(speed.value);
+        applyPlaybackRate();
+      });
     }
 
-    const siblings = Array.from(list.children).filter(
-      (child) => child.tagName === "LI"
-    );
+    audio.addEventListener("loadedmetadata", () => {
+      applyPlaybackRate();
+      if (pending) {
+        const request = pending;
+        pending = null;
+        if (request.token === loadToken) {
+          active = request.part.index;
+          pendingSeek = request.part.timing ? request.part : null;
+          audio.currentTime = request.part.timing?.start ?? 0;
+          audio.play().catch((error) => say(`Playback failed: ${error.message}`));
+        }
+      } else {
+        say("Audio ready.");
+      }
+      updateButtons();
+    });
+    audio.addEventListener("play", () => {
+      say(`Playing ${current()?.key || "recording"}.`);
+      updateButtons();
+    });
+    audio.addEventListener("pause", () => {
+      if (!audio.ended) say("Audio paused.");
+      updateButtons();
+    });
+    function syncHighlight() {
+      if (pendingSeek) {
+        if (
+          audio.seeking ||
+          audio.currentTime < pendingSeek.timing.start ||
+          audio.currentTime >= pendingSeek.timing.end
+        ) {
+          return;
+        }
+        pendingSeek = null;
+      }
 
-    const zeroBasedIndex =
-      siblings.indexOf(element);
-
-    if (zeroBasedIndex === -1) {
-      return null;
-    }
-
-    let startAttr = parseInt(
-      list.getAttribute("start"),
-      10
-    );
-
-    if (isNaN(startAttr)) {
-      startAttr = 1;
-    }
-
-    const ordinal =
-      startAttr + zeroBasedIndex;
-
-    return numberToOrdinalWord(ordinal);
-  }
-
-  /* ============================================================
-     STATUS
-     ============================================================ */
-
-  function setStatus(message) {
-    const status =
-      document.querySelector(
-        "[data-speech-status]"
+      const chapter = sections[current()?.section];
+      const index = chapter?.parts.findIndex((part) =>
+        part.timing &&
+        audio.currentTime >= part.timing.start &&
+        audio.currentTime < part.timing.end
       );
-
-    if (status) {
-      status.textContent = message;
+      if (index >= 0) {
+        active = chapter.parts[index].index;
+        highlight(chapter.parts[index]);
+        updateButtons();
+      } else if (current()?.timing) {
+        highlight(null);
+      }
     }
+    audio.addEventListener("timeupdate", syncHighlight);
+    audio.addEventListener("seeked", syncHighlight);
+    audio.addEventListener("ended", () => {
+      highlight(null);
+      const currentKey = current()?.key;
+      const followingPart = parts.slice(active + 1)
+        .find((part) => part.key !== currentKey);
+      if (followingPart) {
+        active = followingPart.index;
+        playPart(followingPart);
+        return;
+      }
+      playbackComplete = true;
+      say("Playback complete.");
+      updateButtons();
+    });
+    audio.addEventListener("error", () => {
+      say(`Could not load ${mediaPath(current()?.key || controls.dataset.audioKey)}. Check the recording file.`);
+      updateButtons();
+    });
+
+    fetch(new URL(JSON_URL, document.baseURI))
+      .then((response) => {
+        if (!response.ok) throw new Error(`Timestamp file unavailable (${response.status}).`);
+        return response.json();
+      })
+      .then((data) => {
+        const orderedKeys = Array.from(document.querySelectorAll(
+          "[data-recorded-audio-key], h2[data-audio-section]"
+        )).map((element) =>
+          element.dataset.recordedAudioKey || element.dataset.audioSection
+        ).filter((key, index, keys) => key && keys.indexOf(key) === index);
+
+        orderedKeys.forEach((key, section) => {
+          const ranges = data[key];
+          if (!Array.isArray(ranges)) throw new Error(`No sentence ranges for "${key}".`);
+          const theorySection = sectionFor(key);
+          const chapter = { key, section, parts: [] };
+          const transcriptElements = elementsFor(key);
+          const extraHighlights = highlightsFor(key, theorySection, transcriptElements);
+          transcriptElements.forEach((element) => {
+            const pieces = sentenceRanges(element.textContent);
+            const wrapped = new Array(pieces.length);
+            pieces.forEach((piece, index) => {
+              chapter.parts.push({
+                key, section, text: piece.text, element: null, highlights: [],
+                index: parts.length + chapter.parts.length,
+                timing: null,
+              });
+              wrapped[index] = piece;
+            });
+            for (let index = wrapped.length - 1; index >= 0; index -= 1) {
+              const part = chapter.parts[chapter.parts.length - wrapped.length + index];
+              part.element = wrapTextRange(element, wrapped[index].start, wrapped[index].end);
+            }
+          });
+          if (chapter.parts.length !== ranges.length) {
+            throw new Error(
+              `"${key}": ${chapter.parts.length} sentences found; ${ranges.length} ranges supplied.`
+            );
+          }
+          chapter.parts.forEach((part, index) => {
+            const range = ranges[index];
+            if (
+              range.start !== null &&
+              range.end !== null &&
+              Number.isFinite(range.start) &&
+              Number.isFinite(range.end) &&
+              range.start >= 0 &&
+              range.end > range.start
+            ) {
+              part.timing = range;
+            }
+            part.highlights = extraHighlights.filter((element) => {
+              if (
+                element.dataset.recordedAudioHeading === key ||
+                element === theorySection?.heading
+              ) return index === 0;
+              const beforePart = element.compareDocumentPosition(part.element) &
+                Node.DOCUMENT_POSITION_FOLLOWING;
+              if (element.matches("b")) {
+                return beforePart && chapter.parts.find((candidate) =>
+                  element.compareDocumentPosition(candidate.element) &
+                  Node.DOCUMENT_POSITION_FOLLOWING
+                ) === part;
+              }
+              const precedingParts = chapter.parts.filter((candidate) =>
+                candidate.element.compareDocumentPosition(element) &
+                Node.DOCUMENT_POSITION_FOLLOWING
+              );
+              const preceding = precedingParts[precedingParts.length - 1];
+              const nearest = preceding || chapter.parts.find((candidate) =>
+                element.compareDocumentPosition(candidate.element) &
+                Node.DOCUMENT_POSITION_FOLLOWING
+              );
+              return nearest === part;
+            });
+            part.element.tabIndex = 0;
+            part.element.setAttribute("role", "button");
+            part.element.setAttribute("aria-label", `Play sentence ${part.index + 1}`);
+            part.element.addEventListener("click", () => {
+              active = part.index;
+              playPart(part);
+            });
+            part.element.addEventListener("keydown", (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                active = part.index;
+                playPart(part);
+              }
+            });
+          });
+          sections.push(chapter);
+          parts.push(...chapter.parts);
+        });
+
+        active = Math.max(0, parts.findIndex(
+          (part) => part.key === controls.dataset.audioKey
+        ));
+        if (!parts.length) throw new Error("No recorded text is configured for this page.");
+        loadedKey = current().key;
+        audio.src = mediaPath(loadedKey);
+        audio.load();
+        say(`Loading ${loadedKey}…`);
+        updateButtons();
+      })
+      .catch((error) => say(`Audio setup error: ${error.message}`));
   }
 
-  /* ============================================================
-     INITIALIZE
-     ============================================================ */
-
-  if (
-    document.readyState === "loading"
-  ) {
-    document.addEventListener(
-      "DOMContentLoaded",
-      initializeSpeechReader,
-      { once: true }
-    );
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".speech-controls[data-audio-key]").forEach(init);
+    }, { once: true });
   } else {
-    initializeSpeechReader();
+    document.querySelectorAll(".speech-controls[data-audio-key]").forEach(init);
   }
 })();

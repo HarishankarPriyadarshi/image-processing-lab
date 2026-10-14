@@ -1525,7 +1525,8 @@
             <div
               class="speech-controls flex items-center gap-2"
               data-speech-ignore
-              aria-label="Text to Speech controls"
+              aria-label="Recorded audio controls"
+              data-audio-key="1.para.aim"
             >
               <!-- Previous sentence -->
               <button
@@ -1543,7 +1544,7 @@
                 type="button"
                 class="speech-control-button"
                 data-speech-action="toggle"
-                aria-label="Play theory reading"
+                aria-label="Play recorded audio"
                 title="Play"
               >
                 ▶ Play
@@ -1559,8 +1560,22 @@
               >
                 ›
               </button>
+              <label class="speech-speed-control">
+                Speed
+                <input
+                  type="range"
+                  data-speech-speed
+                  min="0.5"
+                  max="2"
+                  step="0.1"
+                  value="1"
+                  aria-label="Playback speed"
+                >
+                <span data-speech-speed-value>1x</span>
+              </label>
+              
                         <style>
-            /* Listen-to-theory controls; speech behaviour lives in theory_speech.js. */
+            /* Recorded-audio controls. */
             .tts-box {
               display: flex;
               justify-content: space-between;
@@ -1598,19 +1613,48 @@
               outline-offset: 2px;
             }
 
+            .speech-control-button:disabled {
+              cursor: not-allowed;
+              opacity: 0.55;
+            }
+
             .speech-control-button[hidden] {
               display: none;
             }
 
             .speech-status {
-              color: #1e3a5f;
-              font-size: 0.95rem;
+              max-width: 14rem;
+              color: #fff;
+              font-size: 0.8rem;
+            }
+
+            .speech-speed-control {
+              display: inline-flex;
+              align-items: center;
+              gap: 0.35rem;
+              color: #fff;
+              font-size: 0.8rem;
+            }
+
+            .speech-speed-control input {
+              width: 5rem;
+              max-width: 9rem;
+              accent-color: #93c5fd;
             }
 
             .speech-sentence-part {
               transition:
                 background 0.25s ease,
                 box-shadow 0.25s ease;
+            }
+
+            .speech-sentence-part[role="button"] {
+              cursor: pointer;
+            }
+
+            .speech-sentence-part[role="button"]:focus-visible {
+              outline: 2px solid #2563eb;
+              outline-offset: 2px;
             }
 
             .speech-sentence-part.speech-active {
@@ -1637,7 +1681,7 @@
             </div>
 
             <div class="section-text text-gray-700 leading-relaxed text-lg">
-              <p>
+              <p data-recorded-audio-text data-recorded-audio-key="1.para.aim">
                 The aim of this experiment is to demonstrate and understand the process of edge detection using derivative-based methods.
               </p>
             </div>
@@ -1801,7 +1845,20 @@
     role="dialog"
     aria-modal="true"
     aria-labelledby="intro-modal-title"
-    style="display: none;"
+    style="    display: none;
+            }
+
+            @media (max-width: 760px) {
+    .tts-box {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .speech-controls {
+      justify-content: center;
+      width: 100%;
+    }"
   >
     <div class="modal-container bg-white rounded-2xl shadow-xl flex flex-col overflow-hidden">
       <div class="intro-header">
