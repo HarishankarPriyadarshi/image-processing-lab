@@ -941,7 +941,7 @@
               class="speech-controls flex items-center gap-2"
               data-speech-ignore
               aria-label="Recorded audio controls"
-              data-audio-key="1.para.intro"
+              data-audio-key="para.intro"
             >
               <!-- Previous sentence -->
               <button
@@ -988,6 +988,7 @@
                 />
                 <span data-speech-speed-value>1x</span>
               </label>
+              <!-- <span class="speech-status" data-speech-status aria-live="polite"></span> -->
 
               <style>
                 /* Recorded-audio controls. */
@@ -1758,37 +1759,37 @@
           </style>
 
           <section data-theory-content class="theory-section">
-            <h2 data-audio-section="1.para.intro">Introduction</h2>
+            <h2 data-audio-section="para.intro">Introduction</h2>
 
-            <p data-recorded-audio-text data-recorded-audio-key="1.para.intro">
+            <p data-recorded-audio-text data-recorded-audio-key="para.intro">
               Image segmentation is the division of an image into regions or
               categories, which correspond to different objects or parts of
               objects. Every pixel in an image is allocated to one of a number
               of these categories.
             </p>
 
-            <p data-recorded-audio-text data-recorded-audio-key="1.para.intro">
+            <p data-recorded-audio-text data-recorded-audio-key="para.intro">
               A good segmentation is typically one in which:
             </p>
 
             <ul>
               <li
                 data-recorded-audio-text
-                data-recorded-audio-key="1.para.intro"
+                data-recorded-audio-key="para.intro"
               >
                 Pixels in the same category have similar grey scale or
                 multivariate values and form a connected region.
               </li>
               <li
                 data-recorded-audio-text
-                data-recorded-audio-key="1.para.intro"
+                data-recorded-audio-key="para.intro"
               >
                 Neighboring pixels which are in different categories have
                 dissimilar values.
               </li>
             </ul>
 
-            <h2 data-audio-section="2.para.edge-segmentation">
+            <h2 data-audio-section="para.edge-segmentation">
               Edge Based Image Segmentation
             </h2>
 
@@ -1811,7 +1812,7 @@
               chains that match the image borders more accurately.
             </p>
 
-            <h2 data-audio-section="3.para.gradient">Gradient</h2>
+            <h2 data-audio-section="para.gradient">Gradient</h2>
 
             <p>
               In image processing, a gradient refers to the rate of change of
@@ -1923,7 +1924,7 @@
               </math>
             </center>
 
-            <h2 data-audio-section="4.para.steps-in-edge-detection">
+            <h2 data-audio-section="para.steps-in-edge-detection">
               Steps in Edge Detection
             </h2>
 
@@ -1970,7 +1971,7 @@
               </li>
             </ol>
 
-            <h2 data-audio-section="5.para.edge-detectors">Edge Detectors</h2>
+            <h2 data-audio-section="para.edge-detectors">Edge Detectors</h2>
 
             <ol>
               <li>
@@ -2004,7 +2005,7 @@
               </figcaption>
             </figure>
 
-            <h2 data-audio-section="6.para.first-order-derivative-operators">
+            <h2 data-audio-section="para.first-order-derivative-operators">
               1. First Order Derivative Operators
             </h2>
 
@@ -2089,7 +2090,7 @@
                   calculated about an interpolated point between pixels is to
                   use a 3 x 3 neighborhood for the gradient calculations.
                   Consider the arrangement of pixels about the pixel [i, j]
-                  shown in Figure 2. The Sobel operator is the magnitude of the
+                  shown in Figure 1. The Sobel operator is the magnitude of the
                   gradient computed by:
                 </p>
 
@@ -2273,7 +2274,7 @@
               </li>
             </ul>
 
-            <h2 data-audio-section="7.para.second-order-derivative-operators">
+            <h2 data-audio-section="para.second-order-derivative-operators">
               2. Second Order Derivative Operators
             </h2>
 
@@ -2360,7 +2361,7 @@
               </li>
             </ul>
 
-            <h2 data-audio-section="8.para.comparison-of-edge-detectors">
+            <h2 data-audio-section="para.comparison-of-edge-detectors">
               Comparison of Edge Detectors
             </h2>
 
@@ -2400,17 +2401,17 @@
                     <ol>
                       <li>Easy and simple computation.</li>
                       <li>Edges are detected along with their orientation.</li>
-                      <li>
+                      <!-- <li>
                         Gives better result than Roberts because it uses a 3 x 3
                         mask.
-                      </li>
+                      </li> -->
                     </ol>
                   </td>
                   <td>
                     <ol>
                       <li>Sensitive to noise.</li>
-                      <li>May produce thick edges.</li>
-                      <li>Less accurate than Canny.</li>
+                      <li>Detection of edges is inaccurate.</li>
+                      <li>Less reliable.</li>
                     </ol>
                   </td>
                 </tr>
@@ -2428,7 +2429,7 @@
                     <ol>
                       <li>Sensitive to noise.</li>
                       <li>Detection of edges may be inaccurate.</li>
-                      <li>Less reliable than Canny.</li>
+                      <li>Less reliable.</li>
                     </ol>
                   </td>
                 </tr>
@@ -2439,14 +2440,14 @@
                   <td>
                     <ol>
                       <li>Improved signal to noise ratio.</li>
-                      <li>Suitable for noisy images.</li>
-                      <li>Accurate edge detection.</li>
+                      <li>Suitable for noisy images i.e., more sensitive to noisy pixels.</li>
+                      <li>Accurate .</li>
                     </ol>
                   </td>
                   <td>
                     <ol>
                       <li>Slow and complex.</li>
-                      <li>Requires more computation.</li>
+                      <li>False zero crossing.</li>
                     </ol>
                   </td>
                 </tr>

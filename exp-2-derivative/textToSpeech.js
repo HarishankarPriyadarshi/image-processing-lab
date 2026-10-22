@@ -1,9 +1,22 @@
 (function () {
   "use strict";
 
-  const AUDIO_DIR = "./audio/theoryAudio/";
+  const AUDIO_PATHS = {
+    "para.aim": "./audio/AimAudio/para.aim.wav",
+    "para.procedure": "./audio/procedureAudio/para.procedure.wav",
+    "para.intro": "./audio/theoryAudio/para.intro.wav",
+    "para.edge-segmentation": "./audio/theoryAudio/para.edge-segmentation.wav",
+    "para.gradient": "./audio/theoryAudio/para.gradient..wav",
+    "para.steps-in-edge-detection": "./audio/theoryAudio/para.steps-in-edge-detection.wav",
+    "para.edge-detectors": "./audio/theoryAudio/para.edge-detectors.wav",
+    "para.first-order-derivative-operators": "./audio/theoryAudio/para.first-order-derivative-operators.wav",
+    "para.second-order-derivative-operators": "./audio/theoryAudio/para.second-order-derivative-operators.wav",
+    "para.comparison-of-edge-detectors": "./audio/theoryAudio/para.comparison-of-edge-detectors.wav",
+  };
   const JSON_URL = "./textToSpeech.json";
   const TEXT = "[data-recorded-audio-text]";
+  const ESTIMATE_NOTICE =
+    "Using approximate word-based sentence timings; add measured offsets to textToSpeech.json for exact synchronization.";
   const SPLITTER = typeof Intl.Segmenter === "function"
     ? new Intl.Segmenter(undefined, { granularity: "sentence" })
     : null;
@@ -69,17 +82,54 @@
   }
 
   function mediaPath(key) {
-    if (key === "1.para.aim") {
-      return "./audio/AimAudio/1.para.aim.wav";
-    }
-    if (key === "1.para.procedure") {
-      return "./audio/procedureAudio/1.para.procedure.wav";
+    const path = AUDIO_PATHS[key];
+    if (!path) throw new Error(`No recording is configured for "${key}".`);
+    return path;
+  }
+
+  function estimateTimings(chapter, duration) {
+    if (
+      !chapter ||
+      !Number.isFinite(duration) ||
+      duration <= 0
+    ) return false;
+
+    const timings = chapter.parts.map((part) => part.timing);
+    let estimated = false;
+    let index = 0;
+
+    while (index < chapter.parts.length) {
+      if (timings[index]) {
+        index += 1;
+        continue;
+      }
+
+      const first = index;
+      while (index < chapter.parts.length && !timings[index]) index += 1;
+      const last = index;
+      const start = first > 0 ? timings[first - 1].end : 0;
+      const end = last < chapter.parts.length ? timings[last].start : duration;
+      const available = Math.max(0, end - start);
+      const wordCounts = chapter.parts.slice(first, last).map((part) =>
+        part.text.trim().split(/\s+/).filter(Boolean).length || 1
+      );
+      const totalWords = wordCounts.reduce((total, count) => total + count, 0);
+      let cursor = start;
+
+      wordCounts.forEach((wordCount, offset) => {
+        const sentenceEnd = offset === wordCounts.length - 1
+          ? end
+          : cursor + (available * wordCount) / totalWords;
+        const part = chapter.parts[first + offset];
+        part.timing = { start: cursor, end: sentenceEnd };
+        part.timingEstimated = true;
+        timings[first + offset] = part.timing;
+        cursor = sentenceEnd;
+      });
+      estimated = true;
     }
 
-    const extension = key === "1.para.intro" || key === "3.para.gradient"
-      ? "wav"
-      : "mp3";
-    return `${AUDIO_DIR}${key}.${extension}`;
+    return estimated;
   }
 
   function elementsFor(key) {
@@ -154,6 +204,8 @@
     let pending = null;
     let pendingSeek = null;
     let playbackComplete = false;
+    let initialized = false;
+    let jsonTimingNote = "";
     let playbackRate = Number(speed?.value || 1);
     if (!Number.isFinite(playbackRate) || playbackRate <= 0) playbackRate = 1;
 
@@ -178,15 +230,25 @@
     const updateButtons = () => {
       if (playButton) {
         const playing = !audio.paused && !audio.ended;
-        playButton.disabled = audio.readyState < 1;
+        playButton.disabled = !initialized || audio.readyState < 1;
         playButton.textContent = playing ? "⏸ Pause" : "▶ Play";
         playButton.setAttribute("aria-label", playing ? "Pause audio" : "Play audio");
       }
-      if (previous) previous.disabled = active <= 0;
-      if (next) next.disabled = active >= parts.length - 1;
+      const canNavigateTo = (part) =>
+        part && (part.key !== current()?.key || part.timing);
+      if (previous) {
+        previous.disabled = !initialized || active <= 0 ||
+          !canNavigateTo(parts[active - 1]);
+      }
+      if (next) {
+        next.disabled = !initialized || active >= parts.length - 1 ||
+          !canNavigateTo(parts[active + 1]);
+      }
     };
 
     function playPart(part) {
+      if (!initialized || !part) return;
+      active = part.index;
       playbackComplete = false;
       highlight(part);
       const seek = part.timing?.start ?? 0;
@@ -212,17 +274,16 @@
     function go(offset) {
       const destination = active + offset;
       if (destination < 0 || destination >= parts.length) return;
-      active = destination;
-      playPart(current());
+      playPart(parts[destination]);
     }
 
     controls.querySelectorAll("[data-speech-action]").forEach((button) => {
       button.addEventListener("click", () => {
         if (button.dataset.speechAction === "previous") return go(-1);
         if (button.dataset.speechAction === "next") return go(1);
+        if (!initialized) return;
         if (audio.paused) {
-          if (playbackComplete) active = 0;
-          playPart(current());
+          playPart(playbackComplete ? parts[0] : current());
         }
         else audio.pause();
       });
@@ -237,6 +298,8 @@
 
     audio.addEventListener("loadedmetadata", () => {
       applyPlaybackRate();
+      const chapter = sections.find((item) => item.key === loadedKey);
+      estimateTimings(chapter, audio.duration);
       if (pending) {
         const request = pending;
         pending = null;
@@ -247,12 +310,17 @@
           audio.play().catch((error) => say(`Playback failed: ${error.message}`));
         }
       } else {
-        say("Audio ready.");
+        say(chapter?.parts.some((part) => part.timingEstimated) || jsonTimingNote
+          ? `Audio ready. ${ESTIMATE_NOTICE}`
+          : "Audio ready.");
       }
       updateButtons();
     });
     audio.addEventListener("play", () => {
-      say(`Playing ${current()?.key || "recording"}.`);
+      const timingNote = current()?.timingEstimated || jsonTimingNote
+        ? ` ${ESTIMATE_NOTICE}`
+        : "";
+      say(`Playing ${current()?.key || "recording"}.${timingNote}`);
       updateButtons();
     });
     audio.addEventListener("pause", () => {
@@ -263,8 +331,7 @@
       if (pendingSeek) {
         if (
           audio.seeking ||
-          audio.currentTime < pendingSeek.timing.start ||
-          audio.currentTime >= pendingSeek.timing.end
+          audio.currentTime < pendingSeek.timing.start
         ) {
           return;
         }
@@ -284,6 +351,7 @@
       } else if (current()?.timing) {
         highlight(null);
       }
+      updateButtons();
     }
     audio.addEventListener("timeupdate", syncHighlight);
     audio.addEventListener("seeked", syncHighlight);
@@ -312,6 +380,8 @@
         return response.json();
       })
       .then((data) => {
+        jsonTimingNote = typeof data._timingNote === "string" &&
+          data._timingNote.startsWith("ESTIMATES:");
         const orderedKeys = Array.from(document.querySelectorAll(
           "[data-recorded-audio-key], h2[data-audio-section]"
         )).map((element) =>
@@ -332,7 +402,7 @@
               chapter.parts.push({
                 key, section, text: piece.text, element: null, highlights: [],
                 index: parts.length + chapter.parts.length,
-                timing: null,
+                timing: null, timingEstimated: false,
               });
               wrapped[index] = piece;
             });
@@ -357,6 +427,7 @@
               range.end > range.start
             ) {
               part.timing = range;
+              part.timingEstimated = false;
             }
             part.highlights = extraHighlights.filter((element) => {
               if (
@@ -386,13 +457,11 @@
             part.element.setAttribute("role", "button");
             part.element.setAttribute("aria-label", `Play sentence ${part.index + 1}`);
             part.element.addEventListener("click", () => {
-              active = part.index;
               playPart(part);
             });
             part.element.addEventListener("keydown", (event) => {
               if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
-                active = part.index;
                 playPart(part);
               }
             });
@@ -405,13 +474,18 @@
           (part) => part.key === controls.dataset.audioKey
         ));
         if (!parts.length) throw new Error("No recorded text is configured for this page.");
+        mediaPath(current().key);
+        initialized = true;
         loadedKey = current().key;
         audio.src = mediaPath(loadedKey);
         audio.load();
         say(`Loading ${loadedKey}…`);
         updateButtons();
       })
-      .catch((error) => say(`Audio setup error: ${error.message}`));
+      .catch((error) => {
+        say(`Audio setup error: ${error.message}`);
+        updateButtons();
+      });
   }
 
   if (document.readyState === "loading") {
