@@ -362,6 +362,16 @@
       transform: translateX(2px);
     }
 
+    #intro-text .intro-sentence {
+      border-radius: 0.2rem;
+      transition: background-color 160ms ease;
+    }
+
+    #intro-text .intro-sentence.active {
+      background-color: rgba(251, 191, 36, 0.35);
+      box-shadow: 0 0 0 0.12em rgba(251, 191, 36, 0.35);
+    }
+
     #intro-text { text-align: center; }
 
     #intro-outline {
@@ -2068,6 +2078,7 @@
   </script>
 
 
+  <script src="./aimVideoHighlight.js"></script>
   <!-- INTRO POPUP SCRIPT (auto-open based on data-intro-autoshow) -->
   <script>
     const DEFAULT_CUE_LEAD = 0.65; // seconds before narration to reveal text
@@ -2398,11 +2409,7 @@ const introCues = [
 
     function appendLine(index) {
       const cue = introCues[index];
-      introText.innerHTML = '';
-      const p = document.createElement('p');
-      p.classList.add('intro-line');
-      p.textContent = cue.text;
-      introText.appendChild(p);
+      AimVideoHighlight.renderCue(introText, cue);
       introText.scrollTop = 0;
     }
 
@@ -2456,14 +2463,11 @@ const introCues = [
 
       if (introGrid) introGrid.classList.add('final-state');
 
-      const finalText = introCues[lastIndex]?.text || '';
       introText.classList.add('final-message');
-      introText.innerHTML = '';
-
-      const p = document.createElement('p');
-      p.classList.add('intro-line', 'active');
-      p.textContent = finalText;
-      introText.appendChild(p);
+      AimVideoHighlight.renderCue(introText, introCues[lastIndex]);
+      const finalLine = introText.querySelector('.intro-line');
+      if (finalLine) finalLine.classList.add('active');
+      AimVideoHighlight.highlightSentence(introText, introCues[lastIndex], audioEl.currentTime);
       lastRenderedIndex = lastIndex;
     }
 
@@ -2492,6 +2496,9 @@ const introCues = [
       }
 
       highlightActiveLine(targetIndex);
+      if (targetIndex >= 0) {
+        AimVideoHighlight.highlightSentence(introText, introCues[targetIndex], currentTime);
+      }
       updateOutline(currentTime);
       maybeShowVideo(currentTime);
       syncVideo();
