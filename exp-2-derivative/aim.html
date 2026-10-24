@@ -530,10 +530,6 @@
       font-size: 1.05rem;
     }
 
-    #intro-grid.final-state { grid-template-columns: 1fr; align-items: center; justify-items: center; }
-    #intro-grid.final-state #intro-left { display: none; }
-    #intro-grid.final-state #intro-right { width: 100%; max-width: 760px; margin: 0 auto; }
-
     .chatbot-launcher {
       width: 74px;
       height: 74px;
@@ -1106,7 +1102,7 @@
 
 #intro-right {
   display: grid;
-  grid-template-rows: 30% 70%;
+  grid-template-rows: 70% 30%;
   gap: clamp(0.75rem, 1.6vw, 1rem);
   width: 100%;
   min-height: 0;
@@ -1125,6 +1121,7 @@
 }
     
 #intro-text {
+  grid-row: 2;
   height: 100%;
   min-height: 0;
   max-height: none;
@@ -1136,22 +1133,26 @@
   color: var(--lab-ink);
   letter-spacing: 0.01em;
 
-  border: 1px solid rgba(11, 96, 168, 0.2);
-  background: var(--intro-text-bg);
+  /* border: 1px solid rgba(11, 96, 168, 0.2); */
+  /* background: var(--intro-text-bg); */
 
   overflow-y: auto;
   scrollbar-gutter: stable;
 
   border-radius: 18px;
 
-  box-shadow:
+  /* box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 14px 30px rgba(15, 23, 42, 0.1);
+    0 14px 30px rgba(15, 23, 42, 0.1); */
 
   position: relative;
   z-index: 2;
   margin-bottom: 0;
   contain: layout paint;
+}
+
+#intro-video-wrapper {
+  grid-row: 1;
 }
 
     #intro-text::before {
@@ -1906,7 +1907,7 @@
         </div>
 
         <!-- RIGHT PANEL -->
-        <div id="intro-right" class="h-full flex flex-col gap-3 min-h-0">
+        <div id="intro-right" class="h-full gap-3 min-h-0">
           <div
             id="intro-text"
             class="space-y-3 text-black text-base leading-relaxed flex-1 overflow-y-auto border rounded-lg p-4 bg-gray-50 shadow-inner min-h-[200px] max-h-full"
@@ -2437,7 +2438,7 @@ const introCues = [
     }
 
     function syncVideo(force = false) {
-      if (!videoEl || !videoShown || finalMessageShown) return;
+      if (!videoEl || !videoShown) return;
 
       const audioTime = audioEl.currentTime || 0;
       const drift = Math.abs((videoEl.currentTime || 0) - audioTime);
@@ -2456,11 +2457,6 @@ const introCues = [
 
       finalMessageShown = true;
 
-      if (audioEl && !audioEl.paused) audioEl.pause();
-      if (videoEl) videoEl.pause();
-      if (videoWrapper) videoWrapper.classList.add('hidden');
-      videoShown = false;
-
       if (introGrid) introGrid.classList.add('final-state');
 
       introText.classList.add('final-message');
@@ -2472,8 +2468,6 @@ const introCues = [
     }
 
     function maybeShowVideo(time) {
-      if (finalMessageShown) return;
-
       if (time >= VIDEO_SHOW_TIME) {
         if (!videoShown) showVideo();
       } else if (videoShown) hideVideo();
