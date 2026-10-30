@@ -1060,11 +1060,27 @@
               margin: 25px 0;
             }
 
+            .theory-section figure.operation-image-comparison {
+              display: grid;
+              grid-template-columns: repeat(2, minmax(0, 1fr));
+              gap: 20px;
+              display: flex;
+              justify-content:center;
+            }
+
+            .theory-section .operation-image-comparison > div {
+              min-width: 0;
+            }
+
             .theory-section img {
               max-width: 100%;
               height: auto;
               display: block;
               margin: 0 auto;
+            }
+
+            .theory-section .operation-image-comparison img {
+              width: auto;
             }
 
             .theory-section figcaption {
@@ -1080,6 +1096,13 @@
               max-width: 100%;
               border-collapse: collapse;
               margin: 20px 0;
+            }
+
+            .theory-section table.kernel-shape-size-table {
+              width: fit-content;
+              max-width: 100%;
+              table-layout: auto;
+            
             }
 
             .theory-section table,
@@ -1098,11 +1121,11 @@
 
             .formula-box {
               text-align: center;
-              margin: 20px auto;
+              /* margin: 20px auto; */
               font-size: 1.25rem;
-              background: #f7f9fc;
-              border: 1px solid #dce3f0;
-              padding: 14px 10px;
+              /* background: #f7f9fc;
+              border: 1px solid #dce3f0; */
+              /* padding: 14px 10px; */
               border-radius: 6px;
               overflow-x: auto;
               overflow-y: visible;
@@ -1521,7 +1544,6 @@
 
             .speech-control-button:hover,
             .speech-control-button:focus-visible {
-              
               transform: translateY(-1px);
               outline: 2px solid #93c5fd;
               outline-offset: 2px;
@@ -1554,194 +1576,436 @@
               <h2>Introduction</h2>
 
               <p>
-                Image segmentation is the division of an image into regions or
-                categories, which correspond to different objects or parts of
-                objects. Every pixel in an image is allocated to one of a number
-                of these categories.
+                Morphological image processing is a technique for analysing and
+                processing the geometrical structures and shapes of objects in
+                digital images.. It provides a collection of operations for
+                modifying image structures and extracting useful information
+                about object shapes and boundaries.
               </p>
 
-              <p>A good segmentation is typically one in which:</p>
+              <p>
+                Morphological operations are particularly useful in binary image
+                processing and can also be extended to grayscale images. They
+                are widely used in image analysis and preprocessing tasks,
+                including noise removal, shape refinement, and the extraction of
+                structural features. The effect of these operations depends on
+                the spatial relationship between image pixels and a structuring
+                element, whose shape and size influence the resulting image.
+              </p>
 
-              <ul>
-                <li>
-                  Pixels in the same category have similar grey scale of
-                  multivariate values and form a connected region.
-                </li>
-                <li>
-                  Neighboring pixels which are in different categories have
-                  dissimilar values.
-                </li>
-              </ul>
-
-
-
+              <p>
+                This experiment explores erosion, dilation, opening, and closing
+                using different structuring element shapes and sizes. By
+                comparing the input and processed images, learners can observe
+                how these operations modify image structures and understand
+                their role in morphological image processing.
+              </p>
 
               <h3>Morphological Operations</h3>
 
               <p>
                 Morphological transformations are some simple operations based
                 on the image shape. It is normally performed on binary images.
-                It needs two inputs, one is our original image, the second one is
-                called structuring element or kernel which decides the nature of
-                operation. Two basic morphological operators are Erosion and
-                Dilation. Then its variant forms like Opening, Closing, Gradient
-                etc also come into play.
+                It needs two inputs, one is our original image, the second one
+                is called structuring element or kernel which decides the nature
+                of operation. But the same idea can extend to grayscale or color
+                by applying the logic to intensity channels. Two basic
+                morphological operators are Erosion and Dilation. Then its
+                variant forms like Opening, Closing, Gradient etc also come into
+                play.
               </p>
 
-              <ol type="a">
+              <h3>Components</h3>
+              <ol>
                 <li>
-                  <b>Erosion</b>
+                  <h4>Input Image</h4>
 
                   <p>
-                    Erosion is a fundamental morphological operation that
-                    functions similarly to the natural process of soil erosion —
-                    it gradually erodes the boundaries of the foreground object.
-                    Typically, the foreground is represented in white (pixel
-                    value = 1), and the background in black (pixel value = 0).
+                    The input image is the image on which the morphological
+                    operation is performed. These operations are most commonly
+                    applied to binary images, where objects are represented by
+                    foreground pixels and the remaining area forms the
+                    background.
+                  </p>
+
+                  <p>In a binary image:</p>
+
+                  <p>
+                    Foreground pixels represent the objects of interest
+                    (typically white).
                   </p>
 
                   <p>
-                    During erosion, a structuring element (or kernel) is slide
-                    over the image, much like in 2D convolution. For a pixel in
-                    the output image to be set to 1, all pixels under the kernel
-                    in the original image must also be 1. If even one pixel
-                    under the kernel is 0, the output pixel is set to 0.
+                    Background pixels represent the surrounding area (typically
+                    black).
                   </p>
-
-                  <p>
-                    As a result, pixels at the boundaries of white regions are
-                    removed, causing the white (foreground) areas to shrink. The
-                    extent of erosion depends on the size and shape of the
-                    structuring element.
-                  </p>
-
-                  <figure>
-                    <img src="images/erosion.png" alt="Example of Erosion" />
-                    <figcaption>Fig. 2 Example of Erosion</figcaption>
-                  </figure>
-
-                  <p><b>Effects of Erosion:</b></p>
-
-                  <ul>
-                    <li>Removes small white noise</li>
-                    <li>Separates objects that are connected</li>
-                    <li>Reduces thickness of foreground objects</li>
-                  </ul>
                 </li>
-
                 <li>
-                  <b>Dilation</b>
+                  <h4>Structuring Element (Kernel)</h4>
 
                   <p>
-                    Dilation is the morphological operation that performs the
-                    inverse of erosion. While erosion reduces the boundaries of
-                    foreground objects, dilation expands them.
+                    A structuring element, also known as a kernel, is a small
+                    matrix that defines the neighborhood over which the
+                    morphological operation is applied. It acts as a template
+                    that slides across the image to determine how each pixel
+                    should be modified based on its surrounding pixels.
                   </p>
-
-                  <p>
-                    In dilation, a structuring element (kernel) slides over the
-                    binary image. For each position of the kernel, the
-                    corresponding pixel in the output image is set to 1 (white)
-                    if at least one pixel under the kernel in the input image is
-                    1. In other words, if any part of the kernel overlaps with a
-                    white pixel in the original image, the output pixel is set
-                    to white.
-                  </p>
-
-                  <p>
-                    This process increases the size of the foreground objects
-                    (white regions), causing them to grow outward by a margin
-                    defined by the structuring element.
-                  </p>
-
-                  <figure>
-                    <img src="images/dilation.png" alt="Example of Dilation" />
-                    <figcaption>Fig. 3 Example of Dilation</figcaption>
-                  </figure>
-
-                  <p><b>Effects of Dilation:</b></p>
-
                   <ul>
                     <li>
-                      Expands object boundaries, filling small holes and gaps
+                      <p>
+                        <b>Fit:</b> When all the pixels in the structuring
+                        element cover the pixels of the object, we call it Fit.
+                      </p>
                     </li>
                     <li>
-                      Useful after erosion to restore object size (a sequence
-                      called opening)
+                      <p>
+                        <b>Hit:</b> When at least one of the pixels in the
+                        structuring element covers the pixels of the object, we
+                        call it Hit.
+                      </p>
                     </li>
                     <li>
-                      Bridges small breaks or connects disjoint parts of objects
+                      <p>
+                        <b>Miss:</b> When no pixel in the structuring element
+                        covers the pixels of the object, we call it miss.
+                      </p>
                     </li>
-                    <li>Fills in gaps in object contours or outlines</li>
                   </ul>
-                </li>
 
-                <li>
-                  <b>Opening</b>
+                  <h3>Effect of Structuring Element Shape and Size</h3>
 
                   <p>
-                    Opening is a fundamental morphological operation in image
-                    processing, defined as an erosion followed by dilation,
-                    using the same structuring element for both steps. It is
-                    primarily used to remove small objects or noise from an
-                    image while preserving the shape and size of larger
-                    foreground objects.
+                    The outcome of a morphological operation depends not only on
+                    the selected operation but also on the structuring element.
+                    Shape determines which spatial neighbourhood is examined,
+                    while size determines the extent of that neighbourhood. [1]
                   </p>
 
-                  <p><b>Effects of Opening:</b></p>
-
-                  <ul>
-                    <li>Removing salt-and-pepper noise from binary images.</li>
-                    <li>
-                      Eliminating small unwanted objects (e.g., speckles, dots).
-                    </li>
-                    <li>Separating weakly connected components.</li>
-                    <li>
-                      Cleaning up scanned documents, microscopy images, etc.
-                    </li>
-                    <li>
-                      Preprocessing step for shape analysis and feature
-                      extraction.
-                    </li>
-                  </ul>
-                </li>
-
-                <li>
-                  <b>Closing</b>
-
-                  <p>
-                    Closing is a fundamental morphological operation that is
-                    essentially the reverse of Opening. It is performed by
-                    applying Dilation followed by Erosion on a binary image.
-                    While Opening focuses on removing small objects and
-                    shrinking the foreground, Closing works to fill small holes
-                    or gaps in the foreground objects, and it is particularly
-                    useful for removing small black points within or around the
-                    objects.
-                  </p>
-
-                  <p><b>Effects of Closing:</b></p>
-
-                  <ul>
-                    <li>
-                      Closing small holes or gaps inside the foreground objects,
-                      making them more solid and continuous.
-                    </li>
-                    <li>
-                      Eliminating small black noise points (often referred to as
-                      salt noise) that are scattered on or near the objects.
-                    </li>
-                    <li>
-                      Smoothening object contours by closing small imperfections
-                      while preserving the general shape of the objects.
-                    </li>
-                    <li>
-                      Joining broken parts of an object, making them appear as a
-                      single connected structure.
-                    </li>
-                  </ul>
+                  <table class="kernel-shape-size-table">
+                    <thead>
+                      <tr>
+                        <th>Kernel choice</th>
+                        <th>Expected influence</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Rectangle</td>
+                        <td>
+                          Examines a rectangular neighbourhood and may affect
+                          features in multiple directions
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Ellipse</td>
+                        <td>Uses an approximately rounded neighbourhood</td>
+                      </tr>
+                      <tr>
+                        <td>Cross</td>
+                        <td>Emphasises a cross-shaped neighbourhood</td>
+                      </tr>
+                      <tr>
+                        <td>3×3</td>
+                        <td>
+                          More local modification; may retain finer details
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>5×5</td>
+                        <td>
+                          Wider neighbourhood and potentially stronger
+                          modification
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>7×7</td>
+                        <td>
+                          Wider spatial influence; may remove, connect or alter
+                          larger details
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </li>
               </ol>
+
+              <h3>Different Morphological Operations</h3>
+
+              <h4>1. Erosion</h4>
+
+              <p>
+                Erosion is a fundamental morphological operation that functions
+                similarly to the natural process of soil erosion . It gradually
+                erodes the boundaries of the foreground object. The Erosion of A
+                by the structuring element B is defined by:
+              </p>
+
+              <div class="formula-box">A &ominus; B</div>
+
+              <p>
+                Here, A represents the input image, B the structuring element,
+                and &ominus; erosion.
+              </p>
+
+              <p>
+                Typically, the foreground is represented in white (pixel value =
+                1), and the background in black (pixel value = 0). During
+                erosion, a structuring element slides over the image, much like
+                in 2D convolution and for each position, if all the pixels under
+                the structuring element match the foreground, the pixel in the
+                output image is set to the foreground. Otherwise, it is set to
+                the background. As a result, pixels at the boundaries of white
+                regions are removed, causing the white (foreground) areas to
+                shrink. The extent of erosion depends on the size and shape of
+                the structuring element.
+              </p>
+
+              <p></p>
+
+              <figure>
+                <img src="images/erosion.png" alt="Example of Erosion" />
+                <figcaption>Fig. 1 Example of Erosion</figcaption>
+              </figure>
+              <div style="padding-left: 2%">
+                <p><b>Effects of Erosion:</b></p>
+
+                <ul>
+                  <li>Removes small white noise</li>
+                  <li>Separates objects that are connected</li>
+                  <li>Reduces thickness of foreground objects</li>
+                </ul>
+              </div>
+              <h4>2. Dilation</h4>
+
+              <p>
+                Dilation is the morphological operation that performs the
+                inverse of erosion. While erosion reduces the boundaries of
+                foreground objects, dilation expands them.The dilation of A by
+                the structuring element B is defined by:
+              </p>
+
+              <div class="formula-box">A &oplus; B</div>
+
+              <p>
+                Here, A represents the input image, B the structuring element,
+                dilation .
+              </p>
+
+              <p>
+                In dilation, a structuring element (kernel) slides over the
+                binary image. For each position of the kernel, the corresponding
+                pixel in the output image is set to 1 (white) if at least one
+                pixel under the kernel in the input image is 1. In other words,
+                if any part of the kernel overlaps with a white pixel in the
+                original image, the output pixel is set to white. This process
+                increases the size of the foreground objects (white regions),
+                causing them to grow outward by a margin defined by the
+                structuring element.
+              </p>
+
+              <figure>
+                <img src="images/dilation.png" alt="Example of Dilation" />
+                <figcaption>Fig. 2 Example of Dilation</figcaption>
+              </figure>
+              <div style="padding-left: 2%">
+                <p><b>Effects of Dilation:</b></p>
+
+                <ul>
+                  <li>
+                    Expands object boundaries, filling small holes and gaps
+                  </li>
+                  <li>
+                    Useful after erosion to restore object size (a sequence
+                    called opening)
+                  </li>
+                  <li>
+                    Bridges small breaks or connects disjoint parts of objects
+                  </li>
+                  <li>Fills in gaps in object contours or outlines</li>
+                </ul>
+              </div>
+              <h4>3. Opening</h4>
+
+              <p>
+                Opening is a compound morphological operation consisting of
+                erosion followed by dilation, usually using the same structuring
+                element for both stages.
+              </p>
+
+              <div class="formula-box">
+                A &compfn; B = (A &ominus; B) &oplus; B
+              </div>
+
+              <p>
+                Here, A represents the input image, B the structuring element,
+                erosion and dilation.
+              </p>
+
+              <p>
+                During the erosion stage its process of opening first eliminates
+                noise by erosion and then restores the original structure by
+                dilation. It is used to remove small noises and smooth the outer
+                borders. This operation is particularly useful for images
+                contaminated by salt-and-pepper noise.
+              </p>
+              <div style="padding-left: 2%">
+                <p><b>Effects of Opening:</b></p>
+
+                <ul>
+                  <li>Removing salt-and-pepper noise from binary images.</li>
+                  <li>
+                    Eliminating small unwanted objects (e.g., speckles, dots).
+                  </li>
+                  <li>Separating weakly connected components.</li>
+                  <li>
+                    Cleaning up scanned documents, microscopy images, etc.
+                  </li>
+                  <li>
+                    Preprocessing step for shape analysis and feature
+                    extraction.
+                  </li>
+                </ul>
+              </div>
+              <figure class="operation-image-comparison">
+                <div>
+                  <img
+                    src="images/opening-closing-input.png"
+                    alt="Input image for opening"
+                  />
+                  <figcaption>Input</figcaption>
+                </div>
+                <div>
+                  <img
+                    src="images/opening-output.png"
+                    alt="Output image after opening"
+                  />
+                  <figcaption>Opening output</figcaption>
+                </div>
+                
+              </figure>
+              <figcaption>Fig. 3 Example of Opening</figcaption>
+              <h4>4. Closing</h4>
+
+              <p>
+                Closing is a compound morphological operation consisting of
+                dilation followed by erosion, usually using the same structuring
+                element for both stages.
+              </p>
+
+              <div class="formula-box">
+                A &bull; B = (A &oplus; B) &ominus; B
+              </div>
+
+              <p>
+                Here, A represents the input image, B the structuring element,
+                dilation and erosion.
+              </p>
+
+              <p>
+                During dilation, foreground regions expand and small gaps may
+                close. Then erosion is applied to reduce the expansion. Closing
+                can preserve the general form of larger structures while filling
+                certain small background gaps or holes, although the original
+                image is not necessarily recovered exactly.
+              </p>
+              <div style="padding-left: 2%">
+                <p><b>Effects of Closing:</b></p>
+
+                <ul>
+                  <li>
+                    Closing small holes or gaps inside the foreground objects,
+                    making them more solid and continuous.
+                  </li>
+                  <li>
+                    Eliminating small black noise points (often referred to as
+                    salt noise) that are scattered on or near the objects.
+                  </li>
+                  <li>
+                    Smoothening object contours by closing small imperfections
+                    while preserving the general shape of the objects.
+                  </li>
+                  <li>
+                    Joining broken parts of an object, making them appear as a
+                    single connected structure.
+                  </li>
+                </ul>
+              </div>
+              <figure class="operation-image-comparison">
+                <div>
+                  <img
+                    src="images/opening-closing-input.png"
+                    alt="Input image for closing"
+                  />
+                  <figcaption>Input</figcaption>
+                </div>
+                <div>
+                  <img
+                    src="images/closing-ouput.png"
+                    alt="Output image after closing"
+                  />
+                  <figcaption>Closing output</figcaption>
+                </div>
+              </figure>
+              <figcaption>Fig. 3 Example of closing</figcaption>
+
+              <h3>Comparison table of Morphological Operations</h3>
+             
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Operation</th>
+                    <th>Effect</th>
+                    <th>Advantages</th>
+                    <th>Limitations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dilation</td>
+                    <td>
+                      Expands objects by adding pixels to their boundaries.
+                    </td>
+                    <td>
+                      Connects small gaps and strengthens weak or broken
+                      structures.
+                    </td>
+                    <td>May enlarge noise and merge nearby objects.</td>
+                  </tr>
+                  <tr>
+                    <td>Erosion</td>
+                    <td>
+                      Shrinks objects by removing pixels from their boundaries.
+                    </td>
+                    <td>
+                      Removes small foreground noise and separates connected
+                      objects.
+                    </td>
+                    <td>May eliminate thin structures and fine details.</td>
+                  </tr>
+                  <tr>
+                    <td>Opening</td>
+                    <td>Erosion followed by dilation.</td>
+                    <td>
+                      Removes small foreground noise and smooths object
+                      boundaries.
+                    </td>
+                    <td>May remove thin structures and narrow connections.</td>
+                  </tr>
+                  <tr>
+                    <td>Closing</td>
+                    <td>Dilation followed by erosion.</td>
+                    <td>
+                      Fills small holes, closes gaps, and smooths object
+                      boundaries.
+                    </td>
+                    <td>
+                      May join nearby objects or fill details that should
+                      remain.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </section>
           </section>
         </section>
