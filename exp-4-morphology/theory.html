@@ -893,7 +893,7 @@
       ></div>
 
       <!-- MAIN CONTENT -->
-      <main class="flex-1 lg:ml-64 p-4 lg:p-6 overflow-x-hidden">
+      <main class="flex-1 lg:ml-64 p-4 lg:p-6 overflow-x-clip">
         <!-- Breadcrumb -->
         <nav
           class="mb-6 text-m text-gray-600 animate-slideInLeft flex flex-wrap items-center gap-2 overflow-hidden"
@@ -910,7 +910,7 @@
         </nav>
 
         <!-- TITLE CARD -->
-        <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
+        <div class="vl-card mb-4 animate-fadeInUp rounded-lg theory-audio-sticky">
           <div
             class="px-4 py-3 tts-box"
             style="
@@ -926,6 +926,7 @@
 
             <div
               class="speech-controls flex items-center gap-2"
+              data-audio-key="e4.para.intro"
               data-speech-ignore
               aria-label="Text to Speech controls"
             >
@@ -961,6 +962,20 @@
               >
                 ›
               </button>
+              <label class="speech-speed-control">
+                Speed
+                <input
+                  type="range"
+                  min="0.5"
+                  max="2"
+                  step="0.1"
+                  value="1"
+                  data-speech-speed
+                  aria-label="Playback speed"
+                />
+                <span data-speech-speed-value>1x</span>
+              </label>
+              <span class="speech-status" data-speech-status role="status" aria-live="polite"></span>
             </div>
           </div>
         </div>
@@ -979,6 +994,43 @@
               font-size: 1.1rem;
               text-align: justify;
               box-sizing: border-box;
+            }
+            .theory-audio-sticky {
+              position: sticky;
+              top: 70px;
+              z-index: 20;
+              background: #fff;
+            }
+            .tts-box {
+              flex-wrap: wrap;
+            }
+            .speech-speed-control {
+              display: flex;
+              align-items: center;
+              gap: 0.35rem;
+              color: #fff;
+              font-size: 0.9rem;
+            }
+            .speech-speed-control input {
+              width: 5.5rem;
+            }
+            .speech-status {
+              color: #fff;
+              font-size: 0.95rem;
+            }
+            .speech-highlight-active {
+              background: rgba(147, 197, 253, 0.55);
+              border-radius: 0.3rem;
+              box-shadow: 0 0 0 0.18rem rgba(147, 197, 253, 0.24);
+              box-decoration-break: clone;
+              -webkit-box-decoration-break: clone;
+            }
+            h2.speech-highlight-active,
+            h3.speech-highlight-active,
+            h4.speech-highlight-active,
+            .formula-box.speech-highlight-active {
+              width: fit-content;
+              max-width: 100%;
             }
 
             .theory-section * {
@@ -1512,7 +1564,7 @@
               }
             }
 
-            /* Listen-to-theory controls; speech behaviour lives in theory_speech.js. */
+            /* Recorded-audio controls; playback behavior lives in textToSpeech.js. */
             .tts-box {
               display: flex;
               justify-content: space-between;
@@ -1573,12 +1625,12 @@
 
           <section class="theory-section" data-theory-content>
             <section>
-              <h2>Introduction</h2>
+              <h2 data-audio-section="e4.para.intro">Introduction</h2>
 
               <p>
                 Morphological image processing is a technique for analysing and
                 processing the geometrical structures and shapes of objects in
-                digital images.. It provides a collection of operations for
+                digital images. It provides a collection of operations for
                 modifying image structures and extracting useful information
                 about object shapes and boundaries.
               </p>
@@ -1601,7 +1653,7 @@
                 their role in morphological image processing.
               </p>
 
-              <h3>Morphological Operations</h3>
+              <h3 data-audio-section="e4.para.morphology-operations">Morphological Operations</h3>
 
               <p>
                 Morphological transformations are some simple operations based
@@ -1615,10 +1667,10 @@
                 play.
               </p>
 
-              <h3>Components</h3>
+              <h3 data-audio-section="e4.para.components">Components</h3>
               <ol>
                 <li>
-                  <h4>Input Image</h4>
+                  <h4 >Input Image</h4>
 
                   <p>
                     The input image is the image on which the morphological
@@ -1672,7 +1724,7 @@
                     </li>
                   </ul>
 
-                  <h3>Effect of Structuring Element Shape and Size</h3>
+                  <h3 data-audio-section="e4.para.effect">Effect of Structuring Element Shape and Size</h3>
 
                   <p>
                     The outcome of a morphological operation depends not only on
@@ -1729,9 +1781,15 @@
                 </li>
               </ol>
 
-              <h3>Different Morphological Operations</h3>
+              <h3
+                data-audio-section="e4.para.different-morphological-operations"
+                data-recorded-audio-key="e4.para.different-morphological-operations"
+                data-recorded-audio-text
+              >
+                Different Morphological Operations
+              </h3>
 
-              <h4>1. Erosion</h4>
+              <h4 data-audio-section="e4.para.erosion">1. Erosion</h4>
 
               <p>
                 Erosion is a fundamental morphological operation that functions
@@ -1775,7 +1833,7 @@
                   <li>Reduces thickness of foreground objects</li>
                 </ul>
               </div>
-              <h4>2. Dilation</h4>
+              <h4 data-audio-section="e4.para.dilation">2. Dilation</h4>
 
               <p>
                 Dilation is the morphological operation that performs the
@@ -1824,7 +1882,7 @@
                   <li>Fills in gaps in object contours or outlines</li>
                 </ul>
               </div>
-              <h4>3. Opening</h4>
+              <h4 data-audio-section="e4.para.opening">3. Opening</h4>
 
               <p>
                 Opening is a compound morphological operation consisting of
@@ -1884,7 +1942,7 @@
                 
               </figure>
               <figcaption>Fig. 3 Example of Opening</figcaption>
-              <h4>4. Closing</h4>
+              <h4 data-audio-section="e4.para.closing">4. Closing</h4>
 
               <p>
                 Closing is a compound morphological operation consisting of
@@ -1948,7 +2006,7 @@
               </figure>
               <figcaption>Fig. 4 Example of closing</figcaption>
 
-              <h3>Comparison table of Morphological Operations</h3>
+              <h3 data-audio-section="e4.para.comparison-table">Comparison table of Morphological Operations</h3>
              
 
               <table>

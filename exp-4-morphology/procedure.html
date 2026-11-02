@@ -831,7 +831,7 @@ main{
       </nav>
 
       <!-- TITLE CARD -->
-      <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
+      <div class="vl-card mb-4 animate-fadeInUp rounded-lg theory-audio-sticky">
         <div class="px-4 py-3 tts-box" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
           <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
             Morphology Based Edge Detection
@@ -840,6 +840,7 @@ main{
 
             <div
               class="speech-controls flex items-center gap-2"
+              data-audio-key="e4.para.procedure"
               data-speech-ignore
               aria-label="Text to Speech controls"
             >
@@ -875,12 +876,33 @@ main{
               >
                 ›
               </button>
+              <label class="speech-speed-control">
+                Speed
+                <input
+                  type="range"
+                  min="0.5"
+                  max="2"
+                  step="0.1"
+                  value="1"
+                  data-speech-speed
+                  aria-label="Playback speed"
+                />
+                <span data-speech-speed-value>1x</span>
+              </label>
+              <span class="speech-status" data-speech-status role="status" aria-live="polite"></span>
                         <style>
-            /* Listen-to-theory controls; speech behaviour lives in theory_speech.js. */
+            /* Recorded-audio controls; playback behavior lives in textToSpeech.js. */
             .tts-box {
               display: flex;
+              flex-wrap: wrap;
               justify-content: space-between;
               align-items: center;
+            }
+            .theory-audio-sticky {
+              position: sticky;
+              top: 70px;
+              z-index: 20;
+              background: #fff;
             }
             .speech-controls {
               display: flex;
@@ -919,8 +941,18 @@ main{
             }
 
             .speech-status {
-              color: #1e3a5f;
+              color: #fff;
               font-size: 0.95rem;
+            }
+            .speech-speed-control {
+              display: flex;
+              align-items: center;
+              gap: 0.35rem;
+              color: #fff;
+              font-size: 0.9rem;
+            }
+            .speech-speed-control input {
+              width: 5.5rem;
             }
 
             .speech-sentence-part {
@@ -933,6 +965,18 @@ main{
               background: rgba(147, 197, 253, 0.55);
               border-radius: 0.3rem;
               box-shadow: 0 0 0 0.18rem rgba(147, 197, 253, 0.24);
+            }
+            .speech-highlight-active {
+              background: rgba(147, 197, 253, 0.55);
+              border-radius: 0.3rem;
+              box-shadow: 0 0 0 0.18rem rgba(147, 197, 253, 0.24);
+              box-decoration-break: clone;
+              -webkit-box-decoration-break: clone;
+            }
+            h2.speech-highlight-active,
+            h3.speech-highlight-active {
+              width: fit-content;
+              max-width: 100%;
             }
           </style>
             </div>
@@ -1004,23 +1048,23 @@ main{
 
           <div data-theory-content class="content">
 
-            <h2>Procedure</h2>
+            <h2 data-recorded-audio-heading="e4.para.procedure">Procedure</h2>
 
-            <h3>For Morphological Operations</h3>
+            <h3 data-recorded-audio-heading="e4.para.procedure">For Morphological Operations</h3>
 
-            <p><b>Step 1:</b> Select an image from the available options or upload one using the <b>Upload File</b> button.</p>
+            <p data-recorded-audio-key="e4.para.procedure" data-recorded-audio-text><b>Step 1:</b> Select an image from the available options or upload one using the <b>Upload File</b> button.</p>
 
-            <p><b>Step 2:</b> Select the <b>Morphological Operation</b>.</p>
+            <p data-recorded-audio-key="e4.para.procedure" data-recorded-audio-text><b>Step 2:</b> Select the <b>Morphological Operation</b>.</p>
 
-            <p><b>Step 3:</b> Select the <b>Kernel Size</b>.</p>
+            <p data-recorded-audio-key="e4.para.procedure" data-recorded-audio-text><b>Step 3:</b> Select the <b>Kernel Size</b>.</p>
 
-            <p><b>Step 4:</b> Select the <b>Kernel Shape</b>.</p>
+            <p data-recorded-audio-key="e4.para.procedure" data-recorded-audio-text><b>Step 4:</b> Select the <b>Kernel Shape</b>.</p>
 
-            <p><b>Step 5:</b> Click the <b>Process</b> button to continue.</p>
+            <p data-recorded-audio-key="e4.para.procedure" data-recorded-audio-text><b>Step 5:</b> Click the <b>Process</b> button to continue.</p>
 
-            <p><b>Step 6:</b> Click the <b>Print</b> button to print the result.</p>
+            <p data-recorded-audio-key="e4.para.procedure" data-recorded-audio-text><b>Step 6:</b> Click the <b>Print</b> button to print the result.</p>
 
-            <p><b>Step 7:</b> Click the <b>Concept</b> button to get a detailed explanation.</p>
+            <p data-recorded-audio-key="e4.para.procedure" data-recorded-audio-text><b>Step 7:</b> Click the <b>Concept</b> button to get a detailed explanation.</p>
 
           </div>
         </div>

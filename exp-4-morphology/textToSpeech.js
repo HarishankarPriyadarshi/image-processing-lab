@@ -2,16 +2,18 @@
   "use strict";
 
   const AUDIO_PATHS = {
-    "para.aim": "./audio/AimAudio/para.aim.wav",
-    "para.procedure": "./audio/procedureAudio/para.procedure.wav",
-    "para.intro": "./audio/theoryAudio/para.intro.wav",
-    "para.edge-segmentation": "./audio/theoryAudio/para.edge-segmentation.wav",
-    "para.gradient": "./audio/theoryAudio/para.gradient..wav",
-    "para.steps-in-edge-detection": "./audio/theoryAudio/para.steps-in-edge-detection.wav",
-    "para.edge-detectors": "./audio/theoryAudio/para.edge-detectors.wav",
-    "para.first-order-derivative-operators": "./audio/theoryAudio/para.first-order-derivative-operators.wav",
-    "para.second-order-derivative-operators": "./audio/theoryAudio/para.second-order-derivative-operators.wav",
-    "para.comparison-of-edge-detectors": "./audio/theoryAudio/para.comparison-of-edge-detectors.wav",
+    "e4.para.aim": "./audio/AimAudio/e4.para.aim.wav",
+    "e4.para.procedure": "./audio/procedureAudio/e4.para.procedure.wav",
+    "e4.para.intro": "./audio/theoryAudio/e4.para.intro.wav",
+    "e4.para.morphology-operations": "./audio/theoryAudio/e4.para.morphology-operations.wav",
+    "e4.para.components": "./audio/theoryAudio/e4.para.components.wav",
+    "e4.para.effect": "./audio/theoryAudio/e4.para.effect.wav",
+    "e4.para.different-morphological-operations": "./audio/theoryAudio/e4.para.different-morphological-operations.wav",
+    "e4.para.erosion": "./audio/theoryAudio/e4.para.erosion.wav",
+    "e4.para.dilation": "./audio/theoryAudio/e4.para.dilation.wav",
+    "e4.para.opening": "./audio/theoryAudio/e4.para.opening.wav",
+    "e4.para.closing": "./audio/theoryAudio/e4.para.closing.wav",
+    "e4.para.comparison-table": "./audio/theoryAudio/e4.para.comparison-table.wav",
   };
   const JSON_URL = "./textToSpeech.json";
   const TEXT = "[data-recorded-audio-text]";
@@ -140,7 +142,7 @@
     const section = sectionFor(key);
     if (!section) return [];
     return Array.from(section.root.querySelectorAll(
-      "p, li, figcaption, .formula-box, .comparison-table td"
+      "p, li, figcaption, .formula-box, td"
     )).filter((element) => {
       return section.contains(element) &&
         !(element.matches("li") && element.querySelector("p, li")) &&
@@ -150,7 +152,9 @@
 
   function sectionFor(key) {
     const root = document.querySelector("[data-theory-content]");
-    const headings = Array.from(root?.querySelectorAll("h2[data-audio-section]") || []);
+    const headings = Array.from(root?.querySelectorAll(
+      "h2[data-audio-section], h3[data-audio-section], h4[data-audio-section]"
+    ) || []);
     const index = headings.findIndex((heading) => heading.dataset.audioSection === key);
     if (index < 0) return null;
 
@@ -383,7 +387,7 @@
         jsonTimingNote = typeof data._timingNote === "string" &&
           data._timingNote.startsWith("ESTIMATES:");
         const orderedKeys = Array.from(document.querySelectorAll(
-          "[data-recorded-audio-key], h2[data-audio-section]"
+          "[data-recorded-audio-key], h2[data-audio-section], h3[data-audio-section], h4[data-audio-section]"
         )).map((element) =>
           element.dataset.recordedAudioKey || element.dataset.audioSection
         ).filter((key, index, keys) => key && keys.indexOf(key) === index);
