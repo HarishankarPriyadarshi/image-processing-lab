@@ -1903,7 +1903,7 @@
 
       <!-- Audio (UPDATED: removed autoplay attribute; controlled by JS) -->
       
-            <audio id="intro-audio" src="./audio/Intropanelvoice_morphology.wav" preload="auto"></audio>
+     <audio id="intro-audio" src="./audio/e4.Intropanelvoice_morphology.wav" preload="auto"></audio>
 
     </div>
   </div>
@@ -2016,75 +2016,74 @@
   <!-- INTRO POPUP SCRIPT (auto-open based on data-intro-autoshow) -->
   <script>
     const DEFAULT_CUE_LEAD = 0.65; // seconds before narration to reveal text
-    const introCues = [
-
+const introCues = [
   {
     start: 0,
-    end: 15,
-    text: "Welcome to the experiment “Morphology Based Edge Detection.” In this experiment, you will learn how morphological image processing techniques can be used for edge detection, and how different morphological operations affect the structure and boundaries of objects in an image."
+    end: 24,
+    text: "Welcome to the experiment Morphology Based Edge Detection.  In this experiment, you will learn how morphological image processing techniques can be used for edge detection, and how different morphological operations affect the structure and boundaries of objects in an image."
   },
 
   {
-    start: 16,
-    end: 40,
+    start: 25,
+    end: 48,
     text: "To guide you throughout the learning process, this experiment is organized into several key sections. We begin with the Aim, which clearly states what you will learn and why the experiment is important. This is followed by the Theory section, where you will find all the essential concepts and foundational knowledge required to understand morphology based edge detection."
   },
 
   {
-    start: 41,
-    end: 58,
-    text: "To make the theory easier to understand, a Text-to-Speech feature is available. You can use the Previous, Play or Pause, and Next controls to listen to the theory sentence by sentence. The currently spoken sentence is highlighted, making it easier to follow along while reading."
+    start: 49,
+    end: 73,
+    text: "To make the theory easier to understand, a Text-to-Speech feature is available. You can use the Previous, Play or Pause, and Next controls to listen to the theory sentence by sentence or Click any sentence to start playback from that point.The currently spoken sentence is highlighted to help you follow along while reading. You can also adjust the playback speed from 0.5× to 2× according to your preference, allowing you to listen at a comfortable pace."
   },
 
   {
-    start: 59,
-    end: 78,
+    start: 74,
+    end: 93,
     text: "Before you proceed to the simulation, the Pretest section helps you evaluate your basic understanding of the topic. Here, you will receive five questions at a time. Each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded and reflected in your Progress Report."
   },
 
   {
-    start: 79,
-    end: 104,
+    start: 94,
+    end: 117,
     text: "Next, you can move on to the Procedure section, which outlines the step-by-step instructions required to perform the experiment correctly. The most important part of the experiment is the Simulation section, where you will first see a Demo tab to understand the basic procedure, followed by the actual Simulation tab, where you can use the virtual setup to perform the experiment yourself."
   },
 
   {
-    start: 105,
-    end: 129,
+    start: 118,
+    end: 137,
     text: "After completing the simulation, the Posttest section helps you evaluate your understanding of the experiment. Similar to the Pretest, you will receive five questions at a time, and each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded again in your Progress Report."
   },
 
   {
-    start: 130,
-    end: 139,
+    start: 138,
+    end: 147,
     text: "Finally, the References and Contributors sections provide the supporting resources and acknowledge the team involved in the development of this experiment."
   },
 
   {
-    start: 140,
-    end: 158,
+    start: 148,
+    end: 165,
     text: "A Progress Report is also available for you, where you can track your real-time progress throughout the experiment. To access this feature, please enter your details such as name, email ID, and designation in the User Input tab. All your activities across the experiments will be recorded in one place."
   },
 
   {
-    start: 159,
-    end: 174,
+    start: 166,
+    end: 183,
     text: "This report allows you to monitor your learning journey in detail, including your pre-test and post-test performance, such as the number of questions attempted and marks obtained. It also records the total time taken to complete the experiment and provides a detailed simulation summary of your activity."
   },
 
   {
-    start: 175,
-    end: 187,
+    start: 184,
+    end: 196,
     text: "In addition, the Progress Report displays your basic information along with the report date, completing the Progress Report as a comprehensive and personalized record of your experiment."
   },
 
   {
-    start: 188,
-    end: 193,
+    start: 197,
+    end: 203,
     text: "Together, these sections ensure a smooth, structured, and engaging learning experience from start to finish."
   }
-
 ];
+
 
     const INTRO_STORAGE_KEY = 'dcShuntIntroShown:aim';
     const INTRO_STORAGE_VERSION = '1';

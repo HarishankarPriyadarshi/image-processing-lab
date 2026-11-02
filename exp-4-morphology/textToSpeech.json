@@ -1,0 +1,70 @@
+{
+  "_timingNote": "ESTIMATES: Procedure sentence starts and selected Gradient and Comparison row markers use the transcript timestamps you supplied. Other boundaries are word-count estimates scaled to each audio duration. Review and adjust by listening; these are not exact alignments.",
+  "e4.para.aim": [
+    {
+      "start": 0,
+      "end": 8.1
+    }
+  ],
+  "e4.para.procedure": [
+    {
+      "start": 0,
+      "end": 13
+    },
+    {
+      "start": 13,
+      "end": 18
+    },
+    {
+      "start": 18,
+      "end": 26
+    },
+    {
+      "start": 26,
+      "end": 32
+    },
+    {
+      "start": 32,
+      "end": 38
+    },
+    {
+      "start": 38,
+      "end": 44
+    },
+    {
+      "start": 44,
+      "end": 47.15
+    }
+  ],
+   "e4.para.intro": [
+
+  ],
+  "e4.para.morphology-operations": [
+
+  ],
+  "e4.para.components": [
+
+  ],
+  "e4.para.effect": [
+
+  ],
+  "e4.para.different-morphological-operations": [
+
+  ],
+  "e4.para.erosion": [
+
+  ],
+  "e4.para.dilation": [
+
+  ],
+  "e4.para.opening": [
+
+  ],
+  "e4.para.closing": [
+
+  ],
+  "e4.para.comparison-table": [
+
+  ]
+ 
+}
