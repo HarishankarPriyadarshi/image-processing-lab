@@ -141,13 +141,18 @@
 
     const section = sectionFor(key);
     if (!section) return [];
-    return Array.from(section.root.querySelectorAll(
+    const transcriptElements = Array.from(section.root.querySelectorAll(
       "p, li, figcaption, .formula-box, td"
     )).filter((element) => {
       return section.contains(element) &&
         !(element.matches("li") && element.querySelector("p, li")) &&
+        !element.closest(".operation-image-comparison") &&
         (!element.closest(".comparison-table") || element.matches("td"));
     });
+    if (key === "e4.para.comparison-table") {
+      return [section.heading, ...transcriptElements];
+    }
+    return transcriptElements;
   }
 
   function sectionFor(key) {
@@ -180,6 +185,10 @@
     ));
     if (section) {
       extras.push(section.heading);
+      if (key === "e4.para.components") {
+        extras.push(...Array.from(section.root.querySelectorAll("h4"))
+          .filter((heading) => section.contains(heading)));
+      }
       extras.push(...Array.from(section.root.querySelectorAll("center"))
         .filter((element) => section.contains(element) && element.querySelector("math")));
     }
@@ -438,6 +447,13 @@
                 element.dataset.recordedAudioHeading === key ||
                 element === theorySection?.heading
               ) return index === 0;
+              if (key === "e4.para.components" && element.matches("h4")) {
+                const firstPartAfterHeading = chapter.parts.find((candidate) =>
+                  element.compareDocumentPosition(candidate.element) &
+                  Node.DOCUMENT_POSITION_FOLLOWING
+                );
+                return firstPartAfterHeading === part;
+              }
               const beforePart = element.compareDocumentPosition(part.element) &
                 Node.DOCUMENT_POSITION_FOLLOWING;
               if (element.matches("b")) {

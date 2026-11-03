@@ -92,46 +92,47 @@
       "end": 33.63
     }
   ],
+
   "e4.para.components": [
     {
       "start": 0,
-      "end": 5.29
+      "end": 6.5
     },
     {
-      "start": 5.29,
-      "end": 14.66
+      "start": 6.5,
+      "end": 15.6
     },
     {
-      "start": 14.66,
-      "end": 16.28
+      "start": 15.6,
+      "end": 17.28
     },
     {
-      "start": 16.28,
-      "end": 19.95
+      "start": 17.28,
+      "end": 20.95
     },
     {
-      "start": 19.95,
-      "end": 23.2
+      "start": 20.95,
+      "end": 24.9
     },
     {
-      "start": 23.2,
-      "end": 32.57
+      "start": 24.9,
+      "end": 37.57
     },
     {
-      "start": 32.57,
-      "end": 41.93
+      "start": 37.57,
+      "end": 45.3
     },
     {
-      "start": 41.93,
-      "end": 49.67
+      "start": 45.3,
+      "end":51.3
     },
     {
-      "start": 49.67,
-      "end": 58.62
+      "start":51.3,
+      "end": 58.2
     },
     {
-      "start": 58.62,
-      "end": 65.95
+      "start": 58.2,
+      "end": 65
     }
   ],
   "e4.para.effect": [
@@ -377,148 +378,137 @@
       "end": 68
     },
     {
-      "start": 68,
-      "end": 71
+      "start": 68.8,
+      "end": 70
     },
     {
-      "start": null,
-      "end": null
-    },
-    {
-      "start": null,
-      "end": null
-    },
-    {
-      "start": null,
-      "end": null
+      "start": 70,
+      "end": 72
     }
   ],
   "e4.para.closing": [
     {
       "start": 0,
-      "end": 9.63
+      "end": 10.5
     },
     {
-      "start": 9.63,
-      "end": 13.75
+      "start": 10.5,
+      "end": 16.3
     },
     {
-      "start": 13.75,
-      "end": 20.63
+      "start": 16.3,
+      "end": 28.5
     },
     {
-      "start": 20.63,
-      "end": 25.21
+      "start": 28.5,
+      "end": 34
     },
     {
-      "start": 25.21,
-      "end": 28.88
+      "start": 34,
+      "end": 36.5
     },
     {
-      "start": 28.88,
-      "end": 40.79
+      "start": 36.5,
+      "end": 48
     },
     {
-      "start": 40.79,
-      "end": 42.17
+      "start": 48,
+      "end":49.6
     },
     {
-      "start": 42.17,
-      "end": 49.04
+      "start": 49.6,
+      "end": 56.2
     },
     {
-      "start": 49.04,
-      "end": 57.75
+      "start": 56.2,
+      "end": 64.5
     },
     {
-      "start": 57.75,
-      "end": 64.63
+      "start": 64.5,
+      "end": 70.5
     },
     {
-      "start": 64.63,
-      "end": 71.04
+      "start": 70.5,
+      "end": 76.2
     },
     {
-      "start": 71.04,
-      "end": 71.5
+      "start": 76.2,
+      "end": 77.1
     },
     {
-      "start": 71.5,
-      "end": 72.42
-    },
-    {
-      "start": 72.42,
-      "end": 72.88
-    },
-    {
-      "start": 72.88,
-      "end": 74.71
+      "start": 77.2,
+      "end": 79
     }
+
   ],
   "e4.para.comparison-table": [
     {
       "start": 0,
-      "end": 0.67
+      "end": 3.8
     },
     {
-      "start": 0.67,
-      "end": 6.04
+      "start": 3.8,
+      "end": 5.8
     },
     {
-      "start": 6.04,
-      "end": 12.09
+      "start": 5.8,
+      "end": 9.2
     },
     {
-      "start": 12.09,
-      "end": 16.79
+      "start": 9.4,
+      "end": 14.8
     },
     {
-      "start": 16.79,
-      "end": 17.46
+      "start": 14.8,
+      "end": 18.9
     },
     {
-      "start": 17.46,
-      "end": 22.83
+      "start": 18.97,
+      "end": 20.2
     },
     {
-      "start": 22.83,
-      "end": 28.21
+      "start": 20.2,
+      "end": 25.5
     },
     {
-      "start": 28.21,
-      "end": 32.91
+      "start": 25.5,
+      "end": 31.29
     },
     {
-      "start": 32.91,
-      "end": 33.58
+      "start": 31.29,
+      "end": 34.71
     },
     {
-      "start": 33.58,
-      "end": 36.27
+      "start": 35,
+      "end": 36.8
     },
     {
-      "start": 36.27,
-      "end": 41.64
+      "start": 36.8,
+      "end": 38.86
     },
     {
-      "start": 41.64,
-      "end": 46.34
+      "start": 38.86,
+      "end": 42.91
     },
     {
-      "start": 46.34,
-      "end": 47.01
+      "start": 42.91,
+      "end": 47.9
     },
     {
-      "start": 47.01,
-      "end": 49.7
+      "start": 47.9,
+      "end": 49.95
     },
     {
-      "start": 49.7,
-      "end": 55.74
+      "start": 49.95,
+      "end": 52.8
     },
     {
-      "start": 55.74,
-      "end": 62.46
+      "start": 52.8,
+      "end": 58.8
+    },
+    {
+      "start": 58.8,
+      "end": 63
     }
   ]
 }
