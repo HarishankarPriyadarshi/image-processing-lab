@@ -363,6 +363,16 @@
       transform: translateX(2px);
     }
 
+    #intro-text .intro-sentence {
+      border-radius: 0.2rem;
+      transition: background-color 160ms ease;
+    }
+
+    #intro-text .intro-sentence.active {
+      background-color: rgba(251, 191, 36, 0.35);
+      box-shadow: 0 0 0 0.12em rgba(251, 191, 36, 0.35);
+    }
+
     #intro-text { text-align: center; }
 
     #intro-outline {
@@ -524,7 +534,8 @@
 
     #intro-grid.final-state { grid-template-columns: 1fr; align-items: center; justify-items: center; }
     #intro-grid.final-state #intro-left { display: none; }
-    #intro-grid.final-state #intro-right { width: 100%; max-width: 760px; margin: 0 auto; }
+    #intro-grid.final-state #intro-right { width: 100%; max-width: 760px; margin: 0 auto; grid-template-rows: 1fr; }
+    #intro-grid.final-state #intro-text { grid-row: 1; }
 
     .chatbot-launcher {
       width: 74px;
@@ -1097,7 +1108,7 @@
 
 #intro-right {
   display: grid;
-  grid-template-rows: 30% 70%;
+  grid-template-rows: 70% 30%;
   gap: clamp(0.75rem, 1.6vw, 1rem);
   width: 100%;
   min-height: 0;
@@ -1116,6 +1127,7 @@
 }
     
 #intro-text {
+  grid-row: 2;
   height: 100%;
   min-height: 0;
   max-height: none;
@@ -1144,6 +1156,11 @@
   margin-bottom: 0;
   contain: layout paint;
 }
+
+#intro-video-wrapper {
+  grid-row: 1;
+}
+
     #intro-text::before {
       content: '';
       position: absolute;
@@ -1516,7 +1533,7 @@
         </nav>
 
         <div class="vl-card mb-4 overflow-hidden animate-fadeInUp rounded-lg">
-          <div class="px-4 py-3 tts-box" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
+          <div class="px-4 py-3 tts-box rounded-lg" style="background: linear-gradient(120deg, #021a2c, #064073, #0b60a8);">
             <h1 class="text-lg md:text-xl font-bold text-white text-center leading-snug">
                 Morphology Based Edge Detection
             </h1>
@@ -1854,31 +1871,25 @@
 
             <ul id="intro-outline">
               <li class="outline-item" data-start="0">Overview</li>
-              <li class="outline-item" data-start="23">Aim</li>
-              <li class="outline-item" data-start="27">Theory</li>
-              <li class="outline-item" data-start="40">Pretest</li>
-              <li class="outline-item" data-start="46">Procedure</li>
-              <li class="outline-item" data-start="55">Simulation</li>
-              <li class="outline-item" data-start="62">Posttest</li>
-              <li class="outline-item" data-start="68">References & Contributors</li>
+              <li class="outline-item" data-start="2">Aim</li>
+              <li class="outline-item" data-start="30">Theory</li>
+              <li class="outline-item" data-start="67">Pretest</li>
+              <li class="outline-item" data-start="87">Procedure</li>
+              <li class="outline-item" data-start="96">Simulation</li>
+              <li class="outline-item" data-start="111">Posttest</li>
+              <li class="outline-item" data-start="131">References & Contributors</li>
             </ul>
 
           </div>
         </div>
 
         <!-- RIGHT PANEL -->
-        <div id="intro-right" class="h-full flex flex-col gap-3 min-h-0">
-          <div
-            id="intro-text"
-            class="space-y-3 text-black text-base leading-relaxed flex-1 overflow-y-auto border rounded-lg p-4 bg-gray-50 shadow-inner min-h-[200px] max-h-full"
-          ></div>
-
+        <div id="intro-right" class="h-full gap-3 min-h-0">
           <div id="intro-video-wrapper">
             <video
               id="intro-video"
               class="w-full object-contain"
               src="./videos/intro_morphology.mp4"
-
               preload="metadata"
               muted
               playsinline
@@ -1886,6 +1897,11 @@
               Your browser does not support the video tag.
             </video>
           </div>
+
+          <div
+            id="intro-text"
+            class="space-y-3 text-black text-base leading-relaxed flex-1 overflow-y-auto border rounded-lg p-4 bg-gray-50 shadow-inner min-h-[200px] max-h-full"
+          ></div>
         </div>
       </div>
 
@@ -1931,7 +1947,7 @@
 
       <!-- Audio (UPDATED: removed autoplay attribute; controlled by JS) -->
       
-     <audio id="intro-audio" src="./audio/e4.Intropanelvoice_morphology.wav" preload="auto"></audio>
+     <audio id="intro-audio" src="./audio/e4.intropanelvoice_morphology.wav" preload="auto"></audio>
 
     </div>
   </div>
@@ -2041,73 +2057,74 @@
   </script>
 
 
+  <script src="./aimVideoHighlight.js"></script>
   <!-- INTRO POPUP SCRIPT (auto-open based on data-intro-autoshow) -->
   <script>
     const DEFAULT_CUE_LEAD = 0.65; // seconds before narration to reveal text
 const introCues = [
   {
     start: 0,
-    end: 24,
+    end: 16,
     text: "Welcome to the experiment Morphology Based Edge Detection.  In this experiment, you will learn how morphological image processing techniques can be used for edge detection, and how different morphological operations affect the structure and boundaries of objects in an image."
   },
 
   {
-    start: 25,
-    end: 48,
+    start: 17,
+    end: 37,
     text: "To guide you throughout the learning process, this experiment is organized into several key sections. We begin with the Aim, which clearly states what you will learn and why the experiment is important. This is followed by the Theory section, where you will find all the essential concepts and foundational knowledge required to understand morphology based edge detection."
   },
 
   {
-    start: 49,
-    end: 73,
+    start: 38,
+    end: 66,
     text: "To make the theory easier to understand, a Text-to-Speech feature is available. You can use the Previous, Play or Pause, and Next controls to listen to the theory sentence by sentence or Click any sentence to start playback from that point.The currently spoken sentence is highlighted to help you follow along while reading. You can also adjust the playback speed from 0.5× to 2× according to your preference, allowing you to listen at a comfortable pace."
   },
 
   {
-    start: 74,
-    end: 93,
+    start: 67,
+    end: 85,
     text: "Before you proceed to the simulation, the Pretest section helps you evaluate your basic understanding of the topic. Here, you will receive five questions at a time. Each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded and reflected in your Progress Report."
   },
 
   {
-    start: 94,
-    end: 117,
+    start: 86,
+    end: 108,
     text: "Next, you can move on to the Procedure section, which outlines the step-by-step instructions required to perform the experiment correctly. The most important part of the experiment is the Simulation section, where you will first see a Demo tab to understand the basic procedure, followed by the actual Simulation tab, where you can use the virtual setup to perform the experiment yourself."
   },
 
   {
-    start: 118,
-    end: 137,
+    start: 109,
+    end: 128,
     text: "After completing the simulation, the Posttest section helps you evaluate your understanding of the experiment. Similar to the Pretest, you will receive five questions at a time, and each time you click on the Refresh button, a new set of questions will be generated. All your attempted questions will be recorded again in your Progress Report."
   },
 
   {
-    start: 138,
-    end: 147,
+    start: 129,
+    end: 137,
     text: "Finally, the References and Contributors sections provide the supporting resources and acknowledge the team involved in the development of this experiment."
   },
 
   {
-    start: 148,
-    end: 165,
+    start: 138,
+    end: 154,
     text: "A Progress Report is also available for you, where you can track your real-time progress throughout the experiment. To access this feature, please enter your details such as name, email ID, and designation in the User Input tab. All your activities across the experiments will be recorded in one place."
   },
 
   {
-    start: 166,
-    end: 183,
+    start: 155,
+    end: 171,
     text: "This report allows you to monitor your learning journey in detail, including your pre-test and post-test performance, such as the number of questions attempted and marks obtained. It also records the total time taken to complete the experiment and provides a detailed simulation summary of your activity."
   },
 
   {
-    start: 184,
-    end: 196,
+    start: 172,
+    end: 184,
     text: "In addition, the Progress Report displays your basic information along with the report date, completing the Progress Report as a comprehensive and personalized record of your experiment."
   },
 
   {
-    start: 197,
-    end: 203,
+    start: 185,
+    end:193,
     text: "Together, these sections ensure a smooth, structured, and engaging learning experience from start to finish."
   }
 ];
@@ -2369,11 +2386,7 @@ const introCues = [
 
     function appendLine(index) {
       const cue = introCues[index];
-      introText.innerHTML = '';
-      const p = document.createElement('p');
-      p.classList.add('intro-line');
-      p.textContent = cue.text;
-      introText.appendChild(p);
+      AimVideoHighlight.renderCue(introText, cue);
       introText.scrollTop = 0;
     }
 
@@ -2427,14 +2440,11 @@ const introCues = [
 
       if (introGrid) introGrid.classList.add('final-state');
 
-      const finalText = introCues[lastIndex]?.text || '';
       introText.classList.add('final-message');
-      introText.innerHTML = '';
-
-      const p = document.createElement('p');
-      p.classList.add('intro-line', 'active');
-      p.textContent = finalText;
-      introText.appendChild(p);
+      AimVideoHighlight.renderCue(introText, introCues[lastIndex]);
+      const finalLine = introText.querySelector('.intro-line');
+      if (finalLine) finalLine.classList.add('active');
+      AimVideoHighlight.highlightSentence(introText, introCues[lastIndex], audioEl.currentTime);
       lastRenderedIndex = lastIndex;
     }
 
@@ -2463,6 +2473,9 @@ const introCues = [
       }
 
       highlightActiveLine(targetIndex);
+      if (targetIndex >= 0) {
+        AimVideoHighlight.highlightSentence(introText, introCues[targetIndex], currentTime);
+      }
       updateOutline(currentTime);
       maybeShowVideo(currentTime);
       syncVideo();
